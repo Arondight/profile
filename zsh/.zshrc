@@ -140,12 +140,12 @@ SSH_KEY_PATH='~/.ssh/id_rsa'
 EDITOR="vim"
 # 终端256 色
 TERM="xterm-256color"
-# LANG，使用DM 需要注释掉if 语句块
-if [[ -z $DISPLAY ]]; then
-  LANG=en_US.UTF-8
-else
-  LANG=zh_CN.UTF-8
-fi
+# LANG，使用DM 或者有了TTY 下UTF-8 解决方案需要注释掉if 语句块
+#if [[ -z $DISPLAY ]]; then
+#  LANG=en_US.UTF-8
+#else
+#  LANG=zh_CN.UTF-8
+#fi
 
 # =========================
 # 自动补全设置
@@ -191,7 +191,7 @@ function umountfs {
 # ========================
 # 文本处理 {
 # less, more, diff, view, vi 全部使用vim
-alias less='sh /usr/share/vim/vim74/macros/less.sh'
+#alias less='sh /usr/share/vim/vim74/macros/less.sh'
 alias more='less'
 alias diff='/usr/bin/vim -d'
 alias view='/usr/bin/vim -R'
@@ -218,6 +218,8 @@ alias ls='/bin/ls -hF --color=auto'
 alias dir='ls'
 alias d='ls'
 alias dm='d | more'
+alias a='ls -A'
+alias am='a | more'
 alias v='d -lh'
 alias vm='v | more'
 alias l='v -A'
@@ -247,7 +249,7 @@ alias chgrp='/bin/chgrp --preserve-root'
 # pacman 自动高亮，提供升级、更新、清理指令
 alias pacman='/usr/bin/pacman --color auto'
 alias arch_update='sudo /usr/bin/pacman -Sy && [[ -f /usr/bin/pkgfile ]] && sudo /usr/bin/pkgfile -u'
-alias arch_upgrade='sudo /usr/bin/pacman -Sy --needed --noconfirm linux-headers pkgfile && sudo /usr/bin/pacman -Su --noconfirm; sudo /usr/bin/pkgfile -u'
+alias arch_upgrade='sudo -i /usr/bin/pacman -Sy --needed --noconfirm linux-headers pkgfile && sudo /usr/bin/pacman -Su --noconfirm; sudo /usr/bin/pkgfile -u'
 alias arch_clean='sudo /usr/bin/pacman -R --noconfirm $(/usr/bin/pacman -Qqdt); sudo /usr/bin/pacman -Sc --noconfirm'
 alias arch_cleanall='sudo /usr/bin/pacman -R --noconfirm $(/usr/bin/pacman -Qqdt); sudo /usr/bin/pacman -Scc'
 # startx 使用中文locale
