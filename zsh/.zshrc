@@ -121,7 +121,7 @@ fi
 # X11 建议使用分屏式虚拟终端例如terminator
 # 强烈建议在需要ssh 的机器上启用（例如你的VPS）
 # =========================
-#[[ -f /usr/bin/tmux ]] && test -z "$TMUX" && (TERM=xterm-256color tmux attach || tmux -2) && exit
+#[[ -f /usr/bin/tmux && -z "$TMUX" ]] && (TERM=xterm-256color tmux attach || tmux -2) && exit
 
 # =========================
 # 环境变量
@@ -206,10 +206,12 @@ alias leafpad='/usr/bin/leafpad --codeset=utf8'
 # }
 # cc {
 # 提供cc99, cxx11 等编译小程序的指令
-alias cc='/usr/bin/gcc'
-alias cc99='cc -std=gun99 -Wall'
-alias cxx='/usr/bin/g++'
-alias cxx11='cxx -std=c11 -Wall'
+alias gcc='/usr/bin/gcc -Wall -fdiagnostics-color=auto'
+alias cc='gcc'
+alias cc99='cc -std=gun99'
+alias g++='/usr/bin/g++ -Wall -fdiagnostics-color=auto'
+alias cxx='g++'
+alias cxx11='cxx -std=c11'
 # }
 # ls {
 # ls 自动高亮，显示后缀，易于阅读格式
