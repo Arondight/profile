@@ -250,8 +250,8 @@ alias chgrp='/bin/chgrp --preserve-root'
 # 常用系统指令 {
 # pacman 自动高亮，提供升级、更新、清理指令
 alias pacman='/usr/bin/pacman --color auto'
-alias arch_update='sudo /usr/bin/pacman -Sy && [[ -f /usr/bin/pkgfile ]] && sudo /usr/bin/pkgfile -u'
-alias arch_upgrade='sudo -i /usr/bin/pacman -Sy --needed --noconfirm linux-headers pkgfile && sudo /usr/bin/pacman -Su --noconfirm; sudo /usr/bin/pkgfile -u'
+alias arch_update='sudo /usr/bin/pacman -Sy && [[ -f /usr/bin/pkgfile ]] && /usr/bin/pkgfile -u'
+alias arch_upgrade='sudo /usr/bin/pacman -Sy --needed --noconfirm linux-headers pkgfile && sudo /usr/bin/pacman -Su --noconfirm; /usr/bin/pkgfile -u'
 alias arch_clean='sudo /usr/bin/pacman -R --noconfirm $(/usr/bin/pacman -Qqdt); sudo /usr/bin/pacman -Sc --noconfirm'
 alias arch_cleanall='sudo /usr/bin/pacman -R --noconfirm $(/usr/bin/pacman -Qqdt); sudo /usr/bin/pacman -Scc'
 # startx 使用中文locale
