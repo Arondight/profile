@@ -147,8 +147,15 @@ let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_key_invoke_completion = '<C-K>'
-let g:ycm_semantic_triggers = {}
-let g:ycm_semantic_triggers.c = ['->', '.', ' ', '(', '[', '&']
+let g:ycm_semantic_triggers = {
+  \     'c' : ['->', '.', ' ', '(', '[', '&'],
+  \     'cpp,objcpp' : ['->', '.', ' ', '(', '[', '&', '::'],
+  \     'perl' : ['->', '::'],
+  \     'php' : ['->', '::', '.'],
+  \     'cs,java,javascript,d,vim,python,perl6,scala,vb,elixir,go' : ['.'],
+  \     'ruby' : ['.', '::'],
+  \     'lua' : ['.', ':']
+  \ }
 " Indentline
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#A4E57E'
@@ -159,23 +166,23 @@ let g:molokai_original = 1
 let g:rehash256 = 1
 " Rainbow-Parentheses
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
+  \   ['brown',       'RoyalBlue3'],
+  \   ['Darkblue',    'SeaGreen3'],
+  \   ['darkgray',    'DarkOrchid3'],
+  \   ['darkgreen',   'firebrick3'],
+  \   ['darkcyan',    'RoyalBlue3'],
+  \   ['darkred',     'SeaGreen3'],
+  \   ['darkmagenta', 'DarkOrchid3'],
+  \   ['brown',       'firebrick3'],
+  \   ['gray',        'RoyalBlue3'],
+  \   ['black',       'SeaGreen3'],
+  \   ['darkmagenta', 'DarkOrchid3'],
+  \   ['Darkblue',    'firebrick3'],
+  \   ['darkgreen',   'RoyalBlue3'],
+  \   ['darkcyan',    'SeaGreen3'],
+  \   ['darkred',     'DarkOrchid3'],
+  \   ['red',         'firebrick3'],
+  \ ]
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 au VimEnter * RainbowParenthesesToggle
