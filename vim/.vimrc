@@ -57,6 +57,7 @@ filetype plugin indent on
 " ==========================
 set number                            " 显示行号
 set cursorline                        " 行高亮
+set cursorcolumn                      " 列高亮
 set ruler                             " 总是显示当前光标位置
 set smartindent                       " 智能对齐方式
 set matchpairs=(:),[:],{:},<:>,       " % 跳转匹配
@@ -79,6 +80,10 @@ set foldmethod=indent                 " 折叠方式
 set foldlevel=0                       " 引发折叠的层次
 set foldcolumn=1                      " 折叠为1 行
 set pastetoggle=<F10>                 " 粘贴模式切换
+"插入模式时是红色
+au InsertLeave * hi Cursor guibg=red
+"离开插入模式时是绿色
+au InsertEnter * hi Cursor guibg=green
 
 " ==========================
 " 常规
