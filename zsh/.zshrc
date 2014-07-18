@@ -116,12 +116,16 @@ elif [[ -d "$HOME/.zsh-syntax-highlighting" ]]; then
 fi
 
 # =========================
-# 保证各终端tmux 的一致性
+# tmux
 # =========================
 # X11 建议使用分屏式虚拟终端例如terminator
 # 强烈建议在需要ssh 的机器上启用（例如你的VPS）
 # =========================
-#[[ -f /usr/bin/tmux && -z "$TMUX" ]] && (TERM=xterm-256color tmux attach || tmux -2) && exit
+# 下面一行用于保持各种端tmux 的一致性，建议在远程主机上的私人账户上开启
+#[[ -f /usr/bin/tmux && -z "$TMUX" ]] && (TERM=xterm-256color && tmux attach || tmux -2) && exit
+# =========================
+# 下面一行只启用tmux 但不保持各终端一致性，建议在远程主机的公共账户上开启
+#[[ -f /usr/bin/tmux && -z "$TMUX" ]] && (TERM=xterm-256color && tmux -2) && exit
 
 # =========================
 # 环境变量
