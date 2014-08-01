@@ -182,7 +182,7 @@ function mountiso {
 }
 # 其他分区挂载
 function mountfs {
-  sudo mount -t auto,nontfs,nomsdos $1 $2 -o defaults
+  sudo mount -t nontfs,nomsdos $1 $2 -o defaults
   sudo chown $(whoami):$(whoami) $2
 }
 # 卸载设备
@@ -212,7 +212,7 @@ alias leafpad='/usr/bin/leafpad --codeset=utf8'
 # 提供cc99, cxx11 等编译小程序的指令
 alias gcc='/usr/bin/gcc -Wall -fdiagnostics-color=auto'
 alias cc='gcc'
-alias cc99='cc -std=gun99'
+alias c99='cc -std=gnu99'
 alias g++='/usr/bin/g++ -Wall -fdiagnostics-color=auto'
 alias cxx='g++'
 alias cxx11='cxx -std=c11'
