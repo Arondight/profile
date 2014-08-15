@@ -14,7 +14,7 @@ fi
 suffix=$(date +%s)
 [[ -d "$HOME/.vim" ]] && mv "$HOME/.vim" "$HOME/.vim.${suffix}.bak"
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim -c ':BundleInstall'
+vim -c ':BundleInstall' -c ':q' -c ':q'
 
 # ycm
 buildpara="--clang-completer"
