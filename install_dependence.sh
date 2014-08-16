@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # oh-my-zsh
 if [[ ! -d "$HOME/.oh-my-zsh" ]];then

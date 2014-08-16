@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 suffix=$(date +%s)
 [[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))

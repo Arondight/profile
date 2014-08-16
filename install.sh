@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [[ "--help" == $1 || "-h" == $1 ]]; then
   echo "$0 [--with-dependence]"
