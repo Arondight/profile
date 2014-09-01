@@ -215,7 +215,7 @@ alias cc='gcc'
 alias c99='cc -std=gnu99'
 alias g++='/usr/bin/g++ -Wall -fdiagnostics-color=auto'
 alias cxx='g++'
-alias cxx11='cxx -std=c11'
+alias cxx11='cxx -std=gnu++11'
 # }
 # ls {
 # ls 自动高亮，显示后缀，易于阅读格式

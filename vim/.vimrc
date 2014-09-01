@@ -327,5 +327,5 @@ function! GnuIndent ()
   set cpoptions-=C
   set expandtab smarttab autoindent smartindent
 endfunction
-au FileType c,cpp,h,hh call GnuIndent ()
+au FileType c,h call GnuIndent ()
 
