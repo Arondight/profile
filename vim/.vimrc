@@ -143,6 +143,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_cpp_include_dirs = ['/usr/include/qt']
+let g:syntastic_cpp_compiler_options = '-std=gnu++11'
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_quiet_messages = { "type": "style" }
