@@ -143,7 +143,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_cpp_include_dirs = ['/usr/include/qt']
-let g:syntastic_cpp_compiler_options = '-std=gnu++11'
+let g:syntastic_cpp_compiler_options = '-std=gnu++11 -Wall'
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_quiet_messages = { "type": "style" }
@@ -300,6 +300,25 @@ map <F3> N
 imap <F3> <ESC><F3>i
 map <F4> :nohlsearch<CR>
 imap <F4> <ESC><F4>a
+" 分屏控制 <C-W>
+" j/k/h/l       J/K/H/L       u/d                 q/o
+" 分屏切换      放置置置      上/下轮转           关闭当前/其他
+" v=/v-         h=/h-         a=/a-/e             -|\
+" 垂直最大/最小 水平最大/最小 分屏最大/最小/相等  水平/垂直分割
+imap <C-W> <ESC><C-W>
+vmap <C-W> v<C-W>
+map <C-W>u <C-W>R
+map <C-W>d <C-W>r
+map <C-W>q <C-W>c
+map <C-W>v= <C-W>_
+map <C-W>v- <C-W>1_
+map <C-W>h= <C-W>\|
+map <C-W>h- <C-W>1\|
+map <C-W>a= <C-W>v=<C-W>h=
+map <C-W>a- <C-W>v-<C-W>h-
+map <C-W>e <C-W>=
+map <C-W>- <C-W>s
+map <C-W>\ <C-W>v
 
 " ==========================
 " Autocmd
