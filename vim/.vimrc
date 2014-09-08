@@ -118,7 +118,7 @@ language message zh_CN.UTF-8          " 打印信息的语言
 let Tlist_Auto_Open=0
 let Tlist_Auto_Update=1
 let Tlist_WinWidth=25
-"let Tlist_WinHeight=100
+let Tlist_WinWidth=35
 let Tlist_Show_One_File=1
 let Tlist_Use_Right_Window=1
 let Tlist_Use_SingleClick=1
@@ -301,10 +301,10 @@ imap <F3> <ESC><F3>i
 map <F4> :nohlsearch<CR>
 imap <F4> <ESC><F4>a
 " 分屏控制 <C-W>
-" j/k/h/l       J/K/H/L       u/d                 q/o
-" 分屏切换      放置置置      上/下轮转           关闭当前/其他
-" v=/v-         h=/h-         a=/a-/e             -|\
-" 垂直最大/最小 水平最大/最小 分屏最大/最小/相等  水平/垂直分割
+" j/k/h/l       J/K/H/L       u/d                 q/o               h/v
+" 分屏切换      分屏放置      上/下轮转           关闭当前/其他     水平/垂直分割
+" v=/v-         h=/h-         a=/a-/e             -/=               ,/.
+" 垂直最大/最小 水平最大/最小 分屏最大/最小/相等  水平增大/减小三行 垂直增大/减小三行
 imap <C-W> <ESC><C-W>
 vmap <C-W> v<C-W>
 map <C-W>u <C-W>R
@@ -317,8 +317,12 @@ map <C-W>h- <C-W>1\|
 map <C-W>a= <C-W>v=<C-W>h=
 map <C-W>a- <C-W>v-<C-W>h-
 map <C-W>e <C-W>=
-map <C-W>- <C-W>s
-map <C-W>\ <C-W>v
+map <C-W>h :split<CR>
+map <C-W>v :vertical split<CR>
+map <C-W>= :resize +3<CR>
+map <C-W>- :resize -3<CR>
+map <C-W>, :vertical resize +3<CR>
+map <C-W>. :vertical resize -3<CR>
 
 " ==========================
 " Autocmd
