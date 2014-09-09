@@ -191,11 +191,38 @@ function umountfs {
 }
 
 # ========================
+# less 函数
+# ========================
+function less {
+  local file_src
+  local less_program
+
+  if [[ -x /usr/bin/vim ]]; then
+    less_program='/usr/bin/vim -c "set nofoldenable" \
+                                -c "let no_plugin_maps = 1" \
+                                -c "runtime! macros/less.vim" '
+  elif [[ -x /usr/bin/nano ]]; then
+    less_program='/usr/bin/nano -v '
+  else
+    /usr/bin/less $@
+    return
+  fi
+
+  if [[ 0 == $# ]]; then
+    file_src='-'
+  else
+    file_src=$@
+  fi
+
+  eval $less_program $file_src
+}
+
+# ========================
 # alias
 # ========================
 # 文本处理 {
 # less, more, diff, view, vi 全部使用vim
-#alias less='sh /usr/share/vim/vim74/macros/less.sh'
+# less 函数请查看之前的定义
 alias more='less'
 alias diff='/usr/bin/vim -d'
 alias view='/usr/bin/vim -R'
