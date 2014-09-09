@@ -117,7 +117,6 @@ language message zh_CN.UTF-8          " 打印信息的语言
 " Taglist
 let Tlist_Auto_Open=0
 let Tlist_Auto_Update=1
-let Tlist_WinWidth=25
 let Tlist_WinWidth=35
 let Tlist_Show_One_File=1
 let Tlist_Use_Right_Window=1
@@ -152,7 +151,7 @@ let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
 " 需要clang cmake llvm python2
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
-let g:ycm_key_invoke_completion = '<C-K>'
+let g:ycm_key_invoke_completion = '<C-N>'
 let g:ycm_semantic_triggers = {
   \     'c' : ['->', '.', ' ', '(', '[', '&'],
   \     'cpp,objcpp' : ['->', '.', ' ', '(', '[', '&', '::'],
