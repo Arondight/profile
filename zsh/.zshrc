@@ -198,20 +198,29 @@ function less {
   local less_program
 
   if [[ -x /usr/bin/vim ]]; then
-    less_program='/usr/bin/vim -c "set nofoldenable" \
-                                -c "let no_plugin_maps = 1" \
-                                -c "runtime! macros/less.vim" '
+    less_program="/usr/bin/vim -c 'set nofoldenable' \
+                                -c 'let no_plugin_maps = 1' \
+                                -c 'runtime! macros/less.vim' "
   elif [[ -x /usr/bin/nano ]]; then
     less_program='/usr/bin/nano -v '
   else
     /usr/bin/less $@
-    return
+    return 0
   fi
 
   if [[ 0 == $# ]]; then
     file_src='-'
+    if [[ -t 0 ]]; then
+      echo "Missing filename" >&2
+      return 1
+    fi
   else
-    file_src=$@
+    file_src='$@'
+  fi
+
+  if [[ ! -t 1 ]]; then
+    /usr/bin/cat $@
+    return 0
   fi
 
   eval $less_program $file_src
