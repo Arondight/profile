@@ -204,8 +204,7 @@ function less {
   elif [[ -x /usr/bin/nano ]]; then
     less_program='/usr/bin/nano -v '
   else
-    /usr/bin/less $@
-    return 0
+    exec /usr/bin/less $@
   fi
 
   if [[ 0 == $# ]]; then
@@ -219,8 +218,7 @@ function less {
   fi
 
   if [[ ! -t 1 ]]; then
-    /usr/bin/cat $@
-    return 0
+    exec /usr/bin/cat $@
   fi
 
   eval $less_program $file_src
