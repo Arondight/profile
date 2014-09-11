@@ -302,7 +302,7 @@ imap <F4> <ESC><F4>a
 " 分屏控制 <C-W>
 " j/k/h/l       J/K/H/L       u/d                 q/o               s/v
 " 分屏切换      分屏放置      上/下轮转           关闭当前/其他     水平/垂直分割
-" v=/v-         h=/h-         a=/a-/e             -/=               ,/.
+" v=/v-         h=/h-         a=/a-/e             =/-               ./,
 " 垂直最大/最小 水平最大/最小 分屏最大/最小/相等  水平增大/减小三行 垂直增大/减小三行
 imap <C-W> <ESC><C-W>
 vmap <C-W> v<C-W>
@@ -320,8 +320,8 @@ map <C-W>s :split<CR>
 map <C-W>v :vertical split<CR>
 map <C-W>= :resize +3<CR>
 map <C-W>- :resize -3<CR>
-map <C-W>, :vertical resize +3<CR>
-map <C-W>. :vertical resize -3<CR>
+map <C-W>. :vertical resize +3<CR>
+map <C-W>, :vertical resize -3<CR>
 
 " ==========================
 " Autocmd
