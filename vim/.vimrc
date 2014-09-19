@@ -306,16 +306,17 @@ imap <F4> <ESC><F4>a
 " 垂直最大/最小 水平最大/最小 分屏最大/最小/相等  水平增大/减小三行 垂直增大/减小三行
 imap <C-W> <ESC><C-W>
 vmap <C-W> v<C-W>
-map <C-W>u <C-W>R
-map <C-W>d <C-W>r
-map <C-W>q <C-W>c
-map <C-W>v= <C-W>_
-map <C-W>v- <C-W>1_
-map <C-W>h= <C-W>\|
-map <C-W>h- <C-W>1\|
+map <C-W>u :wincmd R<CR>
+map <C-W>d :wincmd r<CR>
+map <C-W>q :q<CR>
+map <C-W>o :only<CR>
+map <C-W>v= :wincmd _<CR>
+map <C-W>v- :wincmd 1_<CR>
+map <C-W>h= :wincmd \|<CR>
+map <C-W>h- :wincmd 1\|<CR>
 map <C-W>a= <C-W>v=<C-W>h=
 map <C-W>a- <C-W>v-<C-W>h-
-map <C-W>e <C-W>=
+map <C-W>e :wincmd =<CR>
 map <C-W>s :split<CR>
 map <C-W>v :vertical split<CR>
 map <C-W>= :resize +3<CR>
@@ -333,6 +334,11 @@ if has("autocmd")
     \ exe "normal! g`\"" |
     \ endif
 endif
+
+" ==========================
+" asm 文件使用nasm 语法
+" ==========================
+au FileType asm set filetype=nasm
 
 " ==========================
 " GNU 缩进风格
