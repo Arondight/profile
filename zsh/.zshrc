@@ -2,8 +2,6 @@
 # zshrc 配置文件
 # =========================
 # 位置: ~/.zshrc
-# 需要: oh-my-zsh, zsh-syntax-highlighting
-#
 #           By iSpeller
 # =========================
 
@@ -52,7 +50,7 @@ plugins=(
   history-substring-search jump gnu-utils
   per-directory-history perl python themes textmate
 )
-if [[ "$ZSH" == "$HOME/.oh-my-zsh" ]]; then
+if [[ -w $ZSH ]]; then
   plugins+=zsh_reload
   [[ ! -d "$ZSH/cache" ]] && /bin/mkdir "$ZSH/cache"
 fi
@@ -132,24 +130,17 @@ fi
 # =========================
 # 增加了一些特殊位置的bin 目录
 # 增加了当前目录(但优先级最低)
-PATH=$HOME/bin:/usr/local/bin:$PATH:.
-[[ 0 -ne $(id -u) ]] && PATH=/root/bin:$PATH
+path=($HOME/bin /usr/local/bin $path .)
 # 额外的man 手册路径
-MANPATH=/usr/local/man:$MANPATH
+manpath=(/usr/local/man $manpath)
 # 编译的架构参数
 ARCHFLAGS='-arch x86_64'
 # ssh key
 SSH_KEY_PATH='~/.ssh/id_rsa'
 # 默认编辑器
-EDITOR="vim"
+EDITOR="/usr/bin/vim"
 # 终端256 色
 TERM="xterm-256color"
-# LANG，使用DM 或者有了TTY 下UTF-8 解决方案需要注释掉if 语句块
-#if [[ -z $DISPLAY ]]; then
-#  LANG=en_US.UTF-8
-#else
-#  LANG=zh_CN.UTF-8
-#fi
 
 # =========================
 # 自动补全设置
@@ -166,12 +157,12 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 # ========================
 # fat32 分区挂载
 function mountfat {
-    sudo mount $1 $2 -o iocharset=utf8,umask=000
+    /usr/bin/sudo mount $1 $2 -o iocharset=utf8,umask=000
 }
 # ntfs 分区挂载
 function mountntfs {
   if [[ -f /bin/ntfs-3g ]]; then
-    sudo ntfs-3g $1 $2
+    /usr/bin/sudo ntfs-3g $1 $2
   else
     mountfat $1 $2
   fi
@@ -182,20 +173,20 @@ function mountiso {
 }
 # 其他分区挂载
 function mountfs {
-  sudo mount -t nontfs,nomsdos $1 $2 -o defaults
-  sudo chown $(whoami):$(whoami) $2
+  /usr/bin/sudo mount -t nontfs,nomsdos $1 $2 -o defaults
+  /usr/bin/sudo chown $(whoami):$(whoami) $2
 }
 # 卸载设备
 function umountfs {
-  sudo umount $1
+  /usr/bin/sudo umount $1
 }
 
 # ========================
 # less 函数
 # ========================
 function less {
-  local file_src
-  local less_program
+  local file_src=''
+  local less_program=''
 
   if [[ -x /usr/bin/vim ]]; then
     less_program="/usr/bin/vim -c 'set nofoldenable' \
@@ -222,6 +213,206 @@ function less {
   fi
 
   eval $less_program $file_src
+}
+
+# ========================
+# archpkg 函数
+# 提供slackpkg 风格的包管理
+# 纯自用，因为有点小恋旧癖
+# ========================
+function archpkg {
+  if [[ 0 == $# ]]; then
+    set -- "help"
+  fi
+
+  while true; do
+    case "$1" in
+      update)
+        shift
+        /usr/bin/sudo /usr/bin/pacman -Sy
+        if [[ -f /usr/bin/pkgfile ]]; then
+          /usr/bin/pkgfile --update
+        fi
+        ;;
+      check-updates)
+        shift
+        /usr/bin/sudo /usr/bin/pacman -Qu $@
+        return $?
+        ;;
+      upgrade-all)
+        /usr/bin/sudo /usr/bin/pacman --needed --noconfirm --color auto -Sy linux-headers
+        /usr/bin/sudo /usr/bin/pacman --noconfirm --color auto -Su
+        if [[ -f /usr/bin/pkgfile ]]; then
+          /usr/bin/pkgfile --update
+        fi
+        shift
+        ;;
+      clean-system)
+        local result
+        shift
+        result=( $(pacman -Qqdt) )
+        if [[ '' != $result ]]; then
+          /usr/bin/sudo /usr/bin/pacman --noconfirm --color auto -R $result
+        fi
+        /usr/bin/sudo /usr/bin/pacman --noconfirm --color auto -Sc
+        ;;
+      install)
+        shift
+        if [[ 0 == $# ]]; then
+          set -- 'help'
+          continue
+        fi
+        /usr/bin/sudo /usr/bin/pacman --needed --color auto -S $@
+        return $?
+        ;;
+       reinstall)
+        shift
+        if [[ 0 == $# ]]; then
+          set -- 'help'
+          continue
+        fi
+        /usr/bin/sudo /usr/bin/pacman --color auto -S $@
+        return $?
+        ;;
+      remove)
+        local result
+        shift
+        if [[ 0 == $# ]]; then
+          set -- 'help'
+          continue
+        fi
+        result=( $(/usr/bin/pacman -Qqs $1) )
+        if [[ '' != $result ]]; then
+          /usr/bin/sudo /usr/bin/pacman --color auto -Rsn $result
+        fi
+        return $?
+        ;;
+      download)
+        shift;
+        if [[ 0 == $# ]]; then
+          set -- 'help'
+          continue
+        fi
+        /usr/bin/sudo /usr/bin/pacman --color auto -Sw $@
+        return $?
+        ;;
+      info)
+        shift
+        if [[ 0 == $# ]]; then
+          set -- 'help'
+          continue
+        fi
+        /usr/bin/pacman --color auto -Si $@
+        return $?
+        ;;
+      search)
+        shift
+        if [[ 0 == $# ]]; then
+          set -- 'help'
+          continue
+        fi
+        /usr/bin/pacman --color auto -Ss $@
+        return $?
+        ;;
+      file-search)
+        shift
+        if [[ 0 == $# ]]; then
+          set -- 'help'
+          continue
+        fi
+        if [[ ! -f /usr/bin/pkgfile ]]; then
+          /usr/bin/sudo /usr/bin/pacman --noconfirm --color auto -S pkgfile
+          /usr/bin/pkgfile --update
+        fi
+        /usr/bin/pkgfile --search $@
+        return $?
+        ;;
+      generate-template)
+        local template_file
+        local list_of_packages
+        shift
+        if [[ 0 == $# ]]; then
+          set -- 'help'
+          continue
+        fi
+        template_file=$(readlink -f $1)
+        template_file="$template_file.template"
+        /usr/bin/sudo -v
+        echo "生成软件包列表（需要一会儿）"
+        list_of_packages=$(/usr/bin/pacman -Qqn)
+        echo "生成$template_file"
+        echo $list_of_packages | /usr/bin/sudo /usr/bin/tee -a $template_file >/dev/null 2>&1
+        ;;
+      install-template)
+        local template_file
+        local list_of_packages
+        shift
+        if [[ 0 == $# ]]; then
+          set -- 'help'
+          continue
+        fi
+        template_file=$(readlink -f $1)
+        template_file="$template_file.template"
+        if [[ ! -e $template_file ]]; then
+          echo "文件$template_file 不存在。"
+          return 1
+        fi
+        list_of_packages=( $(/usr/bin/cat $template_file) )
+        /usr/bin/sudo /usr/bin/pacman --needed --color auto -S $list_of_packages
+        ;;
+      remove-template)
+        local template_file
+        local list_of_packages
+        shift
+        if [[ 0 == $# ]]; then
+          set -- 'help'
+          continue
+        fi
+        template_file=$(readlink -f $1)
+        template_file="$template_file.template"
+        if [[ ! -e $template_file ]]; then
+          echo "文件$template_file 不存在。"
+          return 1
+        fi
+        list_of_packages=( $(/usr/bin/cat $template_file) )
+        /usr/bin/sudo /usr/bin/pacman --color auto -Rsn $list_of_packages
+        ;;
+      h|help|-h|--help)
+        /usr/bin/cat << END_OF_HELP
+archpkg 提供了slackpkg 风格的软件包管理机制
+
+用法:
+  archpkg [选项] <匹配串|文件名>
+
+选项:
+  help                          显示本帮助
+  update                        更新软件仓库
+  check-updates [包名]          检查更新
+  upgrade-all                   更新系统
+  clean-system                  清理旧的软件包缓存
+  install <包名>                安装软件包
+  reinstall <包名>              重新安装软件包
+  remove <正则表达式>           卸载软件包
+  download <包名>               下载软件包但不安装
+  info <包名>                   打印软件包信息
+  search <正则表达式>           查找软件包
+  file-search <文件名>          显示某文件属于哪个包
+  generate-template <模板名>    生成包含软件包列表的模板文件
+  install-template <模板名>     安装模板文件中记录的所有软件包
+  remove-template <模板名>      删除模板文件中记录的所有软件包(永远不要使用!)
+
+示例:
+  archpkg upgrade-all clean-system
+  archpkg file-search vim
+  archpkg remove lib32-.+
+END_OF_HELP
+      return 1
+      ;;
+    *)
+      echo "使用archpkg -h 查看帮助"
+      return 1
+    esac
+  done
 }
 
 # ========================
@@ -286,12 +477,7 @@ alias chmod='/bin/chmod --preserve-root'
 alias chgrp='/bin/chgrp --preserve-root'
 # }
 # 常用系统指令 {
-# pacman 自动高亮，提供升级、更新、清理指令
 alias pacman='/usr/bin/pacman --color auto'
-alias arch_update='sudo /usr/bin/pacman -Sy && [[ -f /usr/bin/pkgfile ]] && /usr/bin/pkgfile -u'
-alias arch_upgrade='sudo /usr/bin/pacman -Sy --needed --noconfirm linux-headers pkgfile && sudo /usr/bin/pacman -Su --noconfirm; /usr/bin/pkgfile -u'
-alias arch_clean='sudo /usr/bin/pacman -R --noconfirm $(/usr/bin/pacman -Qqdt); sudo /usr/bin/pacman -Sc --noconfirm'
-alias arch_cleanall='sudo /usr/bin/pacman -R --noconfirm $(/usr/bin/pacman -Qqdt); sudo /usr/bin/pacman -Scc'
 # startx 使用中文locale
 alias startx='export LANG=zh_CN.UTF-8 && startx'
 # 指令人性化输出
@@ -300,9 +486,9 @@ alias df='/bin/df -h'
 alias du='/bin/du -ch'
 alias ping='/bin/ping -c 5'
 # 快速关机、重启
-alias poweroff='sudo /sbin/shutdown -h 0'
+alias poweroff='/usr/bin/sudo /sbin/shutdown -h 0'
 alias halt='poweroff'
-alias reboot='sudo /sbin/shutdown -r 0'
+alias reboot='/usr/bin/sudo /sbin/shutdown -r 0'
 # x11nvc 启动vncserver
 alias vnc-start='/usr/bin/x11vnc -display :0 -noxdamage -many -forever -ncache 10 -auth ~/.Xauthority -rfbauth ~/.vnc/passwd'
 # }
