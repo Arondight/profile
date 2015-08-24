@@ -1,0 +1,76 @@
+v2015-08-24
+  * all:
+      增加了配置更新指令profile_upgrade
+  * zsh:
+      删除了java 和android sdk 的path 文件
+      修改了一些alias
+      增加了几处环境变量
+      增加了函数android_env
+      增加了函数repo
+      改变了自定义函数的加载形式
+  * vim:
+      将插件taglist 替换为tagbar
+      修改了一些按键映射
+      现在无关图形界面一律使用dark 背景
+  * zsh:
+      增加了函数android_env
+  * terminator
+      更改了配色方案
+  * git
+      增加了一些alias
+  * redshift
+      新增了redshift 配置文件
+  * bash:
+      新增了bash 和其他shell 的交互接口目录
+
+v2015-08-09
+  * zsh:
+      剔除了全部的非自建global alias
+      现在所有zsh 插件都通过oh-my-zsh plugins 加载
+      修正了一处安装脚本的错误
+  * vim:
+      增加了可选插件Clang Complete
+
+v2015-08-04
+  * all:
+      修改了几处重定向的逻辑错误
+      修改了git 指令的的判断语句错误
+  * vim:
+      增加了插件bufexplorer
+  * vsftpd:
+      增加了说明文件
+
+v2015-07-31
+  * zsh:
+      单独使用一个目录配置$path
+      修正了一些因为绝对路径引发的问题
+  * vsftpd:
+      增加了一个只允许匿名连接的vsftpd 配置文件
+
+v2015-07-14
+  * vim:
+      单独添加了一个tab 缩进函数
+
+v2015-05-05
+  * all:
+      修改了各自的install.sh 使之更加清晰。
+  * vim:
+      Makefile 中单独设置tab 缩进。
+  * git:
+      增加了git 配置。
+  * zsh:
+      移除了gcc/g++/cc/cxx 的alias。
+
+v2015-05-02
+  * vim:
+      增加了插件vim-gitgutter。
+      修正了<C-V> 可能会转换到nopaste 模式的错误。
+      修正了<C-V> 在插入模式时粘贴后光标可能会移位的错误。
+      移除了插件AuthorInfo。
+  * nano:
+      修改了按键映射。
+      更新了语法高亮配置文件。
+      更改了nanorc 中高亮配置，不再支持旧版。
+  * zsh:
+      现在所有的发行版上都默认加载alias.zsh。
+

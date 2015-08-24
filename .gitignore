@@ -1,0 +1,7 @@
+# backup files
+*~
+*.swp
+
+# nano history file
+search_history
+

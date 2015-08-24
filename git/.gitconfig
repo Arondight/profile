@@ -1,0 +1,40 @@
+[user]
+	name = Arondight
+	email = shell_way@foxmail.com
+[core]
+	editor = vim
+[color]
+	ui = true
+	pager = true
+	branch = auto
+	diff = auto
+[color "status"]
+	added = green
+	changed = cyan
+	untracked = yellow
+[color "diff"]
+	meta = green bold
+	frag = magenta bold
+	old = yellow
+	new = cyan
+[alias]
+	bc = branch
+	st = status
+	cl = clone
+	co = checkout
+	cm = commit
+	df = diff
+	rs = reset
+	ps = push
+	pl = pull
+	mg = merge
+	sh = show
+	lg = log
+	it = init
+[push]
+	default = simple
+[merge]
+	tool = vimdiff
+#[commit]
+#	template = ~/.commit_template
+
