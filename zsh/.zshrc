@@ -115,14 +115,22 @@ if [[ -d $HOME/.zsh/path ]]; then
   done
   unset script
 fi
-# 当前目录*必须*最后添加
+# 当前目录*可能引发安全性问题*
 path+=.
+# 对path 进行一次去重
+if type awk >/dev/null 2>&1; then
+  path=( $(awk -vRS=' ' '!a[$1]++' <<< ${path[@]}) )
+fi
 
 # =========================
 # 环境变量
 # =========================
 # 额外的man 手册路径
 manpath+=/usr/local/man
+# 对manpath 进行一次去重
+if type awk >/dev/null 2>&1; then
+  manpath=( $(awk -vRS=' ' '!a[$1]++' <<< ${manpath[@]}) )
+fi
 # 编译的架构参数
 export ARCHFLAGS='-arch x86_64'
 # ssh key
@@ -169,10 +177,18 @@ function profile_upgrade {
   local current_path="$(pwd)"
 
   cd $profile_root
-  if git pull --rebase --stat public master; then
+  if [[ '-f' == $1 ]]; then
+    git checkout -- .
+  fi
+  if git pull --rebase --stat https://github.com/Arondight/profile.git master; then
     echo "更新完成。"
   else
-    echo "更新失败，可能由于您在本地对配置做了修改。"
+    cat <<EOF
+更新失败，可能由于您在本地对配置做了修改。
+你可以使用指令
+  profile_upgrade -f
+强制更新，但是会清除这些修改。
+EOF
   fi
 
   cd $current_path

@@ -23,10 +23,14 @@ function repo {
 #             By 秦凡东    #
 # ======================== #
 function android_env {
+  local env_script=''
+
   # 基本环境检查 {
-  if ! type virtualenvwrapper.sh >/dev/null 2>&1; then
+  if ! whereis virtualenvwrapper.sh >/dev/null 2>&1; then
     echo "EE: 未发现python-virtualenvwrapper"
     return 1
+  else
+    env_script=$(whereis virtualenvwrapper.sh | awk '{print $2}')
   fi
 
   if ! type python2 >/dev/null 2>&1; then
@@ -36,6 +40,11 @@ function android_env {
 
   if ! type python3 >/dev/null 2>&1; then
     echo "EE: 未发现python3"
+    return 1
+  fi
+
+  if ! type perl >/dev/null 2>&1; then
+    echo "EE: 未发现perl"
     return 1
   fi
   # }
@@ -64,19 +73,24 @@ function android_env {
   # }
 
   # 本代码段在bash 中运行 {
-  echo "正在切换到python2 环境"
+  echo '剔除$PATH 中的当前目录'
+  export PATH=$(
+    echo $PATH | perl -anF/:/ -E \
+      'print join ":", grep { ! /^\.$/ } grep { ++$_{$_} < 2 } @F'
+  )
 
-  source /usr/bin/virtualenvwrapper.sh
-
+  echo '设置python -> python2'
+  source $env_script
   if [[ ! -d "$WORKON_HOME/python2" ]]; then
     mkvirtualenv -p $(which python2) python2
   fi
+  workon 'python2'
 
-  workon "python2"
-
-  echo "正在设置LC_ALL"
-
+  echo '设置LC_ALL=C'
   export LC_ALL=C
+
+  echo '设置LANG=en_US.UTF-8'
+  export LANG=en_US.UTF-8
   # }
 
   return $?

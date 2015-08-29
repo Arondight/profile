@@ -1,3 +1,15 @@
+v2015-08-29
+  * all:
+      公开了指令profile_upgrade
+  * zsh:
+      完善了函数android_env
+      现在可以为profile_upgrade 指令指定-f 开关以强制更新了
+      现在每次加载配置文件的时候都会对PATH 和MANPATH 进行去重了
+  * vim:
+      更改了导致光标移动延迟的一处按键映射
+  * bash:
+      增加了可能的情况下对交互接口目录的创建动作
+
 v2015-08-24
   * all:
       增加了配置更新指令profile_upgrade

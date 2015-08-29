@@ -14,6 +14,13 @@ cd ~/profile
 
 请确保看完**注意**小节之后再进行操作。
 
+# 升级
+你可以使用下面的指令使这些配置文件保持最新（当你使用zsh 的时候）：
+
+```shell
+profile_upgrade
+```
+
 # 注意
 1. 配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是~/profile）！
 
@@ -30,6 +37,8 @@ cd ~/profile
 cd ~/.vim/bundle/YouCompleteMe
 ./install.sh --clang-completer --system-libclang
 ```
+
+当然，如果你手动更新了YCM，你也需要再次执行上面的指令。
 
 如果YCM 依然无法正常工作，将`~/.vimrc` 中的插件列表做如下改动：
 

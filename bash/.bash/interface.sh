@@ -9,7 +9,13 @@
 # =========================
 # Life is short, use Z Shell
 
-if [[ -d $HOME/.bash/interface ]]; then
+interface_dir="$HOME/.bash/interface"
+
+if [[ ! -d $interface_dir ]]; then
+  mkdir -p $interface_dir
+fi
+
+if [[ -d $interface_dir ]]; then
   for script in $HOME/.bash/interface/*.sh; do
     if [[ -r $script ]]; then
       source $script

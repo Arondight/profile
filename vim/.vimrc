@@ -248,8 +248,8 @@ nmap ,cs di'
 nmap zj \\w
 nmap zk \\b
 " vim-gitgutter
-nmap jn <Plug>GitGutterNextHunk
-nmap jp <Plug>GitGutterPrevHunk
+nmap gn <Plug>GitGutterNextHunk
+nmap gp <Plug>GitGutterPrevHunk
 " taglist 开关
 "nmap tl :TlistToggle<CR>
 " tagbar 开关
