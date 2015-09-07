@@ -32,7 +32,7 @@ function mountiso {
   if [[ $# < 2 ]]; then
     return 1
   fi
-  mount $1 $2 -o loop
+  sudo mount $1 $2 -o loop
   return $?
 }
 
@@ -59,7 +59,9 @@ function umount {
   if [[ $# < 1 ]]; then
     return 1
   fi
-  sudo umount $1
+  for name in $@; do
+    sudo umount $name
+  done
   return $?
 }
 

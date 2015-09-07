@@ -1,3 +1,11 @@
+v2015-07-07
+  * zsh:
+      修改了两个挂载函数
+      oh-my-zsh 现在使用一个单独的函数升级
+      现在path 不会引发安全性问题了
+  * vim:
+      增加了插件ack.vim
+
 v2015-08-29
   * all:
       公开了指令profile_upgrade

@@ -39,6 +39,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'itchyny/calendar.vim'
 Plugin 'uguu-org/vim-matrix-screensaver'
 Plugin 'tomasr/molokai'
+Plugin 'mileszs/ack.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
@@ -127,6 +128,8 @@ nmap,m :Man <cword><CR>
 " ==========================
 " 插件
 " ==========================
+" ack.vim
+let g:ackhighlight = 1
 " Taglist
 "let Tlist_Auto_Open=0
 "let Tlist_Auto_Update=1
@@ -244,6 +247,8 @@ let g:clang_auto_select = 1
 " 清空光标所在引号的内容
 nmap ,cd di"
 nmap ,cs di'
+" ack.vim
+nmap ,a :Ack<Space>
 " esaymotion 快速上下跳
 nmap zj \\w
 nmap zk \\b
@@ -406,10 +411,10 @@ function! GnuIndent ()
   set cpoptions-=C
   set expandtab smarttab autoindent smartindent
 endfunction
-au FileType c,h,cpp,cc,hpp call GnuIndent ()
+au FileType c,cpp call GnuIndent ()
 
 " ==========================
-" Makefile tab 设置
+" Tab 缩进
 " ==========================
 function! TabIndent ()
   setlocal noexpandtab smarttab

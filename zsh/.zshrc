@@ -82,9 +82,16 @@ autoload -U promptinit promptinit
 # 当$ZSH 目录有写权限时提供更新指令
 # =========================
 DISABLE_AUTO_UPDATE="true"
-if [[ -w "$ZSH/.git" ]]; then
-  alias oh_my_zsh_upgrade="cd $ZSH/tools; zsh $ZSH/tools/upgrade.sh;"
-fi
+function oh_my_zsh_upgrade {
+  local current_path=$(pwd)
+
+  if [[ -w "$ZSH/.git" ]]; then
+    cd $ZSH/tools;
+    zsh $ZSH/tools/upgrade.sh;
+  fi
+
+  cd $current_path
+}
 
 # ========================
 # 其他oh-my-zsh 设置
@@ -115,7 +122,7 @@ if [[ -d $HOME/.zsh/path ]]; then
   done
   unset script
 fi
-# 当前目录*可能引发安全性问题*
+# 当前目录必须*最后*添加
 path+=.
 # 对path 进行一次去重
 if type awk >/dev/null 2>&1; then
@@ -170,6 +177,16 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 #[[ -f /usr/bin/tmux && -z "$TMUX" ]] && (TERM=xterm-256color && tmux -2) && exit
 
 # ========================
+# alias
+# ========================
+if [[ -r $HOME/.zsh/alias/alias.zsh ]]; then
+  source $HOME/.zsh/alias/alias.zsh
+fi
+if [[ -r $HOME/.zsh/alias/global_alias.zsh ]]; then
+  source $HOME/.zsh/alias/global_alias.zsh
+fi
+
+# ========================
 # 升级函数
 # ========================
 function profile_upgrade {
@@ -207,8 +224,8 @@ function load_local_script {
     less            # less 函数
     archpkg         # archpkg 函数
     android_env     # android_env 函数
-    alias           # 指令别名
-    path            # 指令搜索路径
+    #alias           # alias 永远不应该出现在这里
+    #path            # path 永远不应该出现在这里
   )
 
   for subdirectory in ${zsh_script_paths[@]}; do
