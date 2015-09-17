@@ -6,5 +6,5 @@
 # ======================== #
 
 export GOPATH=$HOME/lib/go
-path+=$GOPATH/bin
+export PATH="$GOPATH/bin:$PATH"
 

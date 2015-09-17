@@ -20,41 +20,46 @@ filetype off                          " required
 set rtp+=~/.vim/bundle/Vundle.vim     " Vundle 路径
 call vundle#begin()                   " call vundle#begin('~/some/path/here')
 " 插件列表 {
-Plugin 'vim-scripts/a.vim'
-Plugin 'vim-scripts/c.vim'
-Plugin 'vim-scripts/Align'
-Plugin 'vim-scripts/DrawIt'
-Plugin 'vim-scripts/mru.vim'
-"Plugin 'vim-scripts/taglist.vim'
-Plugin 'majutsushi/tagbar'
-Plugin 'vim-scripts/TaskList.vim'
-Plugin 'vim-scripts/TeTrIs.vim'
-Plugin 'vim-scripts/spellcheck.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
+Plugin 'chrisbra/vim-diff-enhanced'
 Plugin 'gmarik/Vundle.vim'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'plasticboy/vim-markdown'
+Plugin 'honza/vim-snippets'
 Plugin 'itchyny/calendar.vim'
-Plugin 'uguu-org/vim-matrix-screensaver'
-Plugin 'tomasr/molokai'
+"Plugin 'jeaye/color_coded'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'majutsushi/tagbar'
+Plugin 'Matt-Deacalion/vim-systemd-syntax'
+Plugin 'mbbill/fencview'
 Plugin 'mileszs/ack.vim'
-Plugin 'terryma/vim-multiple-cursors'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'plasticboy/vim-markdown'
+"Plugin 'Rip-Rip/clang_complete'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/vimshell.vim'
-Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'mbbill/fencview'
-Plugin 'Matt-Deacalion/vim-systemd-syntax'
-Plugin 'Yggdroot/indentLine'
-Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tomasr/molokai'
+Plugin 'uguu-org/vim-matrix-screensaver'
 Plugin 'Valloric/ListToggle'
-Plugin 'vim-perl/vim-perl'
-Plugin 'scrooloose/syntastic'
+Plugin 'Valloric/vim-operator-highlight'
 Plugin 'Valloric/YouCompleteMe'
-"Plugin 'Rip-Rip/clang_complete'
+Plugin 'vim-perl/vim-perl'
+Plugin 'vim-scripts/Align'
+Plugin 'vim-scripts/a.vim'
+Plugin 'vim-scripts/c.vim'
+Plugin 'vim-scripts/DrawIt'
+Plugin 'vim-scripts/mru.vim'
+Plugin 'vim-scripts/spellcheck.vim'
+Plugin 'vim-scripts/taglist.vim'
+"Plugin 'vim-scripts/TaskList.vim'
+Plugin 'vim-scripts/TeTrIs.vim'
+Plugin 'Yggdroot/indentLine'
 " }
 call vundle#end()                     " 插件列表必须在此之前结束
 filetype plugin indent on
@@ -249,6 +254,10 @@ nmap ,cd di"
 nmap ,cs di'
 " ack.vim
 nmap ,a :Ack<Space>
+" vim-diff-enhanced
+nmap ,dfm :EnhancedDiff<Space>minimal<CR>
+nmap ,dfp :EnhancedDiff<Space>patience<CR>
+nmap ,dfh :EnhancedDiff<Space>histogram<CR>
 " esaymotion 快速上下跳
 nmap zj \\w
 nmap zk \\b

@@ -6,6 +6,6 @@
 # ======================== #
 
 if [[ -s /usr/bin/gem ]]; then
-  path+=$(ruby -rubygems -e 'puts Gem.user_dir')/bin
+  export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 

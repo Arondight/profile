@@ -14,7 +14,8 @@ make
 # ycm
 buildpara="--clang-completer"
 [[ -e /usr/lib/libclang.so ]] && buildpara="$buildpara --system-libclang"
+[[ -e /usr/bin/go ]] && buildpara="$buildpara --gocode-completer"
 type xbuild >/dev/null 2>&1 && buildpara="$buildpara --omnisharp-completer"
 cd ~/.vim/bundle/YouCompleteMe
-. install.sh $buildpara
+python2 install.py $buildpara
 

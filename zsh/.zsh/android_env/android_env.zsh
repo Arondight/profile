@@ -10,7 +10,7 @@ function repo {
 
   export LC_ALL=''
 
-  command repo $*
+  command env repo $*
 
   export LC_ALL=$LC_ALL_bak
 }
@@ -27,10 +27,22 @@ function android_env {
 
   # 基本环境检查 {
   if ! whereis virtualenvwrapper.sh >/dev/null 2>&1; then
-    echo "EE: 未发现python-virtualenvwrapper"
+    virtualenv_failed=1
     return 1
   else
     env_script=$(whereis virtualenvwrapper.sh | awk '{print $2}')
+    if [[ ! -e $env_script ]]; then
+      if [[ -e $env_script/virtualenvwrapper.sh ]]; then
+        env_script=$env_script/virtualenvwrapper.sh
+      else
+        virtualenv_failed=1
+      fi
+    fi
+  fi
+
+  if [[ 1 ==  $virtualenv_failed ]]; then
+    echo "EE: 未发现python-virtualenvwrapper"
+    return 1
   fi
 
   if ! type python2 >/dev/null 2>&1; then
@@ -54,7 +66,7 @@ function android_env {
     local interface="$HOME/.bash/interface"
     local android_env_interface="$interface/android_env.sh"
 
-    echo "正在切换到bash 环境"
+    echo "设置$SHELL -> bash"
 
     if [[ ! -d $interface ]]; then
       mkdir -p $interface
@@ -73,12 +85,6 @@ function android_env {
   # }
 
   # 本代码段在bash 中运行 {
-  echo '剔除$PATH 中的当前目录'
-  export PATH=$(
-    echo $PATH | perl -anF/:/ -E \
-      'print join ":", grep { ! /^\.$/ } grep { ++$_{$_} < 2 } @F'
-  )
-
   echo '设置python -> python2'
   source $env_script
   if [[ ! -d "$WORKON_HOME/python2" ]]; then
@@ -91,6 +97,12 @@ function android_env {
 
   echo '设置LANG=en_US.UTF-8'
   export LANG=en_US.UTF-8
+
+  echo '剔除$PATH 中的当前目录和重复项'
+  export PATH=$(
+    echo $PATH | perl -anF/:/ -E \
+      'print join ":", grep { ! /^\.$/ } grep { ++$_{$_} < 2 } @F'
+  )
   # }
 
   return $?

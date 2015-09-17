@@ -5,5 +5,5 @@
 #             By 秦凡东    #
 # ======================== #
 
-path+=($HOME/bin /usr/local/bin)
+export PATH="$HOME/bin:$PATH"
 
