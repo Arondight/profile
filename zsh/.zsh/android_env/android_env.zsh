@@ -26,17 +26,16 @@ function android_env {
   local env_script=''
 
   # 基本环境检查 {
+  virtualenv_failed=0
   if ! whereis virtualenvwrapper.sh >/dev/null 2>&1; then
     virtualenv_failed=1
-    return 1
   else
     env_script=$(whereis virtualenvwrapper.sh | awk '{print $2}')
-    if [[ ! -e $env_script ]]; then
-      if [[ -e $env_script/virtualenvwrapper.sh ]]; then
+    if [[ -d $env_script && -e $env_script/virtualenvwrapper.sh ]]; then
         env_script=$env_script/virtualenvwrapper.sh
-      else
+    fi
+    if [[ ! -e $env_script ]]; then
         virtualenv_failed=1
-      fi
     fi
   fi
 
@@ -66,7 +65,7 @@ function android_env {
     local interface="$HOME/.bash/interface"
     local android_env_interface="$interface/android_env.sh"
 
-    echo "设置$SHELL -> bash"
+    echo "设置$(basename $SHELL) -> bash"
 
     if [[ ! -d $interface ]]; then
       mkdir -p $interface
@@ -86,6 +85,7 @@ function android_env {
 
   # 本代码段在bash 中运行 {
   echo '设置python -> python2'
+  export VIRTUALENVWRAPPER_PYTHON=$(which python)
   source $env_script
   if [[ ! -d "$WORKON_HOME/python2" ]]; then
     mkvirtualenv -p $(which python2) python2

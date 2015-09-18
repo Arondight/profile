@@ -1,3 +1,9 @@
+v2015-09-18.1
+  * zsh:
+      修正了android_env 的一处逻辑错误
+  * vim:
+      默认使用基于clang 的代码高亮插件color_coded
+      修改了YCM 变更导致的安装失败的问题
 v2015-09-18
   * zsh:
       修正了android_env 在Ubuntu 环境上失败的错误
