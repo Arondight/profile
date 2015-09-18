@@ -3,9 +3,9 @@
 suffix=$(date +%s)
 
 # vim plugins
-#[[ -d "$HOME/.vim" ]] && mv "$HOME/.vim" "$HOME/.vim.${suffix}.bak"
-#git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-#vim -c 'PluginInstall' -c 'qa'
+[[ -d "$HOME/.vim" ]] && mv "$HOME/.vim" "$HOME/.vim.${suffix}.bak"
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim -c 'PluginInstall' -c 'qa'
 
 # vimproc.vim
 cd ~/.vim/bundle/vimproc.vim
