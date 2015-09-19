@@ -10,7 +10,7 @@ function repo {
 
   export LC_ALL=''
 
-  command env repo $*
+  env repo $*
 
   export LC_ALL=$LC_ALL_bak
 }
@@ -27,7 +27,7 @@ function android_env {
 
   # 基本环境检查 {
   virtualenv_failed=0
-  if ! whereis virtualenvwrapper.sh >/dev/null 2>&1; then
+  if [[ 0 == $(whereis virtualenvwrapper.sh | perl -anF/\\h/ -E 'say scalar @F - 1') ]]; then
     virtualenv_failed=1
   else
     env_script=$(whereis virtualenvwrapper.sh | awk '{print $2}')
@@ -40,22 +40,22 @@ function android_env {
   fi
 
   if [[ 1 ==  $virtualenv_failed ]]; then
-    echo "EE: 未发现python-virtualenvwrapper"
+    echo 'EE: python-virtualenvwrapper is needed but not found.'
     return 1
   fi
 
   if ! type python2 >/dev/null 2>&1; then
-    echo "EE: 未发现python2"
+    echo 'EE: python2 is needed but not found.'
     return 1
   fi
 
   if ! type python3 >/dev/null 2>&1; then
-    echo "EE: 未发现python3"
+    echo 'EE: python3 is needed but not found.'
     return 1
   fi
 
   if ! type perl >/dev/null 2>&1; then
-    echo "EE: 未发现perl"
+    echo "EE: perl is needed but not found."
     return 1
   fi
   # }
@@ -65,7 +65,7 @@ function android_env {
     local interface="$HOME/.bash/interface"
     local android_env_interface="$interface/android_env.sh"
 
-    echo "设置$(basename $SHELL) -> bash"
+    echo "set $(basename $SHELL) -> bash"
 
     if [[ ! -d $interface ]]; then
       mkdir -p $interface
@@ -75,7 +75,7 @@ function android_env {
     which android_env >> $android_env_interface
     echo android_env >> $android_env_interface
 
-    /usr/bin/env bash --init-file $android_env_interface
+    env bash --init-file $android_env_interface
 
     rm -f $android_env_interface
 
@@ -84,7 +84,7 @@ function android_env {
   # }
 
   # 本代码段在bash 中运行 {
-  echo '设置python -> python2'
+  echo 'set python -> python2'
   export VIRTUALENVWRAPPER_PYTHON=$(which python)
   source $env_script
   if [[ ! -d "$WORKON_HOME/python2" ]]; then
@@ -92,13 +92,16 @@ function android_env {
   fi
   workon 'python2'
 
-  echo '设置LC_ALL=C'
+  echo 'export LC_ALL=C'
   export LC_ALL=C
 
-  echo '设置LANG=en_US.UTF-8'
+  echo 'export LANG=en_US.UTF-8'
   export LANG=en_US.UTF-8
 
-  echo '剔除$PATH 中的当前目录和重复项'
+  echo 'unset PERL_MM_OPT'
+  unset PERL_MM_OPT
+
+  echo 'Excluding the current directory and duplicate entries of $PATH'
   export PATH=$(
     echo $PATH | perl -anF/:/ -E \
       'print join ":", grep { ! /^\.$/ } grep { ++$_{$_} < 2 } @F'

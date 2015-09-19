@@ -23,13 +23,13 @@ call vundle#begin()                   " call vundle#begin('~/some/path/here')
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'chrisbra/vim-diff-enhanced'
+Plugin 'easymotion/vim-easymotion'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'itchyny/calendar.vim'
 Plugin 'jeaye/color_coded'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'Lokaltog/vim-easymotion'
 Plugin 'majutsushi/tagbar'
 Plugin 'Matt-Deacalion/vim-systemd-syntax'
 Plugin 'mbbill/fencview'
@@ -52,6 +52,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-perl/vim-perl'
 Plugin 'vim-scripts/Align'
 Plugin 'vim-scripts/a.vim'
+"Plugin 'vim-scripts/bad-apple'
 Plugin 'vim-scripts/c.vim'
 Plugin 'vim-scripts/DrawIt'
 Plugin 'vim-scripts/mru.vim'
@@ -147,7 +148,7 @@ let g:ackhighlight = 1
 "let Tlist_File_Fold_Auto_Close=1
 "let Tlist_GainFocus_On_ToggleOpen=1
 " tagbar
-let g:tagbar_width = 40
+let g:tagbar_width = 35
 let g:tagbar_indent = 2
 let g:tagbar_show_linenumbers = 2
 let g:tagbar_autoshowtag = 1
@@ -156,6 +157,24 @@ let g:tagbar_autoshowtag = 1
 let g:fencview_autodetect = 1
 " Airline
 let g:airline#extensions#tabline#enabled = 1
+" DrawIt
+nmap ,di :DrawIt<CR>tw
+nmap ,ds \ds
+" vim-operator-highlight
+let g:ophigh_filetypes_to_ignore = {
+  \   'pod': 1,
+  \   'markdown': 1,
+  \   'mkd.markdown': 1,
+  \   'tagbar' : 1,
+  \   'qf' : 1,
+  \   'notes' : 1,
+  \   'unite' : 1,
+  \   'text' : 1,
+  \   'vimwiki' : 1,
+  \   'pandoc' : 1,
+  \   'infolog' : 1,
+  \   'mail' : 1,
+  \ }
 " vim-gitgutter
 let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '*'
@@ -178,7 +197,7 @@ let g:syntastic_cpp_include_dirs = ['/usr/include/qt']
 let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall'
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_quiet_messages = { "type": "style" }
+let g:syntastic_quiet_messages = {"type": "style"}
 let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
 " YouCompleteMe
 " 需要clang cmake llvm python2
@@ -190,14 +209,18 @@ let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 let g:ycm_key_invoke_completion = '<C-N>'
-let g:ycm_semantic_triggers = {
-  \     'c' : ['->', '.', ' ', '(', '[', '&'],
-  \     'cpp,objcpp' : ['->', '.', ' ', '(', '[', '&', '::'],
-  \     'perl' : ['->', '::', ' '],
-  \     'php' : ['->', '::', '.'],
-  \     'cs,java,javascript,d,vim,python,perl6,scala,vb,elixir,go' : ['.'],
-  \     'ruby' : ['.', '::'],
-  \     'lua' : ['.', ':']
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.', ' ', '(', '[', '&'],
+  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+  \             're!\[.*\]\s'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', ' ', '(', '[', '&', '::'],
+  \   'perl' : ['->', '::'],
+  \   'php' : ['->', '::', '.'],
+  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
   \ }
 " Indentline
 let g:indentLine_color_term = 239
@@ -283,12 +306,6 @@ nmap <F8> :YcmForceCompileAndDiagnostics<CR>
 nmap tw :ToggleWhitespace <CR>
 " Clean extra whitespace
 nmap sw :StripWhitespace<CR>
-" Drawit
-nmap ,di :DrawIt<CR>tw
-nmap ,ds \ds
-" 快速跳转头文件
-nmap ,as :AS<CR>
-nmap ,av :AV<CR>
 " 多文件缓冲跳转
 nmap bn :bnext<CR>
 nmap bp :bprevious<CR>

@@ -28,11 +28,13 @@ profile_upgrade
 
 1. 配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是~/profile）！
 
-2. 虽然YCM 的作者反对使用系统clang，但是综合各种状况，更推荐在系统中预先安装llvm/clang 以提供YCM 使用的libclang。不同发行版中libclang 所在的包名不一定相同，例如Archlinux 下是*clang* 包，Slackware 下是*llvm* 包，Debian 下则是*libclang-dev* 包。
+2. 虽然YCM 的作者反对使用系统clang，但是综合各种状况，更推荐在系统中预先安装llvm/clang 以提供YCM 使用的libclang。不同发行版中libclang 所在的包名不一定相同，例如Archlinux 下是*clang* 包，Slackware 下是*llvm* 包，Debian 下则是*libclang-X.Y-dev* 包。
 
 3. YCM 在cmake 的过程中用到`python-config`，不同发行版中`python-config` 所在包不一定相同，例如Archlinux 和Slackware 下是*python* 包，Debian 下则是*python-dev* 包。
 
-4. Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
+4. color_coded 在配置过程中需要用到lua，Archlinux 需要安装*lua* 包，Debian 则需要安装''
+
+5. Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
 
 # 备注
 
