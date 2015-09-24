@@ -4,7 +4,8 @@ error=0
 
 echo -ne "检查vim...\t"
 if ! type vim >/dev/null 2>&1; then
-  echo '警告'
+  echo '失败'
+  error=1
 else
   echo '成功'
 fi

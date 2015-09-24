@@ -94,5 +94,5 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 vim -c PluginInstall
 ```
 
-之后可以使用vim-cpp-enhanced-highlight 插件替代color_coded 进行代码补全。
+之后可以使用vim-cpp-enhanced-highlight 插件替代color_coded 进行代码高亮。
 
