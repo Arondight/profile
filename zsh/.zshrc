@@ -198,13 +198,16 @@ function profile_upgrade {
     git checkout -- .
   fi
   if git pull --rebase --stat https://github.com/Arondight/profile.git master; then
-    echo "更新完成。"
+    echo <<EOF
+更新完成。
+你可能需要手动更新Vim 插件：
+  vim -c PluginInstall
+EOF
   else
     cat <<EOF
 更新失败，可能由于您在本地对配置做了修改。
-你可以使用指令
+你可以使用-f 参数强制更新，但是会清除这些修改：
   profile_upgrade -f
-强制更新，但是会清除这些修改。
 EOF
   fi
 

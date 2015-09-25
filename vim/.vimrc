@@ -24,7 +24,9 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'chrisbra/vim-diff-enhanced'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'flazz/vim-colorschemes'
 Plugin 'gmarik/Vundle.vim'
+Plugin 'hdima/python-syntax'
 Plugin 'honza/vim-snippets'
 Plugin 'itchyny/calendar.vim'
 Plugin 'jeaye/color_coded'
@@ -34,6 +36,8 @@ Plugin 'majutsushi/tagbar'
 Plugin 'Matt-Deacalion/vim-systemd-syntax'
 Plugin 'mbbill/fencview'
 Plugin 'mileszs/ack.vim'
+Plugin 'morhetz/gruvbox'
+"Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
 "Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'plasticboy/vim-markdown'
@@ -105,12 +109,13 @@ au InsertEnter * hi Cursor guibg=green
 filetype plugin indent on             " 自动文件检测
 syntax on                             " 语法高亮
 set t_Co=256                          " 256 色
-colorscheme molokai
 "if has('gui_running')
 "    set background=light              " 适应亮色背景
 "else
     set background=dark               " 适应暗色背景
 "endif
+colorscheme gruvbox
+"colorscheme molokai
 set history=4096                      " 历史记录长度
 set showcmd                           " 回显输入的命令
 set showmode                          " 显示当前的模式
@@ -153,6 +158,8 @@ let g:tagbar_indent = 2
 let g:tagbar_show_linenumbers = 2
 let g:tagbar_autoshowtag = 1
 "let g:tagbar_autopreview = 1
+" python-syntax
+let python_highlight_all = 1
 " Fenview
 let g:fencview_autodetect = 1
 " Airline
@@ -209,6 +216,7 @@ let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 let g:ycm_key_invoke_completion = '<C-N>'
+let g:ycm_collect_identifiers_from_tags_files = 0
 let g:ycm_semantic_triggers =  {
   \   'c' : ['->', '.', ' ', '(', '[', '&'],
   \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
@@ -226,10 +234,15 @@ let g:ycm_semantic_triggers =  {
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#A4E57E'
 let g:indentLine_color_light = 7
-let g:ycm_collect_identifiers_from_tags_files = 0
+" gruvbox
+let g:gruvbox_termcolors = 256
+let g:gruvbox_hls_cursor = 'orange'
+let g:gruvbox_invert_tabline = 1
+let g:gruvbox_improved_strings = 1
+let g:gruvbox_improved_warnings = 1
 " Molokai
-let g:molokai_original = 1
-let g:rehash256 = 1
+"let g:molokai_original = 1
+"let g:rehash256 = 1
 " Rainbow-Parentheses
 let g:rbpt_colorpairs = [
   \   ['brown',       'RoyalBlue3'],
