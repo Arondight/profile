@@ -26,6 +26,32 @@ else
   echo '成功'
 fi
 
+echo -ne "检查lua.h...\t"
+lua=$(find /usr/include -name 'lua.h')
+if [[ -z $lua ]]; then
+  echo '失败'
+  error=1
+else
+  echo '成功'
+fi
+
+echo -ne "检查ncurses...\t"
+ncurses=$(find /usr/include -name 'curses.h')
+if [[ -z $ncurses ]]; then
+  echo '失败'
+  error=1
+else
+  echo '成功'
+fi
+
+echo -ne "检查clang...\t"
+if ! type clang >/dev/null 2>&1; then
+  echo '失败'
+  error=1
+else
+  echo '成功'
+fi
+
 echo -ne "检查python-config...\t"
 if ! type python-config >/dev/null 2>&1; then
   echo '失败'
@@ -37,6 +63,14 @@ fi
 echo -ne "检查libclang.so...\t"
 if [[ ! -e /usr/lib/libclang.so ]]; then
   echo '警告'
+else
+  echo '成功'
+fi
+
+echo -ne "检查xz...\t"
+if ! type xz >/dev/null 2>&1; then
+  echo '失败'
+  error=1
 else
   echo '成功'
 fi

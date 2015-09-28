@@ -141,14 +141,14 @@ fi
 # 编译的架构参数
 export ARCHFLAGS='-arch x86_64'
 # ssh key
-export SSH_KEY_PATH='~/.ssh/id_rsa'
+export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 # 默认编辑器
 export EDITOR="/usr/bin/env vim"
 # 终端256 色
 export TERM="xterm-256color"
 # python-virtualenvwrapper
-export WORKON_HOME=~/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export WORKON_HOME="$HOME/.virtualenvs"
+export VIRTUALENVWRAPPER_PYTHON="$(which python)"
 
 # =========================
 # 装载主题和插件
