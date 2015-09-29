@@ -1,3 +1,10 @@
+v2015-09-29
+  * zsh:
+      增加了ssh_env 函数
+      修改了mount 函数的参数
+  * vim:
+      增加了ack.vim 的配置
+
 v2015-09-28
   * vim:
       更改了YCM 配置方式，优先使用非系统位置libclang

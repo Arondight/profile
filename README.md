@@ -55,7 +55,7 @@ oh_my_zsh_upgrade
 
 ### 更新
 
-现如果你手动更新了color_coded，需要执行如下指令配置该插件：
+现如果你手动更新了YCM，需要执行如下指令配置该插件：
 
 ```shell
 cd ~/.vim/bundle/YouCompleteMe/build
@@ -77,7 +77,7 @@ Plugin 'Rip-Rip/clang_complete'
 ```shell
 vim -c 'PluginInstall'
 cd ~/.vim/bundle/clang_complete
-make install
+make && make install
 ```
 
 之后可以使用Clang Complete 插件替代YCM 进行代码补全。

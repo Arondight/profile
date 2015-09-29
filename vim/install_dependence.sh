@@ -15,7 +15,7 @@ make
 cd $HOME/.vim/bundle/color_coded
 mkdir build && cd build
 cmake ..
-make install
+make && make install
 
 # ycm
 sysclang=0

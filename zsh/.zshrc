@@ -223,12 +223,14 @@ EOF
 function load_local_script {
   zsh_path_root=$HOME/.zsh
   zsh_script_paths=(
-    mount_function  # 挂载函数
-    less            # less 函数
-    archpkg         # archpkg 函数
-    android_env     # android_env 函数
-    #alias           # alias 永远不应该出现在这里
-    #path            # path 永远不应该出现在这里
+    mount_function  # 分区快速挂载和批量卸载
+    less            # 替代系统less
+    archpkg         # slackpkg 风格的pacman 封装
+    android_env     # 快速切换android 开发环境
+    ssh_env         # 在ssh 密钥中快速切换
+    # 以下两行永远不应该被包含
+    #alias
+    #path
   )
 
   for subdirectory in ${zsh_script_paths[@]}; do

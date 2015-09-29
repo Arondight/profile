@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
-# ======================== #
-# archpkg 函数             #
-# 提供slackpkg 式的包管理  #
-#                          #
-#             By 秦凡东    #
-# ======================== #
+# ==============================================================================
+# archpkg 函数
+# 提供slackpkg 式的包管理
+#
+#             By 秦凡东
+# ==============================================================================
 
 function archpkg {
   if [[ 0 == $# ]]; then
@@ -206,11 +206,11 @@ archpkg 提供了slackpkg 风格的软件包管理机制
   archpkg file-search vim
   archpkg remove lib32-.+
 END_OF_HELP
-      return 1
-      ;;
-    *)
-      echo "使用archpkg -h 查看帮助"
-      return 1
+        return 1
+        ;;
+      *)
+        echo "使用archpkg -h 查看帮助"
+        return 1
     esac
   done
 }
