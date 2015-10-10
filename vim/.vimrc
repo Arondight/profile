@@ -61,8 +61,8 @@ Plugin 'vim-scripts/c.vim'
 Plugin 'vim-scripts/DrawIt'
 Plugin 'vim-scripts/mru.vim'
 Plugin 'vim-scripts/spellcheck.vim'
-Plugin 'vim-scripts/taglist.vim'
-"Plugin 'vim-scripts/TaskList.vim'
+"Plugin 'vim-scripts/taglist.vim'
+Plugin 'vim-scripts/TaskList.vim'
 Plugin 'vim-scripts/TeTrIs.vim'
 Plugin 'Yggdroot/indentLine'
 " }
@@ -171,9 +171,6 @@ let python_highlight_all = 1
 let g:fencview_autodetect = 1
 " Airline
 let g:airline#extensions#tabline#enabled = 1
-" DrawIt
-nmap ,di :DrawIt<CR>tw
-nmap ,ds \ds
 " vim-operator-highlight
 let g:ophigh_filetypes_to_ignore = {
   \   'pod': 1,
@@ -307,6 +304,9 @@ nmap zk \\b
 " vim-gitgutter
 nmap gn <Plug>GitGutterNextHunk
 nmap gp <Plug>GitGutterPrevHunk
+" DrawIt
+nmap ,di :DrawIt<CR>tw
+nmap ,ds \ds
 " taglist 开关
 "nmap tl :TlistToggle<CR>
 " tagbar 开关
@@ -442,7 +442,7 @@ endif
 " ==============================================================================
 " asm 文件使用nasm 语法
 " ==============================================================================
-au FileType asm set filetype=nasm
+"au FileType asm set filetype=nasm
 
 " ==============================================================================
 " GNU 缩进风格

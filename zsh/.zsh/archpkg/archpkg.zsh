@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
+
 # ==============================================================================
 # archpkg 函数
 # 提供slackpkg 式的包管理
 #
 #             By 秦凡东
 # ==============================================================================
-
 function archpkg {
   if [[ 0 == $# ]]; then
     set -- "help"
@@ -179,7 +179,7 @@ function archpkg {
         ;;
       h|help|-h|--help)
         cat << END_OF_HELP
-archpkg 提供了slackpkg 风格的软件包管理机制
+archpkg - Arch Linux 下slackpkg 风格的软件包管理器
 
 用法:
   archpkg [选项] <匹配串|文件名>

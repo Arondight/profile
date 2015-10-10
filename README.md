@@ -21,13 +21,13 @@ cd ~/profile
 你可以使用下面的指令使这些配置文件保持最新（当你使用zsh 的时候）：
 
 ```shell
-profile_upgrade
+profile-upgrade
 ```
 
 其中oh-my-zsh 的升级单独使用一条指令完成：
 
 ``` shell
-oh_my_zsh_upgrade
+oh-my-zsh-upgrade
 ```
 
 # 依赖
@@ -40,6 +40,18 @@ oh_my_zsh_upgrade
 6. ncurses
 7. python-config
 8. xz
+
+# zsh
+
+zsh 配置中提供了一些额外的函数：
+
+| 函数 | 作用 |
+| --- | --- |
+| android_env | 快速切换到android 开发环境 |
+| archpkg | slackpkg 风格的Arch Linux 包管理器 |
+| less | 更舒适的less 指令 |
+| mount*/umount | 更加安全便捷的mount/umount |
+| ssh_env | ssh 密钥管理器 |
 
 # 注意
 
@@ -113,4 +125,3 @@ vim -c PluginInstall
 ```
 
 之后可以使用vim-cpp-enhanced-highlight 插件替代color_coded 进行代码高亮。
-

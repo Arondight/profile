@@ -1,7 +1,9 @@
 #!/usr/bin/env zsh
 
+alias ssh-env='ssh_env'
+
 # ==============================================================================
-# 在几组ssh 密钥中快速切换
+# ssh 密钥管理器
 #
 #                 by 秦凡东
 # ==============================================================================
@@ -105,6 +107,9 @@ function ssh_env {
         fi
         mkdir -p "$SSH_ENV_WORK_DIR/$new"
         ssh-keygen -t 'rsa' -C "$mail" -f "$SSH_ENV_WORK_DIR/$new/id_rsa"
+        if [[ -d $HOME/.ssh ]]; then
+          rm -rf $HOME/.ssh
+        fi
         return $?
         ;;
       rm)
@@ -131,7 +136,7 @@ function ssh_env {
             -C "$SSH_ENV_WORK_DIR" "$(basename $env)"
         echo "删除环境\"$1\""
         rm -rf $env
-        if [[ -e $HOME/.ssh ]]; then
+        if [[ ! -d $(readlink -f $HOME/.ssh) ]]; then
           rm -rf "$HOME/.ssh"
         fi
         return $?
@@ -211,7 +216,7 @@ function ssh_env {
       h|help|-h|--help)
         shift
         cat <<EOF
-ssh_env 允许在几组ssh 密钥之间快速切换
+ssh_env - ssh 密钥管理器
 
 用法:
   ssh_env [选项] <环境>

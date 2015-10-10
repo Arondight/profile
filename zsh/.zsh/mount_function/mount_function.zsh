@@ -6,10 +6,53 @@
 # ==============================================================================
 
 # ==============================================================================
+# 挂载设备合法性检查
+# ==============================================================================
+function _mount_dev_check {
+  local point=$1
+
+  if [[ ! -b $point ]]; then
+    echo "$point 不是设备文件"
+    return 0
+  fi
+
+  if ! echo $point | grep -P '/dev/.+\d+' >/dev/null 2>&1; then
+    echo "$point 不是一个分区设备"
+    return 0
+  fi
+
+  return 1
+}
+
+# ==============================================================================
+# 挂载点合法性检查
+# ==============================================================================
+function _mount_dir_check {
+  local dir=$1
+
+  if [[ ! -d $dir ]]; then
+    echo "$dir 不是目录或不存在"
+    return 0
+  fi
+
+  return 1
+}
+
+# ==============================================================================
 # fat32 分区挂载
 # ==============================================================================
 function mountfat {
   if [[ $# < 2 ]]; then
+    return 1
+  fi
+
+  _mount_dev_check $1
+  if [[ 0 == $? ]]; then
+    return 1
+  fi
+
+  _mount_dir_check $2
+  if [[ 0 == $? ]]; then
     return 1
   fi
 
@@ -24,6 +67,16 @@ function mountfat {
 # ==============================================================================
 function mountntfs {
   if [[ $# < 2 ]]; then
+    return 1
+  fi
+
+  _mount_dev_check $1
+  if [[ 0 == $? ]]; then
+    return 1
+  fi
+
+  _mount_dir_check $2
+  if [[ 0 == $? ]]; then
     return 1
   fi
 
@@ -45,6 +98,16 @@ function mountiso {
     return 1
   fi
 
+  _mount_dev_check $1
+  if [[ 0 == $? ]]; then
+    return 1
+  fi
+
+  _mount_dir_check $2
+  if [[ 0 == $? ]]; then
+    return 1
+  fi
+
   echo "Mount $1 to $2"
   sudo mount $1 $2 -o loop
 
@@ -59,6 +122,13 @@ function mountdir {
     return 1
   fi
 
+  for dir in $1 $2; do
+    _mount_dir_check $1
+    if [[ 0 == $? ]]; then
+      return 1
+    fi
+  done
+
   echo "Mount $1 to $2"
   sudo mount --bind $1 $2
 
@@ -70,6 +140,16 @@ function mountdir {
 # ==============================================================================
 function mountfs {
   if [[ $# < 2 ]]; then
+    return 1
+  fi
+
+  _mount_dev_check $1
+  if [[ 0 == $? ]]; then
+    return 1
+  fi
+
+  _mount_dir_check $2
+  if [[ 0 == $? ]]; then
     return 1
   fi
 
@@ -88,9 +168,14 @@ function umount {
   if [[ $# < 1 ]]; then
     return 1
   fi
-  for name in $@; do
-    echo "Umount $name"
-    sudo env umount $name
+  for dir in $@; do
+    _mount_dir_check $dir
+    if [[ 0 == $? ]]; then
+      continue 1
+    fi
+
+    echo "Umount $dir"
+    sudo env umount $dir
   done
 
   return $error

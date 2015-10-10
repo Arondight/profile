@@ -1,6 +1,9 @@
 # backup files
 *~
 *.swp
+# tags
+.tags
+tags
 
 # nano history file
 search_history
