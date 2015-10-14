@@ -1,3 +1,7 @@
+v2015-10-14
+  * udev:
+      增加了Spreadtrum 设备的udev rule
+
 v2015-10-10
   * zsh:
       增加了挂载函数的安全性检查

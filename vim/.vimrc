@@ -32,6 +32,7 @@ Plugin 'itchyny/calendar.vim'
 Plugin 'jeaye/color_coded'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'lilydjwg/colorizer'
 Plugin 'majutsushi/tagbar'
 Plugin 'Matt-Deacalion/vim-systemd-syntax'
 Plugin 'mbbill/fencview'
@@ -98,9 +99,9 @@ set foldmethod=indent                 " 折叠方式
 set foldlevel=0                       " 引发折叠的层次
 set foldcolumn=1                      " 折叠为1 行
 set pastetoggle=<F10>                 " 粘贴模式切换
-"插入模式时是红色
-au InsertLeave * hi Cursor guibg=red
-"离开插入模式时是绿色
+" 进入插入模式光标颜色
+au InsertLeave * hi Cursor guibg=cyan
+" 离开插入模式光标颜色
 au InsertEnter * hi Cursor guibg=green
 
 " ==============================================================================
@@ -467,4 +468,3 @@ function! TabIndent ()
   setlocal tabstop=2 shiftwidth=2 softtabstop=2 backspace=2
 endfunction
 au FileType makefile,gitconfig call TabIndent ()
-

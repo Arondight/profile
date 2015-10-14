@@ -87,6 +87,7 @@ alias vnc-start='/usr/bin/env x11vnc -display :0 -noxdamage -many -forever -ncac
 # }
 alias grepsyscall_32='/usr/bin/env cat /usr/include/asm/unistd_32.h | grep '
 alias grepsyscall_64='/usr/bin/env cat /usr/include/asm/unistd_64.h | grep '
+alias lsspread='lsusb | grep 1782'
 # vim 式退出登录
 alias quit='exit'
 alias q='quit'

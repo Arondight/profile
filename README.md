@@ -41,7 +41,7 @@ oh-my-zsh-upgrade
 7. python-config
 8. xz
 
-# zsh
+# ZSH
 
 zsh 配置中提供了一些额外的函数：
 
@@ -56,14 +56,14 @@ zsh 配置中提供了一些额外的函数：
 # 注意
 
 1. 配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是~/profile）！
-2. color_coded 配置过程用到`clang`，不同发行版中`clang` 所在的包不一定相同，例如Arch Linux 下是*clang* 包，Slackware 下是*llvm* 包，Debian 下则是*clang* 包和*clang-X.Y* 包。
-3. YCM 在cmake 的过程中用到`python-config`，不同发行版中`python-config` 所在包不一定相同，例如Arch Linux 和Slackware 下是*python* 包，Debian 下则是*python-dev* 包。
-4. color_coded 在配置过程中需要用到`lua` 和`lua.h`，Arch Linux 需要安装*lua* 包，Debian 则需要安装*libluaX.Y-N-dev* 和*luaX.Y*包。
+2. color_coded 配置过程用到`clang`，不同发行版中`clang` 所在的包不一定相同，例如Arch Linux 下是**clang** 包，Slackware 下是**llvm** 包，Debian 下则是**clang** 包和**clang-X.Y** 包。
+3. YCM 在cmake 的过程中用到`python-config`，不同发行版中`python-config` 所在包不一定相同，例如Arch Linux 和Slackware 下是**python** 包，Debian 下则是**python-dev** 包。
+4. color_coded 在配置过程中需要用到`lua` 和`lua.h`，Arch Linux 需要安装**lua** 包，Debian 则需要安装**libluaX.Y-N-dev** 和**luaX.Y**包。
 5. Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
 
 # 备注
 
-## YCM
+## YouCompleteMe (YCM)
 
 ### 更新
 
@@ -101,7 +101,7 @@ make && make install
 现如果你手动更新了color_coded，需要执行如下指令配置该插件：
 
 ```shell
-vim -c 'PluginInstall'
+vim -c 'PluginInstall' -c qa
 cd ~/.vim/bundle/color_coded
 mkdir build
 cd build
@@ -121,7 +121,7 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 退出vim，执行指令：
 
 ```shell
-vim -c PluginInstall
+vim -c PluginInstall -c qa
 ```
 
 之后可以使用vim-cpp-enhanced-highlight 插件替代color_coded 进行代码高亮。
