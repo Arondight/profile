@@ -7,7 +7,7 @@
 #             By 秦凡东
 # ==============================================================================
 function archpkg {
-  if [[ 0 == $# ]]; then
+  if [[ 0 -eq $# ]]; then
     set -- "help"
   fi
 
@@ -52,7 +52,7 @@ function archpkg {
         ;;
       install)
         shift
-        if [[ 0 == $# ]]; then
+        if [[ 0 -eq $# ]]; then
           set -- 'help'
           continue
         fi
@@ -61,7 +61,7 @@ function archpkg {
         ;;
        reinstall)
         shift
-        if [[ 0 == $# ]]; then
+        if [[ 0 -eq $# ]]; then
           set -- 'help'
           continue
         fi
@@ -71,7 +71,7 @@ function archpkg {
       remove)
         local result
         shift
-        if [[ 0 == $# ]]; then
+        if [[ 0 -eq $# ]]; then
           set -- 'help'
           continue
         fi
@@ -83,7 +83,7 @@ function archpkg {
         ;;
       download)
         shift;
-        if [[ 0 == $# ]]; then
+        if [[ 0 -eq $# ]]; then
           set -- 'help'
           continue
         fi
@@ -92,7 +92,7 @@ function archpkg {
         ;;
       info)
         shift
-        if [[ 0 == $# ]]; then
+        if [[ 0 -eq $# ]]; then
           set -- 'help'
           continue
         fi
@@ -101,7 +101,7 @@ function archpkg {
         ;;
       search)
         shift
-        if [[ 0 == $# ]]; then
+        if [[ 0 -eq $# ]]; then
           set -- 'help'
           continue
         fi
@@ -110,7 +110,7 @@ function archpkg {
         ;;
       file-search)
         shift
-        if [[ 0 == $# ]]; then
+        if [[ 0 -eq $# ]]; then
           set -- 'help'
           continue
         fi
@@ -125,7 +125,7 @@ function archpkg {
         local template_file
         local list_of_packages
         shift
-        if [[ 0 == $# ]]; then
+        if [[ 0 -eq $# ]]; then
           set -- 'help'
           continue
         fi
@@ -145,7 +145,7 @@ function archpkg {
         local template_file
         local list_of_packages
         shift
-        if [[ 0 == $# ]]; then
+        if [[ 0 -eq $# ]]; then
           set -- 'help'
           continue
         fi
@@ -163,7 +163,7 @@ function archpkg {
         local template_file
         local list_of_packages
         shift
-        if [[ 0 == $# ]]; then
+        if [[ 0 -eq $# ]]; then
           set -- 'help'
           continue
         fi

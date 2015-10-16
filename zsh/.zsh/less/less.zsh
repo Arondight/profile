@@ -26,7 +26,7 @@ function less {
     return $?
   fi
 
-  if [[ 0 == $# ]]; then
+  if [[ 0 -eq $# ]]; then
     file_src='-'
     if [[ -t 0 ]]; then
       echo "Missing filename" >&2
@@ -37,7 +37,7 @@ function less {
   fi
 
   if [[ ! -t 1 ]]; then
-    if [[ 0 == $# ]]; then
+    if [[ 0 -eq $# ]]; then
       /usr/bin/env cat
     else
       /usr/bin/env cat $@

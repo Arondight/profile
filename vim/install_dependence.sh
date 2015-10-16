@@ -27,7 +27,7 @@ type go >/dev/null 2>&1 && buildpara="$buildpara --gocode-completer"
 type xbuild >/dev/null 2>&1 && buildpara="$buildpara --omnisharp-completer"
 cd $HOME/.vim/bundle/YouCompleteMe
 git submodule update --init --recursive
-if [[ 1 == $sysclang ]]; then
+if [[ 1 -eq $sysclang ]]; then
   buildpara="$buildpara --system-libclang"
   python2 install.py $buildpara
 elif [[ -n $clang_root ]]; then

@@ -65,6 +65,7 @@ Plugin 'vim-scripts/spellcheck.vim'
 "Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/TaskList.vim'
 Plugin 'vim-scripts/TeTrIs.vim'
+Plugin 'yonchu/accelerated-smooth-scroll'
 Plugin 'Yggdroot/indentLine'
 " }
 call vundle#end()                     " 插件列表必须在此之前结束
@@ -168,6 +169,8 @@ let g:tagbar_autoshowtag = 1
 "let g:tagbar_autopreview = 1
 " python-syntax
 let python_highlight_all = 1
+" accelerated-smooth-scroll
+let g:ac_smooth_scroll_no_default_key_mappings = 1
 " Fenview
 let g:fencview_autodetect = 1
 " Airline
@@ -305,6 +308,9 @@ nmap zk \\b
 " vim-gitgutter
 nmap gn <Plug>GitGutterNextHunk
 nmap gp <Plug>GitGutterPrevHunk
+" accelerated-smooth-scroll
+nmap <silent> <C-J> <Plug>(ac-smooth-scroll-c-d)
+nmap <silent> <C-K> <Plug>(ac-smooth-scroll-c-u)
 " DrawIt
 nmap ,di :DrawIt<CR>tw
 nmap ,ds \ds

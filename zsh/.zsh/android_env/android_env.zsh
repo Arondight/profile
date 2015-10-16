@@ -28,7 +28,7 @@ function android_env {
 
   # 基本环境检查 {
   virtualenv_failed=0
-  if [[ 0 == $(whereis virtualenvwrapper.sh | perl -anF/\\h/ -E 'say scalar @F - 1') ]]; then
+  if [[ 0 -eq $(whereis virtualenvwrapper.sh | perl -anF/\\h/ -E 'say scalar @F - 1') ]]; then
     virtualenv_failed=1
   else
     env_script=$(whereis virtualenvwrapper.sh | awk '{print $2}')
@@ -40,7 +40,7 @@ function android_env {
     fi
   fi
 
-  if [[ 1 ==  $virtualenv_failed ]]; then
+  if [[ 1 -eq  $virtualenv_failed ]]; then
     echo 'EE: python-virtualenvwrapper is needed but not found.'
     return 1
   fi

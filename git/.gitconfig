@@ -32,6 +32,7 @@
 	lg = log
 	it = init
 	fp = format-patch
+	cp = cherry-pick
 [push]
 	default = simple
 [merge]

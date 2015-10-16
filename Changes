@@ -1,3 +1,12 @@
+v2015-10-16
+  * vim:
+      增加了插件accelerated-smooth-scroll
+  * zsh:
+      规范了一些比较语句
+      更改了挂载函数的逻辑
+  * vsftpd:
+      更改了说明文件
+
 v2015-10-14
   * udev:
       增加了Spreadtrum 设备的udev rule

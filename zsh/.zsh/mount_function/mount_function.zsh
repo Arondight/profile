@@ -12,12 +12,10 @@ function _mount_dev_check {
   local point=$1
 
   if [[ ! -b $point ]]; then
-    echo "$point 不是设备文件"
     return 0
   fi
 
   if ! echo $point | grep -P '/dev/.+\d+' >/dev/null 2>&1; then
-    echo "$point 不是一个分区设备"
     return 0
   fi
 
@@ -31,7 +29,6 @@ function _mount_dir_check {
   local dir=$1
 
   if [[ ! -d $dir ]]; then
-    echo "$dir 不是目录或不存在"
     return 0
   fi
 
@@ -47,12 +44,14 @@ function mountfat {
   fi
 
   _mount_dev_check $1
-  if [[ 0 == $? ]]; then
+  if [[ 0 -eq $? ]]; then
+    echo "$1 不是设备"
     return 1
   fi
 
   _mount_dir_check $2
-  if [[ 0 == $? ]]; then
+  if [[ 0 -eq $? ]]; then
+    echo "$2 不是目录"
     return 1
   fi
 
@@ -71,12 +70,14 @@ function mountntfs {
   fi
 
   _mount_dev_check $1
-  if [[ 0 == $? ]]; then
+  if [[ 0 -eq $? ]]; then
+    echo "$1 不是设备"
     return 1
   fi
 
   _mount_dir_check $2
-  if [[ 0 == $? ]]; then
+  if [[ 0 -eq $? ]]; then
+    echo "$2 不是目录"
     return 1
   fi
 
@@ -99,12 +100,14 @@ function mountiso {
   fi
 
   _mount_dev_check $1
-  if [[ 0 == $? ]]; then
+  if [[ 0 -eq $? ]]; then
+    echo "$1 不是设备"
     return 1
   fi
 
   _mount_dir_check $2
-  if [[ 0 == $? ]]; then
+  if [[ 0 -eq $? ]]; then
+    echo "$2 不是目录"
     return 1
   fi
 
@@ -124,7 +127,8 @@ function mountdir {
 
   for dir in $1 $2; do
     _mount_dir_check $1
-    if [[ 0 == $? ]]; then
+    if [[ 0 -eq $? ]]; then
+      echo "$dir 不是目录"
       return 1
     fi
   done
@@ -139,22 +143,30 @@ function mountdir {
 # 其他分区挂载
 # ==============================================================================
 function mountfs {
+  local is_dev=0
+  local is_dir=0
+
   if [[ $# < 2 ]]; then
     return 1
   fi
 
+  _mount_dir_check $1
+  is_dir=$?
   _mount_dev_check $1
-  if [[ 0 == $? ]]; then
+  is_dev=$?
+
+  if [[ q -eq is_dir || q -eq is_dev ]]; then
+    _mount_dir_check $2
+    if [[ 0 -eq $? ]]; then
+      echo "$2 不是目录"
+      return 1
+    fi
+    echo "Mount $1 to $2"
+    sudo mount $1 $2 -o rw,nosuid,nodev,relatime,data=ordered
+  else
+    echo "$1 不是设备或者目录"
     return 1
   fi
-
-  _mount_dir_check $2
-  if [[ 0 == $? ]]; then
-    return 1
-  fi
-
-  echo "Mount $1 to $2"
-  sudo mount $1 $2 -o rw,nosuid,nodev,relatime,data=ordered
 
   return $?
 }
@@ -163,19 +175,28 @@ function mountfs {
 # 卸载设备
 # ==============================================================================
 function umount {
-  error=0
+  local is_dev=0
+  local is_dir=0
+  local error=0
 
   if [[ $# < 1 ]]; then
     return 1
   fi
-  for dir in $@; do
-    _mount_dir_check $dir
-    if [[ 0 == $? ]]; then
-      continue 1
-    fi
 
-    echo "Umount $dir"
-    sudo env umount $dir
+  for file in $@; do
+    _mount_dir_check $file
+    is_dir=$?
+    _mount_dev_check $file
+    is_dev=$?
+
+    if [[ (1 -eq is_dir) || (1 -eq is_dev) ]]; then
+      echo "Umount $file"
+      sudo env umount $file
+    else
+      echo "$file 不是设备或者挂载点"
+      error+=1
+      continue
+    fi
   done
 
   return $error

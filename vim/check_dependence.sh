@@ -75,7 +75,7 @@ else
   echo '成功'
 fi
 
-if [[ 1 == $error ]]; then
+if [[ 1 -eq $error ]]; then
   exit $error
 fi
 

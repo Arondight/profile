@@ -3,8 +3,8 @@
 ```shell
 sudo mkdir -p /home/ftp/root
 sudo chmod 0755 -R /home/ftp/root
-sudo chown root:root -R /home/ftp/root
-sudo gpasswd -a ftp root
+sudo chown $USER:$USER -R /home/ftp/root
+sudo gpasswd -a $USER ftp
 sudo usermod -d /home/ftp/root ftp
 sudo mkdir -p /var/empty
 ```

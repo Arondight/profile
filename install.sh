@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ 0 == $# ]]; then
+if [[ 0 -eq $# ]]; then
   set -- '--help'
 fi
 
@@ -44,7 +44,7 @@ END_OF_HELP
 done
 
 # do_check {
-if [[ 1 == $do_check ]]; then
+if [[ 1 -eq $do_check ]]; then
   error=0
 
   echo '正在检查所需依赖...'
@@ -55,7 +55,7 @@ if [[ 1 == $do_check ]]; then
   else
     echo '成功'
   fi
-  if [[ 1 == $error ]]; then
+  if [[ 1 -eq $error ]]; then
     exit $error
   fi
 
@@ -72,7 +72,7 @@ fi
 # }
 
 # do_install {
-if [[ 1 == $do_install ]]; then
+if [[ 1 -eq $do_install ]]; then
   echo '正在安装配置文件...'
   for path in $(pwd)/* ; do
     if [[ -d $path ]]; then
@@ -87,7 +87,7 @@ fi
 # }
 
 # do_dependence {
-if [[ 1 == $do_dependence ]]; then
+if [[ 1 -eq $do_dependence ]]; then
   echo '正在安装所需依赖...'
   for path in $(pwd)/* ; do
     if [[ -d $path ]]; then

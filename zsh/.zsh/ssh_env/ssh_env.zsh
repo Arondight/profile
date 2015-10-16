@@ -23,7 +23,7 @@ function ssh_env {
     return 1
   fi
 
-  if [[ 0 == $# ]]; then
+  if [[ 0 -eq $# ]]; then
     set -- "help"
   fi
 
@@ -177,7 +177,7 @@ function ssh_env {
         echo "导出\"${archive}.tar.gz\""
         tar -zcf "${archive}.tar.gz" \
             -C "$(dirname $SSH_ENV_WORK_DIR)" "$(basename $SSH_ENV_WORK_DIR)"
-        if [[ 0 == $? ]]; then
+        if [[ 0 -eq $? ]]; then
           echo "成功"
         else
           echo "失败"
@@ -206,7 +206,7 @@ function ssh_env {
         fi
         echo "导入\"$archive\""
         tar -zxf "$archive" -C "$(dirname $SSH_ENV_WORK_DIR)"
-        if [[ 0 == $? ]]; then
+        if [[ 0 -eq $? ]]; then
           echo "成功"
         else
           echo "失败"
