@@ -49,7 +49,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tomasr/molokai'
+"Plugin 'tomasr/molokai'
 Plugin 'uguu-org/vim-matrix-screensaver'
 Plugin 'Valloric/ListToggle'
 Plugin 'Valloric/vim-operator-highlight'
@@ -309,8 +309,8 @@ nmap zk \\b
 nmap gn <Plug>GitGutterNextHunk
 nmap gp <Plug>GitGutterPrevHunk
 " accelerated-smooth-scroll
-nmap <silent> <C-J> <Plug>(ac-smooth-scroll-c-d)
-nmap <silent> <C-K> <Plug>(ac-smooth-scroll-c-u)
+nmap <silent> <S-J> <Plug>(ac-smooth-scroll-c-d)
+nmap <silent> <S-K> <Plug>(ac-smooth-scroll-c-u)
 " DrawIt
 nmap ,di :DrawIt<CR>tw
 nmap ,ds \ds
@@ -474,3 +474,4 @@ function! TabIndent ()
   setlocal tabstop=2 shiftwidth=2 softtabstop=2 backspace=2
 endfunction
 au FileType makefile,gitconfig call TabIndent ()
+

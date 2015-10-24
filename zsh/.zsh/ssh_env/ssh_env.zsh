@@ -19,7 +19,7 @@ function ssh_env {
   fi
 
   if [[ ! -d $SSH_ENV_WORK_DIR || ! -w $SSH_ENV_WORK_DIR ]]; then
-    echo "环境目录\"$SSH_ENV_WORK_DIR\"不正确。"
+    echo "密钥目录\"$SSH_ENV_WORK_DIR\"不正确。"
     return 1
   fi
 
@@ -73,7 +73,7 @@ function ssh_env {
           ln -sf $env $HOME/.ssh
           return $?
         else
-          echo "环境\"$env\"不存在或不可读。"
+          echo "密钥\"$env\"不存在或不可读。"
           return 1
         fi
         return 0
@@ -91,7 +91,7 @@ function ssh_env {
         local new=$1
         shift
         if [[ -d $SSH_ENV_WORK_DIR/$new ]]; then
-          echo "环境\"$new\"已经存在。"
+          echo "密钥\"$new\"已经存在。"
           return 1
         fi
         if [[ ! -L $HOME/.ssh && -e $HOME/.ssh ]]; then
@@ -120,7 +120,7 @@ function ssh_env {
         shift
         local env=$SSH_ENV_WORK_DIR/$1
         if [[ ! -d $env ]]; then
-          echo "未发现环境\"$1\""
+          echo "未发现密钥\"$1\""
           return 1
         fi
         if ! type tar >/dev/null 2>&1; then
@@ -134,7 +134,7 @@ function ssh_env {
         echo "导出\"$1.tar.gz\""
         tar -zcf "$1.tar.gz" \
             -C "$SSH_ENV_WORK_DIR" "$(basename $env)"
-        echo "删除环境\"$1\""
+        echo "删除密钥\"$1\""
         rm -rf $env
         if [[ ! -d $(readlink -f $HOME/.ssh) ]]; then
           rm -rf "$HOME/.ssh"
@@ -152,7 +152,7 @@ function ssh_env {
       mv)
         shift
           if [[ ! -d $SSH_ENV_WORK_DIR/$1 ]]; then
-            echo "环境\"$1\"不存在"
+            echo "密钥\"$1\"不存在"
             return 1
           fi
           echo "\"$1\" -> \"$2\""
@@ -219,16 +219,16 @@ function ssh_env {
 ssh_env - ssh 密钥管理器
 
 用法:
-  ssh_env [选项] <环境>
+  ssh_env [选项] <密钥>
 
 选项:
-  list                      列出所有可供选择的ssh 环境
-  use [环境]                切换到ssh 环境
-  new [环境] <邮箱>         创建一个新的ssh 环境
-  delete [环境]             删除一个ssh 环境并提前创建备份
-  rename [旧环境] [新环境]  将旧环境重命名为新环境
-  export [文件]             将整个环境导出到归档
-  import [文件]             从归档导入到环境
+  list                      列出所有可供选择的ssh 密钥
+  use [密钥]                切换到ssh 密钥
+  new [密钥] <邮箱>         创建一个新的ssh 密钥
+  delete [密钥]             删除一个ssh 密钥并提前创建备份
+  rename [旧密钥] [新密钥]  将旧密钥重命名为新密钥
+  export [文件]             将整个密钥导出到归档
+  import [文件]             从归档导入到密钥
   help                      打印本帮助
 EOF
         return 0

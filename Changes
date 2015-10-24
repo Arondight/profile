@@ -1,3 +1,10 @@
+v2015-10-24
+  * all:
+      增加了一些基本的说明文件
+  * zsh:
+      修改了alias 设置，不再使用绝对路径
+      修改了ssh_env
+
 v2015-10-16
   * vim:
       增加了插件accelerated-smooth-scroll

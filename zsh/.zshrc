@@ -144,7 +144,7 @@ export ARCHFLAGS='-arch x86_64'
 # ssh key
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 # 默认编辑器
-export EDITOR="/usr/bin/env vim"
+export EDITOR="env vim"
 # 终端256 色
 export TERM="xterm-256color"
 # python-virtualenvwrapper
