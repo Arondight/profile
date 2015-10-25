@@ -3,6 +3,8 @@
 suffix=$(date +%s)
 [[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
 
+[[ ! -d "$HOME/.config/fish" ]] && mkdir "$HOME/.config/fish"
+
 echo -ne "配置fish...\t"
 if [[ -L "$HOME/.config/fish/config.fish" ]]; then
   :

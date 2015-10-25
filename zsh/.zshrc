@@ -51,7 +51,7 @@ plugins=(
 )
 if [[ -w $ZSH ]]; then
   plugins+=zsh_reload
-  [[ ! -d "$ZSH/cache" ]] && /bin/mkdir "$ZSH/cache"
+  [[ ! -d "$ZSH/cache" ]] && env mkdir "$ZSH/cache"
 fi
 [[ -d $ZSH/plugins/zsh-completions ]] && plugins+=zsh-completions
 [[ -d $ZSH/plugins/zsh-syntax-highlighting ]] && plugins+=zsh-syntax-highlighting
