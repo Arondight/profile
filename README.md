@@ -32,18 +32,19 @@ oh-my-zsh-upgrade
 
 # 依赖
 
-1. git
-2. cmake
-3. gcc
-4. clang
-5. lua
-6. ncurses
-7. python-config
-8. xz
+1. bash
++ git
++ cmake
++ gcc
++ clang
++ lua
++ ncurses
++ python-config
++ xz
 
-# ZSH
+# 函数
 
-zsh 配置中提供了一些额外的函数：
+zsh 和bash 的配置中提供了一些额外的函数：
 
 | 函数 | 作用 |
 | --- | --- |
@@ -125,3 +126,4 @@ vim -c PluginInstall -c qa
 ```
 
 之后可以使用vim-cpp-enhanced-highlight 插件替代color_coded 进行代码高亮。
+

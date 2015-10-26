@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 alias android-env='android_env'
 
@@ -61,7 +61,7 @@ function android_env {
   fi
   # }
 
-  # 本代码段在zsh 中运行
+  # 本代码段在当前shell 中运行
   if ! echo $0 | grep -P 'bash' >/dev/null 2>&1; then
     local interface="$HOME/.bash/interface"
     local android_env_interface="$interface/android_env.sh"
@@ -76,7 +76,7 @@ function android_env {
     which android_env >> $android_env_interface
     echo android_env >> $android_env_interface
 
-    env bash --init-file $android_env_interface
+    env bash --init-file <(echo -e source \$HOME/.bashrc \&\& source $android_env_interface)
 
     rm -f $android_env_interface
 

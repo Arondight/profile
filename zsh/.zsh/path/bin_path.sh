@@ -1,11 +1,9 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # ==============================================================================
-# rubygems binary path
+# binary path
 #
 #             By 秦凡东
 # ==============================================================================
 
-if [[ -s /usr/bin/gem ]]; then
-  export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-fi
+export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH"
 

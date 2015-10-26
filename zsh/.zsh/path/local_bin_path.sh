@@ -1,10 +1,9 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # ==============================================================================
-# go binary path
+# local binary path
 #
 #             By 秦凡东
 # ==============================================================================
 
-export GOPATH=$HOME/lib/go
-export PATH="$GOPATH/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 

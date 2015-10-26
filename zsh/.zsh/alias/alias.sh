@@ -1,4 +1,4 @@
-#!env zsh
+#!/usr/bin/env bash
 # ==============================================================================
 # alias
 #
@@ -42,8 +42,6 @@ alias lm='l | m'
 # }
 # cd {
 alias ~='cd ~'
-alias /='cd /'
-alias cd/='/'
 # }
 # 安全措施{
 alias cp='env cp -i'
@@ -60,6 +58,7 @@ alias grp='chgrp'
 # 常用指令 {
 alias e='export'
 alias f='env free'
+alias g='env git'
 alias k='kill'
 alias p='env perl'
 alias r='env ruby'
@@ -97,4 +96,13 @@ alias :wq='q'
 alias :Q='q'
 alias :x='q'
 # }
+
+# ==============================================================================
+# global alias
+#
+#             By 秦凡东
+# ==============================================================================
+if [[ 'zsh' == $0 ]]; then
+  source ./global_alias.zsh
+fi
 
