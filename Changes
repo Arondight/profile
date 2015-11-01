@@ -1,3 +1,9 @@
+v2015-11-01
+  * fish:
+      移除了fish 配置
+  * bash:
+      使用bash-git-prompt，避免了之前PS1 在android-env 中的一个错误
+
 v2015-10-26
   * zsh:
       调整了配置架构

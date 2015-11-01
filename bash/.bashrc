@@ -9,10 +9,18 @@
 # ==============================================================================
 # Prompt
 # ==============================================================================
-PS1="$(if [[ ${EUID} == 0 ]]; then echo '\[\e[01;31m\]\h'; else echo '\[\e[01;32m\]\u@\h'; fi)\[\e[01;34m\] \w\n\[\e[01;37m\]\$? \$(if [[ \$? == 0 ]]; then echo \"\[\e[01;32m\]\342\234\223\"; else echo \"\[\e[01;31m\]\342\234\227\"; fi)\[\033[00m\] "
+GIT_PROMPT_ONLY_IN_REPO=1
+GIT_PROMPT_FETCH_REMOTE_STATUS=1
+GIT_PROMPT_SHOW_UPSTREAM=1
+# GIT_PROMPT_STATUS_COMMAND=gitstatus_pre-1.7.10.sh
+# as last entry source the gitprompt script
+# GIT_PROMPT_THEME=Solarized # use theme optimized for solarized color scheme
+if [[ -r $HOME/.bash/bash-git-prompt/gitprompt.sh ]]; then
+  source $HOME/.bash/bash-git-prompt/gitprompt.sh
+fi
 
 # ==============================================================================
 # 加载自定义函数
 # ==============================================================================
-source ~/.zsh/reactor.sh
+source $HOME/.zsh/reactor.sh
 
