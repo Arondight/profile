@@ -9,7 +9,7 @@
 # ==============================================================================
 # Prompt
 # ==============================================================================
-GIT_PROMPT_ONLY_IN_REPO=1
+GIT_PROMPT_ONLY_IN_REPO=0
 GIT_PROMPT_FETCH_REMOTE_STATUS=1
 GIT_PROMPT_SHOW_UPSTREAM=1
 # GIT_PROMPT_STATUS_COMMAND=gitstatus_pre-1.7.10.sh

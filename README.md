@@ -16,19 +16,26 @@ cd ~/profile
 
 请确保看完**所有**小节之后再进行操作。
 
-# 升级
+# 指令
 
-你可以使用下面的指令使这些配置文件保持最新（当你使用zsh 的时候）：
+当你使用zsh 和bash 时，你将可以使用一些额外的指令：
 
-```shell
-profile-upgrade
-```
+| 指令 | 作用 |
+| --- | --- |
+| profile-upgrade | 更新这些配置 |
+| oh-my-zsh-upgrade | 更新oh-my-zsh |
+| [android-env][ID_ANDROID_ENV] | 快速切换到android 开发环境 |
+| [archpkg][ID_ARCHPKG] | slackpkg 风格的Arch Linux 包管理器 |
+| [less][ID_LESS] | 更舒适的less 指令 |
+| [mount*/umount][ID_MOUNT_FUNCTION] | 更加安全便捷的mount/umount |
+| [ssh-env][ID_SSH_ENV] | ssh 密钥管理器 |
 
-其中oh-my-zsh 的升级单独使用一条指令完成：
+[ID_ANDROID_ENV]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/android_env
+[ID_ARCHPKG]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/archpkg
+[ID_LESS]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/less
+[ID_MOUNT_FUNCTION]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/mount_function
+[ID_SSH_ENV]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/ssh_env
 
-``` shell
-oh-my-zsh-upgrade
-```
 
 # 依赖
 
@@ -41,18 +48,6 @@ oh-my-zsh-upgrade
 + ncurses
 + python-config
 + xz
-
-# 函数
-
-zsh 和bash 的配置中提供了一些额外的函数：
-
-| 函数 | 作用 |
-| --- | --- |
-| android_env | 快速切换到android 开发环境 |
-| archpkg | slackpkg 风格的Arch Linux 包管理器 |
-| less | 更舒适的less 指令 |
-| mount*/umount | 更加安全便捷的mount/umount |
-| ssh_env | ssh 密钥管理器 |
 
 # 注意
 
@@ -126,4 +121,31 @@ vim -c PluginInstall -c qa
 ```
 
 之后可以使用vim-cpp-enhanced-highlight 插件替代color_coded 进行代码高亮。
+
+## gruvbox
+
+如果vim 默认配色方案（gruvbox）[显示不正常][ID_GRUVBOX]，将`~/.vimrc` 中的插件列表做如下
+改动：
+
+```vim
+"Plugin 'morhetz/gruvbox'
+Plugin 'tomasr/molokai'
+```
+
+然后在`~/.vimrc` 中更换配色方案：
+
+```vim
+"colorscheme gruvbox
+colorscheme molokai
+```
+
+退出vim，执行指令：
+
+```shell
+vim -c PluginInstall -c qa
+```
+
+之后可以使用molokai 配色替代gruvbox。
+
+[ID_GRUVBOX]: https://github.com/morhetz/gruvbox/wiki/Terminal-specific "跳到gruvbox 的wiki"
 
