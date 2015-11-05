@@ -48,13 +48,12 @@ plugins=(
   battery colorize common-aliases dirhistory
   history-substring-search jump gnu-utils per-directory-history
   perl python sudo themes torrent textmate web-search
+  zsh-completions zsh-syntax-highlighting
 )
 if [[ -w $ZSH ]]; then
   plugins+=zsh_reload
   [[ ! -d "$ZSH/cache" ]] && env mkdir "$ZSH/cache"
 fi
-[[ -d $ZSH/plugins/zsh-completions ]] && plugins+=zsh-completions
-[[ -d $ZSH/plugins/zsh-syntax-highlighting ]] && plugins+=zsh-syntax-highlighting
 [[ -s /usr/bin/rsync ]] && plugins+=(cp rsync)
 [[ -s /usr/bin/ruby ]] && plugins+=ruby
 [[ -s /usr/bin/tmux ]] && plugins+=tmux
@@ -67,13 +66,6 @@ type apt-get >/dev/null 2>&1 && plugins+=debian
 type yum >/dev/null 2>&1 && plugins+=yum
 type zypper >/dev/null 2>&1 && plugins+=suse
 type systemctl >/dev/null 2>&1 && plugins+=systemd
-
-# ==============================================================================
-# autoload
-# ==============================================================================
-autoload -U colors && colors
-autoload -U compinit && compinit
-autoload -U promptinit promptinit
 
 # ==============================================================================
 # oh-my-zsh 自动更新
@@ -151,4 +143,11 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 # 自定义配置
 # ==============================================================================
 source $HOME/.zsh/reactor.sh
+
+# ==============================================================================
+# autoload
+# ==============================================================================
+autoload -U colors && colors
+autoload -U compinit && compinit
+autoload -U promptinit promptinit
 

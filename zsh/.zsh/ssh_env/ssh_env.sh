@@ -3,6 +3,10 @@
 # SOURCE ME!!!
 # ==============================================================================
 
+if [[ 'bash' != $(basename $0) ]]; then
+  fpath+=$HOME/.zsh/ssh_env
+fi
+
 alias ssh-env='ssh_env'
 
 # ==============================================================================
@@ -50,7 +54,7 @@ function ssh_env {
           if [[ -d $file && -w $file ]]; then
             echo -n "$(basename $file)"
             if [[ $file == $current ]]; then
-              echo "\t*"
+              echo -e "\t*"
             else
               echo
             fi

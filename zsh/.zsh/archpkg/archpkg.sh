@@ -3,6 +3,10 @@
 # SOURCE ME!!!
 # ==============================================================================
 
+if [[ 'bash' != $(basename $0) ]]; then
+  fpath=($HOME/.zsh/archpkg $fpath)
+fi
+
 # ==============================================================================
 # archpkg 函数
 # 提供slackpkg 式的包管理
@@ -192,7 +196,7 @@ archpkg - Arch Linux 下slackpkg 风格的软件包管理器
   update                        更新软件仓库
   check-updates [包名]          检查更新
   upgrade-all                   更新系统
-  clean-system                  清理旧的软件包缓存
+  clean-system                  清理不被依赖的包和旧的缓存
   install <包名>                安装软件包
   reinstall <包名>              重新安装软件包
   remove <正则表达式>           卸载软件包

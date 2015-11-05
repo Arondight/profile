@@ -29,12 +29,14 @@ cd ~/profile
 | [less][ID_LESS] | 更舒适的less 指令 |
 | [mount*/umount][ID_MOUNT_FUNCTION] | 更加安全便捷的mount/umount |
 | [ssh-env][ID_SSH_ENV] | ssh 密钥管理器 |
+| [groot][ID_GROOT] | 跳到git 仓库顶层目录 |
 
 [ID_ANDROID_ENV]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/android_env
 [ID_ARCHPKG]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/archpkg
 [ID_LESS]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/less
 [ID_MOUNT_FUNCTION]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/mount_function
 [ID_SSH_ENV]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/ssh_env
+[ID_GROOT]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/groot
 
 
 # 依赖

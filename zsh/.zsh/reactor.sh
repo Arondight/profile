@@ -90,6 +90,7 @@ function load_local_script {
     archpkg         # slackpkg 风格的pacman 封装
     android_env     # 快速切换android 开发环境
     ssh_env         # 在ssh 密钥中快速切换
+    groot           # 跳到git 仓库顶层目录
     # 以下两行永远不应该被包含
     #alias
     #path
@@ -110,4 +111,12 @@ function load_local_script {
 }
 # 立刻装载一次
 load_local_script
+
+# 对fpath 进行一次去重
+if type perl >/dev/null 2>&1; then
+  FPATH=$(
+    echo -n $FPATH | perl -anF/:/ -E  \
+      'print join ":", grep { ++$_{$_} < 2 } @F'
+  )
+fi
 

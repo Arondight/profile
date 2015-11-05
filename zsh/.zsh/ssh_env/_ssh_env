@@ -1,0 +1,20 @@
+#compdef ssh-env ssh_env
+# ==============================================================================
+# Completion for ssh_env and ssh-env
+# ==============================================================================
+
+local -a options
+
+options=(
+  'list:列出所有可供选择的ssh 密钥'
+  'use:切换到ssh 密钥'
+  'new:创建一个新的ssh 密钥'
+  'delete:删除一个ssh 密钥并提前创建备份'
+  'rename:将旧密钥重命名为新密钥'
+  'export:将整个密钥导出到归档'
+  'import:从归档导入到密钥'
+  'help:打印帮助'
+)
+
+_describe 'values' options
+
