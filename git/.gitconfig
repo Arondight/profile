@@ -33,6 +33,7 @@
 	it = init
 	fp = format-patch
 	cp = cherry-pick
+	rb = rebase
 [push]
 	default = simple
 [merge]

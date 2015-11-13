@@ -1,35 +1,64 @@
 [global_config]
   enabled_plugins = InactivityWatch, CustomCommandsMenu, TestPlugin, ActivityWatch, TerminalShot, LaunchpadCodeURLHandler, APTURLHandler, Logger, MavenPluginURLHandler, LaunchpadBugURLHandler
-  title_transmit_bg_color = "#879500"
   inactive_color_offset = 0.99
+  title_transmit_bg_color = "#879500"
 [keybindings]
+  broadcast_all = None
+  broadcast_group = None
+  broadcast_off = None
+  close_term = None
+  close_window = None
+  cycle_next = None
+  cycle_prev = None
+  edit_window_title = None
+  group_all = None
+  group_tab = None
+  help = None
+  hide_window = None
+  insert_number = None
+  insert_padded = None
+  layout_launcher = None
+  move_tab_left = None
+  move_tab_right = None
+  new_terminator = None
+  resize_down = None
+  resize_left = None
+  resize_right = None
+  resize_up = None
+  scaled_zoom = None
+  split_horiz = <Primary><Alt>h
+  split_vert = <Primary><Alt>v
+  switch_to_tab_1 = <Alt>1
   switch_to_tab_10 = <Alt>0
-  switch_to_tab_6 = <Alt>6
-  switch_to_tab_7 = <Alt>7
-  switch_to_tab_4 = <Alt>4
-  switch_to_tab_5 = <Alt>5
   switch_to_tab_2 = <Alt>2
   switch_to_tab_3 = <Alt>3
-  switch_to_tab_1 = <Alt>1
+  switch_to_tab_4 = <Alt>4
+  switch_to_tab_5 = <Alt>5
+  switch_to_tab_6 = <Alt>6
+  switch_to_tab_7 = <Alt>7
   switch_to_tab_8 = <Alt>8
   switch_to_tab_9 = <Alt>9
-[profiles]
-  [[default]]
-    palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
-    background_image = None
-    background_darkness = 0.85
-    scrollback_lines = 500000
-    background_type = transparent
-    use_system_font = False
-    foreground_color = "#ffffff"
-    scroll_on_output = False
-    font = Linux Libertine Mono O 11
+  toggle_scrollbar = None
+  toggle_zoom = None
+  ungroup_all = None
+  ungroup_tab = None
 [layouts]
   [[default]]
     [[[child1]]]
-      type = Terminal
       parent = window0
+      type = Terminal
     [[[window0]]]
-      type = Window
       parent = ""
+      type = Window
 [plugins]
+[profiles]
+  [[default]]
+    background_darkness = 0.85
+    background_image = None
+    background_type = transparent
+    font = Linux Libertine Mono O 11
+    foreground_color = "#ffffff"
+    palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    scroll_on_output = False
+    scrollback_lines = 655360
+    use_system_font = False

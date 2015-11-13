@@ -20,6 +20,7 @@ while true; do
       ;;
     -d|--install-dependence)
       shift
+      do_check=1
       do_dependence=1
       ;;
     -h|--help)

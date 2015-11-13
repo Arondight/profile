@@ -1,0 +1,23 @@
+# ==============================================================================
+# PKGBUILD 语法高亮
+# ==============================================================================
+#
+syntax "pkgbuild" "^.*PKGBUILD*"
+# commands
+color red "\<(cd|echo|enable|exec|export|kill|popd|pushd|read|source|touch|type)\>"
+color brightblack "\<(case|cat|chmod|chown|cp|diff|do|done|elif|else|esac|exit|fi|find|for|ftp|function|grep|gzip|if|in)\>"
+color brightblack "\<(install|ln|local|make|mv|patch|return|rm|sed|select|shift|sleep|tar|then|time|until|while|yes)\>"
+# ${*}
+icolor blue "\$\{?[0-9A-Z_!@#$*?-]+\}?"
+# numerics
+color blue "\ [0-9]*"
+color blue "\.[0-9]*"
+color blue "\-[0-9]*"
+color blue "=[0-9]"
+# spaces
+color ,green "[[:space:]]+$"
+# strings; multilines are not supported
+color brightred ""(\\.|[^"])*"" "'(\\.|[^'])*'"
+# comments
+color brightblack "#.*$"
+
