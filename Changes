@@ -1,3 +1,10 @@
+v2015-11-18
+  * zsh & bash:
+      添加了一些ls 和cd 指令的容错
+  * vim
+      增加了perl 脚本的实时错误检查
+      增加了插件ultisnips
+
 v2015-11-13
   * zsh & bash:
       Add girlfriend

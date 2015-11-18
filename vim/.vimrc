@@ -48,6 +48,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/vimshell.vim'
+Plugin 'SirVer/ultisnips'
 Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'tomasr/molokai'
 Plugin 'uguu-org/vim-matrix-screensaver'
@@ -200,6 +201,10 @@ hi GitGutterAdd ctermbg=bg guibg=bg
 hi GitGutterChange ctermbg=bg guibg=bg
 hi GitGutterDelete ctermbg=bg guibg=bg
 hi GitGutterChangeDelete ctermbg=bg guibg=bg
+" ultiSnips
+let g:UltiSnipsExpandTrigger="<TAB>"
+let g:UltiSnipsJumpForwardTrigger="<C-P>"
+let g:UltiSnipsJumpBackwardTrigger="<C-N>"
 " Syntastic
 " 需要flake8
 let g:syntastic_check_on_open = 1
@@ -208,14 +213,19 @@ let g:syntastic_enable_perl_checker = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_c_checkers = ["gcc", "clang"]
+let g:syntastic_c_compiler_options = '-std=gnu99 -Wall'
+let g:syntastic_cpp_checkers = ["g++", "clang++"]
 let g:syntastic_cpp_include_dirs = ['/usr/include/qt']
-let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall'
+let g:syntastic_cpp_compiler_options = '-std=gnu++11 -Wall'
+let g:syntastic_perl_checkers = ["perl"]
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_quiet_messages = {"type": "style"}
 let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
 " YouCompleteMe
 " 需要clang cmake llvm python2
+let g:ycm_show_diagnostics_ui = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_seed_identifiers_with_syntax = 1

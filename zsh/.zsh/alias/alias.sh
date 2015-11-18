@@ -44,9 +44,14 @@ alias v='d -lh'
 alias vm='v | m'
 alias l='v -A'
 alias lm='l | m'
+alias sl='ls'
+alias lks='ls'
+alias kls='ls'
 # }
 # cd {
 alias ~='cd ~'
+alias cds='cd'
+alias cdl='cd'
 # }
 # 安全措施{
 alias cp='env cp -i'

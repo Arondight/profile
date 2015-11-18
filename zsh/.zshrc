@@ -61,6 +61,7 @@ fi
 [[ -s /usr/bin/svn ]] && plugins+=(svn svn-fast-info)
 [[ -s /usr/bin/gvim ]] && plugins+=vim-interaction
 [[ -s /usr/bin/autojump ]] && plugins+=autojump
+type adb >/dev/null 2>&1 && plugins+=adb
 type pacman-key >/dev/null 2>&1 && plugins+=archlinux
 type apt-get >/dev/null 2>&1 && plugins+=debian
 type yum >/dev/null 2>&1 && plugins+=yum
