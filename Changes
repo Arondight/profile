@@ -1,3 +1,9 @@
+v2015-12-03
+  * vim:
+      完善了README.md
+      添加了依赖zlib
+      移除了插件python-syntax
+
 v2015-11-18
   * zsh & bash:
       添加了一些ls 和cd 指令的容错

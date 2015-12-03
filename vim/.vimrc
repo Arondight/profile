@@ -26,7 +26,7 @@ Plugin 'chrisbra/vim-diff-enhanced'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'gmarik/Vundle.vim'
-Plugin 'hdima/python-syntax'
+"Plugin 'hdima/python-syntax'
 Plugin 'honza/vim-snippets'
 Plugin 'itchyny/calendar.vim'
 Plugin 'jeaye/color_coded'
@@ -225,7 +225,8 @@ let g:syntastic_quiet_messages = {"type": "style"}
 let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
 " YouCompleteMe
 " 需要clang cmake llvm python2
-let g:ycm_show_diagnostics_ui = 0
+let g:ycm_show_diagnostics_ui = 0   " Use GCC as checker (by syntastic)
+"let g:ycm_show_diagnostics_ui = 1   " Use Clang as checker (by YCM, better)
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_seed_identifiers_with_syntax = 1

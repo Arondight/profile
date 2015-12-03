@@ -35,6 +35,15 @@ else
   echo '成功'
 fi
 
+echo -ne "检查zlib...\t"
+zlib=$(find /usr/include -name 'zlib.h')
+if [[ -z $zlib ]]; then
+  echo '失败'
+  error=1
+else
+  echo '成功'
+fi
+
 echo -ne "检查ncurses...\t"
 ncurses=$(find /usr/include -name 'curses.h')
 if [[ -z $ncurses ]]; then
