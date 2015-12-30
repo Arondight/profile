@@ -91,6 +91,9 @@ alias halt='poweroff'
 alias reboot='env sudo env shutdown -r 0'
 # x11nvc 启动vncserver
 alias vnc-start='env x11vnc -display :0 -noxdamage -many -forever -ncache 10 -auth ~/.Xauthority -rfbauth ~/.vnc/passwd'
+# systemd
+alias logctl='journalctl'
+alias osctl='systemctl'
 # }
 # 其他 {
 # }

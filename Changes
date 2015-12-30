@@ -1,3 +1,11 @@
+v2015-12-30
+  * zsh & bash:
+      增加了一些alias
+  * bash:
+      完善了bash 的基本配置和补全
+  * vim:
+      修正了一处map 错误
+
 v2015-12-03
   * vim:
       完善了README.md

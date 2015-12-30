@@ -7,6 +7,19 @@
 # ==============================================================================
 
 # ==============================================================================
+# Common
+# ==============================================================================
+HISTCONTROL=ignoredups:ignorespace
+HISTSIZE=65536
+HISTFILESIZE=655360
+shopt -s histappend
+shopt -s checkwinsize
+
+if [[  -r /usr/share/bash-completion/bash_completion ]]; then
+  source /usr/share/bash-completion/bash_completion
+fi
+
+# ==============================================================================
 # Prompt
 # ==============================================================================
 GIT_PROMPT_ONLY_IN_REPO=0

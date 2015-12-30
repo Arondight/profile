@@ -68,6 +68,7 @@ Plugin 'vim-scripts/TaskList.vim'
 Plugin 'vim-scripts/TeTrIs.vim'
 Plugin 'yonchu/accelerated-smooth-scroll'
 Plugin 'Yggdroot/indentLine'
+Plugin 'lzap/vim-selinux'
 " }
 call vundle#end()                     " 插件列表必须在此之前结束
 filetype plugin indent on
@@ -306,7 +307,7 @@ let g:clang_auto_select = 1
 " ==============================================================================
 " 快速查找、替换
 nmap ,f :/<C-R><C-W><CR>
-nmap ,h :%s//<C-R><C-W>/g<HOME><RIGHT><RIGHT><RIGHT>
+nmap ,h :%s/<C-R><C-W>//g<HOME><RIGHT><RIGHT><RIGHT>
 " 清空光标所在引号的内容
 nmap ,cd di"
 nmap ,cs di'
