@@ -15,10 +15,6 @@ HISTFILESIZE=655360
 shopt -s histappend
 shopt -s checkwinsize
 
-if [[  -r /usr/share/bash-completion/bash_completion ]]; then
-  source /usr/share/bash-completion/bash_completion
-fi
-
 # ==============================================================================
 # Prompt
 # ==============================================================================
@@ -33,7 +29,16 @@ if [[ -r $HOME/.bash/bash-git-prompt/gitprompt.sh ]]; then
 fi
 
 # ==============================================================================
+# 补全
+# ==============================================================================
+if [[  -r /usr/share/bash-completion/bash_completion ]]; then
+  source /usr/share/bash-completion/bash_completion
+fi
+
+# ==============================================================================
 # 加载自定义函数
 # ==============================================================================
-source $HOME/.zsh/reactor.sh
+if [[ -r $HOME/.zsh/reactor.sh ]]; then
+  source $HOME/.zsh/reactor.sh
+fi
 

@@ -13,31 +13,34 @@
 	changed = cyan
 	untracked = yellow
 [color "diff"]
-	meta = green bold
 	frag = magenta bold
-	old = yellow
+	meta = green bold
 	new = cyan
+	old = yellow
 [alias]
 	bc = branch
-	st = status
 	cl = clone
-	co = checkout
 	cm = commit
-	df = diff
-	rs = reset
-	ps = push
-	pl = pull
-	mg = merge
-	sh = show
-	lg = log
-	it = init
-	fp = format-patch
+	co = checkout
 	cp = cherry-pick
+	df = diff
+	fp = format-patch
+	it = init
+	lg = log
+	mg = merge
+	pl = pull
+	ps = push
 	rb = rebase
+	rs = reset
+	sh = show
+	sm = submodule
+	st = status
 [push]
 	default = simple
 [merge]
 	tool = vimdiff
 #[commit]
 #	template = ~/.commit_template
+#[http]
+#	proxy = socks5://127.0.0.1:9999
 
