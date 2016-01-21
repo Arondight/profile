@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-suffix=$(date +%s)
+suffix=$(date +'%Y-%m-%d_%T')
 [[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
 src_dirs="$curdir/user-dirs.dirs"
 src_locale="$curdir/user-dirs.locale"

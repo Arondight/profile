@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-suffix=$(date +%s)
+suffix=$(date +'%Y-%m-%d_%T')
 [[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
 src="$curdir/config"
 dest="$HOME/.mplayer/config"

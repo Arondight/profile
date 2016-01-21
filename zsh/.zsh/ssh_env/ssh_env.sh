@@ -35,7 +35,7 @@ function ssh_env {
   fi
 
   if [[ ! -L "$HOME/.ssh" && -e "$HOME/.ssh" ]]; then
-    local suffix=$(date +%s)
+    local suffix=$(date +'%Y-%m-%d_%T')
     mv "$HOME/.ssh" "$SSH_ENV_WORK_DIR/ssh.$suffix"
     echo "当前密钥已转化为\"ssh.$suffix\"。"
     set -- "use" "ssh.$suffix"

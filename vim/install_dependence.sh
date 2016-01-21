@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-suffix=$(date +%s)
+suffix=$(date +'%Y-%m-%d_%T')
 
 # vim plugins
 [[ -d "$HOME/.vim" ]] && mv "$HOME/.vim" "$HOME/.vim.${suffix}.bak"
