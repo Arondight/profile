@@ -1,3 +1,7 @@
+v2016-01-29
+  * vim:
+    增加了插件vim-jst 和vim-javascript
+
 v2016-01-26
   * all:
       cpan 模块使用系统默认路径
