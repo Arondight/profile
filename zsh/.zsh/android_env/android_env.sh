@@ -64,7 +64,7 @@ function android_env {
   fi
   # }
 
-  # 本代码段在当前shell 中运行
+  # 本代码段在zsh 中运行
   if ! echo $0 | grep -P 'bash' >/dev/null 2>&1; then
     local interface="$HOME/.bash/interface"
     local android_env_interface="$interface/android_env.sh"
@@ -79,6 +79,7 @@ function android_env {
     which android_env >> $android_env_interface
     echo android_env >> $android_env_interface
 
+    # 这里用的是zsh 的特性，需要控制只在zsh 和bash 中加载本段代码
     env bash --init-file <(echo -e source \$HOME/.bashrc \&\& source $android_env_interface)
 
     rm -f $android_env_interface

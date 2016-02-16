@@ -1,6 +1,14 @@
+v2016-02-16
+  * bash & zsh:
+      为android_env 增加了初始化脚本
+  * tmux:
+      修改了一处新版本中变动的配置选项
+  * nano:
+      删除了一处不兼容新版本的配置选项
+
 v2016-01-29
   * vim:
-    增加了插件vim-jst 和vim-javascript
+      增加了插件vim-jst 和vim-javascript
 
 v2016-01-26
   * all:

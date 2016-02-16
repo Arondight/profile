@@ -81,8 +81,6 @@ set morespace
 set mouse
 # 退出时不自动保存
 unset tempfile
-# 保存到符号链接指向的文件
-unset nofollow
 # 禁止独占Ctrl+Q 和Ctrl+S
 unset preserve
 # 允许挂起
