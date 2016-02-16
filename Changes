@@ -1,3 +1,7 @@
+v2016-02-16.2
+  * zsh:
+      Fixed #1
+
 v2016-02-16
   * bash & zsh:
       为android_env 增加了初始化脚本

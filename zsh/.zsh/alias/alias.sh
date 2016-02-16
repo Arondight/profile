@@ -115,7 +115,7 @@ alias :x='q'
 #
 #             By 秦凡东
 # ==============================================================================
-if [[ 'bash' != $0 ]]; then
+if [[ -n $ZSH_NAME ]]; then
   source $HOME/.zsh/alias/global_alias.zsh
 fi
 
