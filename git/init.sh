@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 if [[ -r ./.gitconfig ]]; then
-  ln -s $HOME/.gitconfig ./.gitconfig
+  ln -s $(readlink -f ./.gitconfig) $HOME/.gitconfig
 fi
 
