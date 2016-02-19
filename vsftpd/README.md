@@ -1,6 +1,6 @@
 一个只允许匿名登录、不提供写权限的vsftpd 配置文件。
 
-```shell
+```bash
 sudo mkdir -p /home/ftp/root
 sudo chmod 0755 -R /home/ftp/root
 sudo chown $USER:$USER -R /home/ftp/root

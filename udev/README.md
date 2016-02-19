@@ -1,6 +1,6 @@
 这是一个Android 设备的udev 规则列表。
 
-```shell
+```bash
 sudo cp ./51-android.rules /etc/udev/rules.d
 sudo chmod 644 /etc/udev/rules.d/51-android.rules
 ```

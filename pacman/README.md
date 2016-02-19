@@ -2,7 +2,7 @@
 
 这份配置不会被自动安装。
 
-```shell
+```bash
 sudo cp pacman.conf /etc/pacman.conf
 ```
 

@@ -1,3 +1,7 @@
+v2016-02-19
+  * bash & zsh:
+      增加vman 函数
+
 v2016-02-18
   * bash & zsh:
       修正了git 目录下错误的init 脚本

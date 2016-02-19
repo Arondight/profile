@@ -82,6 +82,7 @@ EOF
 # 加载自定义配置
 # ==============================================================================
 # 位于~/.zsh
+# ==============================================================================
 function load_local_script {
   zsh_path_root=$HOME/.zsh
   zsh_script_paths=(
@@ -91,6 +92,7 @@ function load_local_script {
     android_env     # 快速切换android 开发环境
     ssh_env         # 在ssh 密钥中快速切换
     groot           # 跳到git 仓库顶层目录
+    vman            # 在Vim 中查看manual
     # 以下两行永远不应该被包含
     #alias
     #path

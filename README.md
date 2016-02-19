@@ -8,7 +8,7 @@
 
 如果看了这些你仍然不知道该怎么做，请执行下面的指令同时安装配置文件和所依赖的运行环境：
 
-```shell
+```bash
 git clone https://github.com/Arondight/profile.git ~/profile
 cd ~/profile
 ./install.sh -c -i -d
@@ -67,7 +67,7 @@ cd ~/profile
 
 现如果你手动更新了YCM，需要执行如下指令配置该插件：
 
-```shell
+```bash
 cd ~/.vim/bundle/YouCompleteMe/build
 cmake -G "Unix Makefiles" -DPATH_TO_LLVM_ROOT=$(find ~/.vim/bundle/color_coded/build -maxdepth 1 -type d -name 'clang*') . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
 make ycm_support_libs
@@ -84,7 +84,7 @@ Plugin 'Rip-Rip/clang_complete'
 
 退出vim，执行指令：
 
-```shell
+```bash
 vim -c 'PluginInstall'
 cd ~/.vim/bundle/clang_complete
 make && make install
@@ -98,7 +98,7 @@ make && make install
 
 现如果你手动更新了color_coded，需要执行如下指令配置该插件：
 
-```shell
+```bash
 vim -c 'PluginInstall' -c qa
 cd ~/.vim/bundle/color_coded
 mkdir build
@@ -118,7 +118,7 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 
 退出vim，执行指令：
 
-```shell
+```bash
 vim -c PluginInstall -c qa
 ```
 
@@ -143,7 +143,7 @@ colorscheme molokai
 
 退出vim，执行指令：
 
-```shell
+```bash
 vim -c PluginInstall -c qa
 ```
 

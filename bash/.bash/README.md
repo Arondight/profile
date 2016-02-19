@@ -2,7 +2,7 @@
 
 你需要将期望bash 完成的操作以`.sh`文件的形式写入`~/.bash/interface/`，然后像下面这样调用bash：
 
-```shell
+```bash
 bash --init-file ~/.bash/interface.sh
 ```
 

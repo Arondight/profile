@@ -2,7 +2,7 @@
 
 在你的shell 配置文件中加入以下语句：
 
-```shell
+```bash
 source $HOME/.zsh/reactor.sh
 ```
 

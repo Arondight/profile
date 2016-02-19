@@ -2,13 +2,13 @@
 
 运行本目录下的初始化脚本：
 
-```shell
+```bash
 ./init.sh
 ```
 
 或者手动执行（你需要清楚你在做什么）：
 
-```shell
+```bash
 echo /usr/lib/{libtinfo.so{,.5,.6},libncurses.so{.5,.6}} |\
   xargs -d ' ' -I {} sudo ln -s /usr/lib/libncursesw.so {}
 ```
