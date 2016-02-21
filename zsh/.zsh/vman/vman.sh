@@ -13,7 +13,7 @@ function vman {
   local section=''
 
   if [[ $# < 1 ]]; then
-    exit 0
+    return 0
   fi
 
   for key in $@; do

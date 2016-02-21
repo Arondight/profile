@@ -26,10 +26,11 @@ cd ~/profile
 | oh-my-zsh-upgrade | 更新oh-my-zsh |
 | [android-env][ID_ANDROID_ENV] | 快速切换到android 开发环境 |
 | [archpkg][ID_ARCHPKG] | slackpkg 风格的Arch Linux 包管理器 |
+| [groot][ID_GROOT] | 跳到git 仓库顶层目录 |
 | [less][ID_LESS] | 更舒适的less 指令 |
 | [mount*/umount][ID_MOUNT_FUNCTION] | 更加安全便捷的mount/umount |
 | [ssh-env][ID_SSH_ENV] | ssh 密钥管理器 |
-| [groot][ID_GROOT] | 跳到git 仓库顶层目录 |
+| [vman][ID_VMAN] | 在Vim 中查看Manual |
 
 [ID_ANDROID_ENV]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/android_env
 [ID_ARCHPKG]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/archpkg
@@ -37,6 +38,7 @@ cd ~/profile
 [ID_MOUNT_FUNCTION]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/mount_function
 [ID_SSH_ENV]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/ssh_env
 [ID_GROOT]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/groot
+[ID_VMAN]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/vman
 
 
 # 依赖
