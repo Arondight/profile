@@ -1,3 +1,7 @@
+v2016-02-24
+  * bash & zsh:
+      现在archpkg clean-system 时使用-Rsn 参数了
+
 v2016-02-21
   * bash & zsh:
       修复了vman 不带参数运行导致终端退出的错误

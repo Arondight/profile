@@ -128,8 +128,7 @@ vim -c PluginInstall -c qa
 
 ## gruvbox
 
-如果vim 默认配色方案（gruvbox）[显示不正常][ID_GRUVBOX]，将`~/.vimrc` 中的插件列表做如下
-改动：
+如果vim 默认配色方案（gruvbox）[显示不正常][ID_GRUVBOX]，将`~/.vimrc` 中的插件列表做如下改动：
 
 ```vim
 "Plugin 'morhetz/gruvbox'

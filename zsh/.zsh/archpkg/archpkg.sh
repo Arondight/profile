@@ -52,7 +52,7 @@ function archpkg {
         shift
         result=( $(pacman -Qqdt) )
         if [[ 0 != ${#result[@]} ]]; then
-          sudo pacman --noconfirm --color auto -R ${result[@]}
+          sudo pacman --noconfirm --color auto -Rsn ${result[@]}
         fi
         sudo pacman --noconfirm --color auto -Sc
         return $?
