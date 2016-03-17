@@ -9,13 +9,13 @@ vim -c 'PluginInstall' -c 'qa'
 
 # vimproc.vim
 cd $HOME/.vim/bundle/vimproc.vim
-make
+make -j4
 
 # color_coded
 cd $HOME/.vim/bundle/color_coded
 mkdir build && cd build
 cmake ..
-make && make install
+make -j4 && make install
 
 # ycm
 sysclang=0
@@ -37,7 +37,7 @@ elif [[ -n $clang_root ]]; then
         -DPATH_TO_LLVM_ROOT=$clang_root \
         . \
         $HOME/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
-  make ycm_support_libs
+  make -j4
 else
   python2 install.py $buildpara
 fi
