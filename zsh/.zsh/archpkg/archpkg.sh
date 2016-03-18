@@ -29,7 +29,7 @@ function archpkg {
         shift
         sudo pacman -Sy
         if [[ -f /usr/bin/pkgfile ]]; then
-          pkgfile --update
+          sudo pkgfile --update
         fi
         return $?
         ;;
@@ -43,7 +43,7 @@ function archpkg {
         sudo pacman --needed --noconfirm --color auto -Sy linux-headers
         sudo pacman --noconfirm --color auto -Su
         if [[ -f /usr/bin/pkgfile ]]; then
-          pkgfile --update
+          sudo pkgfile --update
         fi
         return $?
         ;;
@@ -123,7 +123,7 @@ function archpkg {
         fi
         if [[ ! -f /usr/bin/pkgfile ]]; then
           sudo pacman --noconfirm --color auto -S pkgfile
-          pkgfile --update
+          sudo pkgfile --update
         fi
         pkgfile --search $@
         return $?
