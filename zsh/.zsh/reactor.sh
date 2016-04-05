@@ -81,7 +81,7 @@ EOF
 # ==============================================================================
 # 加载自定义配置
 # ==============================================================================
-# 位于~/.zsh
+# 只操作可读但不可执行的、以*sh 为后缀名的文件
 # ==============================================================================
 function load_local_script {
   zsh_path_root=$HOME/.zsh
@@ -102,7 +102,7 @@ function load_local_script {
     script_path=$zsh_path_root/$subdirectory
     if [[ -d $script_path ]]; then
       for script in $script_path/*.sh; do
-        if [[ -r $script ]]; then
+        if [[ -r $script && ! -x $script ]]; then
           source $script
         fi
       done

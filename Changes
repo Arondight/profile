@@ -1,8 +1,14 @@
+v2016-04-05
+  * bash & zsh:
+      修复了一处可能使所有终端都无法登陆的BUG
+
 v2016-03-18
-  * archpkg 更新pkgfile 数据库时使用root 权限
+  * bash & zsh:
+      archpkg 更新pkgfile 数据库时使用root 权限
 
 v2016-03-17
-  * 根据YCM 的改动修改了make 的参数
+  * vim:
+      根据YCM 的改动修改了make 的参数
 
 v2016-03-08
   * tig:
