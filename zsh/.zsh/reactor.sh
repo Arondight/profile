@@ -93,6 +93,7 @@ function load_local_script {
     ssh_env         # 在ssh 密钥中快速切换
     groot           # 跳到git 仓库顶层目录
     vman            # 在Vim 中查看manual
+    apply           # 补丁工具
     # 以下两行永远不应该被包含
     #alias
     #path

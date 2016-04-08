@@ -16,8 +16,6 @@ alias c='env cat'
 # less, more, diff, view, vi 全部使用vim
 alias more='less'
 alias m='more'
-alias diff='env vim -d'
-alias sysdiff='env diff'
 alias view='env vim -R'
 alias vi='env vim'
 # grep 自动高亮，默认使用pcre 正则
