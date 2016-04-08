@@ -14,7 +14,7 @@ function unapply {
   local patch_file=$2
 
   if [[ -z $patch_file || -z $patch_strip ]]; then
-    echo "Usage: apply <patch_strip> <patch-file>"
+    echo "Usage: unapply <patch_strip> <patch-file>"
     return 1
   fi
 

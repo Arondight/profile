@@ -1,3 +1,8 @@
+v2016-04-08.3
+  * bash & zsh:
+      将makepatch 函数修改为mkpatch
+      修正了一些错误的帮助信息
+
 v2016-04-08.2
   * all:
       增加了MIT-LICENSE
