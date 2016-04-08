@@ -72,7 +72,7 @@ cd ~/profile
 ```bash
 cd ~/.vim/bundle/YouCompleteMe/build
 cmake -G "Unix Makefiles" -DPATH_TO_LLVM_ROOT=$(find ~/.vim/bundle/color_coded/build -maxdepth 1 -type d -name 'clang*') . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
-make ycm_support_libs
+make -j4
 ```
 
 ### 替代
@@ -89,7 +89,7 @@ Plugin 'Rip-Rip/clang_complete'
 ```bash
 vim -c 'PluginInstall'
 cd ~/.vim/bundle/clang_complete
-make && make install
+make install -j4
 ```
 
 之后可以使用Clang Complete 插件替代YCM 进行代码补全。
@@ -106,7 +106,7 @@ cd ~/.vim/bundle/color_coded
 mkdir build
 cd build
 cmake ..
-make install
+make install -j4
 ```
 
 ### 替代
