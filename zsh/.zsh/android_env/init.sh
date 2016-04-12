@@ -10,6 +10,7 @@ fi
 for lib in /usr/lib/{libtinfo.so{,.5,.6},libncurses.so{.5,.6}}; do
   if [[ ! -e $lib ]]; then
     sudo ln -s $target $lib
+    echo "$lib -> $target"
   fi
 done
 

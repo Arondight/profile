@@ -43,6 +43,8 @@ cd ~/profile
 
 # 依赖
 
+## 依赖列表
+
 1. bash
 + git
 + cmake
@@ -53,15 +55,34 @@ cd ~/profile
 + python-config
 + xz
 
+## clang
+
+color\_coded 配置过程用到`clang`，不同发行版中`clang` 所在的包不一定相同，例如Arch Linux 下是**clang** 包，Slackware 下是**llvm** 包，Debian 下则是**clang** 包和**clang-X.Y** 包。
+
+## python-config
+
+YCM 在cmake 的过程中用到`python-config`，不同发行版中`python-config` 所在包不一定相同，例如Arch Linux 和Slackware 下是**python** 包，Debian 下则是**python-dev** 包。
+
+
+## lua
+
+color\_coded 在配置过程中需要用到`lua` 和`lua.h`，Arch Linux 需要安装**lua** 包，Debian 则需要安装**libluaX.Y-N-dev** 和**luaX.Y**包。
+
+## libtinfo
+
+YCM 正常工作需要`libtinfo.so.5`，你需要事先准备好这个库，如果你的发行版（例如Arch Linux）没有包含此库的包，那么事先准备好`/usr/lib/libncursesw.so.6`。如果你已经完成了配置过程，只需要手动执行：
+
+```bash
+~/profile/zsh/.zsh/android_env/init.sh
+```
+
 # 注意
 
 1. 配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是~/profile）！
-2. color_coded 配置过程用到`clang`，不同发行版中`clang` 所在的包不一定相同，例如Arch Linux 下是**clang** 包，Slackware 下是**llvm** 包，Debian 下则是**clang** 包和**clang-X.Y** 包。
-3. YCM 在cmake 的过程中用到`python-config`，不同发行版中`python-config` 所在包不一定相同，例如Arch Linux 和Slackware 下是**python** 包，Debian 下则是**python-dev** 包。
-4. color_coded 在配置过程中需要用到`lua` 和`lua.h`，Arch Linux 需要安装**lua** 包，Debian 则需要安装**libluaX.Y-N-dev** 和**luaX.Y**包。
-5. Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
++ Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
++ 如果C/C++ 文件花屏，执行`rm -rvf ~/.vim/{bin,doc,plugin}`。
 
-# 备注
+# Vim
 
 ## YouCompleteMe (YCM)
 
@@ -70,9 +91,8 @@ cd ~/profile
 现如果你手动更新了YCM，需要执行如下指令配置该插件：
 
 ```bash
-cd ~/.vim/bundle/YouCompleteMe/build
-cmake -G "Unix Makefiles" -DPATH_TO_LLVM_ROOT=$(find ~/.vim/bundle/color_coded/build -maxdepth 1 -type d -name 'clang*') . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
-make -j4
+cd ~/.vim/bundle/YouCompleteMe
+python2 install.py --clang-completer --gocode-completer --system-boost --tern-completer --omnisharp-completer
 ```
 
 ### 替代
@@ -151,12 +171,4 @@ vim -c PluginInstall -c qa
 之后可以使用molokai 配色替代gruvbox。
 
 [ID_GRUVBOX]: https://github.com/morhetz/gruvbox/wiki/Terminal-specific "跳到gruvbox 的wiki"
-
-## C/C++ 文件花屏
-
-如果遇到这个问题，执行：
-
-```bash
-rm -rvf ~/.vim/{bin,doc,plugin}
-```
 

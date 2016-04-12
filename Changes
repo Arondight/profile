@@ -1,3 +1,10 @@
+v2016-04-12.2
+  * all:
+      更新的README.md
+  * vim:
+      允许加载YCM
+      尝试自动解决YCM 对libtinfo 的依赖
+
 v2016-04-12
   * bash & zsh:
       修改了alias

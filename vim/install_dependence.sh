@@ -17,6 +17,11 @@ mkdir build && cd build
 cmake ..
 make -j4 && make install
 
+# libtinfo
+if [[ -x ~/profile/zsh/.zsh/android_env/init.sh ]]; then
+  ~/profile/zsh/.zsh/android_env/init.sh
+fi
+
 # ycm
 sysclang=0
 buildpara="--clang-completer"
