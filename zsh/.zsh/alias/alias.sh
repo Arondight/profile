@@ -18,6 +18,7 @@ alias more='less'
 alias m='more'
 alias view='env vim -R'
 alias vi='env vim'
+alias vm='env vim'
 # grep 自动高亮，默认使用pcre 正则
 alias grep='env grep --color=auto -P'
 alias egrep='env grep --color=auto -E'
@@ -28,21 +29,22 @@ alias leafpad='env leafpad --codeset=utf8'
 # }
 # cc {
 # 提供cc99, cxx11 等编译小程序的指令
-alias c99='env gcc -Wall -std=c99 -fdiagnostics-color=auto'
-alias cxx11='env g++ -Wall -std=c++11 -fdiagnostics-color=auto'
+alias gcc='env gcc -Wall -fdiagnostics-color=auto'
+alias g++='env g++ -Wall -fdiagnostics-color=auto'
+alias c99='gcc -std=gnu99'
+alias c11='gcc -std=gnu11'
+alias cxx11='g++ -std=gnu++11'
+alias cxx14='g++ -std=gnu++14'
 # }
 # ls {
 alias ls='env ls -hF --color=auto'
 alias dir='ls'
 alias d='ls'
-alias dm='d | m'
 alias a='ls -A'
-alias am='a | m'
 alias v='d -lh'
-alias vm='v | m'
 alias l='v -A'
-alias lm='l | m'
 alias sl='ls'
+alias ks='ls'
 alias lks='ls'
 alias kls='ls'
 # }
@@ -82,7 +84,7 @@ alias startx='export LANG=zh_CN.UTF-8 && env startx'
 alias mkdir='env mkdir -p -v'
 alias df='env df -h'
 alias du='env du -ch'
-alias ping='env ping -c 5'
+alias ping='env ping -c 50 -i 0.2 -q'
 # 快速关机、重启
 alias poweroff='env sudo env shutdown -h 0'
 alias halt='poweroff'
@@ -95,8 +97,8 @@ alias osctl='systemctl'
 # }
 # 其他 {
 # }
-alias grepsyscall_32='env cat /usr/include/asm/unistd_32.h | grep '
-alias grepsyscall_64='env cat /usr/include/asm/unistd_64.h | grep '
+alias grepsyscall_32='env cat /usr/include/asm/unistd_32.h | grep'
+alias grepsyscall_64='env cat /usr/include/asm/unistd_64.h | grep'
 alias lsspread='lsusb | grep 1782'
 alias -- -='sudo'
 # vim 式退出登录

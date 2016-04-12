@@ -1,3 +1,13 @@
+v2016-04-12
+  * bash & zsh:
+      修改了alias
+      修改了apply
+  * vim:
+      增删了几个插件
+      不再与color_coded 共用一套clang
+  * tig:
+      所有模式下显示commit id
+
 v2016-04-08.3
   * bash & zsh:
       将makepatch 函数修改为mkpatch

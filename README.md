@@ -28,7 +28,7 @@ cd ~/profile
 | [archpkg][ID_ARCHPKG] | slackpkg 风格的Arch Linux 包管理器 |
 | [groot][ID_GROOT] | 跳到git 仓库顶层目录 |
 | [less][ID_LESS] | 更舒适的less 指令 |
-| [mount*/umount][ID_MOUNT_FUNCTION] | 更加安全便捷的mount/umount |
+| [mount\*/umount][ID_MOUNT_FUNCTION] | 更加安全便捷的mount/umount |
 | [ssh-env][ID_SSH_ENV] | ssh 密钥管理器 |
 | [vman][ID_VMAN] | 在Vim 中查看Manual |
 
@@ -94,11 +94,11 @@ make install -j4
 
 之后可以使用Clang Complete 插件替代YCM 进行代码补全。
 
-## color_coded
+## color\_coded
 
 ### 更新
 
-现如果你手动更新了color_coded，需要执行如下指令配置该插件：
+现如果你手动更新了color\_coded，需要执行如下指令配置该插件：
 
 ```bash
 vim -c 'PluginInstall' -c qa
@@ -111,7 +111,7 @@ make install -j4
 
 ### 替代
 
-如果color_coded 无法正常工作，将`~/.vimrc` 中的插件列表做如下改动：
+如果color\_coded 无法正常工作，将`~/.vimrc` 中的插件列表做如下改动：
 
 ```vim
 "Plugin 'jeaye/color_coded'
@@ -124,7 +124,7 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 vim -c PluginInstall -c qa
 ```
 
-之后可以使用vim-cpp-enhanced-highlight 插件替代color_coded 进行代码高亮。
+之后可以使用vim-cpp-enhanced-highlight 插件替代color\_coded 进行代码高亮。
 
 ## gruvbox
 
@@ -151,4 +151,12 @@ vim -c PluginInstall -c qa
 之后可以使用molokai 配色替代gruvbox。
 
 [ID_GRUVBOX]: https://github.com/morhetz/gruvbox/wiki/Terminal-specific "跳到gruvbox 的wiki"
+
+## C/C++ 文件花屏
+
+如果遇到这个问题，执行：
+
+```bash
+rm -rvf ~/.vim/{bin,doc,plugin}
+```
 

@@ -14,12 +14,12 @@ function unapply {
   local patch_file=$2
 
   if [[ -z $patch_file || -z $patch_strip ]]; then
-    echo "Usage: unapply <patch_strip> <patch-file>"
+    echo "Usage: unapply <strip> <patch-file>"
     return 1
   fi
 
   if ! echo $patch_strip | grep -P '\d+' 2>&1 >/dev/null; then
-    echo "<patch_strip> should be a integer, quit."
+    echo "<strip> should be a integer, quit."
     return 1
   fi
 

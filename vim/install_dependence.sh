@@ -30,14 +30,14 @@ git submodule update --init --recursive
 if [[ 1 -eq $sysclang ]]; then
   buildpara="$buildpara --system-libclang"
   python2 install.py $buildpara
-elif [[ -n $clang_root ]]; then
-  mkdir build
-  cd build
-  cmake -G "Unix Makefiles" \
-        -DPATH_TO_LLVM_ROOT=$clang_root \
-        . \
-        $HOME/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
-  make -j4
+#elif [[ -n $clang_root ]]; then
+#  mkdir build
+#  cd build
+#  cmake -G "Unix Makefiles" \
+#        -DPATH_TO_LLVM_ROOT=$clang_root \
+#        . \
+#        $HOME/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
+#  make -j4
 else
   python2 install.py $buildpara
 fi

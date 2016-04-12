@@ -27,6 +27,7 @@ Plugin 'chrisbra/vim-diff-enhanced'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'gmarik/Vundle.vim'
+"Plugin 'godlygeek/tabular'
 "Plugin 'hdima/python-syntax'
 Plugin 'honza/vim-snippets'
 Plugin 'itchyny/calendar.vim'
@@ -43,7 +44,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'ntpeters/vim-better-whitespace'
 "Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pangloss/vim-javascript'
-Plugin 'plasticboy/vim-markdown'
+"Plugin 'plasticboy/vim-markdown'             " godlygeek/tabular
 "Plugin 'Rip-Rip/clang_complete'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
@@ -55,8 +56,8 @@ Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'tomasr/molokai'
 Plugin 'uguu-org/vim-matrix-screensaver'
 Plugin 'Valloric/ListToggle'
-Plugin 'Valloric/vim-operator-highlight'
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/MatchTagAlways'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-perl/vim-perl'
 Plugin 'vim-scripts/Align'
 Plugin 'vim-scripts/a.vim'
@@ -252,6 +253,15 @@ let g:ycm_semantic_triggers =  {
   \   'lua' : ['.', ':'],
   \   'erlang' : [':'],
   \ }
+" MatchTagAlways
+let g:mta_use_matchparen_group = 1
+let g:mta_set_default_matchtag_color = 1
+let g:mta_filetypes = {
+  \ 'html' : 1,
+  \ 'xhtml' : 1,
+  \ 'xml' : 1,
+  \ 'jinja' : 1,
+  \ }
 " Indentline
 let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#A4E57E'
@@ -322,6 +332,8 @@ nmap ,dfh :EnhancedDiff<Space>histogram<CR>
 " esaymotion 快速上下跳
 nmap zj \\w
 nmap zk \\b
+" MatchTagAlways
+nmap <leader>% :MtaJumpToOtherTag<cr>
 " vim-gitgutter
 nmap gn <Plug>GitGutterNextHunk
 nmap gp <Plug>GitGutterPrevHunk

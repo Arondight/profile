@@ -3,19 +3,20 @@
 # SOURCE ME!!!
 # ==============================================================================
 
+alias mkpatch='makepatch'
 # ==============================================================================
 # 制作补丁
 #
 #                 by 秦凡东
 # ==============================================================================
-function mkpatch {
+function makepatch {
   local DIFF_CMD='diff'
   local patch_base=$1
   local patch_target=$2
   local patch_file=$3
 
   if [[ -z $patch_base || -z $patch_target || -z $patch_file ]]; then
-    echo "Usage: mkpatch <patch_base> <patch-target> <patch_file>"
+    echo "Usage: makepatch <patch-base> <patch-target> <patch-file>"
     return 1
   fi
 
