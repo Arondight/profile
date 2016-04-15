@@ -1,6 +1,16 @@
+v2016-04-15
+  * all:
+      更新了README.md
+  * git:
+      默认复制配置文件，不再使用链接
+  * hosts:
+      增加了hosts
+  * iam:
+      增加了iam 函数
+
 v2016-04-12.2
   * all:
-      更新的README.md
+      更新了README.md
   * vim:
       允许加载YCM
       尝试自动解决YCM 对libtinfo 的依赖

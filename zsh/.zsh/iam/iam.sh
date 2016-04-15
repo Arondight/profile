@@ -4,24 +4,34 @@
 # ==============================================================================
 
 # ==============================================================================
-# 跳到git 仓库顶层目录
+# 为当前git 仓库配置user 信息
 #
 #                 by 秦凡东
 # ==============================================================================
-function groot {
-  local flagdir=".git"
+function iam {
   local topdir=$(readlink -f $(pwd))
+  local name=$1
+  local email=$2
 
-  while [[ ! -d $topdir/$flagdir && "/" != $topdir ]]; do
-    topdir=$(readlink -f $topdir/..)
-  done
-
-  if [[ "/" == $topdir ]]; then
-    echo "当前目录不在git 仓库内"
+  if ! groot >/dev/null 2>&1; then
+    echo "Not a git repository, quit."
     return 1
   else
-    cd $topdir
+    echo "Change to top of current git repository."
   fi
+
+  if [[ -z $name ]]; then
+    name='Arondight'
+  fi
+
+  if [[ -z $email ]]; then
+    email='shell_way@foxmail.com'
+  fi
+
+  echo "Set user.name to $name"
+  env git config user.name $name
+  echo "Set user.email to $email"
+  env git config user.email $email
 
   return $?
 }

@@ -25,20 +25,24 @@ cd ~/profile
 | profile-upgrade | 更新这些配置 |
 | oh-my-zsh-upgrade | 更新oh-my-zsh |
 | [android-env][ID_ANDROID_ENV] | 快速切换到android 开发环境 |
+| [apply][ID_APPLY] | 补丁操作 |
 | [archpkg][ID_ARCHPKG] | slackpkg 风格的Arch Linux 包管理器 |
 | [groot][ID_GROOT] | 跳到git 仓库顶层目录 |
+| [iam][ID_IAM] | 为git 仓库配置user 信息 |
 | [less][ID_LESS] | 更舒适的less 指令 |
-| [mount\*/umount][ID_MOUNT_FUNCTION] | 更加安全便捷的mount/umount |
+| [mount_function][ID_MOUNT_FUNCTION] | 更加安全便捷的mount/umount |
 | [ssh-env][ID_SSH_ENV] | ssh 密钥管理器 |
 | [vman][ID_VMAN] | 在Vim 中查看Manual |
 
-[ID_ANDROID_ENV]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/android_env
-[ID_ARCHPKG]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/archpkg
-[ID_LESS]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/less
-[ID_MOUNT_FUNCTION]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/mount_function
-[ID_SSH_ENV]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/ssh_env
-[ID_GROOT]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/groot
-[ID_VMAN]: https://github.com/Arondight/profile/tree/master/zsh/.zsh/vman
+[ID_ANDROID_ENV]: zsh/.zsh/android_env
+[ID_APPLY]: zsh/.zsh/apply
+[ID_ARCHPKG]: zsh/.zsh/archpkg
+[ID_IAM]: zsh/.zsh/iam
+[ID_LESS]: zsh/.zsh/less
+[ID_MOUNT_FUNCTION]: zsh/.zsh/mount_function
+[ID_SSH_ENV]: zsh/.zsh/ssh_env
+[ID_GROOT]: zsh/.zsh/groot
+[ID_VMAN]: zsh/.zsh/vman
 
 
 # 依赖

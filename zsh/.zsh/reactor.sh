@@ -94,6 +94,7 @@ function load_local_script {
     groot           # 跳到git 仓库顶层目录
     vman            # 在Vim 中查看manual
     apply           # 补丁工具
+    iam             # git 仓库user 信息配置
     # 以下两行永远不应该被包含
     #alias
     #path
