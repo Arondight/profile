@@ -31,7 +31,7 @@ Plugin 'gmarik/Vundle.vim'
 "Plugin 'hdima/python-syntax'
 Plugin 'honza/vim-snippets'
 Plugin 'itchyny/calendar.vim'
-Plugin 'jeaye/color_coded'
+"Plugin 'jeaye/color_coded'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'lilydjwg/colorizer'
@@ -42,7 +42,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'morhetz/gruvbox'
 "Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
-"Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pangloss/vim-javascript'
 "Plugin 'plasticboy/vim-markdown'             " godlygeek/tabular
 "Plugin 'Rip-Rip/clang_complete'
@@ -115,7 +115,7 @@ au InsertEnter * hi Cursor guibg=green
 " ==============================================================================
 filetype plugin indent on             " 自动文件检测
 syntax on                             " 语法高亮
-set t_Co=256                          " 256 色
+"set t_Co=256                          " 256 色
 "if has('gui_running')
 "    set background=light              " 适应亮色背景
 "else
@@ -176,6 +176,9 @@ let g:tagbar_autoshowtag = 1
 let python_highlight_all = 1
 " accelerated-smooth-scroll
 let g:ac_smooth_scroll_no_default_key_mappings = 1
+" vim-cpp-enhanced-highlight
+let g:cpp_class_scope_highlight = 1
+let g:cpp_experimental_template_highlight = 1
 " Fenview
 let g:fencview_autodetect = 1
 " Airline

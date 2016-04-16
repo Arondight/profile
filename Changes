@@ -1,3 +1,9 @@
+v2016-04-16.2
+  * vim:
+      重新试图与color_coded 共用一套clang
+      使用vim-cpp-enhanced-highlight 插件暂时替代color_coded
+      不再强制指定126 色以便在TTY 下使用
+
 v2016-04-16
   * ssh:
       添加SSH 密钥对以做备份
