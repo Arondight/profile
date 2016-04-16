@@ -148,6 +148,13 @@ zstyle ':completion:*' completer _complete _prefix _correct _prefix _match _appr
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 
 # ==============================================================================
+# 历史记录
+# ==============================================================================
+if [[ -r $HOME/.zsh_history ]]; then
+  fc -R $HOME/.zsh_history
+fi
+
+# ==============================================================================
 # 自定义配置
 # ==============================================================================
 if [[ -r $HOME/.zsh/reactor.sh ]]; then

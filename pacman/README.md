@@ -3,6 +3,6 @@
 这份配置不会被自动安装。
 
 ```bash
-sudo cp pacman.conf /etc/pacman.conf
+./init.sh
 ```
 
