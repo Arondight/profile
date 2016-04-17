@@ -1,6 +1,7 @@
 [user]
 	name = Arondight
 	email = shell_way@foxmail.com
+	signingkey = B66CC194
 [core]
 	editor = vim
 [color]
@@ -23,6 +24,7 @@
 	cm = commit
 	co = checkout
 	cp = cherry-pick
+	cs = commit -S
 	df = diff
 	fp = format-patch
 	it = init
@@ -35,6 +37,8 @@
 	sh = show
 	sm = submodule
 	st = status
+	ts = tag -s
+	vc = verify-commit
 [push]
 	default = simple
 [merge]
