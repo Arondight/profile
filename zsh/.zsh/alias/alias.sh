@@ -84,7 +84,7 @@ alias startx='export LANG=zh_CN.UTF-8 && env startx'
 alias mkdir='env mkdir -p -v'
 alias df='env df -h'
 alias du='env du -ch'
-alias ping='env ping -c 50 -i 0.2 -q'
+alias ping='env ping -c 20 -i 0.2 -q'
 # 快速关机、重启
 alias poweroff='env sudo env shutdown -h 0'
 alias halt='poweroff'

@@ -1,3 +1,10 @@
+v2016-04-19
+  * bash & zsh:
+      修改了alias
+      修改了archpkg upgrade-all 时升级linux-header 的顺序（可能会引入问题）
+  * hosts
+      增加了个人vps
+
 v2016-04-17
   * git:
       增加了GPG 签名的commit 和tag 别名
