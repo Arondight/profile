@@ -26,8 +26,6 @@ fi
 # ==============================================================================
 # oh-my-zsh 路径
 # ==============================================================================
-# 优先使用~ 下的oh-my-zsh
-# ==============================================================================
 ZSH=/usr/share/oh-my-zsh
 [[ -d $HOME/.oh-my-zsh ]] && ZSH=$HOME/.oh-my-zsh
 
@@ -44,36 +42,51 @@ ZSH_THEME='af-magic'
 # ==============================================================================
 # oh-my-zsh 插件
 # ==============================================================================
+# 官方通用插件
 plugins=(
-  battery colorize common-aliases dirhistory
-  history-substring-search jump gnu-utils per-directory-history
-  perl python sudo themes torrent textmate web-search
-  zsh-completions zsh-syntax-highlighting
+  battery colorize command-not-found common-aliases copydir copyfile dircycle
+  dirhistory dirpersist encode64 gnu-utils history-substring-search jump
+  per-directory-history perl python sudo systemadmin textmate themes torrent
+  urltools wd web-search zsh-completions zsh-navigation-tools
+  zsh-syntax-highlighting
 )
 if [[ -w $ZSH ]]; then
   plugins+=zsh_reload
   [[ ! -d "$ZSH/cache" ]] && env mkdir "$ZSH/cache"
 fi
-[[ -s /usr/bin/rsync ]] && plugins+=(cp rsync)
-[[ -s /usr/bin/ruby ]] && plugins+=ruby
-[[ -s /usr/bin/tmux ]] && plugins+=tmux
-[[ -s /usr/bin/git ]] && plugins+=(git github git-prompt git-extras)
-[[ -s /usr/bin/svn ]] && plugins+=(svn svn-fast-info)
-[[ -s /usr/bin/gvim ]] && plugins+=vim-interaction
-[[ -s /usr/bin/autojump ]] && plugins+=autojump
-type adb >/dev/null 2>&1 && plugins+=adb
-type pacman-key >/dev/null 2>&1 && plugins+=archlinux
+# 第三方插件
+plugins+=(
+  $(find $ZSH/custom/plugins/* -maxdepth 0 -type d | xargs -I {} basename {})
+)
+# 选择性加载
+type adb >/dev/null 2>&1 && plugins+=(adb repo)
 type apt-get >/dev/null 2>&1 && plugins+=debian
+type autojump >/dev/null 2>&1 && plugins+=autojump
+type dnf >/dev/null 2>&1 && plugins+=dnf
+type docker >/dev/null 2>&1 && plugins+=docker
+type git >/dev/null 2>&1 && plugins+=(git github git-prompt git-extras)
+type go >/dev/null 2>&1 && plugins+=(go golang)
+type gvim >/dev/null 2>&1 && plugins+=vim-interaction
+type nmap >/dev/null 2>&1 && plugins+=nmap
+type node >/dev/null 2>&1 && plugins+=node
+type npm >/dev/null 2>&1 && plugins+=npm
+type pacman-key >/dev/null 2>&1 && plugins+=archlinux
+type pip >/dev/null 2>&1 && plugins+=pip
+type rsync >/dev/null 2>&1 && plugins+=(cp rsync)
+type ruby >/dev/null 2>&1 && plugins+=(ruby rails)
+type rvm >/dev/null 2>&1 && plugins+=rvm
+type screen >/dev/null 2>&1 && plugins+=screen
+type svn >/dev/null 2>&1 && plugins+=(svn svn-fast-info)
+type systemctl >/dev/null 2>&1 && plugins+=systemd
+type tmux >/dev/null 2>&1 && plugins+=tmux
+type whois >/dev/null 2>&1 && plugins+=iwhois
 type yum >/dev/null 2>&1 && plugins+=yum
 type zypper >/dev/null 2>&1 && plugins+=suse
-type systemctl >/dev/null 2>&1 && plugins+=systemd
 
 # ==============================================================================
 # oh-my-zsh 自动更新
 # ==============================================================================
-# 关闭oh-my-zsh 自带的定期更新
-# 当$ZSH 目录有写权限时提供更新指令
-# ==============================================================================
+# 关闭oh-my-zsh 自带的定期更新，当$ZSH 目录有写权限时提供更新指令
 DISABLE_AUTO_UPDATE="true"
 alias oh-my-zsh-upgrade='oh_my_zsh_upgrade'
 function oh_my_zsh_upgrade {
@@ -160,23 +173,6 @@ fi
 if [[ -r $HOME/.zsh/reactor.sh ]]; then
   source $HOME/.zsh/reactor.sh
 fi
-
-# ==============================================================================
-# 指令前插入sudo
-# ==============================================================================
-zle -N sudoline
-bindkey "\e\e" sudoline
-function sudoline {
-  if [[ -z $BUFFER ]]; then
-    zle up-history
-  fi
-
-  if [[ $BUFFER != sudo\ * ]]; then
-    BUFFER="sudo $BUFFER"
-  fi
-
-  zle end-of-line
-}
 
 # ==============================================================================
 # 和expr 类似的计算器

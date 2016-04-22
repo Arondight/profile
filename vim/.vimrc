@@ -323,9 +323,7 @@ let g:clang_auto_select = 1
 " 快速查找、替换
 nmap ,f :/<C-R><C-W><CR>
 nmap ,h :%s/<C-R><C-W>//g<HOME><RIGHT><RIGHT><RIGHT>
-" 清空光标所在引号的内容
-nmap ,cd di"
-nmap ,cs di'
+nmap ,s :write !sudo tee %<CR>
 " ack.vim
 nmap ,a :Ack<Space>
 " vim-diff-enhanced

@@ -40,8 +40,9 @@ function archpkg {
         ;;
       upgrade-all)
         shift
+        sudo pacman -Sy
         sudo pacman --noconfirm --color auto -Su
-        sudo pacman --needed --noconfirm --color auto -Sy linux-headers
+        sudo pacman --needed --noconfirm --color auto -S linux-headers
         if [[ -f /usr/bin/pkgfile ]]; then
           sudo pkgfile --update
         fi

@@ -1,3 +1,11 @@
+v2016-04-22
+  * bash & zsh:
+      修正了一处archpkg 的逻辑错误
+  * zsh:
+      修改了一些oh-my-zsh 插件
+  * vim:
+      增加快捷键,s
+
 v2016-04-19
   * bash & zsh:
       修改了alias
