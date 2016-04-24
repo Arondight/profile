@@ -47,8 +47,7 @@ plugins=(
   battery colorize command-not-found common-aliases copydir copyfile dircycle
   dirhistory dirpersist encode64 gnu-utils history-substring-search jump
   per-directory-history perl python sudo systemadmin textmate themes torrent
-  urltools wd web-search zsh-completions zsh-navigation-tools
-  zsh-syntax-highlighting
+  urltools wd web-search zsh-navigation-tools
 )
 if [[ -w $ZSH ]]; then
   plugins+=zsh_reload
