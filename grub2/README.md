@@ -1,35 +1,29 @@
-这是用于制作USB 多启动盘的一份GRUB2 配置文件，用于制作一个可以选择从多个ISO 镜像启动的USB 设备。
+这是用于制作USB 多启动盘的一系列GRUB2 配置文件，用于制作一个可以选择从多个ISO 镜像启动的USB 设备。
 
-在为USB 设备安装好GRUB2 后，在GRUB2 配置文件中增加对`custom.cfg` 的引用：
+其中，`grub.cfg` 已将主题指定为[Dacha204/grub2-themes-Ettery](https://github.com/Dacha204/grub2-themes-Ettery)。
 
-```grub2
-### BEGIN /etc/grub.d/41_custom ###
-if [ -f  ${config_directory}/custom.cfg ]; then
-  source ${config_directory}/custom.cfg
-elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
-  source $prefix/custom.cfg;
-fi
-### END /etc/grub.d/41_custom ###
-```
+---
 
 USB 设备上的分区如下：
 
 ```
-$ lsblk -o NAME,UUID /dev/sdb
-NAME   UUID
+$ lsblk -o NAME,LABEL,FSTYPE,UUID /dev/sdb
+NAME   LABEL FSTYPE UUID
 sdb
-├─sdb1 0bcee804-909d-4f95-a48e-e8aafa1e9dce
-└─sdb2 27b788f8-8556-4478-885e-40d4b6aa7383
+├─sdb1 data  ntfs   5AC560670CEADC8F
+├─sdb2 image ext4   97e75763-3409-46df-b88d-ba5f234bf6f8
+└─sdb3 boot  ext4   30a8bfb5-933c-4a52-8b7f-953ab7c58a0e
 ```
 
-每个分区的大致内容如下：
+`sdb3` 的大致内容如下：
 
 ```
-$ tree -L 3 27b788f8-8556-4478-885e-40d4b6aa7383
-27b788f8-8556-4478-885e-40d4b6aa7383
+$ tree -L 3 boot
+boot
 └── boot
     ├── grub
     │   ├── custom.cfg
+    │   ├── device.cfg
     │   ├── fonts
     │   ├── grub.cfg
     │   ├── grubenv
@@ -39,13 +33,15 @@ $ tree -L 3 27b788f8-8556-4478-885e-40d4b6aa7383
     └── memtest86+
         └── memtest.bin
 
-7 directories, 4 files
+7 directories, 5 files
 ```
 
+`sdb2` 的大致内容如下：
+
 ```
-$ tree 0bcee804-909d-4f95-a48e-e8aafa1e9dce
-0bcee804-909d-4f95-a48e-e8aafa1e9dce
-└── sysimg
+$ tree -a image
+image
+└── .image
     ├── ArchLinux
     │   └── archlinux-2016.04.01-dual.iso
     ├── CentOS
@@ -59,7 +55,8 @@ $ tree 0bcee804-909d-4f95-a48e-e8aafa1e9dce
     ├── openSUSE
     │   └── openSUSE-13.2-KDE-Live-x86_64.iso
     └── Ubuntu
-        └── ubuntu-16.04-desktop-amd64.iso
+        └── ubuntu-16.04-desktop-amd64.iso
 
 8 directories, 7 files
 ```
+
