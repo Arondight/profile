@@ -82,9 +82,25 @@ YCM 正常工作需要`libtinfo.so.5`，你需要事先准备好这个库，如�
 
 # 注意
 
-1. 配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是~/profile）！
-+ Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
-+ 如果C/C++ 文件花屏，执行`rm -rvf ~/.vim/{bin,doc,plugin}`。
+## 本地文件
+
+配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是~/profile）！
+
+## Vim 插件安装停顿
+
+Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
+
+## Vim 花屏
+
+如果C/C++ 文件花屏，依次执行下列执行指令：
+
+```bash
+rm -rvf ~/.vim/{bin,doc,plugin}
+cd ~/.zsh
+groot
+ln -sf $(readlink -f ./vim/.color_coded) ~/.color_coded
+./vim/install_dependence.sh
+```
 
 # Vim
 

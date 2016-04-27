@@ -1,3 +1,12 @@
+v2016-04-27
+  * vim:
+      现在启用插件color_coded
+      现在YCM 与color_coded 公用一套clang
+      解决了使用color_coded 时Vim 花屏的BUG
+      修改了Vim 配置插件的逻辑，不再备份原有的~/.vim 目录
+  * host:
+      改了个IP
+
 v2016-04-25
   * tmux:
       删除了一些不兼容新版的配置

@@ -4,8 +4,10 @@ suffix=$(date +'%Y-%m-%d_%T')
 [[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
 src_vimrc="$curdir/.vimrc"
 src_ycmrc="$curdir/.ycm_extra_conf.py"
+src_colorcoded="$curdir/.color_coded"
 dest_vimrc="$HOME/.vimrc"
 dest_ycmrc="$HOME/.ycm_extra_conf.py"
+dest_colorcoded="$HOME/.color_coded"
 dest_plugin="$HOME/.vim"
 
 [[ -f "$dest_vimrc" || -L "$dest_vimrc" ]] && mv "$dest_vimrc" "${dest_vimrc}.${suffix}.bak"
@@ -17,5 +19,6 @@ fi
 echo -ne "配置vim...\t"
 ln -s "$src_vimrc" "$dest_vimrc"
 ln -s "$src_ycmrc" "$dest_ycmrc"
+ln -sf "$src_colorcoded" "$dest_colorcoded"
 echo '完成'
 

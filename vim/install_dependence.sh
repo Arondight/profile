@@ -3,8 +3,15 @@
 suffix=$(date +'%Y-%m-%d_%T')
 
 # vim plugins
-[[ -d "$HOME/.vim" ]] && mv "$HOME/.vim" "$HOME/.vim.${suffix}.bak"
-git clone https://github.com/gmarik/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+if [[ ! -d "$HOME/.vim" ]]; then
+  mkdir -p "$HOME/.vim"
+fi
+
+# Vundel.vim
+if [[ ! -d $HOME/.vim/bundle/Vundle.vim ]]; then
+  git clone https://github.com/gmarik/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+fi
+
 vim -c 'PluginInstall' -c 'qa'
 
 # vimproc.vim
@@ -16,14 +23,15 @@ fi
 # color_coded
 if [[ -d $HOME/.vim/bundle/color_coded ]]; then
   cd $HOME/.vim/bundle/color_coded
-  mkdir build && cd build
+  mkdir build
+  cd build
   cmake ..
   make -j4 && make install
 fi
 
 # libtinfo
-if [[ -x ~/profile/zsh/.zsh/android_env/init.sh ]]; then
-  ~/profile/zsh/.zsh/android_env/init.sh
+if [[ -x $HOME/profile/zsh/.zsh/android_env/init.sh ]]; then
+  $HOME/profile/zsh/.zsh/android_env/init.sh
 fi
 
 # ycm
@@ -41,13 +49,13 @@ if [[ -d $HOME/.vim/bundle/YouCompleteMe ]]; then
     buildpara="$buildpara --system-libclang"
     python2 install.py $buildpara
   elif [[ -n $clang_root ]]; then
-    mkdir build
-    cd build
+    mkdir -p $HOME/.vim/bundle/YouCompleteMe/build
+    cd $HOME/.vim/bundle/YouCompleteMe/build
     cmake -G "Unix Makefiles" \
           -DPATH_TO_LLVM_ROOT=$clang_root \
           . \
           $HOME/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
-    make -j4
+    cmake --build . --target ycm_core --config Release
   else
     python2 install.py $buildpara
   fi
