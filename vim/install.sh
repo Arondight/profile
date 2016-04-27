@@ -8,10 +8,8 @@ src_colorcoded="$curdir/.color_coded"
 dest_vimrc="$HOME/.vimrc"
 dest_ycmrc="$HOME/.ycm_extra_conf.py"
 dest_colorcoded="$HOME/.color_coded"
-dest_plugin="$HOME/.vim"
 
 [[ -f "$dest_vimrc" || -L "$dest_vimrc" ]] && mv "$dest_vimrc" "${dest_vimrc}.${suffix}.bak"
-[[ -d "$dest_plugin" || -L "$dest_plugin" ]] && mv "$dest_plugin" "${dest_plugin}.${suffix}.bak"
 if [[ -f "$dest_ycmrc" || -L "$dest_ycmrc" ]]; then
   mv "$dest_ycmrc" "${dest_ycmrc}.${suffix}.bak"
 fi
