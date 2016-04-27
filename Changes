@@ -1,3 +1,7 @@
+v2016-04-27.2
+  * nvim:
+      增加nvim 配置，与vim 共享配置
+
 v2016-04-27
   * vim:
       现在启用插件color_coded
