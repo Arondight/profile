@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Install profiles for tig
+# Force install profiles for git
 # ==============================================================================
 # Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
@@ -10,22 +10,22 @@ WORKDIR=$(dirname $(readlink -f $0))
 
 # MAIN:
 {
-  TIGRCSRC="${WORKDIR}/.tigrc"
-  TIGRCDEST="${HOME}/.tigrc"
+  GITCONFSRC="${WORKDIR}/.gitconfig"
+  GITCONFDEST="${HOME}/.gitconfig"
 
-  if [[ -e $TIGRCDEST ]]
+  if [[ -e $GITCONFDEST ]]
   then
-    if [[ -n $(md5sum $TIGRCSRC $TIGRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum $GITCONFSRC $GITCONFDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $TIGRCDEST "${TIGRCDEST}.${SUFFIX}.bak"
+      mv -v $GITCONFDEST "${GITCONFDEST}.${SUFFIX}.bak"
     fi
   fi
 
   echo -ne "Install profiles for git ...\t"
 
-  if [[ ! -e $TIGRCDEST ]]
+  if [[ ! -e $GITCONFDEST ]]
   then
-    install $TIGRCSRC $TIGRCDEST
+    install $GITCONFSRC $GITCONFDEST
   fi
 
   echo 'done'

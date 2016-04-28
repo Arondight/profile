@@ -1,19 +1,38 @@
 #!/usr/bin/env bash
+# ==============================================================================
+# Install profiles for terminator
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 
-suffix=$(date +'%Y-%m-%d_%T')
-[[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
-src="$curdir/config"
-dest="$HOME/.config/terminator/config"
+SUFFIX=$(date +'%Y-%m-%d_%T')
+WORKDIR=$(dirname $(readlink -f $0))
 
-if [[ -d "$(dirname $dest)" ]]; then
-  if [[ -f "$dest" || -L "$dest" ]]; then
-    mv "$dest" "${dest}.${suffix}.bak"
+# MAIN:
+{
+  TMNTDIR="${XDG_CONFIG_HOME:-${HOME}/.config}/terminator"
+  TMNTCONFSRC="${WORKDIR}/config"
+  TMNTCONFDEST="${TMNTDIR}/config"
+
+  mkdir -p $TMNTDIR
+
+  if [[ -e $TMNTCONFDEST ]]
+  then
+    if [[ -n $(md5sum $TMNTCONFSRC $TMNTCONFDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    then
+      mv -v $TMNTCONFDEST "${TMNTCONFDEST}.${SUFFIX}.bak"
+    fi
   fi
-else
-  mkdir "$(dirname $dest)"
-fi
 
-echo -ne "配置terminator...\t"
-ln -sf "$src" "$dest"
-echo '完成'
+  echo -ne "Install profiles for terminator ...\t"
+
+  if [[ ! -e $TMNTCONFDEST ]]
+  then
+    ln -sf $TMNTCONFSRC $TMNTCONFDEST
+  fi
+
+  echo 'done'
+
+  exit $?
+}
 

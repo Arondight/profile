@@ -1,14 +1,39 @@
 #!/usr/bin/env bash
+# ==============================================================================
+# Install profiles for nvim
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 
-suffix=$(date +'%Y-%m-%d_%T')
-[[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
-src_nvimrc="$HOME/.vimrc"
-dest_nvimrc="$HOME/.config/nvim/init.vim"
+SUFFIX=$(date +'%Y-%m-%d_%T')
+WORKDIR=$(dirname $(readlink -f $0))
 
-[[ ! -d $HOME/.config/nvim ]] && mkdir -p $HOME/.config/nvim
-[[ -f "$dest_nvimrc" || -L "$dest_nvimrc" ]] && mv "$dest_nvimrc" "${dest_nvimrc}.${suffix}.bak"
+# MAIN:
+{
+  NVIMDIR="${XDG_CONFIG_HOME:-${HOME}/.config}/nvim"
+  NVIMRCSRC="${HOME}/.vimrc"
+  NVIMRCDEST="${NVIMDIR}/init.vim"
 
-echo -ne "配置nvim...\t"
-ln -sf "$src_nvimrc" "$dest_nvimrc"
-echo '完成'
+  mkdir -p $NVIMDIR
+  NVIMRCSRC=$(readlink -f $NVIMRCSRC)
+
+  if [[ -e $NVIMRCDEST ]]
+  then
+    if [[ -n $(md5sum $MPCONFSRC $NVIMRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    then
+      mv -v $NVIMRCDEST "${NVIMRCDEST}.${SUFFIX}.bak"
+    fi
+  fi
+
+  echo -ne "Install profiles for nvim ...\t"
+
+  if [[ ! -e $NVIMRCDEST ]]
+  then
+    ln -sf $NVIMRCSRC $NVIMRCDEST
+  fi
+
+  echo 'done'
+
+  exit $?
+}
 

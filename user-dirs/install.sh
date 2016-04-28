@@ -1,25 +1,53 @@
 #!/usr/bin/env bash
+# ==============================================================================
+# Install profiles for user-dirs
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 
-suffix=$(date +'%Y-%m-%d_%T')
-[[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
-src_dirs="$curdir/user-dirs.dirs"
-src_locale="$curdir/user-dirs.locale"
-dest_dirs="$HOME/.config/user-dirs.dirs"
-dest_locale="$HOME/.config/user-dirs.locale"
+SUFFIX=$(date +'%Y-%m-%d_%T')
+WORKDIR=$(dirname $(readlink -f $0))
 
-if [[ -d "$(dirname $dest_dirs)" ]]; then
-  if [[ -f "$dest_dirs" || -L "$dest_dirs" ]]; then
-    mv "$dest_dirs" "$dest_dirs.${suffix}.bak"
+# MAIN:
+{
+  CONFDIR=${XDG_CONFIG_HOME:-${HOME}/.config}
+  DIRSSRC="${WORKDIR}/user-dirs.dirs"
+  DIRSDEST="${CONFDIR}/user-dirs.dirs"
+  LOCALESRC="${WORKDIR}/user-dirs.locale"
+  LOCALEDEST="${CONFDIR}/user-dirs.locale"
+
+  mkdir -p $CONFDIR
+
+  if [[ -e $DIRSDEST ]]
+  then
+    if [[ -n $(md5sum $DIRSSRC $DIRSDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    then
+      mv -v $DIRSDEST "${DIRSDEST}.${SUFFIX}.bak"
+    fi
   fi
-  if [[ -f "$dest_locale" || -L "$dest_locale" ]]; then
-    mv "$dest_locale" "$dest_locale.${suffix}.bak"
-  fi
-else
-  mkdir "$(dirname $dest_dirs)"
-fi
 
-echo -ne "配置user-dirs...\t"
-ln -s "$src_dirs" "$dest_dirs"
-ln -s "$src_locale" "$dest_locale"
-echo '完成'
+  if [[ -e $LOCALEDEST ]]
+  then
+    if [[ -n $(md5sum $LOCALESRC $LOCALEDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    then
+      mv -v $LOCALEDEST "${LOCALEDEST}.${SUFFIX}.bak"
+    fi
+  fi
+
+  echo -ne "Install profiles for user-dirs ...\t"
+
+  if [[ ! -e $DIRSDEST ]]
+  then
+    ln -sf $DIRSSRC $DIRSDEST
+  fi
+
+  if [[ ! -e $LOCALEDEST ]]
+  then
+    ln -sf $LOCALESRC $LOCALEDEST
+  fi
+
+  echo 'done'
+
+  exit $?
+}
 

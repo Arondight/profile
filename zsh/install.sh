@@ -1,12 +1,52 @@
 #!/usr/bin/env bash
+# ==============================================================================
+# Install profiles for zsh
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 
-suffix=$(date +'%Y-%m-%d_%T')
-[[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
+SUFFIX=$(date +'%Y-%m-%d_%T')
+WORKDIR=$(dirname $(readlink -f $0))
 
-[[ -f "$HOME/.zshrc" || -L "$HOME/.zshrc" ]] && mv "$HOME/.zshrc" "$HOME/.zshrc.${suffix}.bak"
+# MAIN:
+{
+  ZSHRCSRC="${WORKDIR}/.zshrc"
+  ZSHSRC="${WORKDIR}/.zsh"
+  ZSHRCDEST="${HOME}/.zshrc"
+  ZSHDEST="${HOME}/.zsh"
 
-echo -ne "配置zsh...\t"
-ln -s "$curdir/.zshrc" "$HOME/.zshrc"
-ln -sf "$curdir/.zsh" "$HOME/.zsh"
-echo '完成'
+  if [[ -e $ZSHRCDEST ]]
+  then
+    if [[ -n $(md5sum $ZSHRCSRC $ZSHRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    then
+      mv -v $ZSHRCDEST "${ZSHRCDEST}.${SUFFIX}.bak"
+    fi
+  fi
+
+  if [[ -e $ZSHDEST ]]
+  then
+    if [[ -L $ZSHDEST ]]
+    then
+      rm -vf $ZSHDEST
+    else
+      mv -v $ZSHRCDEST "${ZSHRCDEST}.${SUFFIX}.bak"
+    fi
+  fi
+
+  echo -ne "Install profiles for zsh...\t"
+
+  if [[ ! -e $ZSHRCDEST ]]
+  then
+    ln -sf $ZSHRCSRC $ZSHRCDEST
+  fi
+
+  if [[ ! -e $ZSHDEST ]]
+  then
+    ln -sf $ZSHSRC $ZSHDEST
+  fi
+
+  echo 'done'
+
+  exit 0
+}
 

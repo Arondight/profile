@@ -1,19 +1,38 @@
 #!/usr/bin/env bash
+# ==============================================================================
+# Install profiles for mplayer
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 
-suffix=$(date +'%Y-%m-%d_%T')
-[[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
-src="$curdir/config"
-dest="$HOME/.mplayer/config"
+SUFFIX=$(date +'%Y-%m-%d_%T')
+WORKDIR=$(dirname $(readlink -f $0))
 
-if [[ -d "$HOME/.mplayer" ]]; then
-  if [[ -f "$dest" || -L "$dest" ]]; then
-    mv "$dest" "${dest}.${suffix}.bak"
+# MAIN:
+{
+  MPDIR="${HOME}/.mplayer"
+  MPCONFSRC="${WORKDIR}/config"
+  MPCONFDEST="${MPDIR}/config"
+
+  mkdir -p $MPDIR
+
+  if [[ -e $MPCONFDEST ]]
+  then
+    if [[ -n $(md5sum $MPCONFSRC $MPCONFDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    then
+      mv -v $MPCONFDEST "${MPCONFDEST}.${SUFFIX}.bak"
+    fi
   fi
-else
-  mkdir "$HOME/.mplayer"
-fi
 
-echo -ne "配置mplayer...\t"
-ln -s "$src" "$dest"
-echo '完成'
+  echo -ne "Install profiles for mplayer ...\t"
+
+  if [[ ! -e $MPCONFDEST ]]
+  then
+    ln -sf $MPCONFSRC $MPCONFDEST
+  fi
+
+  echo 'done'
+
+  exit $?
+}
 

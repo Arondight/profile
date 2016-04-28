@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Install profiles for tig
+# Force install profiles for hosts
 # ==============================================================================
 # Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
@@ -10,22 +10,22 @@ WORKDIR=$(dirname $(readlink -f $0))
 
 # MAIN:
 {
-  TIGRCSRC="${WORKDIR}/.tigrc"
-  TIGRCDEST="${HOME}/.tigrc"
+  HOSTSSRC="${WORKDIR}/hosts"
+  HOSTSDEST="${HOME}/hosts"
 
-  if [[ -e $TIGRCDEST ]]
+  if [[ -e $HOSTSDEST ]]
   then
-    if [[ -n $(md5sum $TIGRCSRC $TIGRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum $HOSTSSRC $HOSTSDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $TIGRCDEST "${TIGRCDEST}.${SUFFIX}.bak"
+      mv -v $HOSTSDEST "${HOSTSDEST}.${SUFFIX}.bak"
     fi
   fi
 
-  echo -ne "Install profiles for git ...\t"
+  echo -ne "Install profiles for hosts ...\t"
 
-  if [[ ! -e $TIGRCDEST ]]
+  if [[ ! -e $HOSTSDEST ]]
   then
-    install $TIGRCSRC $TIGRCDEST
+    sudo install $HOSTSSRC $HOSTSDEST
   fi
 
   echo 'done'

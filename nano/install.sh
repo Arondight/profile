@@ -1,16 +1,55 @@
 #!/usr/bin/env bash
+# ==============================================================================
+# Install profiles for nano
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 
-suffix=$(date +'%Y-%m-%d_%T')
-[[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
-src_nanorc="$curdir/.nanorc"
-src_plugin="$curdir/.nano"
-dest_nanorc="$HOME/.nanorc"
-dest_plugin="$HOME/.nano"
+SUFFIX=$(date +'%Y-%m-%d_%T')
+WORKDIR=$(dirname $(readlink -f $0))
 
-echo -ne "配置nano...\t"
-[[ -f "$dest_nanorc" || -L "$dest_nanorc" ]] && mv "$dest_nanorc" "${dest_nanorc}.${suffix}.bak"
-ln -s "$src_nanorc" "$dest_nanorc"
-[[ -d "$dest_plugin" ||  -L "$dest_plugin" ]] && mv "$dest_plugin" "${dest_plugin}.${suffix}.bak"
-ln -s "$src_plugin" "$dest_plugin"
-echo '完成'
+# MAIN:
+{
+  NANODIR="${HOME}/.nano"
+  NANORCSRC="${WORKDIR}/.nanorc"
+  NANORCDEST="${HOME}/.nanorc"
+  NANOSRC="${WORKDIR}/.nano"
+  NANODEST=$NANODIR
+
+  mkdir -p $NANODIR
+
+  if [[ -e $NANORCDEST ]]
+  then
+    if [[ -n $(md5sum $NANORCSRC $NANORCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    then
+      mv -v $NANORCDEST "${NANORCDEST}.${SUFFIX}.bak"
+    fi
+  fi
+
+  if [[ -e $NANODEST ]]
+  then
+    if [[ -L $NANORCDEST && $NANOSRC == $(readlink -f $NANODEST) ]]
+    then
+      :
+    else
+      mv -v $NANODEST "${NANODEST}.${SUFFIX}.bak"
+    fi
+  fi
+
+  echo -ne "Install profiles for nano ...\t"
+
+  if [[ ! -e $NANORCDEST ]]
+  then
+    ln -sf $NANORCSRC $NANORCDEST
+  fi
+
+  if [[ ! -e $NANODEST ]]
+  then
+    ln -sf $NANOSRC $NANODEST
+  fi
+
+  echo 'done'
+
+  exit $?
+}
 

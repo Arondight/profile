@@ -54,17 +54,18 @@ alias profile-upgrade='profile_upgrade'
 function profile_upgrade {
   local profile_root="$(dirname -z $(readlink -f $HOME/.zshrc))/.."
   local current_path="$(pwd)"
+  local install_sh="${profile_root}/install.sh"
 
   cd $profile_root
   if [[ '-f' == $1 ]]; then
     git checkout -- .
   fi
   if git pull --rebase --stat https://github.com/Arondight/profile.git master; then
-    cat <<'EOF'
-更新完成。
-你可能需要手动安装新的Vim 插件：
-  vim -c PluginInstall -c qa
-EOF
+    echo "更新完成，现在开始执行install.sh 脚本。"
+    echo "Try to run \"${install_sh}\" -a"
+    if [[ -x $install_sh ]]; then
+      command $install_sh
+    fi
   else
     cat <<'EOF'
 更新失败，可能由于您在本地对配置做了修改。

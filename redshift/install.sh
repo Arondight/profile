@@ -1,19 +1,38 @@
 #!/usr/bin/env bash
+# ==============================================================================
+# Install profiles for redshift
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 
-suffix=$(date +'%Y-%m-%d_%T')
-[[ -z $curdir ]] && curdir=$(dirname $(readlink -f $0))
-src="$curdir/redshift.conf"
-dest="$HOME/.config/redshift.conf"
+SUFFIX=$(date +'%Y-%m-%d_%T')
+WORKDIR=$(dirname $(readlink -f $0))
 
-if [[ -d "$HOME/.config" ]]; then
-  if [[ -f "$dest" || -L "$dest" ]]; then
-    mv "$dest" "${dest}.${suffix}.bak"
+# MAIN:
+{
+  CONFDIR=${XDG_CONFIG_HOME:-${HOME}/.config}
+  RSCONFSRC="${WORKDIR}/redshift.conf"
+  RSCONFDEST="${CONFDIR}/redshift.conf"
+
+  mkdir -p $CONFDIR
+
+  if [[ -e $RSCONFDEST ]]
+  then
+    if [[ -n $(md5sum $RSCONFSRC $RSCONFDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    then
+      mv -v $RSCONFDEST "${RSCONFDEST}.${SUFFIX}.bak"
+    fi
   fi
-else
-  mkdir "$HOME/.config"
-fi
 
-echo -ne "配置redshift...\t"
-ln -s "$src" "$dest"
-echo '完成'
+  echo -ne "Install profiles for redshift ...\t"
+
+  if [[ ! -e $RSCONFDEST ]]
+  then
+    ln -sf $RSCONFSRC $RSCONFDEST
+  fi
+
+  echo 'done'
+
+  exit $?
+}
 

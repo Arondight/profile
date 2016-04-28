@@ -4,14 +4,14 @@
 
 # 安装
 
-其中根目录下的`install.sh` 用于整体的安装，每个子目录下的`check_dependence.sh` 用于检查所必须的运行环境是否满足，`install.sh` 用于单独安装配置文件并备份旧的配置文件，`install_dependence.sh` 用于安装配置依赖的运行环境。
+其中根目录下的`install.sh` 用于整体的安装，每个子目录下的`check.sh` 用于检查所必须的运行环境是否满足，`install.sh` 用于单独安装配置文件并备份旧的配置文件，`init.sh` 用于安装配置依赖的运行环境，`install.force.sh` 用于手动安装一些可能需要保持机器上独立的配置。
 
 如果看了这些你仍然不知道该怎么做，请执行下面的指令同时安装配置文件和所依赖的运行环境：
 
 ```bash
 git clone https://github.com/Arondight/profile.git ~/profile
 cd ~/profile
-./install.sh -c -i -d
+./install.sh -a
 ```
 
 请确保看完**所有**小节之后再进行操作。

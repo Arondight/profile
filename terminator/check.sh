@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Install profiles for hosts
+# Check for installtion of terminator's profiles
 # ==============================================================================
 # Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
 
-SUFFIX=$(date +'%Y-%m-%d_%T')
-WORKDIR=$(dirname $(readlink -f $0))
-
 # MAIN:
 {
-  echo -ne "Install profiles for hosts ...\t"
-  echo "skip"
+  ret=0
 
-  exit $?
+  echo -ne "Checking terminator ...\t"
+  if ! type terminator >/dev/null 2>&1; then
+    echo 'warning'
+  else
+    echo 'ok'
+  fi
+
+  exit $ret
 }
 

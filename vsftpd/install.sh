@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
+# ==============================================================================
+# Install profiles for vsftpd
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 
-echo -ne "配置vsftpd...\t"
-echo '跳过'
+SUFFIX=$(date +'%Y-%m-%d_%T')
+WORKDIR=$(dirname $(readlink -f $0))
+
+# MAIN:
+{
+  echo -ne "Install profiles for vsftpd ...\t"
+  echo "skip"
+}
 

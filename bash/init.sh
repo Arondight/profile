@@ -1,17 +1,22 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Install profiles for hosts
+# Do init for profiles of bash
 # ==============================================================================
 # Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
 
-SUFFIX=$(date +'%Y-%m-%d_%T')
-WORKDIR=$(dirname $(readlink -f $0))
-
 # MAIN:
 {
-  echo -ne "Install profiles for hosts ...\t"
-  echo "skip"
+  BASHPROMPTDIR="${HOME}/.bash/bash-git-prompt"
+  BASHPROMPTURL='https://github.com/magicmonty/bash-git-prompt'
+
+  echo -ne "Init profiles for bash ...\t"
+
+  if [[ ! -d $BASHPROMPTDIR ]]; then
+    git clone $BASHPROMPTURL $BASHPROMPTDIR
+  fi
+
+  echo 'done'
 
   exit $?
 }
