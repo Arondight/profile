@@ -22,7 +22,8 @@ cd ~/profile
 
 | 指令 | 作用 |
 | --- | --- |
-| profile-upgrade | 更新这些配置 |
+| profile-upgrade | 更新这些配置源文件 |
+| profile-reconf | 重新设置这些配置文件 |
 | oh-my-zsh-upgrade | 更新oh-my-zsh |
 | [android-env][ID_ANDROID_ENV] | 快速切换到android 开发环境 |
 | [apply][ID_APPLY] | 补丁操作 |

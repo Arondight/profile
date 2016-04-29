@@ -60,7 +60,7 @@ function initColorCoded ()
     mkdir -p "${COLORCODEDDIR}/build"
     cd "${COLORCODEDDIR}/build"
     cmake ..
-    cmake --build . --config Release -- install -j4
+    cmake --build . --target install --config Release -- -j4
 
     return $?
   fi

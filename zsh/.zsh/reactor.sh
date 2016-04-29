@@ -2,10 +2,10 @@
 # ==============================================================================
 # 注册自定义函数
 # ==============================================================================
+# Created by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 # 在shell 配置文件中加入下列一行:
 #   source $HOME/.zsh/reactor.sh
-#
-#           By 秦凡东
 # ==============================================================================
 
 # ==============================================================================
@@ -14,27 +14,63 @@
 # 适用于无法分屏的ssh 的环境
 # ==============================================================================
 # 保持各终端tmux 的一致性
-#[[ -f /usr/bin/tmux && -z "$TMUX" ]] && (TERM=xterm-256color && tmux attach || tmux -2) && exit
-# ==============================================================================
+function autosynctmux ()
+{
+  if [[ -f /usr/bin/tmux && -z "$TMUX" ]]
+  then
+    export TERM=xterm-256color
+    if ! tmux attach
+    then
+      tmux -2
+    fi
+  fi
+
+  # 退出tmux 即退出终端
+  exit $?
+}
 # 无视各终端tmux 的一致性
-#[[ -f /usr/bin/tmux && -z "$TMUX" ]] && (TERM=xterm-256color && tmux -2) && exit
+function autotmux ()
+{
+  if [[ -f /usr/bin/tmux && -z "$TMUX" ]]
+  then
+    export TERM=xterm-256color
+    tmux -2
+  fi
+
+  # 退出tmux 即退出终端
+  exit $?
+}
+# 在虚拟化环境中尝试开各终端一致的tmux
+if type systemd-detect-virt >/dev/null 2>&1
+then
+  if [[ 'none' != $(systemd-detect-virt) ]]
+  then
+    autosynctmux
+  fi
+fi
 
 # ==============================================================================
 # PATH
 # ==============================================================================
 # 脚本位于~/.zsh/path，后缀名为sh
-if [[ -d $HOME/.zsh/path ]]; then
-  for script in $HOME/.zsh/path/*.sh; do
-    if [[ -r $script ]]; then
+MYPATHDIR="${HOME}/.zsh/path"
+if [[ -d $MYPATHDIR ]]
+then
+  for script in ${MYPATHDIR}/*.sh
+  do
+    if [[ -r $script ]]
+    then
       source $script
     fi
   done
   unset script
 fi
 # 当前目录必须*最后*添加
-export PATH=$PATH:.
+export PATH="${PATH}:."
 # 对path 进行一次去重
-if type perl >/dev/null 2>&1; then
+if type perl >/dev/null 2>&1
+then
+  # XXX: 这里的去重考虑使用sed/awk 重写
   export PATH=$(
     perl -E 'print join ":", grep { ++$_{$_} < 2 } split ":", $ENV{PATH}'
   )
@@ -43,38 +79,65 @@ fi
 # ==============================================================================
 # alias
 # ==============================================================================
-if [[ -r $HOME/.zsh/alias/alias.sh ]]; then
-  source $HOME/.zsh/alias/alias.sh
+MYALIAS_SH="${HOME}/.zsh/alias/alias.sh"
+if [[ -r $MYALIAS_SH ]]
+then
+  source $MYALIAS_SH
 fi
+
+# ==============================================================================
+# 重新配置
+# ==============================================================================
+alias profile-reconf='profile_reconf'
+function profile_reconf ()
+{
+  local PROFILEROOT=$(dirname $(dirname $(readlink -f $HOME/.zshrc)))
+  local CWD=$(pwd)
+  local INSTALL_SH="${PROFILEROOT}/install.sh"
+  local ARGS='-a'
+
+  cd $PROFILEROOT
+
+  if [[ -x $INSTALL_SH ]]
+  then
+    command $INSTALL_SH $ARGS
+  fi
+
+  cd $CWD
+
+  return $?
+}
 
 # ==============================================================================
 # 升级函数
 # ==============================================================================
 alias profile-upgrade='profile_upgrade'
-function profile_upgrade {
-  local profile_root="$(dirname -z $(readlink -f $HOME/.zshrc))/.."
-  local current_path="$(pwd)"
-  local install_sh="${profile_root}/install.sh"
+function profile_upgrade () {
+  local PROFILEROOT=$(dirname $(dirname $(readlink -f $HOME/.zshrc)))
+  local CWD=$(pwd)
 
-  cd $profile_root
-  if [[ '-f' == $1 ]]; then
+  cd $PROFILEROOT
+  if [[ '-f' == $1 ]]
+  then
+    git reset HEAD .
     git checkout -- .
   fi
-  if git pull --rebase --stat https://github.com/Arondight/profile.git master; then
-    echo "更新完成，现在开始执行install.sh 脚本。"
-    echo "Try to run \"${install_sh}\" -a"
-    if [[ -x $install_sh ]]; then
-      command $install_sh
-    fi
+  if git pull --rebase --stat https://github.com/Arondight/profile.git master
+  then
+    cat <<'EOF'
+更新完成。
+你可以需要运行以下指令来重新配置：
+  profile-reconf
+EOF
   else
     cat <<'EOF'
 更新失败，可能由于您在本地对配置做了修改。
 你可以使用-f 参数强制更新，但是会清除这些修改：
-  profile_upgrade -f
+  profile-upgrade -f
 EOF
   fi
 
-  cd $current_path
+  cd $CWD
 
   return $?
 }
@@ -84,9 +147,13 @@ EOF
 # ==============================================================================
 # 只操作可读但不可执行的、以*sh 为后缀名的文件
 # ==============================================================================
-function load_local_script {
-  zsh_path_root=$HOME/.zsh
-  zsh_script_paths=(
+function load_local_script ()
+{
+  local ZSHDIR="${HOME}/.zsh"
+  local subdir=''
+  local script=''
+
+  SCRIPTDIR=(
     mount_function  # 分区快速挂载和批量卸载
     less            # 替代系统less
     archpkg         # slackpkg 风格的pacman 封装
@@ -101,24 +168,30 @@ function load_local_script {
     #path
   )
 
-  for subdirectory in ${zsh_script_paths[@]}; do
-    script_path=$zsh_path_root/$subdirectory
-    if [[ -d $script_path ]]; then
-      for script in $script_path/*.sh; do
-        if [[ -r $script && ! -x $script ]]; then
+  for subdir in ${SCRIPTDIR[@]}
+  do
+    script="${ZSHDIR}/${subdir}"
+    if [[ -d $script ]]
+    then
+      for script in ${script}/*.sh
+      do
+        if [[ -r $script && ! -x $script ]]
+        then
           source $script
         fi
       done
       unset script
     fi
-    unset script_path
+    unset subdir
   done
 }
 # 立刻装载一次
 load_local_script
 
 # 对fpath 进行一次去重
-if type perl >/dev/null 2>&1; then
+if type perl >/dev/null 2>&1
+then
+  # XXX: 考虑使用awk/sed 重写
   FPATH=$(
     echo -n $FPATH | perl -anF/:/ -E  \
       'print join ":", grep { ++$_{$_} < 2 } @F'
