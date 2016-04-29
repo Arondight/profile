@@ -16,29 +16,39 @@
 # 保持各终端tmux 的一致性
 function autosynctmux ()
 {
-  if [[ -f /usr/bin/tmux && -z "$TMUX" ]]
+  local SESSIONID='autotmux'
+
+  if ! type tmux >/dev/null 2>&1
+  then
+    return 1
+  fi
+
+  if [[ -z "$TMUX" ]]
   then
     export TERM=xterm-256color
     if ! tmux attach
     then
-      tmux -2
+      tmux -2 new -s $SESSIONID
     fi
   fi
 
-  # 退出tmux 即退出终端
-  exit $?
+  return $?
 }
 # 无视各终端tmux 的一致性
 function autotmux ()
 {
-  if [[ -f /usr/bin/tmux && -z "$TMUX" ]]
+  if ! type tmux >/dev/null 2>&1
   then
-    export TERM=xterm-256color
-    tmux -2
+    return 1
   fi
 
-  # 退出tmux 即退出终端
-  exit $?
+  if [[ -z "$TMUX" ]]
+  then
+    export TERM=xterm-256color
+    tmux -2 new
+  fi
+
+  return $?
 }
 # 在虚拟化环境中尝试开各终端一致的tmux
 if type systemd-detect-virt >/dev/null 2>&1
