@@ -7,20 +7,25 @@
 # SOURCE ME!!!
 # ==============================================================================
 
-function vman {
+function vman ()
+{
   local section=''
 
-  if [[ $# < 1 ]]; then
+  if [[ $# < 1 ]]
+  then
     return 0
   fi
 
-  for key in $@; do
-    if echo $key | grep -P '^[1-9]$' >/dev/null 2>&1; then
+  for key in $@
+  do
+    if echo $key | grep -P '^[1-9]$' >/dev/null 2>&1
+    then
       section=$key
     else
-      vim -c "Man $section $key" -c 'only'
+      vim -c "Man ${section} ${key}" -c 'only'
     fi
-
   done
+
+  return $?
 }
 

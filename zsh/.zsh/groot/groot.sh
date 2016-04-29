@@ -7,16 +7,20 @@
 # SOURCE ME!!!
 # ==============================================================================
 
-function groot {
-  local flagdir=".git"
+function groot ()
+{
+  local GDIRNAME='.git'
+  local ROOTDIR='/'
   local topdir=$(readlink -f $(pwd))
 
-  while [[ ! -d $topdir/$flagdir && "/" != $topdir ]]; do
-    topdir=$(readlink -f $topdir/..)
+  while [[ ! -d "${topdir}/${GDIRNAME}" && $ROOTDIR != $topdir ]]
+  do
+    topdir=$(readlink -f "${topdir}/..")
   done
 
-  if [[ "/" == $topdir ]]; then
-    echo "当前目录不在git 仓库内"
+  if [[ $ROOTDIR == $topdir ]]
+  then
+    echo "Not a git repository."
     return 1
   else
     cd $topdir

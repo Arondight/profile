@@ -6,3 +6,5 @@
 source $HOME/.zsh/reactor.sh
 ```
 
+> 目前已知兼容bash、dash 和zsh，虽然数组下标规则不统一，但是这些脚本中未使用任何数组下标。
+

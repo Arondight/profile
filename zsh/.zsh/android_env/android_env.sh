@@ -29,8 +29,9 @@ function android_env ()
   local wrapper=''
   local failed=0
 
-  # 基本环境检查 {
+  # 基本环境检查
   # XXX: 这里考虑使用sed/awk 替换perl
+  # {
   if [[ 0 -eq $(whereis ${WRAPPERSH} | perl -anF/\\h/ -E 'say scalar @F - 1') ]]
   then
     failed=1
@@ -72,6 +73,7 @@ function android_env ()
   # }
 
   # 本代码段在zsh 中运行
+  # {
   if [[ -n $ZSH_NAME ]]
   then
     local INTERFACEDIR="$HOME/.bash/interface"
@@ -93,7 +95,8 @@ function android_env ()
   fi
   # }
 
-  # 本代码段在bash 中运行 {
+  # 本代码段在bash 中运行
+  # {
   echo 'set python -> python2'
   export VIRTUALENVWRAPPER_PYTHON=$(which python)
   source $wrapper

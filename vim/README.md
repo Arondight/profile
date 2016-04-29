@@ -28,12 +28,5 @@
 
 以上所有特性在Arch Linux 下正常，各种插件的依赖可能需要自己Hack。
 
-其中配置复杂的插件均提供了替代品，详情见项目根目录的README.md。
-
-其中逻辑级别的错误需要使用Clang 进行代码检查，目前GCC (5.2.0)
-无法达到这种智能级别，详情见Vim 配置文件YCM 部分的注释。
-
-截图如下：
-
 ![Vim](screenshots/vim.png?raw=true)
 
