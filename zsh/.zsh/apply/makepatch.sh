@@ -1,41 +1,41 @@
 #!/usr/bin/env cat
 # ==============================================================================
+# 制作补丁
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 # SOURCE ME!!!
 # ==============================================================================
 
 alias mkpatch='makepatch'
-# ==============================================================================
-# 制作补丁
-#
-#                 by 秦凡东
-# ==============================================================================
-function makepatch {
-  local DIFF_CMD='diff'
-  local patch_base=$1
-  local patch_target=$2
-  local patch_file=$3
 
-  if [[ -z $patch_base || -z $patch_target || -z $patch_file ]]; then
-    echo "Usage: makepatch <patch-base> <patch-target> <patch-file>"
+function makepatch () {
+  local DIFFCMD='diff'
+  local base=$1
+  local target=$2
+  local patch=$3
+
+  if [[ -z $base || -z $target || -z $patch ]]; then
+    echo "Usage: makepatch <base> <target> <patch>"
     return 1
   fi
 
-  if [[ ! -e $patch_base ]]; then
-    echo "\"$patch_base\" is not exist, quit."
+  if [[ ! -e $base ]]; then
+    echo "\"$base\" is not exist, quit."
     return 1
   fi
 
-  if [[ ! -e $patch_target ]]; then
-    echo "\"$patch_target\" is not exist, quit."
+  if [[ ! -e $target ]]; then
+    echo "\"$target\" is not exist, quit."
     return 1
   fi
 
-  if [[ -e $patch_file ]]; then
-    echo "\"$patch_file\" has already exist, quit and do nothing."
+  if [[ -e $patch ]]; then
+    echo "\"$patch\" has already exist, quit and do nothing."
     return 1
   fi
 
-  env $DIFF_CMD -N -u -r $patch_base $patch_target >$patch_file
+  command $DIFFCMD -N -u -r -a $base $target >$patch
 
   return $?
 }

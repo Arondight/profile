@@ -1,34 +1,37 @@
 #!/usr/bin/env cat
 # ==============================================================================
+# 打补丁
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 # SOURCE ME!!!
 # ==============================================================================
 
-# ==============================================================================
-# 打补丁
-#
-#                 by 秦凡东
-# ==============================================================================
-function apply {
-  local PATCH_CMD='patch'
-  local patch_strip=$1
-  local patch_file=$2
+function apply ()
+{
+  local PATCHCMD='patch'
+  local stripLevel=$1
+  local file=$2
 
-  if [[ -z $patch_file || -z $patch_strip ]]; then
+  if [[ -z $file || -z $stripLevel ]]
+  then
     echo "Usage: apply <strip> <patch-file>"
     return 1
   fi
 
-  if ! echo $patch_strip | grep -P '\d+' 2>&1 >/dev/null; then
+  if ! echo $stripLevel | grep -P '\d+' 2>&1 >/dev/null
+  then
     echo "<strip> should be a integer, quit."
     return 1
   fi
 
-  if [[ ! -r $patch_file ]]; then
-    echo "\"$patch_file\" can not be read, quit."
+  if [[ ! -r $file ]]
+  then
+    echo "\"$file\" can not be read, quit."
     return 1
   fi
 
-  env $PATCH_CMD -p $patch_strip <$patch_file
+  command $PATCHCMD -p $stripLevel <$file
 
   return $?
 }

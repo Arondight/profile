@@ -1,11 +1,9 @@
 #!/usr/bin/env cat
 # ==============================================================================
-# binary path
-#
-#             By 秦凡东
+# Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
 # SOURCE ME!!!
 # ==============================================================================
 
-export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$PATH"
+export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:${HOME}/bin:${PATH}"
 

@@ -1,12 +1,10 @@
 #!/usr/bin/env cat
 # ==============================================================================
-# go binary path
-#
-#             By 秦凡东
+# Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
 # SOURCE ME!!!
 # ==============================================================================
 
-export GOPATH=$HOME/lib/go
-export PATH="$GOPATH/bin:$PATH"
+export GOPATH="${HOME}/lib/go"
+export PATH="${GOPATH}/bin:${PATH}"
 

@@ -28,7 +28,10 @@ function autosynctmux ()
     export TERM=xterm-256color
     if ! tmux attach
     then
-      tmux -2 new -s $SESSIONID
+      if tmux -2 new -s $SESSIONID
+      then
+        exit $?
+      fi
     fi
   fi
 
@@ -45,7 +48,10 @@ function autotmux ()
   if [[ -z "$TMUX" ]]
   then
     export TERM=xterm-256color
-    tmux -2 new
+    if tmux -2 new
+    then
+      exit $?
+    fi
   fi
 
   return $?

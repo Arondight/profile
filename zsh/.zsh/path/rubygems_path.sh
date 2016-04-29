@@ -1,13 +1,12 @@
 #!/usr/bin/env cat
 # ==============================================================================
-# rubygems binary path
-#
-#             By 秦凡东
+# Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
 # SOURCE ME!!!
 # ==============================================================================
 
-if [[ -s /usr/bin/gem ]]; then
+if type gem >/dev/null 2>&1
+then
   export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 

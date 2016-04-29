@@ -1,54 +1,57 @@
 #!/usr/bin/env cat
 # ==============================================================================
+# 使用Vim 作为less 程序
+# ==============================================================================
+# Create by Arondight <shell_way@foxmail.com>
+# ==============================================================================
 # SOURCE ME!!!
 # ==============================================================================
 
-# ==============================================================================
-# alias for /usr/bin/less
-# ==============================================================================
-alias sysless='/usr/bin/env less'
+alias sysless='env less'
 
-# ==============================================================================
-# less 函数
-# 用于在大多数情况下替代系统less 指令
-#
-#             By 秦凡东
-# ==============================================================================
-function less {
-  local file_src=''
-  local less_program=''
+function less ()
+{
+  local input=''
+  local pager=''
 
-  if [[ -x /usr/bin/vim ]]; then
-    less_program="vim -c 'set nofoldenable' \
+  if type vim >/dev/null 2>&1
+  then
+    pager="vim -c 'set nofoldenable' \
                       -c 'let no_plugin_maps = 1' \
-                      -c 'runtime! macros/less.vim' "
-  elif [[ -x /usr/bin/nano ]]; then
-    less_program='nano -v '
+                      -c 'runtime! macros/less.vim'"
+  elif type nano >/dev/null 2>&1
+  then
+    pager='nano -v'
   else
-    /usr/bin/env less $@
+    less $@
     return $?
   fi
 
-  if [[ 0 -eq $# ]]; then
-    file_src='-'
-    if [[ -t 0 ]]; then
+  if [[ 0 -eq $# ]]
+  then
+    input='-'
+    if [[ -t 0 ]]
+    then
       echo "Missing filename" >&2
       return 1
     fi
   else
-    file_src='$@'
+    input='$@'
   fi
 
-  if [[ ! -t 1 ]]; then
-    if [[ 0 -eq $# ]]; then
-      /usr/bin/env cat
+  if [[ ! -t 1 ]]
+  then
+    if [[ 0 -eq $# ]]
+    then
+      cat
     else
-      /usr/bin/env cat $@
+      cat $@
     fi
     return $?
   fi
 
-  eval $less_program $file_src
+  eval $pager $input
+
   return $?
 }
 
