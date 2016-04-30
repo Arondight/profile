@@ -149,10 +149,10 @@ function initYCM ()
   echo -ne "Init profiles for vim ...\t"
 
   initPlugins || exit $?
-  initVimproc || exit $?
-  initColorCoded || exit $?
-  initLibtinfo || exit $?
-  initYCM || exit $?
+  initVimproc
+  initColorCoded
+  initLibtinfo
+  initYCM
 
   echo 'done'
 

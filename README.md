@@ -92,7 +92,7 @@ Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很�
 在**任何**插件改动后都要执行指令：
 
 ```bash
-profile-reconf
+profilereconf
 ```
 
 ## 插件替代

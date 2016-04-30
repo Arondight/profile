@@ -20,6 +20,7 @@
 	old = yellow
 [alias]
 	bc = branch
+	cf = config
 	cl = clone
 	cm = commit
 	co = checkout
