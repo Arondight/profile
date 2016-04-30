@@ -13,7 +13,7 @@ echo /usr/lib/{libtinfo.so{,.5,.6},libncurses.so{.5,.6}} |\
   xargs -d ' ' -I {} sudo ln -s /usr/lib/libncursesw.so {}
 ```
 
-| 需要的库 | 定向到 |
+| 需要的库 | 链接到 |
 | --- | --- |
 | /usr/lib/libtinfo.so | /usr/lib/libncursesw.so |
 | /usr/lib/libtinfo.so.5 | /usr/lib/libncursesw.so |

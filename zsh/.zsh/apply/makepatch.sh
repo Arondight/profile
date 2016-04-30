@@ -35,6 +35,7 @@ function makepatch () {
     return 1
   fi
 
+  # XXX: Dose -a is ok here?
   command $DIFFCMD -N -u -r -a $base $target >$patch
 
   return $?

@@ -7,8 +7,8 @@
 # SOURCE ME!!!
 # ==============================================================================
 
-alias androidenv='android_env'
-alias android-env='android_env'
+alias android-env='androidenv'
+alias android_env='androidenv'
 
 function repo ()
 {
@@ -23,7 +23,7 @@ function repo ()
   return $?
 }
 
-function android_env ()
+function androidenv ()
 {
   local WRAPPERSH='virtualenvwrapper.sh'
   local wrapper=''
@@ -47,7 +47,7 @@ function android_env ()
     fi
   fi
 
-  if [[ 1 -eq  $failed ]]
+  if [[ 1 -eq $failed ]]
   then
     echo 'EE: python-virtualenvwrapper is needed but not found.'
     return 1
@@ -76,16 +76,16 @@ function android_env ()
   # {
   if [[ -n $ZSH_NAME ]]
   then
-    local INTERFACEDIR="$HOME/.bash/interface"
-    local shadowscript="$INTERFACEDIR/android_env.sh"
+    local INTERFACEDIR="${HOME}/.bash/interface"
+    local shadowscript="${INTERFACEDIR}/androidenv.sh"
 
     echo "set $(basename $SHELL) -> bash"
 
     mkdir -p $INTERFACEDIR
 
     which repo > $shadowscript
-    which android_env >> $shadowscript
-    echo android_env >> $shadowscript
+    which androidenv >> $shadowscript
+    echo androidenv >> $shadowscript
 
     bash --init-file <(echo -e source \$HOME/.bashrc \&\& source $shadowscript)
 

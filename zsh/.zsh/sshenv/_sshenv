@@ -1,0 +1,19 @@
+#compdef sshenv
+# ==============================================================================
+# Completion for ssh_env and ssh-env
+# ==============================================================================
+local -a options
+
+options=(
+  'list:List all avaliable environments'
+  'use:Use environment as default ssh key'
+  'new:Create a new environment with email if it is given'
+  'delete:Export a environment then delete it'
+  'rename:Rename old environment to new'
+  'export:Export all environments to a tarball'
+  'import:Import environments from a tarball'
+  'help:Show this help message'
+)
+
+_describe 'values' options
+

@@ -20,7 +20,7 @@ function groot ()
 
   if [[ $ROOTDIR == $topdir ]]
   then
-    echo "Not a git repository."
+    echo "Not a git repository." >&2
     return 1
   else
     cd $topdir

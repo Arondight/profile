@@ -27,40 +27,37 @@ cd ~/profile
 ./install.sh -a
 ```
 
-请确保看完**所有**小节之后再进行操作。
+> 请确保看完**所有**小节之后再进行操作。
 
-# 指令
+# 注意
 
-当你使用`zsh` 和`bash` 作为登陆Shell 时，你将可以使用一些额外的指令：
+## 本地文件
+
+配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是`~/profile`）！
+
+## Vim 界面无反应
+
+Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
+
+# 插件
+
+当你使用`zsh` 和`bash` 作为登陆Shell 时，你将可以使用一些小插件：
 
 | 指令 | 作用 |
 | --- | --- |
-| profile-upgrade | 更新这些配置源文件 |
-| profile-reconf | 重新设置这些配置文件 |
+| [profileupdate](zsh/.zsh/profileutils) | 更新配置仓库 |
+| [profilereconf](zsh/.zsh/profileutils) | 重设运行环境 |
 | oh-my-zsh-upgrade | 更新oh-my-zsh |
-| [android-env][ID_ANDROID_ENV] | 快速切换到android 开发环境 |
-| [apply][ID_APPLY] | 补丁操作 |
-| [archpkg][ID_ARCHPKG] | slackpkg 风格的Arch Linux 包管理器 |
-| [groot][ID_GROOT] | 跳到git 仓库顶层目录 |
-| [iam][ID_IAM] | 为git 仓库配置user 信息 |
-| [less][ID_LESS] | 更舒适的less 指令 |
-| [mount_function][ID_MOUNT_FUNCTION] | 更加安全便捷的mount/umount |
-| [ssh-env][ID_SSH_ENV] | ssh 密钥管理器 |
-| [vman][ID_VMAN] | 在Vim 中查看Manual |
-
-[ID_ANDROID_ENV]: zsh/.zsh/android_env
-[ID_APPLY]: zsh/.zsh/apply
-[ID_ARCHPKG]: zsh/.zsh/archpkg
-[ID_IAM]: zsh/.zsh/iam
-[ID_LESS]: zsh/.zsh/less
-[ID_MOUNT_FUNCTION]: zsh/.zsh/mount_function
-[ID_SSH_ENV]: zsh/.zsh/ssh_env
-[ID_GROOT]: zsh/.zsh/groot
-[ID_VMAN]: zsh/.zsh/vman
+| [androidenv](zsh/.zsh/androidenv) | 切换到安卓开发环境 |
+| [apply](zsh/.zsh/apply) | 补丁操作 |
+| [archpkg](zsh/.zsh/archpkg) | slackpkg 风格的Arch Linux 包管理器 |
+| [groot](zsh/.zsh/groot) | 跳到git 仓库顶层目录 |
+| [less](zsh/.zsh/less) | 更舒适的less |
+| [mountcmds](zsh/.zsh/mountcmds) | 一系列挂载、卸载指令 |
+| [sshenv](zsh/.zsh/sshenv) | ssh 密钥管理器 |
+| [vman](zsh/.zsh/vman) | 更舒适的Manual |
 
 # 依赖
-
-## 依赖列表
 
 | 文件 | 指令 |
 | --- | --- |
@@ -86,29 +83,7 @@ cd ~/profile
 
 > 其中`文件`字段表示你需要安装能够提供该文件的包；`指令`字段表示你只要能够提供一个可以正常使用的该指令即可。
 
-为什么安装一些配置需要依赖到`vim` 和`clang` 这样的指令，或者是`lua.h` 或者`zlib.h` 的提供包？嘛……原因很复杂，总之就是这么设定的！
-
-## clang
-
-color\_coded 配置过程用到`clang`，不同发行版中`clang` 所在的包不一定相同，例如Arch Linux 下是`clang` 包，Slackware 下是`llvm` 包，Debian 下则是`clang` 包和`clang-X.Y` 包。
-
-## python-config
-
-YCM 在cmake 的过程中用到`python-config`，不同发行版中`python-config` 所在包不一定相同，例如Arch Linux 和Slackware 下是`python` 包，Debian 下则是`python-dev` 包。
-
-## lua
-
-color\_coded 在配置过程中需要用到`lua` 和其开发包，Arch Linux 需要安装`lua` 包，Debian 则需要安装`libluaX.Y-N-dev` 和`luaX.Y`包。
-
-# 注意
-
-## 本地文件
-
-配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是~/profile）！
-
-## Vim 界面无反应
-
-Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
+为什么安装一些配置需要依赖到`vim` 和`clang` 这样的指令，或者是`lua.h` 和`zlib.h` 的提供包？嘛……原因很复杂，总之就是这么设定的！
 
 # Vim
 
@@ -122,26 +97,27 @@ profile-reconf
 
 ## 插件替代
 
-## YouCompleteMe (YCM)
+## YouCompleteMe -> clang\_complete
 
-可以使用Clang Complete 插件替代YCM 进行代码补全：
+YouCompleteMe 功能强大但是配置相对复杂。可以使用clang\_complete 插件替代YouCompleteMe 进行代码补全：
 
 ```vim
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'Rip-Rip/clang_complete'
 ```
-## color\_coded
 
-可以使用vim-cpp-enhanced-highlight 插件替代color\_coded 进行代码高亮：
+## color\_coded -> vim-cpp-enhanced-highlight
+
+color\_coded 是一个基于libclang 的语义级代码高亮插件，精准但是资源消耗大。可以使用vim-cpp-enhanced-highlight 插件替代color\_coded 进行代码高亮：
 
 ```vim
 "Plugin 'jeaye/color_coded'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 ```
 
-## gruvbox
+## gruvbox -> molokai
 
-可以使用molokai 配色替代gruvbox：
+grubbox 是一个保护视力的配色方案，但色彩较单一。可以使用molokai 配色替代gruvbox：
 
 ```vim
 "Plugin 'morhetz/gruvbox'

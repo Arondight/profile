@@ -29,7 +29,7 @@ function initPlugins ()
     fi
   fi
 
-  vim -c 'PluginInstall' -c 'qa'
+  vim -c 'PluginUpdate' -c 'qa'
 
   return $?
 }

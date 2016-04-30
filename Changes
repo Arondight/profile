@@ -1,3 +1,16 @@
+v2016-04-30
+  * all:
+      精简README.md
+  * bash & zsh:
+      重写了archpkg 和ssh_env
+      一些代码做了规范性调整
+      重命名ssh_env 为sshenv
+      重命名android_env 为androidenv
+      重命名profile_upgrade 为profileupdate
+      重命名profile_reconf 为profilereconf
+  * vim:
+      现在profilereconf 会更新并重配vim 插件了
+
 v2016-04-29.6
   * all:
       更新了README.md

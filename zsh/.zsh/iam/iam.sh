@@ -14,7 +14,7 @@ function iam ()
 
   if ! groot >/dev/null 2>&1
   then
-    echo "Not a git repository, quit."
+    echo "Not a git repository, quit." >&2
     return 1
   else
     echo "Change to top of current git repository."

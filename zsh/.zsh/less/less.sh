@@ -17,8 +17,8 @@ function less ()
   if type vim >/dev/null 2>&1
   then
     pager="vim -c 'set nofoldenable' \
-                      -c 'let no_plugin_maps = 1' \
-                      -c 'runtime! macros/less.vim'"
+               -c 'let no_plugin_maps = 1' \
+               -c 'runtime! macros/less.vim'"
   elif type nano >/dev/null 2>&1
   then
     pager='nano -v'

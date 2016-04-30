@@ -1,223 +1,354 @@
 #!/usr/bin/env cat
 # ==============================================================================
-# 像slackpkg 一样使用pacman
+# A slackpkg-style package manager for Arch Linux
 # ==============================================================================
 # Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
 # SOURCE ME!!!
 # ==============================================================================
 
-if [[ 'bash' != $(basename $0) ]]; then
-  fpath=($HOME/.zsh/archpkg $fpath)
+if [[ -n $ZSH_NAME ]]
+then
+  fpath+="${HOME}/.zsh/archpkg"
 fi
 
-function archpkg {
-  if [[ 0 -eq $# ]]; then
-    set -- "help"
-  fi
+function _archpkgHelp ()
+{
+  cat <<'END_OF_HELP' >&2
+archpkg - A slackpkg-style package manager for Arch Linux
 
-  if [[ ! -f /usr/bin/pacman ]]; then
-    echo "未发现pacman 指令"
-    return 1
-  fi
+Usage:
+  archpkg [option] <regex|file>
 
-  while true; do
-    case "$1" in
-      update)
-        shift
-        sudo pacman -Sy
-        if [[ -f /usr/bin/pkgfile ]]; then
-          sudo pkgfile --update
-        fi
-        return $?
-        ;;
-      check-updates)
-        shift
-        sudo pacman -Qu $@
-        return $?
-        ;;
-      upgrade-all)
-        shift
-        sudo pacman -Sy
-        sudo pacman --noconfirm --color auto -Su
-        sudo pacman --needed --noconfirm --color auto -S linux-headers
-        if [[ -f /usr/bin/pkgfile ]]; then
-          sudo pkgfile --update
-        fi
-        return $?
-        ;;
-      clean-system)
-        local result
-        shift
-        result=( $(pacman -Qqdt) )
-        if [[ 0 != ${#result[@]} ]]; then
-          sudo pacman --noconfirm --color auto -Rsn ${result[@]}
-        fi
-        sudo pacman --noconfirm --color auto -Sc
-        return $?
-        ;;
-      install)
-        shift
-        if [[ 0 -eq $# ]]; then
-          set -- 'help'
-          continue
-        fi
-        sudo pacman --needed --color auto -S $@
-        return $?
-        ;;
-       reinstall)
-        shift
-        if [[ 0 -eq $# ]]; then
-          set -- 'help'
-          continue
-        fi
-        sudo pacman --color auto -S $@
-        return $?
-        ;;
-      remove)
-        local result
-        shift
-        if [[ 0 -eq $# ]]; then
-          set -- 'help'
-          continue
-        fi
-        result=( $(pacman -Qqs $1) )
-        if [[ 0 != ${#result[@]} ]]; then
-          sudo pacman --color auto -Rsn ${result[@]}
-        fi
-        return $?
-        ;;
-      download)
-        shift;
-        if [[ 0 -eq $# ]]; then
-          set -- 'help'
-          continue
-        fi
-        sudo pacman --color auto -Sw $@
-        return $?
-        ;;
-      info)
-        shift
-        if [[ 0 -eq $# ]]; then
-          set -- 'help'
-          continue
-        fi
-        pacman --color auto -Si $@
-        return $?
-        ;;
-      search)
-        shift
-        if [[ 0 -eq $# ]]; then
-          set -- 'help'
-          continue
-        fi
-        pacman --color auto -Ss $@
-        return $?
-        ;;
-      file-search)
-        shift
-        if [[ 0 -eq $# ]]; then
-          set -- 'help'
-          continue
-        fi
-        if [[ ! -f /usr/bin/pkgfile ]]; then
-          sudo pacman --noconfirm --color auto -S pkgfile
-          sudo pkgfile --update
-        fi
-        pkgfile --search $@
-        return $?
-        ;;
-      generate-template)
-        local template_file
-        local list_of_packages
-        shift
-        if [[ 0 -eq $# ]]; then
-          set -- 'help'
-          continue
-        fi
-        template_file=$(readlink -f $1)
-        template_file="$template_file.template"
-        sudo -v
-        echo "生成软件包列表（需要一会儿）"
-        list_of_packages=$(pacman -Qqn)    # 这里不使用数组
-        echo "生成$template_file"
-        if [[ -e $template_file ]]; then
-          rm -f $template_file
-        fi
-        echo $list_of_packages | sudo tee -a $template_file >/dev/null 2>&1
-        return $?
-        ;;
-      install-template)
-        local template_file
-        local list_of_packages
-        shift
-        if [[ 0 -eq $# ]]; then
-          set -- 'help'
-          continue
-        fi
-        template_file=$(readlink -f $1)
-        template_file="$template_file.template"
-        if [[ ! -e $template_file ]]; then
-          echo "文件$template_file 不存在。"
-          return 1
-        fi
-        list_of_packages=( $(cat $template_file) )
-        sudo pacman --needed --color auto -S ${list_of_packages[@]}
-        return $?
-        ;;
-      remove-template)
-        local template_file
-        local list_of_packages
-        shift
-        if [[ 0 -eq $# ]]; then
-          set -- 'help'
-          continue
-        fi
-        template_file=$(readlink -f $1)
-        template_file="$template_file.template"
-        if [[ ! -e $template_file ]]; then
-          echo "文件$template_file 不存在。"
-          return 1
-        fi
-        list_of_packages=( $(cat $template_file) )
-        sudo pacman --color auto -Rsn ${list_of_packages[@]}
-        return $?
-        ;;
-      h|help|-h|--help)
-        cat << END_OF_HELP
-archpkg - Arch Linux 下slackpkg 风格的软件包管理器
+Options:
+  update                      Update repos
+  check-updates [package]     Check for update
+  upgrade-all                 Upgrade all packages
+  clean-system                Clean useless packages and cached files
+  install <package>           Install a package
+  reinstall <package>         Reinstall a package
+  remove <package>            Remove a package
+  download <package>          Download a package but do not install it
+  info <package>              Show info of a package
+  search <regex>              Search for package
+  file-search <file>          Show which package provide the file
+  generate-template <file>    Generate a template file contains all packages name
+  install-template <file>     Install all packages from a template file
+  remove-template <file>      Remove all packages from a template file
+  help                        Show this help message
 
-用法:
-  archpkg [选项] <匹配串|文件名>
-
-选项:
-  help                          显示本帮助
-  update                        更新软件仓库
-  check-updates [包名]          检查更新
-  upgrade-all                   更新系统
-  clean-system                  清理不被依赖的包和旧的缓存
-  install <包名>                安装软件包
-  reinstall <包名>              重新安装软件包
-  remove <正则表达式>           卸载软件包
-  download <包名>               下载软件包但不安装
-  info <包名>                   打印软件包信息
-  search <正则表达式>           查找软件包
-  file-search <文件名>          显示某文件属于哪个包
-  generate-template <模板名>    生成包含软件包列表的模板文件
-  install-template <模板名>     安装模板文件中记录的所有软件包
-  remove-template <模板名>      删除模板文件中记录的所有软件包(永远不要使用!)
-
-示例:
+Example:
   archpkg upgrade-all
   archpkg file-search vim
   archpkg remove lib32-.+
 END_OF_HELP
-        return 1
+
+  return $?
+}
+
+function _archpkgCheckUpgrades ()
+{
+  sudo pacman -Qu $@
+
+  return $?
+}
+
+function _archpkgUpdate ()
+{
+  sudo pacman -Sy
+
+  if type pkgfile >/dev/null 2>&1
+  then
+    sudo pkgfile --update
+  fi
+
+  return $?
+}
+
+function _archpkgUpgradeAll ()
+{
+  sudo pacman -Sy
+  sudo pacman --noconfirm --color auto -Su
+  sudo pacman --needed --noconfirm --color auto -S linux-headers
+
+  if type pkgfile >dev/null 2>&1
+  then
+    sudo pkgfile --update
+  fi
+
+  return $?
+}
+
+function _archpkgCleanSystem ()
+{
+  local result=( $(pacman -Qqdt) )
+
+  if [[ 0 -ne ${#result[@]} ]]
+  then
+    sudo pacman --noconfirm --color auto -Rsn ${result[@]}
+  fi
+
+  sudo pacman --noconfirm --color auto -Sc
+
+  return $?
+}
+
+function _archpkgInstall ()
+{
+  if [[ 0 -eq $# ]]
+  then
+    _archpkgHelp
+    return 1
+  fi
+
+  sudo pacman --needed --color auto -S $@
+
+  return $?
+}
+
+function _archpkgReinstall ()
+{
+  if [[ 0 -eq $# ]]
+  then
+    _archpkgHelp
+    return 1
+  fi
+
+  sudo pacman --color auto -S $@
+
+  return $?
+}
+
+function _archpkgRemove ()
+{
+  local result=''
+
+  if [[ 0 -eq $# ]]
+  then
+    _archpkgHelp
+    return 1
+  fi
+
+  result=( $(pacman -Qqs $1) )
+
+  if [[ 0 != ${#result[@]} ]]
+  then
+    sudo pacman --color auto -Rsn ${result[@]}
+  fi
+
+  return $?
+}
+
+function _archpkgDownload ()
+{
+  if [[ 0 -eq $# ]]
+  then
+    _archpkgHelp
+    return 1
+  fi
+
+  sudo pacman --color auto -Sw $@
+
+  return $?
+}
+
+function _archpkgInfo ()
+{
+  if [[ 0 -eq $# ]]
+  then
+    _archpkgHelp
+    return 1
+  fi
+
+  pacman --color auto -Si $@
+
+  return $?
+}
+
+function _archpkgSearch ()
+{
+  if [[ 0 -eq $# ]]
+  then
+    _archpkgHelp
+    return 1
+  fi
+
+  pacman --color auto -Si $@
+
+  return $?
+}
+
+function _archpkgFileSearch ()
+{
+  if [[ 0 -eq $# ]]
+  then
+    _archpkgHelp
+    return 1
+  fi
+
+  if ! type pkgfile >/dev/null 2>&1
+  then
+    sudo pacman --noconfirm --color auto -S pkgfile
+    sudo pkgfile --update
+  fi
+
+  pkgfile --search $@
+
+  return $?
+}
+
+function _archpkgGenerateTemplate ()
+{
+  local templatefile=''
+  local packages=''
+
+  if [[ 0 -eq $# ]]
+  then
+    _archpkgHelp
+    return 1
+  fi
+
+  templatefile=$(readlink -f $1)
+
+  packages=$(pacman -Qqn)    # 这里不使用数组
+  if [[ -e $templatefile ]]
+  then
+    rm -f $templatefile
+  fi
+
+  echo $packages | sudo tee -a $templatefile >/dev/null 2>&1
+
+  return $?
+}
+
+function _archpkgInstallTemplate ()
+{
+  local templatefile=''
+  local packages=''
+
+  if [[ 0 -eq $# ]]
+  then
+    _archpkgHelp
+    return 1
+  fi
+
+  templatefile=$(readlink -f $1)
+  if [[ ! -e $templatefile ]]
+  then
+    echo "File \"${templatefile}\" not exists."
+    return 1
+  fi
+
+  packages=( $(cat $templatefile) )
+  sudo pacman --needed --color auto -S ${packages[@]}
+
+  return $?
+}
+
+function _archpkgRemoveTemplate ()
+{
+  local templatefile=''
+  local packages=''
+
+  if [[ 0 -eq $# ]]
+  then
+    _archpkgHelp
+    return 1
+  fi
+
+  templatefile=$(readlink -f $1)
+  if [[ ! -e $templatefile ]]
+  then
+    echo "File \"${templatefile}\" not exists."
+    return 1
+  fi
+
+  packages=( $(cat $templatefile) )
+  sudo pacman --color auto -Rsn ${packages[@]}
+
+  return $?
+}
+
+function archpkg ()
+{
+  if [[ 0 -eq $# ]]
+  then
+    set -- 'help'
+  fi
+
+  if ! type pacman-key >/dev/null 2>&1
+  then
+    echo 'It seems that your system is not an Arch Linux like.'
+    return 1
+  fi
+
+  case $1 in
+    check-updates)
+      shift
+      _archpkgCheckUpgrades
+      ;;
+    update)
+      shift
+      _archpkgUpdate
+      ;;
+    upgrade-all)
+      shift
+      _archpkgUpgradeAll
+      ;;
+    clean-system)
+      shift
+      _archpkgCleanSystem
+      ;;
+    install)
+      shift
+      _archpkgInstall $@
         ;;
-      *)
-        echo "使用archpkg -h 查看帮助"
-        return 1
-    esac
-  done
+     reinstall)
+      shift
+      _archpkgReinstall $@
+      ;;
+    remove)
+      shift
+      _archpkgRemove $@
+      ;;
+    download)
+      shift
+      _archpkgDownload $@
+      ;;
+    info)
+      shift
+      _archpkgInfo $@
+      ;;
+    search)
+      shift
+      _archpkgSearch $@
+      ;;
+    file-search)
+      shift
+      _archpkgFileSearch $@
+      ;;
+    generate-template)
+      shift
+      _archpkgGenerateTemplate $@
+      ;;
+    install-template)
+      shift
+      _archpkgInstallTemplate $@
+      ;;
+    remove-template)
+      shift
+      _archpkgRemoveTemplate $@
+      ;;
+    h|help|-h|--help)
+      shift
+      _archpkgHelp
+      return 1
+      ;;
+    *)
+      echo 'Run "archpkg -h" to show help message.' >&2
+      return 1
+  esac
+
+  return $?
 }
 

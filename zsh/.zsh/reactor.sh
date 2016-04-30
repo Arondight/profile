@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# 注册自定义函数
+# 注册自定义插件
 # ==============================================================================
 # Created by Arondight <shell_way@foxmail.com>
 # ==============================================================================
@@ -57,6 +57,7 @@ function autotmux ()
   return $?
 }
 # 在虚拟化环境中尝试开各终端一致的tmux
+# XXX: 这样做真的利大于弊？tmux 在移动设备上的表现并不好
 if type systemd-detect-virt >/dev/null 2>&1
 then
   if [[ 'none' != $(systemd-detect-virt) ]]
@@ -68,7 +69,6 @@ fi
 # ==============================================================================
 # PATH
 # ==============================================================================
-# 脚本位于~/.zsh/path，后缀名为sh
 MYPATHDIR="${HOME}/.zsh/path"
 if [[ -d $MYPATHDIR ]]
 then
@@ -102,86 +102,27 @@ then
 fi
 
 # ==============================================================================
-# 重新配置
-# ==============================================================================
-alias profile-reconf='profile_reconf'
-function profile_reconf ()
-{
-  local PROFILEROOT=$(dirname $(dirname $(readlink -f $HOME/.zshrc)))
-  local CWD=$(pwd)
-  local INSTALL_SH="${PROFILEROOT}/install.sh"
-  local ARGS='-a'
-
-  cd $PROFILEROOT
-
-  if [[ -x $INSTALL_SH ]]
-  then
-    command $INSTALL_SH $ARGS
-  fi
-
-  cd $CWD
-
-  return $?
-}
-
-# ==============================================================================
-# 升级函数
-# ==============================================================================
-alias profile-upgrade='profile_upgrade'
-function profile_upgrade () {
-  local PROFILEROOT=$(dirname $(dirname $(readlink -f $HOME/.zshrc)))
-  local CWD=$(pwd)
-
-  cd $PROFILEROOT
-  if [[ '-f' == $1 ]]
-  then
-    git reset HEAD .
-    git checkout -- .
-  fi
-  if git pull --rebase --stat https://github.com/Arondight/profile.git master
-  then
-    cat <<'EOF'
-更新完成。
-你可以需要运行以下指令来重新配置：
-  profile-reconf
-EOF
-  else
-    cat <<'EOF'
-更新失败，可能由于您在本地对配置做了修改。
-你可以使用-f 参数强制更新，但是会清除这些修改：
-  profile-upgrade -f
-EOF
-  fi
-
-  cd $CWD
-
-  return $?
-}
-
-# ==============================================================================
 # 加载自定义配置
 # ==============================================================================
 # 只操作可读但不可执行的、以*sh 为后缀名的文件
 # ==============================================================================
-function load_local_script ()
+function myPluginLoader ()
 {
   local ZSHDIR="${HOME}/.zsh"
   local subdir=''
   local script=''
-
-  SCRIPTDIR=(
-    mount_function  # 分区快速挂载和批量卸载
-    less            # 替代系统less
-    archpkg         # slackpkg 风格的pacman 封装
-    android_env     # 快速切换android 开发环境
-    ssh_env         # 在ssh 密钥中快速切换
-    groot           # 跳到git 仓库顶层目录
-    vman            # 在Vim 中查看manual
-    apply           # 补丁工具
-    iam             # git 仓库user 信息配置
-    # 以下两行永远不应该被包含
-    #alias
-    #path
+  # "alias" 和"path" 永远不应该被包含到这个数组
+  local SCRIPTDIR=(
+    androidenv
+    apply
+    archpkg
+    iam
+    groot
+    less
+    mountcmds
+    profileutils
+    sshenv
+    vman
   )
 
   for subdir in ${SCRIPTDIR[@]}
@@ -201,8 +142,9 @@ function load_local_script ()
     unset subdir
   done
 }
+
 # 立刻装载一次
-load_local_script
+myPluginLoader
 
 # 对fpath 进行一次去重
 if type perl >/dev/null 2>&1
