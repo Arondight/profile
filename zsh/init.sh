@@ -14,22 +14,32 @@
   ZSHSYNHLURL='https://github.com/zsh-users/zsh-syntax-highlighting.git'
   ZSHCOMLDIR="${PLUGINDIR}/zsh-completions"
   ZSHCOMLURL="https://github.com/zsh-users/zsh-completions.git"
+  GITPULLCMD='git pull --rebase --stat'
 
-  echo -ne "Init profiles for zsh ...\t"
+  echo 'Init profiles for zsh ...'
 
   # oh-my-zsh
-  if [[ ! -d $OHMYZSHDIR ]];then
+  if [[ ! -d $OHMYZSHDIR ]]
+  then
     git clone $OHMYZSHURL $OHMYZSHDIR
+  else
+    cd $OHMYZSHDIR && command $GITPULLCMD
   fi
 
   # zsh-syntax-highlighting
-  if [[ ! -d $ZSHSYNHLDIR ]];then
+  if [[ ! -d $ZSHSYNHLDIR ]]
+  then
     git clone $ZSHSYNHLURL $ZSHSYNHLDIR
+  else
+    cd $ZSHSYNHLDIR && command $GITPULLCMD
   fi
 
   # zsh-completions
-  if [[ ! -d $ZSHCOMLDIR ]]; then
+  if [[ ! -d $ZSHCOMLDIR ]]
+  then
     git clone $ZSHCOMLURL $ZSHCOMLDIR
+  else
+    cd $ZSHCOMLDIR && command $GITPULLCMD
   fi
 
   # for possible insecure directories

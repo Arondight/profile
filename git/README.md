@@ -1,4 +1,4 @@
-git 配置文件，提供了配色、别名等基本的配置，不会被自动安装。
+git 配置文件。git 是一个git 的文本界面前端。
 
 ```bash
 ./install.force.sh

@@ -2,25 +2,29 @@
 # ==============================================================================
 # Completion for archpkg
 # ==============================================================================
-local -a options
 
-options=(
-  'update:Update repos'
-  'check-updates:Check for update'
-  'upgrade-all:Upgrade all packages'
-  'clean-system:Clean useless packages and cached files'
-  'install:Install a package'
-  'reinstall:Reinstall a package'
-  'remove:Remove a package'
-  'download:Download a package but do not install it'
-  'info:Show info of a package'
-  'search:Search for package'
-  'file-search:Show which package provide the file'
-  'generate-template:Generate a template file contains all packages name'
-  'install-template:Install all packages from a template file'
-  'remove-template:Remove all packages from a template file'
-  'help:Show this help message'
-)
+function _archpkg ()
+{
+  local options=(
+    'update:Update repos'
+    'check-updates:Check for update'
+    'upgrade-all:Upgrade all packages'
+    'clean-system:Clean useless packages and cached files'
+    'install:Install a package'
+    'reinstall:Reinstall a package'
+    'remove:Remove a package'
+    'download:Download a package but do not install it'
+    'info:Show info of a package'
+    'search:Search for package'
+    'file-search:Show which package provide the file'
+    'generate-template:Generate a template file contains all packages name'
+    'install-template:Install all packages from a template file'
+    'remove-template:Remove all packages from a template file'
+    'help:Show this help message'
+  )
 
-_describe 'values' options
+  _describe 'values' options
+}
+
+_archpkg
 

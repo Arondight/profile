@@ -2,7 +2,7 @@
 
 各式各样的配置文件，都是个人使用的，不过为了今后方便自己多系统使用和今后的迁移，写了一些一键安装配置和依赖的脚本。如果你要使用这些配置，对在你的机器上引发的一切不良后果例如蓝屏和发射核导弹概不负责。
 
-支持的架构为x86 系列（x86/x86\_64/amd64）。
+支持的架构为x86 系列（`x86`/`x86_64`/`amd64`）。
 
 测试通过的系统：
 
@@ -35,7 +35,7 @@ cd ~/profile
 
 配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是`~/profile`）！
 
-## Vim 界面无反应
+## 安装Vim 插件无反应
 
 Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
 
@@ -105,6 +105,8 @@ YouCompleteMe 功能强大但是配置相对复杂。可以使用clang\_complete
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'Rip-Rip/clang_complete'
 ```
+
+> 当前clang\_complete 存在一个导致Vim 花屏的BUG，详见 #12
 
 ## color\_coded -> vim-cpp-enhanced-highlight
 

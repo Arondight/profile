@@ -9,11 +9,15 @@
 {
   BASHPROMPTDIR="${HOME}/.bash/bash-git-prompt"
   BASHPROMPTURL='https://github.com/magicmonty/bash-git-prompt'
+  GITPULLCMD='git pull --rebase --stat'
 
-  echo -ne "Init profiles for bash ...\t"
+  echo 'Init profiles for bash ...'
 
-  if [[ ! -d $BASHPROMPTDIR ]]; then
+  if [[ ! -d $BASHPROMPTDIR ]]
+  then
     git clone $BASHPROMPTURL $BASHPROMPTDIR
+  else
+    cd $BASHPROMPTDIR && command $GITPULLCMD
   fi
 
   echo 'done'

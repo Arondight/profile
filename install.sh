@@ -7,9 +7,22 @@
 
 WORKDIR=$(dirname $(readlink -f $0))
 
-check=0
-install=0
-init=0
+function showHelp ()
+{
+  cat <<'END_OF_HELP' >&2
+Usage：
+  ./install.sh [Option]...
+Options：
+  -h, --help        Show this help
+  -c, --check       Check if everything is ready
+  -i, --install     Install these profiles
+  -a, --init        Init these profiles after installtion
+Example：
+  ./install.sh -a
+END_OF_HELP
+
+  return $?
+}
 
 function doCheck ()
 {
@@ -108,6 +121,11 @@ function doInit ()
 
 # MAIN:
 {
+  optCheck=0
+  optInstall=0
+  optInit=0
+  optHelp=0
+
   if [[ 0 -eq $# ]]
   then
     set -- '--help'
@@ -118,34 +136,23 @@ function doInit ()
     case $1 in
       -c|--check)
         shift
-        check=1
+        optCheck=1
         ;;
       -i|--install)
         shift
-        install=1
-        set -- '--check'
+        optInstall=1
+        set -- '--check' $@
         continue
         ;;
       -a|--init)
         shift
-        init=1
-        set -- '--install'
+        optInit=1
+        set -- '--install' $@
         continue
         ;;
       -h|--help)
         shift
-        cat << END_OF_HELP
-Usage：
-  ./install.sh [Option]...
-Options：
-  -h, --help        Show this help
-  -c, --check       Check if everything is ready
-  -i, --install     Install these profiles
-  -a, --init        Init these profiles after installtion
-Example：
-  ./install.sh -a
-END_OF_HELP
-        exit 1
+        optHelp=1
         ;;
       *)
         break
@@ -153,8 +160,17 @@ END_OF_HELP
     esac
   done
 
+  # show help {
+  if [[ 1 -eq $optHelp ]]
+  then
+    showHelp
+    exit 1
+  fi
+  # }
+
   # do check {
-  if [[ 1 -eq $check ]]; then
+  if [[ 1 -eq $optCheck ]]
+  then
     if ! doCheck
     then
       exit $?
@@ -163,7 +179,8 @@ END_OF_HELP
   # }
 
   # do install {
-  if [[ 1 -eq $install ]]; then
+  if [[ 1 -eq $optInstall ]]
+  then
     if ! doInstall
     then
       exit $?
@@ -172,7 +189,8 @@ END_OF_HELP
   # }
 
   # do init {
-  if [[ 1 -eq $init ]]; then
+  if [[ 1 -eq $optInit ]]
+  then
     if ! doInit
     then
       exit $?

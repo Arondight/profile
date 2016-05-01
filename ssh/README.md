@@ -2,7 +2,7 @@
 
 ```bash
 gpg ssh-env.tar.gz.asc
-ssh-env import ssh-env
+sshenv import ssh-env
 rm -f ssh-env.tar.gz
 ```
 
