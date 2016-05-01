@@ -14,6 +14,8 @@
   ZSHSYNHLURL='https://github.com/zsh-users/zsh-syntax-highlighting.git'
   ZSHCOMLDIR="${PLUGINDIR}/zsh-completions"
   ZSHCOMLURL="https://github.com/zsh-users/zsh-completions.git"
+  ZSHSUGGESTDIR="${PLUGINDIR}/zsh-autosuggestions"
+  ZSHSUGGESTURL='https://github.com/zsh-users/zsh-autosuggestions.git'
   GITPULLCMD='git pull --rebase --stat'
 
   echo 'Init profiles for zsh ...'
@@ -40,6 +42,14 @@
     git clone $ZSHCOMLURL $ZSHCOMLDIR
   else
     cd $ZSHCOMLDIR && command $GITPULLCMD
+  fi
+
+  # zsh-autosuggestions
+  if [[ ! -d $ZSHSUGGESTDIR ]]
+  then
+    git clone $ZSHSUGGESTURL $ZSHSUGGESTDIR
+  else
+    cd $ZSHSUGGESTDIR && command $GITPULLCMD
   fi
 
   # for possible insecure directories
