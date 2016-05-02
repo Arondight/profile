@@ -215,6 +215,7 @@ let g:UltiSnipsJumpBackwardTrigger="<C-N>"
 " Syntastic
 " 需要flake8
 let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_always_populate_loc_list = 1
@@ -235,7 +236,7 @@ let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
 let g:ycm_show_diagnostics_ui = 0   " Use GCC as checker (by syntastic)
 "let g:ycm_show_diagnostics_ui = 1   " Use Clang as checker (by YCM, better)
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 0
+let g:ycm_confirm_extra_conf = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_add_preview_to_completeopt = 0

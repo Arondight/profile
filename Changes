@@ -1,3 +1,8 @@
+v2016-05-02
+  * vim:
+      在~/.ycm_extra_conf.py 中添加了内核头文件目录
+      禁用syntastic 关闭检查以避免偶尔的退出时卡死
+
 v2016-05-01.2
   * zsh:
       增加插件zsh-autosuggestions

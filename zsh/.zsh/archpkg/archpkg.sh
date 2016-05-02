@@ -71,7 +71,7 @@ function _archpkgUpgradeAll ()
   sudo pacman --noconfirm --color auto -Su
   sudo pacman --needed --noconfirm --color auto -S linux-headers
 
-  if type pkgfile >dev/null 2>&1
+  if type pkgfile >/dev/null 2>&1
   then
     sudo pkgfile --update
   fi
