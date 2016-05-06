@@ -9,100 +9,83 @@
 # ==============================================================================
 
 # ==============================================================================
-# tmux
+# 对path 进行去重
 # ==============================================================================
-# 适用于无法分屏的ssh 的环境
-# ==============================================================================
-# 保持各终端tmux 的一致性
-function autosynctmux ()
+function _uniqPath ()
 {
-  local SESSIONID='autotmux'
-
-  if ! type tmux >/dev/null 2>&1
+  if ! type perl >/dev/null 2>&1
   then
     return 1
   fi
 
-  if [[ -z "$TMUX" ]]
-  then
-    export TERM=xterm-256color
-    if ! tmux attach
-    then
-      if tmux -2 new -s $SESSIONID
-      then
-        exit $?
-      fi
-    fi
-  fi
-
-  return $?
-}
-# 无视各终端tmux 的一致性
-function autotmux ()
-{
-  if ! type tmux >/dev/null 2>&1
-  then
-    return 1
-  fi
-
-  if [[ -z "$TMUX" ]]
-  then
-    export TERM=xterm-256color
-    if tmux -2 new
-    then
-      exit $?
-    fi
-  fi
-
-  return $?
-}
-# 在虚拟化环境中尝试开各终端一致的tmux
-# XXX: 这样做真的利大于弊？tmux 在移动设备上的表现并不好
-if type systemd-detect-virt >/dev/null 2>&1
-then
-  if [[ 'none' != $(systemd-detect-virt) ]]
-  then
-    autosynctmux
-  fi
-fi
-
-# ==============================================================================
-# PATH
-# ==============================================================================
-MYPATHDIR="${HOME}/.zsh/path"
-if [[ -d $MYPATHDIR ]]
-then
-  for script in ${MYPATHDIR}/*.sh
-  do
-    if [[ -r $script ]]
-    then
-      source $script
-    fi
-  done
-  unset script
-fi
-# 当前目录必须*最后*添加
-export PATH="${PATH}:."
-# 对path 进行一次去重
-if type perl >/dev/null 2>&1
-then
   # XXX: 这里的去重考虑使用sed/awk 重写
   export PATH=$(
     perl -E 'print join ":", grep { ++$_{$_} < 2 } split ":", $ENV{PATH}'
   )
-fi
+
+  return $?
+}
+
+# ==============================================================================
+# 对fpath 进行去重
+# ==============================================================================
+function _uniqFpath ()
+{
+  if ! type perl >/dev/null 2>&1
+  then
+    return 1
+  fi
+
+  # XXX: 这里的去重考虑使用sed/awk 重写
+  export FPATH=$(
+    echo -n $FPATH | perl -anF/:/ -E 'print join ":", grep { ++$_{$_} < 2 } @F'
+  )
+
+  return $?
+}
+
+# ==============================================================================
+# PATH
+# ==============================================================================
+function myPathLoader ()
+{
+  local MYPATHDIR="${HOME}/.zsh/path"
+
+  if [[ -d $MYPATHDIR ]]
+  then
+    for script in ${MYPATHDIR}/*.sh
+    do
+      if [[ -r $script ]]
+      then
+        source $script
+      fi
+    done
+    unset script
+  fi
+
+  # 当前目录必须*最后*添加
+  export PATH="${PATH}:."
+
+  return $?
+}
 
 # ==============================================================================
 # alias
 # ==============================================================================
-MYALIAS_SH="${HOME}/.zsh/alias/alias.sh"
-if [[ -r $MYALIAS_SH ]]
-then
-  source $MYALIAS_SH
-fi
+function myAliasLoader ()
+{
+  local MYALIAS_SH="${HOME}/.zsh/alias/alias.sh"
+
+  if [[ -r $MYALIAS_SH ]]
+  then
+    source $MYALIAS_SH
+  fi
+
+  return 0
+}
 
 # ==============================================================================
-# 加载自定义配置
+# 加载自定义插件
 # ==============================================================================
 # 只操作可读但不可执行的、以*sh 为后缀名的文件
 # ==============================================================================
@@ -119,6 +102,7 @@ function myPluginLoader ()
     iam
     groot
     less
+    logintmux
     mountcmds
     profileutils
     sshenv
@@ -143,16 +127,17 @@ function myPluginLoader ()
   done
 }
 
-# 立刻装载一次
-myPluginLoader
+{
+  # From this file
+  myPluginLoader
+  myPathLoader
+  myAliasLoader
 
-# 对fpath 进行一次去重
-if type perl >/dev/null 2>&1
-then
-  # XXX: 考虑使用awk/sed 重写
-  FPATH=$(
-    echo -n $FPATH | perl -anF/:/ -E  \
-      'print join ":", grep { ++$_{$_} < 2 } @F'
-  )
-fi
+  # From logintmux
+  loginTmux
+
+  # Do some clear
+  _uniqPath
+  _uniqFpath
+}
 

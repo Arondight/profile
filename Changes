@@ -1,3 +1,9 @@
+v2016-05-06
+  * bash & zsh:
+      单独将tmux 相关的函数拉出一个插件
+      在使用SSH 登陆时交互式地试图使用tmux 取代login shell
+      简化了reactor.sh
+
 v2016-05-02
   * vim:
       在~/.ycm_extra_conf.py 中添加了内核头文件目录
