@@ -28,6 +28,8 @@ function synctmux ()
       then
         exit $?
       fi
+    else
+      exit $?
     fi
   fi
 
@@ -72,7 +74,7 @@ function loginTmux ()
   echo -n 'It seems you login with a ssh client, work with tmux? (y/n) '
   read choose
 
-  if [[ $choose =~ '[^yY]' ]]
+  if echo $choose | grep -P '[^yY]' >/dev/null 2>&1
   then
     return 0
   fi
@@ -89,7 +91,7 @@ EOF
     echo -n 'Choose one: '
     read choose
 
-    if [[ $choose =~ '^[^0-9]+$' ]]
+    if echo $choose | grep -P '[^0-9]' >/dev/null 2>&1
     then
       continue
     fi

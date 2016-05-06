@@ -49,9 +49,10 @@ plugins=(
   per-directory-history perl python sudo systemadmin textmate themes torrent
   urltools wd web-search zsh-navigation-tools
 )
-if [[ -w $ZSH ]]; then
+if [[ -w $ZSH ]]
+then
   plugins+=zsh_reload
-  [[ ! -d "$ZSH/cache" ]] && env mkdir "$ZSH/cache"
+  mkdir -p "$ZSH/cache"
 fi
 # 第三方插件
 plugins+=(

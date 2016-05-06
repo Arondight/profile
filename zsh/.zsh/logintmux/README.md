@@ -4,3 +4,5 @@
 | nosynctmux | 独立操作的tmux |
 | loginTmux | 使用tmux 取代login shell |
 
+> BUG：无法`scp` 到目标机器。
+
