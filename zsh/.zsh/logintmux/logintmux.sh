@@ -12,7 +12,7 @@
 # ==============================================================================
 function synctmux ()
 {
-  local SESSIONID='autotmux'
+  local SESSIONID='loginTmuxSession'
 
   if ! type tmux >/dev/null 2>&1
   then
@@ -22,7 +22,7 @@ function synctmux ()
   if [[ -z "$TMUX" ]]
   then
     export TERM='xterm-256color'
-    if ! tmux attach
+    if ! tmux attach -t $SESSIONID
     then
       if tmux -2 new -s $SESSIONID
       then

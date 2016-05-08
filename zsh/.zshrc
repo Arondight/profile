@@ -49,16 +49,8 @@ plugins=(
   per-directory-history perl python sudo systemadmin textmate themes torrent
   urltools wd web-search zsh-navigation-tools
 )
-if [[ -w $ZSH ]]
-then
-  plugins+=zsh_reload
-  mkdir -p "$ZSH/cache"
-fi
-# 第三方插件
-plugins+=(
-  $(find $ZSH/custom/plugins/* -maxdepth 0 -type d | xargs -I {} basename {})
-)
 # 选择性加载
+[[ -w $ZSH ]] && plugins+=zsh_reload && mkdir -p "$ZSH/cache"
 type adb >/dev/null 2>&1 && plugins+=(adb repo)
 type apt-get >/dev/null 2>&1 && plugins+=debian
 type autojump >/dev/null 2>&1 && plugins+=autojump
@@ -82,6 +74,19 @@ type tmux >/dev/null 2>&1 && plugins+=tmux
 type whois >/dev/null 2>&1 && plugins+=iwhois
 type yum >/dev/null 2>&1 && plugins+=yum
 type zypper >/dev/null 2>&1 && plugins+=suse
+# 第三方插件
+customPlugins=(
+  #zsh-autosuggestions
+  zsh-completions
+  zsh-syntax-highlighting
+)
+allCustomPlugins=(
+  $(find $ZSH/custom/plugins/* -maxdepth 0 -type d | xargs -I {} basename {})
+)
+plugins+=(
+  $(echo ${customPlugins[@]} ${allCustomPlugins[@]} |\
+    tr '[:space:]' "\n" | sort | uniq -d)
+)
 
 # ==============================================================================
 # oh-my-zsh 自动更新

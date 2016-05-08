@@ -1,3 +1,9 @@
+v2016-05-08
+  * bash & zsh:
+      现在loginTmux 不会attach 到错误的session 了
+  * zsh:
+      现在有选择的加载第三方插件
+
 v2016-05-06.2
   * bash & zsh:
       修正了loginTmux 无法兼容bash 的问题
