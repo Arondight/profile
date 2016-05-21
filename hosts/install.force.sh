@@ -11,7 +11,7 @@ WORKDIR=$(dirname $(readlink -f $0))
 # MAIN:
 {
   HOSTSSRC="${WORKDIR}/hosts"
-  HOSTSDEST="${HOME}/hosts"
+  HOSTSDEST='/etc/hosts'
 
   if [[ -e $HOSTSDEST ]]
   then
@@ -25,7 +25,7 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $HOSTSDEST ]]
   then
-    sudo install $HOSTSSRC $HOSTSDEST
+    sudo install -Dm0644 $HOSTSSRC $HOSTSDEST
   fi
 
   echo 'done'

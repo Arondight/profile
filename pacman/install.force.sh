@@ -25,7 +25,7 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $PKMANDEST ]]
   then
-    sudo install $PKMANSRC $PKMANDEST
+    sudo install -Dm0644 $PKMANSRC $PKMANDEST
   fi
 
   echo 'done'

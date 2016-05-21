@@ -35,6 +35,10 @@ cd ~/profile
 
 配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是`~/profile`）！
 
+## libtinfo
+
+Vim 的某些插件需要使用`libtinfo.so.5`，有的发行版例如Arch Linux 不提供此库，你需要手动设置该库，具体方法详见[zsh/.zsh/androidenv/README.md](zsh/.zsh/androidenv/README.md)。
+
 ## 安装Vim 插件无反应
 
 Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
@@ -64,7 +68,7 @@ Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很�
 | `curses.h` | `awk` |
 | `lua.h` | `clang` |
 | `zlib.h` | `cmake` |
-| | `date` |
+| `libtinfo.so.5` | `date` |
 | | `gcc` |
 | | `git` |
 | | `grep` |

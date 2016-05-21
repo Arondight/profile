@@ -25,7 +25,7 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $TIGRCDEST ]]
   then
-    install $TIGRCSRC $TIGRCDEST
+    install -Dm0644 $TIGRCSRC $TIGRCDEST
   fi
 
   echo 'done'

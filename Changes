@@ -1,3 +1,11 @@
+v2016-05-21
+  * all:
+      更改了可能导致配置文件权限不恰当的安装脚本
+  * hosts:
+      修改了错误的安装路径
+  * vim:
+      现在检查系统对libtinfo 库的支持
+
 v2016-05-08
   * bash & zsh:
       现在loginTmux 不会attach 到错误的session 了

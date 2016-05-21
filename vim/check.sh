@@ -91,6 +91,15 @@
     echo 'ok'
   fi
 
+  echo -ne "Checking libtinfo ...\t"
+  if [[ ! -f $(readlink -f '/usr/lib/libtinfo.so.5') ]]
+  then
+    echo "failed\tSee git repository's README.md file for more."
+    ret=1
+  else
+    echo 'ok'
+  fi
+
   exit $ret
 }
 

@@ -25,7 +25,7 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $TMUXCONFDEST ]]
   then
-    install $TMUXCONFSRC $TMUXCONFDEST
+    install -Dm0644 $TMUXCONFSRC $TMUXCONFDEST
   fi
 
   echo 'done'

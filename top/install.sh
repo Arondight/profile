@@ -25,7 +25,7 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $TOPRCDEST ]]
   then
-    install $TOPRCSRC $TOPRCDEST
+    install -Dm0644 $TOPRCSRC $TOPRCDEST
   fi
 
   echo 'done'
