@@ -7,7 +7,7 @@
 
 # MAIN:
 {
-  LIBNCURSESW='/usr/lib/libncursesw.so.6'
+  LIBNCURSESW=$(find /lib /usr/lib -name 'libncursesw.so' | sort | head -1)
   lib=''
 
   if [[ ! -e $LIBNCURSESW ]]

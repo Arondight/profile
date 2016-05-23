@@ -8,6 +8,7 @@
 # MAIN:
 {
   HEADERS=( $(find /usr/include -type f) )
+  LIBS=( $(find -L /lib{,64} /usr/lib{,64} -type f) )
   ret=0
 
   echo -ne "Checking vim ...\t"
@@ -38,7 +39,7 @@
   fi
 
   echo -ne "Checking lua.h ...\t"
-  if ! echo ${HEADERS[@]} | grep -P '\blua\.h\b' >/dev/null 2>&1
+  if ! echo ${HEADERS[@]} | grep -oP '\blua\.h\b' >/dev/null 2>&1
   then
     echo 'failed'
     ret=1
@@ -47,7 +48,7 @@
   fi
 
   echo -ne "Checking zlib.h ...\t"
-  if ! echo ${HEADERS[@]} | grep -P '\bzlib\.h\b' >/dev/null 2>&1
+  if ! echo ${HEADERS[@]} | grep -oP '\bzlib\.h\b' >/dev/null 2>&1
   then
     echo 'failed'
     ret=1
@@ -56,7 +57,7 @@
   fi
 
   echo -ne "Checking curses.h ...\t"
-  if ! echo ${HEADERS[@]} | grep -P '\bcurses\.h\b' >/dev/null 2>&1
+  if ! echo ${HEADERS[@]} | grep -oP '\bcurses\.h\b' >/dev/null 2>&1
   then
     echo 'failed'
     ret=1
@@ -92,9 +93,9 @@
   fi
 
   echo -ne "Checking libtinfo ...\t"
-  if [[ ! -f $(readlink -f '/usr/lib/libtinfo.so.5') ]]
+  if ! echo ${LIBS[@]} | grep -oP '\blibtinfo\.so\.5\b' >/dev/null 2>&1
   then
-    echo "failed\tSee git repository's README.md file for more."
+    echo -e "failed\tSee git repository's README.md file for more info."
     ret=1
   else
     echo 'ok'

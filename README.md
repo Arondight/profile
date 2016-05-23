@@ -8,7 +8,7 @@
 
 - [x] Arch Linux
 - [ ] Debian 8
-- [ ] Ubuntu 16.04
+- [x] Ubuntu 16.04
 - [ ] CentOS 7
 - [ ] openSUSE 13.2
 - [ ] Slackware 14.2
