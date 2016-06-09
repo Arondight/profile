@@ -2,18 +2,17 @@
 
 各式各样的配置文件，都是个人使用的，不过为了今后方便自己多系统使用和今后的迁移，写了一些一键安装配置和依赖的脚本。如果你要使用这些配置，对在你的机器上引发的一切不良后果例如蓝屏和发射核导弹概不负责。
 
-支持的架构为x86 系列（`x86`/`x86_64`/`amd64`）。
+支持的架构为`X86`。
 
 测试通过的系统：
 
 - [x] Arch Linux
-- [ ] Debian 8
-- [x] Ubuntu 16.04
-- [ ] CentOS 7
+- [ ] CentOS 7.2.1511
+- [x] Debian 8.5.0
+- [x] Fedora 23
 - [ ] openSUSE 13.2
-- [ ] Slackware 14.2
-
-> 通常来说，只要系统不要太老即可，上面没过的基本都是没测。
+- [x] Slackware 14.2
+- [x] Ubuntu 16.04
 
 # 安装
 
@@ -109,8 +108,6 @@ YouCompleteMe 功能强大但是配置相对复杂。可以使用clang\_complete
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'Rip-Rip/clang_complete'
 ```
-
-> 当前clang\_complete 存在一个导致Vim 花屏的BUG，详见 #12
 
 ## color\_coded -> vim-cpp-enhanced-highlight
 
