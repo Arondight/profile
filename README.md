@@ -1,4 +1,6 @@
-# 说明
+# profile
+
+## 说明
 
 各式各样的配置文件，都是个人使用的，不过为了今后方便自己多系统使用和今后的迁移，写了一些一键安装配置和依赖的脚本。如果你要使用这些配置，对在你的机器上引发的一切不良后果例如蓝屏和发射核导弹概不负责。
 
@@ -14,7 +16,7 @@
 - [x] Slackware 14.2
 - [x] Ubuntu 16.04
 
-# 安装
+## 安装
 
 其中根目录下的`install.sh` 用于整体的安装，每个子目录下的`check.sh` 用于检查系统环境，`install.sh` 用于备份并复制配置文件，`init.sh` 用于搭建配置需要的运行环境，`install.force.sh` 用于手动安装一些可能需要保持机器上独立的配置。
 
@@ -28,21 +30,21 @@ cd ~/profile
 
 > 请确保看完**所有**小节之后再进行操作。
 
-# 注意
+## 注意
 
-## 本地文件
+### 本地文件
 
 配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是`~/profile`）！
 
-## libtinfo
+### libtinfo
 
 Vim 的某些插件需要使用`libtinfo.so.5`，有的发行版例如Arch Linux 不提供此库，你需要手动设置该库，具体方法详见[zsh/.zsh/androidenv/README.md](zsh/.zsh/androidenv/README.md)。
 
-## 安装Vim 插件无反应
+### 安装Vim 插件无反应
 
 Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
 
-# 插件
+## 插件
 
 当你使用`zsh` 和`bash` 作为登陆Shell 时，你将可以使用一些小插件：
 
@@ -60,7 +62,7 @@ Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很�
 | [sshenv](zsh/.zsh/sshenv) | ssh 密钥管理器 |
 | [vman](zsh/.zsh/vman) | 更舒适的Manual |
 
-# 依赖
+## 依赖
 
 | 文件 | 指令 |
 | --- | --- |
@@ -88,9 +90,9 @@ Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很�
 
 为什么安装一些配置需要依赖到`vim` 和`clang` 这样的指令，或者是`lua.h` 和`zlib.h` 的提供包？嘛……原因很复杂，总之就是这么设定的！
 
-# Vim
+## Vim
 
-## 插件改动
+### 插件改动
 
 在**任何**插件改动后都要执行指令：
 
@@ -98,9 +100,9 @@ Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很�
 profilereconf
 ```
 
-## 插件替代
+### 插件替代
 
-## YouCompleteMe -> clang\_complete
+#### YouCompleteMe -> clang\_complete
 
 YouCompleteMe 功能强大但是配置相对复杂。可以使用clang\_complete 插件替代YouCompleteMe 进行代码补全：
 
@@ -109,7 +111,7 @@ YouCompleteMe 功能强大但是配置相对复杂。可以使用clang\_complete
 Plugin 'Rip-Rip/clang_complete'
 ```
 
-## color\_coded -> vim-cpp-enhanced-highlight
+#### color\_coded -> vim-cpp-enhanced-highlight
 
 color\_coded 是一个基于libclang 的语义级代码高亮插件，精准但是资源消耗大。可以使用vim-cpp-enhanced-highlight 插件替代color\_coded 进行代码高亮：
 
@@ -118,7 +120,7 @@ color\_coded 是一个基于libclang 的语义级代码高亮插件，精准但�
 Plugin 'octol/vim-cpp-enhanced-highlight'
 ```
 
-## gruvbox -> molokai
+#### gruvbox -> molokai
 
 grubbox 是一个保护视力的配色方案，但色彩较单一。可以使用molokai 配色替代gruvbox：
 
