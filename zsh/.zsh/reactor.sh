@@ -133,8 +133,10 @@ function myPluginLoader ()
   myPathLoader
   myAliasLoader
 
-  # From logintmux
+  # From logintmux directory
   loginTmux
+  # From iam directory
+  iam
 
   # Do some clear
   _uniqPath
