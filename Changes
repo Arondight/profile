@@ -1,3 +1,7 @@
+v2016-07-12.1
+  * pacman:
+      增加了几个XferCommand
+
 v2016-07-12
   * bash & zsh:
       修改了alias
