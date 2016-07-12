@@ -68,6 +68,7 @@ function _archpkgUpdate ()
 function _archpkgUpgradeAll ()
 {
   sudo pacman -Sy
+  sudo pacman --needed --noconfirm --color auto -S xdelta3
   sudo pacman --noconfirm --color auto -Su
   sudo pacman --needed --noconfirm --color auto -S linux-headers
 
@@ -303,7 +304,7 @@ function archpkg ()
       shift
       _archpkgInstall $@
         ;;
-     reinstall)
+    reinstall)
       shift
       _archpkgReinstall $@
       ;;

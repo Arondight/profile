@@ -1,3 +1,9 @@
+v2016-07-12
+  * bash & zsh:
+      修改了alias
+  * pacman:
+      使用增量更新 \(^o^)/~
+
 v2016-06-28
   * bash & zsh:
       rm/mv/ln/cp 增加-v 选择

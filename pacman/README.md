@@ -2,5 +2,6 @@
 
 ```bash
 ./install.force.sh
+sudo pacman -S xdelta3
 ```
 
