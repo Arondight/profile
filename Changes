@@ -1,3 +1,7 @@
+v2016-09-13
+  * vim:
+      不再显式指定color_coded 调用clang 的-fcolor-diagnostics 参数
+
 v2016-07-12.1
   * pacman:
       增加了几个XferCommand

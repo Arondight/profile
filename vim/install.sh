@@ -14,8 +14,6 @@ WORKDIR=$(dirname $(readlink -f $0))
   VIMRCDEST="${HOME}/.vimrc"
   YCMRCSRC="${WORKDIR}/.ycm_extra_conf.py"
   YCMRCDEST="${HOME}/.ycm_extra_conf.py"
-  COLORCODEDSRC="${WORKDIR}/.color_coded"
-  COLORCODEDDEST="${HOME}/.color_coded"
 
   if [[ -e $VIMRCDEST ]]
   then
@@ -43,11 +41,6 @@ WORKDIR=$(dirname $(readlink -f $0))
   if [[ ! -e $YCMRCDEST ]]
   then
     ln -sf $YCMRCSRC $YCMRCDEST
-  fi
-
-  if [[ ! -e $COLORCODEDDEST ]]
-  then
-    ln -sf $COLORCODEDSRC $COLORCODEDDEST
   fi
 
   echo 'done'
