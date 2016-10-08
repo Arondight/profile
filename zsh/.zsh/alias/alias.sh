@@ -53,6 +53,10 @@ alias ~='cd ~'
 alias cds='cd'
 alias cdl='cd'
 # }
+# 下载 {
+alias curl='curl -L -c -'
+alias wget='wget -c'
+# }
 # 安全措施{
 alias cp='env cp -iv'
 alias mv='env mv -iv'

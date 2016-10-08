@@ -62,3 +62,4 @@
     scroll_on_output = False
     scrollback_lines = 655360
     use_system_font = False
+    word_chars = "-A-Za-z0-9,./?%&#:_~"
