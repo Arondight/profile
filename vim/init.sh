@@ -113,6 +113,16 @@ function initYCM ()
       buildpara="$buildpara --omnisharp-completer"
     fi
 
+    if type rustc >/dev/null 2>&1
+    then
+      buildpara="$buildpara --racer-completer"
+    fi
+
+    if type npm >/dev/null 2>&1 && type node >/dev/null 2>&1
+    then
+      buildpara="$buildpara --tern-completer"
+    fi
+
     cd $YCMDIR
 
     if ! git submodule update --init --recursive

@@ -1,7 +1,11 @@
+v2016-10-11.1
+  * vim:
+      为YouCompleteMe 添加JavaScript 和Rust 支持
+
 v2016-10-11
   * vim:
       0x23..0x26, 0x40 不在作为单词的一部分
-      初始化时使用color_coded/build 目录下的高版本clang 根目录
+      YouCompleteMe 使用color_coded/build 目录下的高版本clang 根目录
 
 v2016-10-08
   * bash & zsh:
