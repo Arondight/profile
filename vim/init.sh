@@ -96,8 +96,7 @@ function initYCM ()
   if [[ -d $YCMDIR ]]
   then
     buildpara="--clang-completer"
-    clangroot=( $(find $HOME/.vim/bundle/color_coded/build -maxdepth 1 -type d -name 'clang*') )
-    clangroot=${clangroot[-1]}
+    clangroot=$(find $HOME/.vim/bundle/color_coded/build -maxdepth 1 -type d -name 'clang*' | sort -r | head -n 1)
 
     if [[ -z $clangroot && -e $LIBCLANG_SO ]]
     then

@@ -132,7 +132,7 @@ set clipboard+=unnamed                " 关联系统的剪贴板
 set encoding=utf-8                    " vim内部使用的编码方式
 set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set fileformat=unix                   " 换行符风格
-set iskeyword+=35-38,64               " 以下字符被看作单词的一部分
+"set iskeyword+=35-38,64               " 以下字符被看作单词的一部分
 set laststatus=2                      " 总是显示状态栏
 set langmenu=zh_CN.utf-8              " GUI 菜单编码
 language message zh_CN.utf-8          " 打印信息的语言
