@@ -25,7 +25,7 @@
   then
     git clone $OHMYZSHURL $OHMYZSHDIR
   else
-    cd $OHMYZSHDIR && command $GITPULLCMD
+    pushd $OHMYZSHDIR && command $GITPULLCMD && popd
   fi
 
   # zsh-syntax-highlighting
@@ -33,7 +33,7 @@
   then
     git clone $ZSHSYNHLURL $ZSHSYNHLDIR
   else
-    cd $ZSHSYNHLDIR && command $GITPULLCMD
+    pushd $ZSHSYNHLDIR && command $GITPULLCMD && popd
   fi
 
   # zsh-completions
@@ -41,7 +41,7 @@
   then
     git clone $ZSHCOMLURL $ZSHCOMLDIR
   else
-    cd $ZSHCOMLDIR && command $GITPULLCMD
+    pushd $ZSHCOMLDIR && command $GITPULLCMD && popd
   fi
 
   # zsh-autosuggestions
@@ -49,7 +49,7 @@
   then
     git clone $ZSHSUGGESTURL $ZSHSUGGESTDIR
   else
-    cd $ZSHSUGGESTDIR && command $GITPULLCMD
+    pushd $ZSHSUGGESTDIR && command $GITPULLCMD && popd
   fi
 
   # for possible insecure directories

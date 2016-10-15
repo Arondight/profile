@@ -1,9 +1,33 @@
 # backup files
 *~
 *.swp
+
 # tags
 .tags*
 tags
 
+# log files
+*.log
+
+# dot files
+.*
+
+# git
+!.gitignore
+
+# python
+*.pyc
+
+# make file
+*.o
+*.o.d
+core
+*.ko
+*.mod
+*.mod.c
+Module.symvers
+modules.order
+
 # nano history file
 search_history
+

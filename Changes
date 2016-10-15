@@ -1,3 +1,10 @@
+v2016-10-16
+  * all:
+      使用pushd/popd 替换了可能引发问题的cd 指令
+      更好的.gitignore
+  * vim:
+      为内核模块查错进行准备
+
 v2016-10-11.1
   * vim:
       为YouCompleteMe 添加JavaScript 和Rust 支持

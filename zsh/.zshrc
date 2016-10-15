@@ -94,15 +94,13 @@ plugins+=(
 # 关闭oh-my-zsh 自带的定期更新，当$ZSH 目录有写权限时提供更新指令
 DISABLE_AUTO_UPDATE="true"
 alias oh-my-zsh-upgrade='oh_my_zsh_upgrade'
-function oh_my_zsh_upgrade {
-  local current_path=$(pwd)
-
+function oh_my_zsh_upgrade
+{
   if [[ -w "$ZSH/.git" ]]; then
-    cd $ZSH/tools;
+    pushd $ZSH/tools;
     zsh $ZSH/tools/upgrade.sh;
+    popd
   fi
-
-  cd $current_path
 }
 
 # ==============================================================================

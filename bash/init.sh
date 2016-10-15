@@ -17,7 +17,7 @@
   then
     git clone $BASHPROMPTURL $BASHPROMPTDIR
   else
-    cd $BASHPROMPTDIR && command $GITPULLCMD
+    pushd $BASHPROMPTDIR && command $GITPULLCMD && popd
   fi
 
   echo 'done'

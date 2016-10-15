@@ -223,6 +223,8 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_c_checkers = ["gcc", "clang"]
 let g:syntastic_c_compiler_options = '-std=gnu99 -Wall'
+let g:syntastic_c_config_file = ''
+"let g:syntastic_c_no_default_include_dirs = 0
 let g:syntastic_cpp_checkers = ["g++", "clang++"]
 let g:syntastic_cpp_include_dirs = ['/usr/include/qt']
 let g:syntastic_cpp_compiler_options = '-std=gnu++11 -Wall'
@@ -236,7 +238,7 @@ let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
 let g:ycm_show_diagnostics_ui = 0   " Use GCC as checker (by syntastic)
 "let g:ycm_show_diagnostics_ui = 1   " Use Clang as checker (by YCM, better)
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 1
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_add_preview_to_completeopt = 0

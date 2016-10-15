@@ -42,8 +42,9 @@ function initVimproc ()
 
   if [[ -d $VIMPROCDIR ]]
   then
-    cd $VIMPROCDIR
+    pushd $VIMPROCDIR
     make -j4
+    popd
     return $?
   fi
 
@@ -58,9 +59,10 @@ function initColorCoded ()
   if [[ -d $COLORCODEDDIR ]]
   then
     mkdir -p "${COLORCODEDDIR}/build"
-    cd "${COLORCODEDDIR}/build"
+    pushd "${COLORCODEDDIR}/build"
     cmake ..
     cmake --build . --target install --config Release -- -j4
+    popd
 
     return $?
   fi
@@ -82,6 +84,28 @@ function initLibtinfo ()
   fi
 
   return 1
+}
+
+function initSyntastic ()
+{
+  local KDIR="/usr/lib/modules/$(uname -r)/build"
+  local SYNTASTICDIR="$(dirname $(readlink -f $0))/syntastic"
+  local SYNTASTIC_C_CONFIG="${HOME}/.syntastic_c_config"
+
+  if [[ ! -d $KDIR ]]
+  then
+    return
+  fi
+
+  echo $SYNTASTICDIR
+  pushd $SYNTASTICDIR
+  make clean
+  make all V=1 2>&1 | grep -oP -- '-nostdinc.+?(?=-DKBUILD_BASENAME)' | \
+    head -n 1 |  tee $SYNTASTIC_C_CONFIG
+  make clean
+  sed -i 's/[ \t]\+/\n/g' $SYNTASTIC_C_CONFIG
+  sed -i '/^\s*$/d' $SYNTASTIC_C_CONFIG
+  popd
 }
 
 # YCM
@@ -123,7 +147,7 @@ function initYCM ()
       buildpara="$buildpara --tern-completer"
     fi
 
-    cd $YCMDIR
+    pushd $YCMDIR
 
     if ! git submodule update --init --recursive
     then
@@ -138,14 +162,17 @@ function initYCM ()
     elif [[ -n $clangroot ]]
     then
       mkdir -p ${YCMDIR}/build && \
-        cd ${YCMDIR}/build && \
+        pushd ${YCMDIR}/build && \
         cmake -DPATH_TO_LLVM_ROOT=$clangroot . ${YCMDIR}/third_party/ycmd/cpp && \
-        cmake --build . --target ycm_core --config Release
+        cmake --build . --target ycm_core --config Release && \
+        popd
       return $?
     else
       python2 "${YCMDIR}/install.py" $buildpara
       return $?
     fi
+
+    popd
   fi
 
   return 0
@@ -161,6 +188,7 @@ function initYCM ()
   initVimproc
   initColorCoded
   initLibtinfo
+  initSyntastic
   initYCM
 
   echo 'done'

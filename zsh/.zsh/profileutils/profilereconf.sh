@@ -11,12 +11,11 @@ alias profile_reconf='profilereconf'
 function profilereconf ()
 {
   local PROFILEROOT=$(dirname $(dirname $(readlink -f $HOME/.zshrc)))
-  local CWD=$(pwd)
   local INSTALL_SH="${PROFILEROOT}/install.sh"
   local ARGS='-a'
   local ret=0
 
-  cd $PROFILEROOT
+  pushd $PROFILEROOT
 
   if [[ -x $INSTALL_SH ]]
   then
@@ -27,7 +26,7 @@ function profilereconf ()
     ret=1
   fi
 
-  cd $CWD
+  popd
 
   return $?
 }

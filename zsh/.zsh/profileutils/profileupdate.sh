@@ -10,11 +10,10 @@ function profileupdate () {
   local ORIGINGITURL='https://github.com/Arondight/profile.git'
   local URLREG='https?://(([\w\d\.-]+\.\w{2,6})|(\d{1,3}(\.\d{1,3}){3}))(:\d{1,4})*(/[\w\d\&%\./-~-]*)?'
   local BRANCH='master'
-  local CWD=$(pwd)
   local gitconf=''
   local giturl=''
 
-  cd $PROFILEROOT
+  pushd $PROFILEROOT
 
   if type groot >/dev/null 2>&1
   then
@@ -45,7 +44,7 @@ function profileupdate () {
     echo 'Use "-f" option to do a force update, but you will lose local changes.' >&2
   fi
 
-  cd $CWD
+  popd
 
   return $?
 }
