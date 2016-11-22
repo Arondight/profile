@@ -11,8 +11,8 @@
 - [x] Arch Linux
 - [ ] CentOS 7.2.1511
 - [x] Debian 8.5.0
-- [x] Fedora 23
-- [ ] openSUSE 13.2
+- [x] Fedora 26
+- [x] openSUSE 42.2
 - [x] Slackware 14.2
 - [x] Ubuntu 16.04
 

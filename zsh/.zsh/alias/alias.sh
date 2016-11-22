@@ -60,7 +60,7 @@ alias wget='wget -c'
 # 安全措施{
 alias cp='env cp -iv'
 alias mv='env mv -iv'
-alias rm='env rm -Iv --preserve-root'
+alias rm='env rm -iv --preserve-root'
 alias ln='env ln -iv'
 alias chown='env chown -v --preserve-root'
 alias own='chown'
