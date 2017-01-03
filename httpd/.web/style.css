@@ -1,0 +1,51 @@
+p {
+  font-family: "sans-serif";
+  color: #0080FF;
+  font-weight: bolder;
+  font-size: 36px;
+  text-align: center;
+}
+h3 {
+  width: 80%;
+  margin: 0 auto;
+  text-align: right;
+  color: #757575;
+}
+table {
+  width: 80%;
+  border-collapse: collapse;
+  border: 1px #858585 solid;
+  margin: 0 auto
+}
+table td {
+  line-height: 20px;
+  font-size: 18px;
+  text-align: left;
+  border: 1px #858585 solid;
+}
+table td:nth-child(1) {
+  width: 20px;
+  text-align: right;
+}
+table tr:nth-child(odd) {
+  background: #f0f0f0;
+}
+table tr:hover {
+  background: #ACD6FF;
+  color: #990000;
+}
+table th {
+  background: #999999;
+  line-height: 17px;
+}
+table th  a:link {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+table th  a:visited {
+  color: #FFFFFF;
+}
+table th  a:hover {
+  color: #FFFF00;
+}
+

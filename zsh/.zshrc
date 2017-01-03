@@ -24,9 +24,10 @@ function oh_my_zsh_conf ()
   # ==============================================================================
   # PROMPT - 注释了一些不错的
   # ==============================================================================
+  #ZSH_THEME='af-magic'
   #ZSH_THEME='robbyrussell'
-  ZSH_THEME='ys'
   #ZSH_THEME='tjkirch'
+  ZSH_THEME='ys'
 
   # ==============================================================================
   # oh-my-zsh 插件
@@ -37,7 +38,7 @@ function oh_my_zsh_conf ()
     'dircycle' 'dirhistory' 'dirpersist' 'encode64' 'gnu-utils'
     'history-substring-search' 'jump' 'pass per-directory-history' 'perl'
     'systemadmin' 'textmate' 'themes' 'torrent' 'urltools' 'wd' 'web-search'
-    'zsh-navigation-tools'
+    'zsh-navigation-tools' 'zsh_reload'
   )
   # 选择性加载
   existcmd 'adb' && plugins+=('adb' 'repo')
