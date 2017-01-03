@@ -5,7 +5,7 @@
 # SOURCE ME!!!
 # ==============================================================================
 
-if type gem >/dev/null 2>&1
+if existcmd gem
 then
   export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi

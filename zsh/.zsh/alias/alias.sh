@@ -119,7 +119,7 @@ alias :x='q'
 # ==============================================================================
 # Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
-if [[ -n $ZSH_NAME ]]
+if [[ -n "$ZSH_NAME" ]]
 then
   source "${HOME}/.zsh/alias/global_alias.zsh"
 fi

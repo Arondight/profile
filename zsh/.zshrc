@@ -7,16 +7,135 @@
 # ==============================================================================
 
 # ==============================================================================
+# If a command exist
+# ==============================================================================
+function existcmd ()
+{
+  local cmd="$1"
+  type "$cmd" 2>&1 >/dev/null
+  return $?
+}
+
+# ==============================================================================
+# 配置oh-my-zsh
+# ==============================================================================
+function oh_my_zsh_conf ()
+{
+  # ==============================================================================
+  # PROMPT - 注释了一些不错的
+  # ==============================================================================
+  #ZSH_THEME='robbyrussell'
+  ZSH_THEME='ys'
+  #ZSH_THEME='tjkirch'
+
+  # ==============================================================================
+  # oh-my-zsh 插件
+  # ==============================================================================
+  # 官方通用插件
+  plugins=(
+    'battery' 'colorize' 'command-not-found' 'common-aliases' 'copydir' 'copyfile'
+    'dircycle' 'dirhistory' 'dirpersist' 'encode64' 'gnu-utils'
+    'history-substring-search' 'jump' 'pass per-directory-history' 'perl'
+    'systemadmin' 'textmate' 'themes' 'torrent' 'urltools' 'wd' 'web-search'
+    'zsh-navigation-tools'
+  )
+  # 选择性加载
+  existcmd 'adb' && plugins+=('adb' 'repo')
+  existcmd 'apt-get' && plugins+='debian'
+  existcmd 'autojump' && plugins+='autojump'
+  existcmd 'dnf' && plugins+='dnf'
+  existcmd 'docker' && plugins+='docker'
+  existcmd 'emacs' && plugins+='emacs'
+  existcmd 'fbterm' && plugins+='fbterm'
+  existcmd 'firewalld' && plugins+='firewalld'
+  existcmd 'git' && plugins+=('git' 'github' 'git-prompt' 'git-extras')
+  existcmd 'go' && plugins+=('go' 'golang')
+  existcmd 'gvim' && plugins+='vim-interaction'
+  existcmd 'nmap' && plugins+='nmap'
+  existcmd 'node' && plugins+='node'
+  existcmd 'npm' && plugins+='npm'
+  existcmd 'pacman-key' && plugins+='archlinux'
+  existcmd 'pip' && plugins+='pip'
+  existcmd 'pylint' && plugins+='pylint'
+  existcmd 'python' && plugins+='python'
+  existcmd 'rsync' && plugins+=('cp' 'rsync')
+  existcmd 'ruby' && plugins+=('ruby' 'rails')
+  existcmd 'rust' && plugins+='rust'
+  existcmd 'rvm' && plugins+='rvm'
+  existcmd 'screen' && plugins+='screen'
+  #existcmd 'ssh-agent' && plugins+='ssh-agent'
+  existcmd 'sublime' && plugins+='sublime'
+  existcmd 'sudo' && plugins+='sudo'
+  existcmd 'svn' && plugins+=('svn' 'svn-fast-info')
+  existcmd 'systemctl' && plugins+='systemd'
+  existcmd 'tmux' && plugins+='tmux'
+  existcmd 'whois' && plugins+='iwhois'
+  existcmd 'yum' && plugins+='yum'
+  existcmd 'zypper' && plugins+='suse'
+  # 第三方插件
+  customPlugins=(
+    'zsh-autosuggestions'
+    'zsh-completions'
+    'zsh-syntax-highlighting'
+  )
+  allCustomPlugins=(
+    $(find ${ZSH}/custom/plugins/* -maxdepth 0 -type d | xargs -I {} basename {})
+  )
+  plugins+=(
+    $(echo "${customPlugins[@]}" "${allCustomPlugins[@]}" |\
+      tr '[:space:]' "\n" | sort | uniq -d)
+  )
+
+  # ==============================================================================
+  # oh-my-zsh 自动更新
+  # ==============================================================================
+  # 关闭oh-my-zsh 自带的定期更新，当$ZSH 目录有写权限时提供更新指令
+  DISABLE_AUTO_UPDATE="true"
+  alias oh-my-zsh-upgrade='oh_my_zsh_upgrade'
+  function oh_my_zsh_upgrade
+  {
+    if [[ -w "${ZSH}/.git" ]]
+    then
+      pushd "${ZSH}/tools"
+      command "${ZSH}/tools/upgrade.sh"
+      popd
+    fi
+  }
+
+  # ==============================================================================
+  # 其他设置
+  # ==============================================================================
+  # 合法单词字符
+  WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
+  # 日期格式，合法间隔包括'/'、'.' 和'-'
+  HIST_STAMPS="yyyy-mm-dd"
+  # 大小写敏感？
+  CASE_SENSITIVE="false"
+  # 禁止自动设置终端标题？
+  DISABLE_AUTO_TITLE="false"
+  # 补全等待时显示红点？
+  COMPLETION_WAITING_DOTS="true"
+  # 允许自动改错？
+  ENABLE_CORRECTION="false"
+  # Disable marking untracked files under VCS as dirty ?
+  # This makes repository status check for large repositories faster.
+  DISABLE_UNTRACKED_FILES_DIRTY="false"
+}
+
+# ==============================================================================
 # Say Hello ^_^
 # ==============================================================================
-if type fortune >/dev/null 2>&1; then
-  if type cowsay >/dev/null 2>&1; then
+if existcmd 'fortune'
+then
+  if existcmd 'cowsay'
+  then
     cowsay -f tux "$(fortune)"
   else
     fortune
   fi
 else
-  if type cowsay >/dev/null 2>&1; then
+  if existcmd 'cowsay'
+  then
     cowsay -f tux "Hi $(whoami) ^_^"
   else
     echo "Hi $(whoami) ^_^"
@@ -26,121 +145,40 @@ fi
 # ==============================================================================
 # oh-my-zsh 路径
 # ==============================================================================
-ZSH=/usr/share/oh-my-zsh
-[[ -d $HOME/.oh-my-zsh ]] && ZSH=$HOME/.oh-my-zsh
-
-# ==============================================================================
-# PROMPT - 注释了一些不错的
-# ==============================================================================
-#ZSH_THEME='robbyrussell'
-#ZSH_THEME='blinks'
-#ZSH_THEME='dstufft'
-ZSH_THEME='af-magic'
-#ZSH_THEME='ys'
-#ZSH_THEME='tjkirch'
-
-# ==============================================================================
-# oh-my-zsh 插件
-# ==============================================================================
-# 官方通用插件
-plugins=(
-  battery colorize command-not-found common-aliases copydir copyfile dircycle
-  dirhistory dirpersist encode64 gnu-utils history-substring-search jump
-  per-directory-history perl python sudo systemadmin textmate themes torrent
-  urltools wd web-search zsh-navigation-tools
-)
-# 选择性加载
-[[ -w $ZSH ]] && plugins+=zsh_reload && mkdir -p "$ZSH/cache"
-type adb >/dev/null 2>&1 && plugins+=(adb repo)
-type apt-get >/dev/null 2>&1 && plugins+=debian
-type autojump >/dev/null 2>&1 && plugins+=autojump
-type dnf >/dev/null 2>&1 && plugins+=dnf
-type docker >/dev/null 2>&1 && plugins+=docker
-type git >/dev/null 2>&1 && plugins+=(git github git-prompt git-extras)
-type go >/dev/null 2>&1 && plugins+=(go golang)
-type gvim >/dev/null 2>&1 && plugins+=vim-interaction
-type nmap >/dev/null 2>&1 && plugins+=nmap
-type node >/dev/null 2>&1 && plugins+=node
-type npm >/dev/null 2>&1 && plugins+=npm
-type pacman-key >/dev/null 2>&1 && plugins+=archlinux
-type pip >/dev/null 2>&1 && plugins+=pip
-type rsync >/dev/null 2>&1 && plugins+=(cp rsync)
-type ruby >/dev/null 2>&1 && plugins+=(ruby rails)
-type rvm >/dev/null 2>&1 && plugins+=rvm
-type screen >/dev/null 2>&1 && plugins+=screen
-type svn >/dev/null 2>&1 && plugins+=(svn svn-fast-info)
-type systemctl >/dev/null 2>&1 && plugins+=systemd
-type tmux >/dev/null 2>&1 && plugins+=tmux
-type whois >/dev/null 2>&1 && plugins+=iwhois
-type yum >/dev/null 2>&1 && plugins+=yum
-type zypper >/dev/null 2>&1 && plugins+=suse
-# 第三方插件
-customPlugins=(
-  #zsh-autosuggestions
-  zsh-completions
-  zsh-syntax-highlighting
-)
-allCustomPlugins=(
-  $(find $ZSH/custom/plugins/* -maxdepth 0 -type d | xargs -I {} basename {})
-)
-plugins+=(
-  $(echo ${customPlugins[@]} ${allCustomPlugins[@]} |\
-    tr '[:space:]' "\n" | sort | uniq -d)
-)
-
-# ==============================================================================
-# oh-my-zsh 自动更新
-# ==============================================================================
-# 关闭oh-my-zsh 自带的定期更新，当$ZSH 目录有写权限时提供更新指令
-DISABLE_AUTO_UPDATE="true"
-alias oh-my-zsh-upgrade='oh_my_zsh_upgrade'
-function oh_my_zsh_upgrade
-{
-  if [[ -w "$ZSH/.git" ]]; then
-    pushd $ZSH/tools;
-    zsh $ZSH/tools/upgrade.sh;
-    popd
-  fi
-}
-
-# ==============================================================================
-# 其他设置
-# ==============================================================================
-# 合法单词字符
-WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
-# 日期格式，合法间隔包括'/'、'.' 和'-'
-HIST_STAMPS="yyyy-mm-dd"
-# 大小写敏感？
-CASE_SENSITIVE="false"
-# 禁止自动设置终端标题？
-DISABLE_AUTO_TITLE="false"
-# 补全等待时显示红点？
-COMPLETION_WAITING_DOTS="true"
-# 允许自动改错？
-ENABLE_CORRECTION="false"
-# Disable marking untracked files under VCS as dirty ?
-# This makes repository status check for large repositories faster.
-DISABLE_UNTRACKED_FILES_DIRTY="false"
+LOAD_OH_MY_ZSH=1
+if [[ -d "${HOME}/.oh-my-zsh" ]]
+then
+  ZSH="${HOME}/.oh-my-zsh"
+elif [[ -d '/usr/share/oh-my-zsh' ]]
+then
+  ZSH='/usr/share/oh-my-zsh'
+  ZSH_CACHE_DIR="${HOME}/.oh-my-zsh-cache"
+  mkdir -p "$ZSH_CACHE_DIR"
+else
+  LOAD_OH_MY_ZSH=0
+fi
 
 # ==============================================================================
 # 装载主题和插件
 # ==============================================================================
-if [[ -r $ZSH/oh-my-zsh.sh ]]; then
-  source $ZSH/oh-my-zsh.sh
+if [[ 1 -eq "$LOAD_OH_MY_ZSH" && -r "${ZSH}/oh-my-zsh.sh" ]]
+then
+  oh_my_zsh_conf && source "${ZSH}/oh-my-zsh.sh"
 fi
 
 # ==============================================================================
 # 模块导入
 # ==============================================================================
-zmodload zsh/mathfunc
+zmodload 'zsh/mathfunc'
 
 # ==============================================================================
 # 环境变量
 # ==============================================================================
 # 额外的man 手册路径
-manpath+=/usr/local/man
+manpath+='/usr/local/man'
 # 对manpath 进行一次去重
-if type awk >/dev/null 2>&1; then
+if existcmd 'awk'
+then
   manpath=( $(awk -vRS=' ' '!a[$1]++' <<< ${manpath[@]}) )
 fi
 # 编译的架构参数
@@ -166,15 +204,17 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 # ==============================================================================
 # 历史记录
 # ==============================================================================
-if [[ -r $HOME/.zsh_history ]]; then
-  fc -R $HOME/.zsh_history
+if [[ -r "${HOME}/.zsh_history" ]]
+then
+  fc -R "${HOME}/.zsh_history"
 fi
 
 # ==============================================================================
 # 自定义配置
 # ==============================================================================
-if [[ -r $HOME/.zsh/reactor.sh ]]; then
-  source $HOME/.zsh/reactor.sh
+if [[ -r "${HOME}/.zsh/reactor.sh" ]]
+then
+  source "${HOME}/.zsh/reactor.sh"
 fi
 
 # ==============================================================================
@@ -182,19 +222,21 @@ fi
 # ==============================================================================
 zle -N exprline
 bindkey "^e" exprline
-function exprline {
-  if [[ ! -z $BUFFER ]]; then
+function exprline ()
+{
+  if [[ ! -z "$BUFFER" ]]
+  then
     BUFFER="echo \$(($BUFFER))"
   fi
 
-  zle end-of-line
+  zle 'end-of-line'
 }
 
 # ==============================================================================
 # 绝对秒数化为可读时间
 # ==============================================================================
 function timeconv {
-  date -d @$1 +"%Y-%m-%d %T"
+  date -d "@${1}" +"%Y-%m-%d %T"
 }
 
 # ==============================================================================

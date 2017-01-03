@@ -12,9 +12,9 @@
 # ==============================================================================
 function synctmux ()
 {
-  local SESSIONID='loginTmuxSession'
+  local _sessionid='loginTmuxSession'
 
-  if ! type tmux >/dev/null 2>&1
+  if ! existcmd 'tmux'
   then
     return 1
   fi
@@ -22,26 +22,26 @@ function synctmux ()
   if [[ -z "$TMUX" ]]
   then
     export TERM='xterm-256color'
-    if ! tmux attach -t $SESSIONID
+    if ! tmux attach -t "$_sessionid"
     then
-      if tmux -2 new -s $SESSIONID
+      if tmux -2 new -s "$_sessionid"
       then
-        exit $?
+        exit "$?"
       fi
     else
-      exit $?
+      exit "$?"
     fi
   fi
 
-  return $?
+  return "$?"
 }
 
 # ==============================================================================
 # 无视各终端tmux 的一致性
 # ==============================================================================
-function nosynctmux ()
+function unsynctmux ()
 {
-  if ! type tmux >/dev/null 2>&1
+  if ! existcmd 'tmux'
   then
     return 1
   fi
@@ -51,7 +51,7 @@ function nosynctmux ()
     export TERM='xterm-256color'
     if tmux -2 new
     then
-      exit $?
+      exit "$?"
     fi
   fi
 
@@ -66,15 +66,15 @@ function loginTmux ()
 {
   local choose='n'
 
-  if [[ -z $SSH_CLIENT || -n $TMUX ]]
+  if [[ -z "$SSH_CLIENT" || -n "$TMUX" ]]
   then
     return 0
   fi
 
   echo -n 'It seems you login with a ssh client, work with tmux? (y/n) '
-  read choose
+  read 'choose'
 
-  if echo $choose | grep -P '[^yY]' >/dev/null 2>&1
+  if echo "$choose" | grep -P '[^yY]' >/dev/null 2>&1
   then
     return 0
   fi
@@ -91,26 +91,26 @@ EOF
     echo -n 'Choose one: '
     read choose
 
-    if echo $choose | grep -P '[^0-9]' >/dev/null 2>&1
+    if echo "$choose" | grep -P '[^0-9]' >/dev/null 2>&1
     then
       continue
     fi
 
-    if [[ 'false' == $(awk --assign=choose=$choose \
+    if [[ 'false' == "$(awk --assign=choose=$choose \
                         'BEGIN { print ((choose >= 1) && (choose < 4)) \
-                          ? "true" : "false" }') ]]
+                          ? "true" : "false" }')" ]]
     then
       continue
     fi
     break
   done
 
-  case $choose in
+  case "$choose" in
     1)
       synctmux
       ;;
     2)
-      nosynctmux
+      unsynctmux
       ;;
     3)
       ;;

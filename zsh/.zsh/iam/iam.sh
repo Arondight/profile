@@ -9,21 +9,21 @@
 
 function iam ()
 {
-  local FINGERPRINT='4444949501B3CC2A76579C0825FFD92AB66CC194'
-  local GIT_AUTHOR_NAME_VALUE='Arondight'
-  local GIT_AUTHOR_EMAIL_VALUE='shell_way@foxmail.com'
-  local GIT_COMMITTER_EMAIL_VALUE=$GIT_AUTHOR_EMAIL_VALUE
+  local _fingerprint='4444949501B3CC2A76579C0825FFD92AB66CC194'
+  local _git_author_name='Arondight'
+  local _git_author_email='shell_way@foxmail.com'
+  local _git_committer_email="$_git_author_email"
 
-  if !type gpg >/dev/null 2>&1
+  if ! existcmd 'gpg'
   then
     return 0
   fi
 
-  if gpg --list-secret-keys | grep -oP "^\h+${FINGERPRINT}$" >/dev/null 2>&1
+  if gpg --list-secret-keys | grep -oP "^\h+${fingerprint}$" >/dev/null 2>&1
   then
-    export GIT_AUTHOR_NAME=$GIT_AUTHOR_NAME_VALUE
-    export GIT_AUTHOR_EMAIL=$GIT_AUTHOR_EMAIL_VALUE
-    export GIT_COMMITTER_EMAIL=$GIT_COMMITTER_EMAIL_VALUE
+    export GIT_AUTHOR_NAME="$_git_author_name"
+    export GIT_AUTHOR_EMAIL="$_git_author_email"
+    export GIT_COMMITTER_EMAIL="$_git_committer_email"
   fi
 
   return $?

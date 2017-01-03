@@ -10,24 +10,24 @@ alias profile_reconf='profilereconf'
 
 function profilereconf ()
 {
-  local PROFILEROOT=$(dirname $(dirname $(readlink -f $HOME/.zshrc)))
-  local INSTALL_SH="${PROFILEROOT}/install.sh"
-  local ARGS='-a'
-  local ret=0
+  local _profileroot="$(dirname $(dirname $(readlink -f $HOME/.zshrc)))"
+  local _install_sh="${_profileroot}/install.sh"
+  local _args='-a'
+  local _ret=0
 
-  pushd $PROFILEROOT
+  pushd "$_profileroot"
 
-  if [[ -x $INSTALL_SH ]]
+  if [[ -x "$_install_sh" ]]
   then
-    command $INSTALL_SH $ARGS
-    ret=$?
+    command "$_install_sh" "$_args"
+    _ret="$?"
   else
-    echo "\"${INSTALL_SH}\" not found." >&2
-    ret=1
+    echo "\"${_install_sh}\" not found." >&2
+    _ret=1
   fi
 
   popd
 
-  return $?
+  return "$?"
 }
 

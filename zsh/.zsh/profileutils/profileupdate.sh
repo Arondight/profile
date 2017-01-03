@@ -6,37 +6,37 @@ alias profile-update='profileupdate'
 alias profile_update='profileupdate'
 
 function profileupdate () {
-  local PROFILEROOT=$(dirname $(dirname $(readlink -f $HOME/.zshrc)))
-  local ORIGINGITURL='https://github.com/Arondight/profile.git'
-  local URLREG='https?://(([\w\d\.-]+\.\w{2,6})|(\d{1,3}(\.\d{1,3}){3}))(:\d{1,4})*(/[\w\d\&%\./-~-]*)?'
-  local BRANCH='master'
-  local gitconf=''
-  local giturl=''
+  local _profileroot=$(dirname $(dirname $(readlink -f "${HOME}/.zshrc")))
+  local _upstream='https://github.com/Arondight/profile.git'
+  local _urlreg='https?://(([\w\d\.-]+\.\w{2,6})|(\d{1,3}(\.\d{1,3}){3}))(:\d{1,4})*(/[\w\d\&%\./-~-]*)?'
+  local _branch='master'
+  local _gitconf=''
+  local _giturl=''
 
-  pushd $PROFILEROOT
+  pushd "$_profileroot"
 
-  if type groot >/dev/null 2>&1
+  if existcmd 'groot'
   then
     groot
   fi
 
-  PROFILEROOT=$(pwd)
+  _profileroot="$(pwd)"
+  _gitconf="${_profileroot}/.git/config"
 
-  gitconf="${PROFILEROOT}/.git/config"
-  if [[ -r $gitconf ]]
+  if [[ -r "$_gitconf" ]]
   then
-    giturl=$(grep -oP $URLREG $gitconf | head -n 1)
+    _giturl=$(grep -oP "$_urlreg" "$_gitconf" | head -n 1)
   fi
 
-  if [[ '-f' == $1 ]]
+  if [[ '-f' == "$1" ]]
   then
     git reset HEAD .
     git checkout -- .
   fi
 
-  giturl=${giturl:-$ORIGINGITURL}
+  _giturl="${_giturl:-$_upstream}"
 
-  if git pull --rebase --stat $giturl $BRANCH
+  if git pull --rebase --stat "$_giturl" "$_branch"
   then
     echo 'Everything is up to date. Run "profilereconf" to reconfig.'
   else
@@ -46,6 +46,6 @@ function profileupdate () {
 
   popd
 
-  return $?
+  return "$?"
 }
 

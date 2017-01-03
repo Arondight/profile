@@ -11,47 +11,47 @@ alias sysless='env less'
 
 function less ()
 {
-  local input=''
-  local pager=''
+  local _input=''
+  local _pager=''
 
   if type vim >/dev/null 2>&1
   then
-    pager="vim -c 'set nofoldenable' \
+    _pager="vim -c 'set nofoldenable' \
                -c 'let no_plugin_maps = 1' \
                -c 'runtime! macros/less.vim'"
   elif type nano >/dev/null 2>&1
   then
-    pager='nano -v'
+    _pager='nano -v'
   else
     less $@
-    return $?
+    return "$?"
   fi
 
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
-    input='-'
+    _input='-'
     if [[ -t 0 ]]
     then
       echo "Missing filename" >&2
       return 1
     fi
   else
-    input='$@'
+    _input='$@'
   fi
 
   if [[ ! -t 1 ]]
   then
-    if [[ 0 -eq $# ]]
+    if [[ 0 -eq "$#" ]]
     then
       cat
     else
       cat $@
     fi
-    return $?
+    return "$?"
   fi
 
-  eval $pager $input
+  eval "$_pager" "$_input"
 
-  return $?
+  return "$?"
 }
 

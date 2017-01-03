@@ -7,9 +7,9 @@
 # SOURCE ME!!!
 # ==============================================================================
 # 由于历史原因，工作目录和指令名并不符合
-export SSHENV_WORK_DIR=$(readlink -f ${SSHENV_WORK_DIR:-"${HOME}/.ssh_env"})
+export SSHENV_WORK_DIR="$(readlink -f ${SSHENV_WORK_DIR:-"${HOME}/.ssh_env"})"
 
-if [[ -n $ZSH_NAME ]]
+if [[ -n "$ZSH_NAME" ]]
 then
   fpath+="${HOME}/.zsh/sshenv"
 fi
@@ -36,211 +36,211 @@ Options:
   help                        Show this help message
 EOF
 
-  return $?
+  return "$?"
 }
 
 function _sshenvProlog ()
 {
-  local SUFFIX=$(date +'%Y-%m-%d_%T')
-  local SSHENV_SSH_DIR="${HOME}/.ssh"
+  local _suffix="$(date +'%Y-%m-%d_%T')"
+  local _sshenv_ssh_dir="${HOME}/.ssh"
 
-  mkdir -p $SSHENV_WORK_DIR
+  mkdir -p "$SSHENV_WORK_DIR"
 
-  if [[ ! -d $SSHENV_WORK_DIR || ! -w $SSHENV_WORK_DIR ]]
+  if [[ ! -d "$SSHENV_WORK_DIR" || ! -w "$SSHENV_WORK_DIR" ]]
   then
     echo "Can not open \"${SSHENV_WORK_DIR}\"." >&2
     return 1
   fi
 
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     echo 'Run "sshenv -h" for help.' >&2
     return 1
   fi
 
-  if [[ ! -L $SSHENV_SSH_DIR && -e $SSHENV_SSH_DIR ]]
+  if [[ ! -L "$_sshenv_ssh_dir" && -e "$_sshenv_ssh_dir" ]]
   then
-    if mv -f $SSHENV_SSH_DIR "${SSHENV_WORK_DIR}/env.${SUFFIX}"
+    if mv -f "$_sshenv_ssh_dir" "${SSHENV_WORK_DIR}/env.${_suffix}"
     then
-      echo "Transfer current ssh keys to environment \"env.${SUFFIX}\"."
+      echo "Transfer current ssh keys to environment \"env.${_suffix}\"."
     fi
   fi
 
-  return $?
+  return "$?"
 }
 
 function _sshenvList ()
 {
   # Here use origin path
-  local SSHENV_SSH_DIR=$(readlink -f "${HOME}/.ssh")
-  local env=''
+  local _sshenv_ssh_dir="$(readlink -f "${HOME}/.ssh")"
+  local _env=''
 
-  for env in $SSHENV_WORK_DIR/*
+  for _env in "$SSHENV_WORK_DIR"/*
   do
-    if [[ -d $env && -w $env ]]
+    if [[ -d "$_env" && -w "$_env" ]]
     then
-      echo -n "$(basename $env)"
-      if [[ $env == $SSHENV_SSH_DIR ]]
+      echo -n "$(basename $_env)"
+      if [[ "$_env" == "$_sshenv_ssh_dir" ]]
       then
         echo -e "\t*"
       else
         echo
       fi
     fi
-    unset env
+    unset '_env'
   done
 
-  return $?
+  return "$?"
 }
 
 function _sshenvUse ()
 {
-  local env="${SSHENV_WORK_DIR}/${1}"
-  local ret=0
+  local _env="${SSHENV_WORK_DIR}/${1}"
+  local _ret=0
 
-  if [[ -z $1 ]]
+  if [[ -z "$1" ]]
   then
     return 1
   fi
 
-  if [[ -d $env && -r $env ]]
+  if [[ -d "$_env" && -r "$_env" ]]
   then
-    echo "Use environment \"$(basename $env)\"."
-    if [[ -e $HOME/.ssh ]]
+    echo "Use environment \"$(basename $_env)\"."
+    if [[ -e "${HOME}/.ssh" ]]
     then
-      rm -rf $HOME/.ssh
+      rm -rf "${HOME}/.ssh"
     fi
-    ln -sf $env $HOME/.ssh
-    ret=$?
+    ln -sf "$_env" "${HOME}/.ssh"
+    _ret="$?"
   else
     echo "Environment \"$env\" is bad." >&2
-    ret=1
+    _ret=1
   fi
 
-  return $ret
+  return "$_ret"
 }
 
 function _sshenvNew ()
 {
-  local new=$1
-  local mail=${2:-"$(whoami)@$(hostname)"}
+  local _new="$1"
+  local _mail="${2:-"$(whoami)@$(hostname)"}"
 
-  if [[ -z $new ]]
+  if [[ -z "$_new" ]]
   then
     return 1
   fi
 
-  if ! type ssh-keygen >/dev/null 2>&1
+  if ! existcmd ssh-keygen
   then
     echo "Command \"ssh-keygen\" not found." >&2
     return 1
   fi
 
-  if [[ -d "${SSHENV_WORK_DIR}/${new}" ]]
+  if [[ -d "${SSHENV_WORK_DIR}/${_new}" ]]
   then
-    echo "Environment \"$new\" has already exist." >&2
+    echo "Environment \"${_new}\" has already exist." >&2
     return 1
   fi
 
-  mkdir -p "${SSHENV_WORK_DIR}/${new}"
-  ssh-keygen -t 'rsa' -C "$mail" -f "$SSHENV_WORK_DIR/$new/id_rsa"
+  mkdir -p "${SSHENV_WORK_DIR}/${_new}"
+  ssh-keygen -t 'rsa' -C "${_mail}" -f "${SSHENV_WORK_DIR}/${_new}/id_rsa"
 
   # XXX: WHY? I forgot why try to remove ~/.ssh here...
-  if [[ -d $SSHENV_SSH_DIR ]]
+  if [[ -d "$_sshenv_ssh_dir" ]]
   then
-    rm -rf $SSHENV_SSH_DIR
+    rm -rf "$_sshenv_ssh_dir"
   fi
 
-  return $?
+  return "$?"
 }
 
 function _sshenvDelete ()
 {
-  local SSHENV_SSH_DIR="${HOME}/.ssh"
-  local env="${SSHENV_WORK_DIR}/${1}"
+  local _sshenv_ssh_dir="${HOME}/.ssh"
+  local _env="${SSHENV_WORK_DIR}/${1}"
 
-  if [[ ! -d $env ]]
+  if [[ ! -d "$_env" ]]
   then
     echo "Environment \"$1\" not found." >&2
     return 1
   fi
 
-  if ! type tar >/dev/null 2>&1
+  if ! existcmd 'tar'
   then
     echo "Command \"tar\" not found." >&2
     return 1
   fi
 
-  if ! type gzip >/dev/null 2>&1
+  if ! existcmd 'gzip'
   then
     echo "Command \"gzip\" not found." >&2
     return 1
   fi
 
   echo "Export current environment \"${1}\" to \"${1}.tar.gz\""
-  tar -zcf "${1}.tar.gz" -C $SSHENV_WORK_DIR $(basename $env)
+  tar -zcf "${1}.tar.gz" -C "$SSHENV_WORK_DIR" "$(basename $_env)"
   echo "Delete environment \"${1}\""
-  rm -rf $env
+  rm -rf "$_env"
 
   # XXX: WHY? I forgot why try to remove ~/.ssh here...
-  if [[ -d $SSHENV_SSH_DIR ]]
+  if [[ -d "$_sshenv_ssh_dir" ]]
   then
-    rm -rf $SSHENV_SSH_DIR
+    rm -rf "$_sshenv_ssh_dir"
   fi
 
-  return $?
+  return "$?"
 }
 
 function _sshenvRename ()
 {
-  local old="${SSHENV_WORK_DIR}/${1}"
-  local new="${SSHENV_WORK_DIR}/${2}"
+  local _old="${SSHENV_WORK_DIR}/${1}"
+  local _new="${SSHENV_WORK_DIR}/${2}"
 
-  if [[ -z $old || -z $new ]]
+  if [[ -z "$_old" || -z "$_new" ]]
   then
     echo 'Run "sshenv -h" for help.' >&2
     return 1
   fi
 
-  if [[ ! -d $old ]]
+  if [[ ! -d "$_old" ]]
   then
     echo "Environment \"${1}\" not found." >&2
     return 1
   fi
 
   echo "Rename \"$1\" to \"$2\"."
-  mv $old $new
-  _sshenvUse $2
+  mv "$_old" "$_new"
+  _sshenvUse "$2"
 
-  return $?
+  return "$?"
 }
 
 function _sshenvExport ()
 {
-  local tarball=$1
+  local _tarball="$1"
 
-  if [[ -z $tarball ]]
+  if [[ -z "$_tarball" ]]
   then
     echo 'Run "sshenv -h" for help.' >&2
     return 1
   fi
 
-  if ! type tar >/dev/null 2>&1
+  if ! existcmd 'tar'
   then
     echo "Command \"tar\" not found." >&2
     return 1
   fi
 
-  if ! type gzip >/dev/null 2>&1
+  if ! existcmd 'gzip'
   then
     echo "Command \"gzip\" not found." >&2
     return 1
   fi
 
-  echo "Export all environments to \"${tarball}.tar.gz\""
-  tar -zcf "${tarball}.tar.gz" \
+  echo "Export all environments to \"${_tarball}.tar.gz\""
+  tar -zcf "${_tarball}.tar.gz" \
       -C "$(dirname $SSHENV_WORK_DIR)" "$(basename $SSHENV_WORK_DIR)"
-  if [[ 0 -eq $? ]]
+  if [[ 0 -eq "$?" ]]
   then
     echo 'done'
   else
@@ -253,40 +253,40 @@ function _sshenvExport ()
 
 function _sshenvImport ()
 {
-  local tarball=$1
+  local _tarball="$1"
 
-  if [[ -z $1 ]]
+  if [[ -z "$_tarball" ]]
   then
     echo 'Run "sshenv -h" for help.' >&2
     return 1
   fi
 
-  if ! type tar >/dev/null 2>&1
+  if ! existcmd 'tar'
   then
     echo "Command \"tar\" not found." >&2
     return 1
   fi
 
-  if ! type gzip >/dev/null 2>&1
+  if ! existcmd 'gzip'
   then
     echo "Command \"gzip\" not found." >&2
     return 1
   fi
 
-  if [[ ! -r $tarball ]]
+  if [[ ! -r "$_tarball" ]]
   then
-    echo "Can not read \"${tarball}\", try \"${tarball}.tar.gz\"."
-    tarball="${tarball}.tar.gz"
-    if [[ ! -r $tarball ]]
+    echo "Can not read \"${_tarball}\", try \"${_tarball}.tar.gz\"."
+    _tarball="${_tarball}.tar.gz"
+    if [[ ! -r "$_tarball" ]]
     then
-      echo "Can not read \"${tarball}\"" >&2
+      echo "Can not read \"${_tarball}\"" >&2
       return 1
     fi
   fi
 
-  echo "Import environments from \"${tarball}\""
-  tar -zxf "$tarball" -C "$(dirname $SSHENV_WORK_DIR)"
-  if [[ 0 -eq $? ]]
+  echo "Import environments from \"${_tarball}\""
+  tar -zxf "$_tarball" -C "$(dirname $SSHENV_WORK_DIR)"
+  if [[ 0 -eq "$?" ]]
   then
     echo 'done'
   else
@@ -299,14 +299,12 @@ function _sshenvImport ()
 
 function sshenv ()
 {
-  local list=''
-
   if ! _sshenvProlog $@
   then
     return 1
   fi
 
-  case $1 in
+  case "$1" in
     list|show)
       shift
       _sshenvList
@@ -346,6 +344,6 @@ function sshenv ()
       ;;
   esac
 
-  return $?
+  return "$?"
 }
 

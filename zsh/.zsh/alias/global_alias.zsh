@@ -9,7 +9,7 @@
 
 for alias in $(alias -g | grep -oP '^.+?(?==)')
 do
-  unalias $alias
+  unalias "$alias"
 done
 
 alias -g ..='..'

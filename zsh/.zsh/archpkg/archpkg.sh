@@ -43,26 +43,26 @@ Example:
   archpkg remove lib32-.+
 END_OF_HELP
 
-  return $?
+  return "$?"
 }
 
 function _archpkgCheckUpgrades ()
 {
   sudo pacman -Qu $@
 
-  return $?
+  return "$?"
 }
 
 function _archpkgUpdate ()
 {
   sudo pacman -Sy
 
-  if type pkgfile >/dev/null 2>&1
+  if existcmd 'pkgfile'
   then
     sudo pkgfile --update
   fi
 
-  return $?
+  return "$?"
 }
 
 function _archpkgUpgradeAll ()
@@ -72,31 +72,31 @@ function _archpkgUpgradeAll ()
   sudo pacman --noconfirm --color auto -Su
   sudo pacman --needed --noconfirm --color auto -S linux-headers
 
-  if type pkgfile >/dev/null 2>&1
+  if existcmd 'pkgfile'
   then
     sudo pkgfile --update
   fi
 
-  return $?
+  return "$?"
 }
 
 function _archpkgCleanSystem ()
 {
-  local result=( $(pacman -Qqdt) )
+  local _result=( $(pacman -Qqdt) )
 
-  if [[ 0 -ne ${#result[@]} ]]
+  if [[ 0 -ne "${#_result[@]}" ]]
   then
-    sudo pacman --noconfirm --color auto -Rsn ${result[@]}
+    sudo pacman --noconfirm --color auto -Rsn ${_result[@]}
   fi
 
   sudo pacman --noconfirm --color auto -Sc
 
-  return $?
+  return "$?"
 }
 
 function _archpkgInstall ()
 {
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     _archpkgHelp
     return 1
@@ -104,12 +104,12 @@ function _archpkgInstall ()
 
   sudo pacman --needed --color auto -S $@
 
-  return $?
+  return "$?"
 }
 
 function _archpkgReinstall ()
 {
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     _archpkgHelp
     return 1
@@ -117,24 +117,24 @@ function _archpkgReinstall ()
 
   sudo pacman --color auto -S $@
 
-  return $?
+  return "$?"
 }
 
 function _archpkgRemove ()
 {
-  local result=''
+  local _result=''
 
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     _archpkgHelp
     return 1
   fi
 
-  result=( $(pacman -Qqs $1) )
+  _result=( $(pacman -Qqs "$1") )
 
-  if [[ 0 != ${#result[@]} ]]
+  if [[ 0 != "${#_result[@]}" ]]
   then
-    sudo pacman --color auto -Rsn ${result[@]}
+    sudo pacman --color auto -Rsn ${_result[@]}
   fi
 
   return $?
@@ -142,7 +142,7 @@ function _archpkgRemove ()
 
 function _archpkgDownload ()
 {
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     _archpkgHelp
     return 1
@@ -150,12 +150,12 @@ function _archpkgDownload ()
 
   sudo pacman --color auto -Sw $@
 
-  return $?
+  return "$?"
 }
 
 function _archpkgInfo ()
 {
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     _archpkgHelp
     return 1
@@ -163,12 +163,12 @@ function _archpkgInfo ()
 
   pacman --color auto -Si $@
 
-  return $?
+  return "$?"
 }
 
 function _archpkgSearch ()
 {
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     _archpkgHelp
     return 1
@@ -176,18 +176,18 @@ function _archpkgSearch ()
 
   pacman --color auto -Si $@
 
-  return $?
+  return "$?"
 }
 
 function _archpkgFileSearch ()
 {
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     _archpkgHelp
     return 1
   fi
 
-  if ! type pkgfile >/dev/null 2>&1
+  if ! existcmd 'pkgfile'
   then
     sudo pacman --noconfirm --color auto -S pkgfile
     sudo pkgfile --update
@@ -195,61 +195,61 @@ function _archpkgFileSearch ()
 
   pkgfile --search $@
 
-  return $?
+  return "$?"
 }
 
 function _archpkgGenerateTemplate ()
 {
-  local templatefile=''
-  local packages=''
+  local _templatefile=''
+  local _packages=''
 
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     _archpkgHelp
     return 1
   fi
 
-  templatefile=$(readlink -f $1)
+  _templatefile=$(readlink -f "$1")
 
-  packages=$(pacman -Qqn)    # 这里不使用数组
-  if [[ -e $templatefile ]]
+  _packages=$(pacman -Qqn)    # 这里不使用数组
+  if [[ -e "$_templatefile" ]]
   then
-    rm -f $templatefile
+    rm -f "$_templatefile"
   fi
 
-  echo $packages | sudo tee -a $templatefile >/dev/null 2>&1
+  echo "$_packages" | sudo tee -a "$_templatefile" >/dev/null 2>&1
 
-  return $?
+  return "$?"
 }
 
 function _archpkgInstallTemplate ()
 {
-  local templatefile=''
-  local packages=''
+  local _templatefile=''
+  local _packages=''
 
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     _archpkgHelp
     return 1
   fi
 
-  templatefile=$(readlink -f $1)
-  if [[ ! -e $templatefile ]]
+  _templatefile=$(readlink -f "$1")
+  if [[ ! -e "$_templatefile" ]]
   then
-    echo "File \"${templatefile}\" not exists."
+    echo "File \"${_templatefile}\" not exists."
     return 1
   fi
 
-  packages=( $(cat $templatefile) )
-  sudo pacman --needed --color auto -S ${packages[@]}
+  _packages=( $(cat "$_templatefile") )
+  sudo pacman --needed --color auto -S ${_packages[@]}
 
-  return $?
+  return "$?"
 }
 
 function _archpkgRemoveTemplate ()
 {
-  local templatefile=''
-  local packages=''
+  local _templatefile=''
+  local _packages=''
 
   if [[ 0 -eq $# ]]
   then
@@ -257,33 +257,33 @@ function _archpkgRemoveTemplate ()
     return 1
   fi
 
-  templatefile=$(readlink -f $1)
-  if [[ ! -e $templatefile ]]
+  _templatefile=$(readlink -f "$1")
+  if [[ ! -e "$_templatefile" ]]
   then
-    echo "File \"${templatefile}\" not exists."
+    echo "File \"${_templatefile}\" not exists."
     return 1
   fi
 
-  packages=( $(cat $templatefile) )
-  sudo pacman --color auto -Rsn ${packages[@]}
+  _packages=( $(cat "$_templatefile") )
+  sudo pacman --color auto -Rsn ${_packages[@]}
 
-  return $?
+  return "$?"
 }
 
 function archpkg ()
 {
-  if [[ 0 -eq $# ]]
+  if [[ 0 -eq "$#" ]]
   then
     set -- 'help'
   fi
 
-  if ! type pacman-key >/dev/null 2>&1
+  if ! existcmd 'pacman-key'
   then
     echo 'It seems that your system is not an Arch Linux like.'
     return 1
   fi
 
-  case $1 in
+  case "$1" in
     check-updates)
       shift
       _archpkgCheckUpgrades
@@ -350,6 +350,6 @@ function archpkg ()
       return 1
   esac
 
-  return $?
+  return "$?"
 }
 

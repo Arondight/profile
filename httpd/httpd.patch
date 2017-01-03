@@ -1,0 +1,56 @@
+diff --git a/httpd/conf/extra/httpd-autoindex.conf b/httpd/conf/extra/httpd-autoindex.conf
+index 709d755..ac2f3ff 100644
+--- a/httpd/conf/extra/httpd-autoindex.conf
++++ b/httpd/conf/extra/httpd-autoindex.conf
+@@ -89,5 +89,5 @@ HeaderName HEADER.html
+ # IndexIgnore is a set of filenames which directory indexing should ignore
+ # and not include in the listing.  Shell-style wildcarding is permitted.
+ #
+-IndexIgnore .??* *~ *# HEADER* README* RCS CVS *,v *,t
++IndexIgnore .??* *~ *# HEADER* RCS CVS *,v *,t
+ 
+diff --git a/httpd/conf/httpd.conf b/httpd/conf/httpd.conf
+index 79a8b6d..00003f6 100644
+--- a/httpd/conf/httpd.conf
++++ b/httpd/conf/httpd.conf
+@@ -247,8 +247,8 @@ ServerAdmin you@example.com
+ # documents. By default, all requests are taken from this directory, but
+ # symbolic links and aliases may be used to point to other locations.
+ #
+-DocumentRoot "/srv/http"
+-<Directory "/srv/http">
++DocumentRoot "/home/ftp/root"
++<Directory "/home/ftp/root">
+     #
+     # Possible values for the Options directive are "None", "All",
+     # or any combination of:
+@@ -262,6 +262,13 @@ DocumentRoot "/srv/http"
+     # for more information.
+     #
+     Options Indexes FollowSymLinks
++    IndexOptions FancyIndexing FoldersFirst NameWidth=* DescriptionWidth=* SuppressHTMLPreamble HTMLTable
++    IndexOptions Charset=utf-8 IconHeight=16 IconWidth=16 SuppressRules
++    IndexIgnore /.web
++    HeaderName /.web/header.html
++    ReadmeName /.web/footer.html
++    IndexOrderDefault Ascending Date
++    ServerSignature Off
+ 
+     #
+     # AllowOverride controls what directives may be placed in .htaccess files.
+diff --git a/systemd/system/multi-user.target.wants/httpd.service b/systemd/system/multi-user.target.wants/httpd.service
+new file mode 120000
+index 0000000..b23f8a9
+--- /dev/null
++++ b/systemd/system/multi-user.target.wants/httpd.service
+@@ -0,0 +1 @@
++/usr/lib/systemd/system/httpd.service
+\ No newline at end of file
+diff --git a/systemd/system/multi-user.target.wants/nginx.service b/systemd/system/multi-user.target.wants/nginx.service
+deleted file mode 120000
+index 52485d2..0000000
+--- a/systemd/system/multi-user.target.wants/nginx.service
++++ /dev/null
+@@ -1 +0,0 @@
+-/usr/lib/systemd/system/nginx.service
+\ No newline at end of file

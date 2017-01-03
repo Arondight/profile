@@ -9,30 +9,30 @@
 
 function unapply ()
 {
-  local PATCHCMD='patch'
-  local stripLevel=$1
-  local file=$2
+  local _patchcmd='patch'
+  local _stripLevel="$1"
+  local _file="$2"
 
-  if [[ -z $file || -z $stripLevel ]]
+  if [[ -z "$_file" || -z "$_stripLevel" ]]
   then
     echo "Usage: unapply <strip> <patch-file>"
     return 1
   fi
 
-  if ! echo $stripLevel | grep -P '\d+' 2>&1 >/dev/null
+  if ! echo "$_stripLevel" | grep -P '\d+' 2>&1 >/dev/null
   then
     echo "<strip> should be a integer, quit."
     return 1
   fi
 
-  if [[ ! -r $file ]]
+  if [[ ! -r "$_file" ]]
   then
-    echo "\"$file\" can not be read, quit."
+    echo "\"${_file}\" can not be read, quit."
     return 1
   fi
 
-  command $PATCHCMD -R -E -p $stripLevel <$file
+  command "$_patchcmd" -R -E -p "$_stripLevel" <"$_file"
 
-  return $?
+  return "$?"
 }
 

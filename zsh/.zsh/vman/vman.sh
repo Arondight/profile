@@ -9,23 +9,24 @@
 
 function vman ()
 {
-  local section=''
+  local _section=''
+  local _key=''
 
-  if [[ $# < 1 ]]
+  if [[ "$#" < 1 ]]
   then
     return 0
   fi
 
-  for key in $@
+  for _key in $@
   do
-    if echo $key | grep -P '^[1-9]$' >/dev/null 2>&1
+    if echo "$_key" | grep -P '^[1-9]$' >/dev/null 2>&1
     then
-      section=$key
+      _section="$_key"
     else
-      vim -c "Man ${section} ${key}" -c 'only'
+      vim -c "Man ${_section} ${_key}" -c 'only'
     fi
   done
 
-  return $?
+  return "$?"
 }
 
