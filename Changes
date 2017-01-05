@@ -1,3 +1,7 @@
+v2017-01-05
+  * vim:
+      插件调整，https://github.com/Arondight/profile/issues/21
+
 v2017-01-03.1
   * httpd:
       添加了缺失的.web 目录

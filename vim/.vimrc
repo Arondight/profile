@@ -27,11 +27,11 @@ Plugin 'chrisbra/vim-diff-enhanced'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'gmarik/Vundle.vim'
-"Plugin 'godlygeek/tabular'
-"Plugin 'hdima/python-syntax'
+Plugin 'godlygeek/tabular'
+Plugin 'hdima/python-syntax'
 Plugin 'honza/vim-snippets'
 Plugin 'itchyny/calendar.vim'
-Plugin 'jeaye/color_coded'
+"Plugin 'jeaye/color_coded'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'lilydjwg/colorizer'
@@ -42,13 +42,13 @@ Plugin 'mileszs/ack.vim'
 Plugin 'morhetz/gruvbox'
 "Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
-"Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pangloss/vim-javascript'
-"Plugin 'plasticboy/vim-markdown'             " godlygeek/tabular
-"Plugin 'Rip-Rip/clang_complete'
+Plugin 'plasticboy/vim-markdown'             " godlygeek/tabular
+Plugin 'Rip-Rip/clang_complete'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'SirVer/ultisnips'
@@ -57,7 +57,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'uguu-org/vim-matrix-screensaver'
 Plugin 'Valloric/ListToggle'
 Plugin 'Valloric/MatchTagAlways'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-perl/vim-perl'
 Plugin 'vim-scripts/Align'
 Plugin 'vim-scripts/a.vim'
@@ -121,8 +121,8 @@ syntax on                             " 语法高亮
 "else
     set background=dark               " 适应暗色背景
 "endif
-colorscheme gruvbox
-"colorscheme molokai
+colorscheme gruvbox                   " Plugin 'morhetz/gruvbox'
+"colorscheme molokai                   " Plugin 'tomasr/molokai'
 set history=4096                      " 历史记录长度
 set showcmd                           " 回显输入的命令
 set showmode                          " 显示当前的模式
@@ -208,6 +208,10 @@ hi GitGutterAdd ctermbg=bg guibg=bg
 hi GitGutterChange ctermbg=bg guibg=bg
 hi GitGutterDelete ctermbg=bg guibg=bg
 hi GitGutterChangeDelete ctermbg=bg guibg=bg
+" vim-markdown
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_math = 1
+let g:vim_markdown_new_list_item_indent = 2
 " ultiSnips
 let g:UltiSnipsExpandTrigger="<TAB>"
 let g:UltiSnipsJumpForwardTrigger="<C-P>"
@@ -311,11 +315,13 @@ let g:vimshell_prompt_expr =
   \ 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
 let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
 " Clang Complete
+"let g:clang_library_path='/usr/lib/libclang.so'
+"let g:clang_use_library = 1
+"let g:clang_user_options = '-std=c++11'
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_hl_errors = 1
 let g:clang_complete_optional_args_in_snippets = 1
-let g:clang_user_options = '-std=c++11'
 let g:clang_snippets = 1
 let g:clang_snippets_engine = 'clang_complete'
 let g:clang_auto_select = 1

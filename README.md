@@ -9,7 +9,7 @@
 测试通过的系统：
 
 - [x] Arch Linux
-- [ ] CentOS 7.2.1511
+- [x] CentOS 7.3
 - [x] Debian 8.5.0
 - [x] Fedora 26
 - [x] openSUSE 42.2
@@ -28,21 +28,7 @@ cd ~/profile
 ./install.sh -a
 ```
 
-> 请确保看完**所有**小节之后再进行操作。
-
-## 注意
-
-### 本地文件
-
-配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是`~/profile`）！
-
-### libtinfo
-
-Vim 的某些插件需要使用`libtinfo.so.5`，有的发行版例如Arch Linux 不提供此库，你需要手动设置该库，具体方法详见[zsh/.zsh/androidenv/README.md](zsh/.zsh/androidenv/README.md)。
-
-### 安装Vim 插件无反应
-
-Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很久，请耐心等待。
+> 配置文件的安装使用了`ln` 创建软链接，所以一定不要删除`git clone` 生成的目录（默认是`~/profile`）！
 
 ## 插件
 
@@ -64,73 +50,21 @@ Vim 在执行`PluginInstall` 时，会在`Valloric/YouCompleteMe` 上停留很�
 
 ## 依赖
 
-| 文件 | 指令 |
-| --- | --- |
-| `curses.h` | `awk` |
-| `lua.h` | `clang` |
-| `zlib.h` | `cmake` |
-| `libtinfo.so.5` | `date` |
-| | `gcc` |
-| | `git` |
-| | `grep` |
-| | `install` |
-| | `ln` |
-| | `md5sum` |
-| | `mkdir` |
-| | `mv` |
-| | `python-config` |
-| | `readlink` |
-| | `rm` |
-| | `tail` |
-| | `uniq` |
-| | `vim` |
-| | `xz` |
+系统中需要提供以下指令。
 
-> 其中`文件`字段表示你需要安装能够提供该文件的包；`指令`字段表示你只要能够提供一个可以正常使用的该指令即可。
-
-为什么安装一些配置需要依赖到`vim` 和`clang` 这样的指令，或者是`lua.h` 和`zlib.h` 的提供包？嘛……原因很复杂，总之就是这么设定的！
+`awk`, `clang`, `date`, `git`, `grep`, `install`, `ln`, `md5sum`, `make`, `mkdir`, `mv`, `readlink`, `rm`, `tail`, `uniq`, `vim`, `xz`
 
 ## Vim
 
-### 插件改动
-
-在**任何**插件改动后都要执行指令：
+在**任何**插件改动后都要执行指令。
 
 ```bash
 profilereconf
 ```
 
-### 插件替代
+## 版权
 
-#### YouCompleteMe -> clang\_complete
+[MIT-LICENSE](MIT-LICENSE)
 
-YouCompleteMe 功能强大但是配置相对复杂。可以使用clang\_complete 插件替代YouCompleteMe 进行代码补全：
-
-```vim
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'Rip-Rip/clang_complete'
-```
-
-#### color\_coded -> vim-cpp-enhanced-highlight
-
-color\_coded 是一个基于libclang 的语义级代码高亮插件，精准但是资源消耗大。可以使用vim-cpp-enhanced-highlight 插件替代color\_coded 进行代码高亮：
-
-```vim
-"Plugin 'jeaye/color_coded'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-```
-
-#### gruvbox -> molokai
-
-grubbox 是一个保护视力的配色方案，但色彩较单一。可以使用molokai 配色替代gruvbox：
-
-```vim
-"Plugin 'morhetz/gruvbox'
-Plugin 'tomasr/molokai'
-```
-
-```vim
-"colorscheme gruvbox
-colorscheme molokai
-```
+Copyright (c) 2015-2017 秦凡东(Qin Fandong)
 

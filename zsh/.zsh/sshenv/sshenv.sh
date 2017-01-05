@@ -41,7 +41,7 @@ EOF
 
 function _sshenvProlog ()
 {
-  local _suffix="$(date +'%Y-%m-%d_%T')"
+  local _suffix="$(date +'%Y%m%d-%H%M%S')"
   local _sshenv_ssh_dir="${HOME}/.ssh"
 
   mkdir -p "$SSHENV_WORK_DIR"

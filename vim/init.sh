@@ -42,9 +42,21 @@ function initVimproc ()
 
   if [[ -d $VIMPROCDIR ]]
   then
-    pushd $VIMPROCDIR
-    make -j4
-    popd
+    pushd $VIMPROCDIR && make -j8 && popd
+    return $?
+  fi
+
+  return 0
+}
+
+# clang_complete
+function initClangComplete ()
+{
+  local _clang_complete_dir="${PLUGINDIR}/clang_complete"
+
+  if [[ -d "$_clang_complete_dir" ]]
+  then
+    pushd "$_clang_complete_dir" && make install -j8 && popd
     return $?
   fi
 
@@ -61,7 +73,7 @@ function initColorCoded ()
     mkdir -p "${COLORCODEDDIR}/build"
     pushd "${COLORCODEDDIR}/build"
     cmake ..
-    cmake --build . --target install --config Release -- -j4
+    cmake --build . --target install --config Release -- -j8
     popd
 
     return $?
@@ -186,10 +198,11 @@ function initYCM ()
 
   initPlugins || exit $?
   initVimproc
-  initColorCoded
-  initLibtinfo
-  initSyntastic
-  initYCM
+  initClangComplete
+  #initColorCoded
+  #initLibtinfo
+  #initSyntastic
+  #initYCM
 
   echo 'done'
 
