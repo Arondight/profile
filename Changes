@@ -1,3 +1,8 @@
+v2017-01-05.1
+  * apache:
+      使用Arch Linux 的包名作为目录名
+      配置微调
+
 v2017-01-05
   * vim:
       插件调整，https://github.com/Arondight/profile/issues/21

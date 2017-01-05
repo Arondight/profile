@@ -1,0 +1,86 @@
+diff --git a/httpd/conf/extra/httpd-autoindex.conf b/httpd/conf/extra/httpd-autoindex.conf
+index 709d755..884e83b 100644
+--- a/httpd/conf/extra/httpd-autoindex.conf
++++ b/httpd/conf/extra/httpd-autoindex.conf
+@@ -42,10 +42,10 @@ AddIcon /icons/binary.gif .bin .exe
+ AddIcon /icons/binhex.gif .hqx
+ AddIcon /icons/tar.gif .tar
+ AddIcon /icons/world2.gif .wrl .wrl.gz .vrml .vrm .iv
+-AddIcon /icons/compressed.gif .Z .z .tgz .gz .zip
++AddIcon /icons/compressed.gif .Z .z .tgz .gz .zip .rpm .deb
+ AddIcon /icons/a.gif .ps .ai .eps
+ AddIcon /icons/layout.gif .html .shtml .htm .pdf
+-AddIcon /icons/text.gif .txt
++AddIcon /icons/text.gif .txt .md .xml .log
+ AddIcon /icons/c.gif .c
+ AddIcon /icons/p.gif .pl .py
+ AddIcon /icons/f.gif .for
+@@ -89,5 +89,5 @@ HeaderName HEADER.html
+ # IndexIgnore is a set of filenames which directory indexing should ignore
+ # and not include in the listing.  Shell-style wildcarding is permitted.
+ #
+-IndexIgnore .??* *~ *# HEADER* README* RCS CVS *,v *,t
++IndexIgnore .??* *~ *# README.h?ml HEADER* RCS CVS *,v *,t
+ 
+diff --git a/httpd/conf/httpd.conf b/httpd/conf/httpd.conf
+index 79a8b6d..ad65d9c 100644
+--- a/httpd/conf/httpd.conf
++++ b/httpd/conf/httpd.conf
+@@ -247,8 +247,8 @@ ServerAdmin you@example.com
+ # documents. By default, all requests are taken from this directory, but
+ # symbolic links and aliases may be used to point to other locations.
+ #
+-DocumentRoot "/srv/http"
+-<Directory "/srv/http">
++DocumentRoot "/home/ftp/root"
++<Directory "/home/ftp/root">
+     #
+     # Possible values for the Options directive are "None", "All",
+     # or any combination of:
+@@ -262,6 +262,13 @@ DocumentRoot "/srv/http"
+     # for more information.
+     #
+     Options Indexes FollowSymLinks
++    IndexOptions FancyIndexing FoldersFirst NameWidth=* DescriptionWidth=* SuppressHTMLPreamble HTMLTable
++    IndexOptions Charset=utf-8 IconHeight=16 IconWidth=16 SuppressRules
++    IndexIgnore /.web
++    HeaderName /.web/header.html
++    ReadmeName /.web/footer.html
++    IndexOrderDefault Ascending Date
++    ServerSignature Off
+ 
+     #
+     # AllowOverride controls what directives may be placed in .htaccess files.
+@@ -460,6 +467,23 @@ LogLevel warn
+ #ErrorDocument 404 "/cgi-bin/missing_handler.pl"
+ #ErrorDocument 402 http://www.example.com/subscription_info.html
+ #
++ErrorDocument 400 "400 BAD REQUEST.html"
++ErrorDocument 401 "401 UNAUTHORIZED"
++ErrorDocument 403 "403 FORBIDDEN"
++ErrorDocument 404 "404 NOT FOUND"
++ErrorDocument 405 "405 METHOD NOT ALLOWED"
++ErrorDocument 408 "408 REQUEST TIME OUT"
++ErrorDocument 410 "410 GONE"
++ErrorDocument 411 "411 LENGTH REQUIRED"
++ErrorDocument 412 "412 PRECONDITION FAILED"
++ErrorDocument 413 "413 REQUEST ENTITY TOO LARGE"
++ErrorDocument 414 "414 REQUEST URI TOO LARGE"
++ErrorDocument 415 "415 UNSUPPORTED MEDIA TYPE"
++ErrorDocument 500 "500 INTERNAL SERVER ERROR"
++ErrorDocument 501 "501 NOT IMPLEMENTED"
++ErrorDocument 502 "502 BAD GATEWAY"
++ErrorDocument 503 "503 SERVICE UNAVAILABLE"
++ErrorDocument 506 "506 VARIANT ALSO VARIES"
+ 
+ #
+ # MaxRanges: Maximum number of Ranges in a request before
+@@ -491,7 +515,7 @@ LogLevel warn
+ Include conf/extra/httpd-mpm.conf
+ 
+ # Multi-language error messages
+-Include conf/extra/httpd-multilang-errordoc.conf
++#Include conf/extra/httpd-multilang-errordoc.conf
+ 
+ # Fancy directory listings
+ Include conf/extra/httpd-autoindex.conf
