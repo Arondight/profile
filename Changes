@@ -1,3 +1,16 @@
+v2017-01-11
+  * bash & zsh:
+      修改了一个出错信息未被忽略的错误
+  * bash:
+      增加了~/.bash_profile
+  * zsh:
+      暂时移除会导致终端退出的插件zsh-syntax-highlighting
+      修改了iam 插件加载错误的问题
+  * apache:
+      增加了Arch Linux 下apache 配置文件
+  * vsftpd:
+      去除了配置文件的独立化设置
+
 v2017-01-05.1
   * apache:
       使用Arch Linux 的包名作为目录名

@@ -12,7 +12,7 @@
 function existcmd ()
 {
   local cmd="$1"
-  type "$cmd" 2>&1 >/dev/null
+  type "$cmd" >/dev/null 2>&1
   return $?
 }
 
@@ -77,7 +77,7 @@ function oh_my_zsh_conf ()
   customPlugins=(
     'zsh-autosuggestions'
     'zsh-completions'
-    'zsh-syntax-highlighting'
+    #'zsh-syntax-highlighting'
   )
   allCustomPlugins=(
     $(find ${ZSH}/custom/plugins/* -maxdepth 0 -type d | xargs -I {} basename {})

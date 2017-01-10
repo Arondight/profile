@@ -19,7 +19,7 @@ function iam ()
     return 0
   fi
 
-  if gpg --list-secret-keys | grep -oP "^\h+${fingerprint}$" >/dev/null 2>&1
+  if gpg --list-secret-keys | grep -oP "^\h+${_fingerprint}$" >/dev/null 2>&1
   then
     export GIT_AUTHOR_NAME="$_git_author_name"
     export GIT_AUTHOR_EMAIL="$_git_author_email"

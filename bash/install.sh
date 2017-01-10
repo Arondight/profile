@@ -13,6 +13,8 @@ WORKDIR=$(dirname $(readlink -f $0))
   BASHDIR="${HOME}/.bash"
   BASHRCSRC="${WORKDIR}/.bashrc"
   BASHRCDEST="${HOME}/.bashrc"
+  BASHPROFILESRC="${WORKDIR}/.bash_profile"
+  BASHPROFILEDEST="${HOME}/.bash_profile"
   INTERFACESHSRC="${WORKDIR}/.bash/interface.sh"
   INTERFACESHDEST="${HOME}/.bash/interface.sh"
 
@@ -23,6 +25,14 @@ WORKDIR=$(dirname $(readlink -f $0))
     if [[ -n $(md5sum $BASHRCSRC $BASHRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
       mv -v $BASHRCDEST "${BASHRCDEST}.${SUFFIX}.bak"
+    fi
+  fi
+
+  if [[ -e $BASHPROFILEDEST ]]
+  then
+    if [[ -n $(md5sum $BASHPROFILESRC $BASHPROFILEDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    then
+      mv -v $BASHPROFILEDEST "${BASHPROFILEDEST}.${SUFFIX}.bak"
     fi
   fi
 
@@ -39,6 +49,11 @@ WORKDIR=$(dirname $(readlink -f $0))
   if [[ ! -e $BASHRCDEST ]]
   then
     ln -sf $BASHRCSRC $BASHRCDEST
+  fi
+
+  if [[ ! -e $BASHPROFILEDEST ]]
+  then
+    ln -sf $BASHPROFILESRC $BASHPROFILEDEST
   fi
 
   if [[ ! -e $INTERFACESHDEST ]]

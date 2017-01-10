@@ -6,5 +6,6 @@
 cp -rvf .web /home/ftp/root
 ```
 
-> 如果是Red Hat 系列发行版，需要留意文件`/etc/httpd/conf.d/welcome.conf`。
+> 1. 如果是Red Hat 系列发行版，需要留意文件`/etc/httpd/conf.d/welcome.conf`。
+> 2. `httpd.conf`和`extra/httpd-autoindex.conf`为Arch Linux 下apache 配置文件的备份，**不具备**发行版之间的通用性。
 
