@@ -1,3 +1,9 @@
+v2017-01-30
+  * apache:
+      增加了一些autoindex
+  * sysctl:
+      增加了个人的sysctl 配置
+
 v2017-01-11
   * bash & zsh:
       修改了一个出错信息未被忽略的错误

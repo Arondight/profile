@@ -54,12 +54,15 @@ cd ~/profile
 
 `awk`, `clang`, `date`, `git`, `grep`, `install`, `ln`, `md5sum`, `make`, `mkdir`, `mv`, `readlink`, `rm`, `tail`, `uniq`, `vim`, `xz`
 
-## Vim
+## 注意
 
-在**任何**插件改动后都要执行指令。
+Git 仓库在2017-01-11 进行了一次变基操作，导致`profileupdate` 指令出错，请执行以下指令修正错误。
 
 ```bash
-profilereconf
+cd ~/.zsh
+groot
+git reset --hard 4476284
+git pull -p
 ```
 
 ## 版权

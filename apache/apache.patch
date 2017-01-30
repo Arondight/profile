@@ -7,11 +7,11 @@ index 709d755..884e83b 100644
  AddIcon /icons/tar.gif .tar
  AddIcon /icons/world2.gif .wrl .wrl.gz .vrml .vrm .iv
 -AddIcon /icons/compressed.gif .Z .z .tgz .gz .zip
-+AddIcon /icons/compressed.gif .Z .z .tgz .gz .zip .rpm .deb
++AddIcon /icons/compressed.gif .Z .z .tgz .txz .gz .zip .bz2 .rpm .deb
  AddIcon /icons/a.gif .ps .ai .eps
  AddIcon /icons/layout.gif .html .shtml .htm .pdf
 -AddIcon /icons/text.gif .txt
-+AddIcon /icons/text.gif .txt .md .xml .log
++AddIcon /icons/text.gif .txt .md .xml .log .repo
  AddIcon /icons/c.gif .c
  AddIcon /icons/p.gif .pl .py
  AddIcon /icons/f.gif .for

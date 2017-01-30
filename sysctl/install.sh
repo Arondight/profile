@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Install profiles for apache
+# Install profiles for sysctl
 # ==============================================================================
 # Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
@@ -10,7 +10,9 @@ WORKDIR=$(dirname $(readlink -f $0))
 
 # MAIN:
 {
-  echo -ne "Install profiles for apache ...\t"
+  echo -ne "Install profiles for sysctl ...\t"
   echo "skip"
+
+  exit $?
 }
 
