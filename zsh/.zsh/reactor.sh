@@ -106,9 +106,8 @@ function myPluginLoader ()
   local script=''
   # "alias" 和"path" 永远不应该被包含到这个数组
   local SCRIPTDIR=(
-    'androidenv' 'apply' 'archpkg' 'iam' 'groot' 'less' 'logintmux'
+    'androidenv' 'apply' 'archpkg' 'custom' 'iam' 'groot' 'less' 'logintmux'
     'mountcmds' 'profileutils' 'sshenv' 'vman'
-    'custom'  # This SHOULD be last
   )
 
   for subdir in ${SCRIPTDIR[@]}
@@ -139,6 +138,8 @@ function myPluginLoader ()
   existcmd 'loginTmux' && loginTmux
   # From iam directory
   existcmd 'iam' && iam
+  # From custom directory, this SHOULD be last
+  existcmd 'customShellrc' && customShellrc
 
   # Do some clear
   _uniqPath

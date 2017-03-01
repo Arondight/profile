@@ -7,6 +7,7 @@
 # SOURCE ME!!!
 # ==============================================================================
 
+function customShellrc
 {
   local _CUSTOM_SHELLRC="${HOME}/.custom_shellrc"
 
