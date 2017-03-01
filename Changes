@@ -1,3 +1,11 @@
+v2017-03-01
+  * bash & zsh:
+      增加插件custom
+      删除了一条alias
+  * vim:
+      修改了README.md
+
+
 v2017-01-30
   * apache:
       增加了一些autoindex

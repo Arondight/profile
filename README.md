@@ -65,6 +65,10 @@ git reset --hard 4476284
 git pull -p
 ```
 
+## Shell 第三方配置
+
+插件[custom](zsh/.zsh/custom) 会读取文件`~/.custom_shellrc`。
+
 ## 版权
 
 [MIT-LICENSE](MIT-LICENSE)
