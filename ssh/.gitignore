@@ -1,3 +1,6 @@
 # tar
 *.tar.gz
 
+# ssh keys
+.ssh_env/
+
