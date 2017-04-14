@@ -43,6 +43,7 @@ cd ~/profile
 | [apply](zsh/.zsh/apply) | 补丁操作 |
 | [archpkg](zsh/.zsh/archpkg) | slackpkg 风格的Arch Linux 包管理器 |
 | [groot](zsh/.zsh/groot) | 跳到git 仓库顶层目录 |
+| [ipmi](zsh/.zsh/ipmi) | `ipmitool` 封装 |
 | [less](zsh/.zsh/less) | 更舒适的less |
 | [mountcmds](zsh/.zsh/mountcmds) | 一系列挂载、卸载指令 |
 | [sshenv](zsh/.zsh/sshenv) | ssh 密钥管理器 |

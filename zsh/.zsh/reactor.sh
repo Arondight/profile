@@ -106,8 +106,8 @@ function myPluginLoader ()
   local script=''
   # "alias" 和"path" 永远不应该被包含到这个数组
   local SCRIPTDIR=(
-    'androidenv' 'apply' 'archpkg' 'custom' 'iam' 'groot' 'less' 'logintmux'
-    'mountcmds' 'profileutils' 'sshenv' 'vman'
+    'androidenv' 'apply' 'archpkg' 'custom' 'iam' 'ipmi' 'groot' 'less'
+    'logintmux' 'mountcmds' 'profileutils' 'sshenv' 'vman'
   )
 
   for subdir in ${SCRIPTDIR[@]}
