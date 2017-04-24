@@ -1,3 +1,8 @@
+v2017-04-24
+  * bash & zsh
+      修正了ipmi-boot 和ipmi-deattach 无法工作的问题
+      修正了umount 目录失败的问题
+
 v2017-04-14
   * bash & zsh:
       添加了插件ipmi

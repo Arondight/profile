@@ -38,7 +38,7 @@ function ipmi_status ()
 # ==============================================================================
 # This turn power on
 # ==============================================================================
-alias impi-boot='ipmi_boot'
+alias ipmi-boot='ipmi_boot'
 function ipmi_boot ()
 {
   _ipmi_action $@ power on
@@ -69,7 +69,7 @@ function ipmi_attach ()
 # This to deattach
 # ==============================================================================
 alias ipmi-deattach='ipmi_deattach'
-function ipmi-deattach ()
+function ipmi_deattach ()
 {
   _ipmi_action $@ sol deactivate
   return $?
