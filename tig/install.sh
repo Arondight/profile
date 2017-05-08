@@ -21,7 +21,7 @@ WORKDIR=$(dirname $(readlink -f $0))
     fi
   fi
 
-  echo -ne "Install profiles for git ...\t"
+  echo -ne "Install profiles for tig ...\t"
 
   if [[ ! -e $TIGRCDEST ]]
   then

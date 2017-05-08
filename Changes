@@ -1,5 +1,9 @@
+v2017-05-08
+  * tig:
+      配置中删除了与默认配置相同的部分
+
 v2017-04-24
-  * bash & zsh
+  * bash & zsh:
       修正了ipmi-boot 和ipmi-deattach 无法工作的问题
       修正了umount 目录失败的问题
 
