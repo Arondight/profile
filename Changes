@@ -1,3 +1,7 @@
+v2017-06-15
+  * zsh:
+      启用插件zsh-syntax-highlighting
+
 v2017-05-08
   * tig:
       配置中删除了与默认配置相同的部分

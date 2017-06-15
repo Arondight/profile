@@ -54,12 +54,10 @@
 [profiles]
   [[default]]
     background_darkness = 0.85
-    background_image = None
     background_type = transparent
     font = Source Code Pro 13
     foreground_color = "#ffffff"
     palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
-    scroll_on_output = False
     scrollback_lines = 655360
     use_system_font = False
     word_chars = "-A-Za-z0-9,./?%&#:_~"
