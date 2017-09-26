@@ -16,7 +16,7 @@ function repo ()
 
   export LC_ALL=''
   # Here MUST be "env" not "command"
-  env repo "$*"
+  env repo $*
 
   export LC_ALL="$LC_ALL_bak"
 

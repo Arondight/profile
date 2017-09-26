@@ -1,3 +1,9 @@
+v2017-09-26
+  * tmux:
+      更新了按键设置
+  * zsh:
+      修正了android_env 中错误的repo 脚本
+
 v2017-06-15
   * zsh:
       启用插件zsh-syntax-highlighting
