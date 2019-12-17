@@ -44,7 +44,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pangloss/vim-javascript'
-Plugin 'plasticboy/vim-markdown'             " godlygeek/tabular
+"Plugin 'plasticboy/vim-markdown'             " godlygeek/tabular
 Plugin 'Rip-Rip/clang_complete'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'

@@ -1,3 +1,14 @@
+v2019-12-02
+  * bash & zsh:
+      增加了ssh-forget
+  * zsh:
+      修改了MANPATH 错误问题
+      修改了路径插件不加载的问题
+  * vim:
+      不再启用插件vim-markdown
+  * terminator:
+      修改了配置
+
 v2018-07-15
   * ssh:
       更新ssh 密钥

@@ -36,7 +36,7 @@ function oh_my_zsh_conf ()
   plugins=(
     'battery' 'colorize' 'command-not-found' 'common-aliases' 'copydir' 'copyfile'
     'dircycle' 'dirhistory' 'dirpersist' 'encode64' 'gnu-utils'
-    'history-substring-search' 'jump' 'pass per-directory-history' 'perl'
+    'history-substring-search' 'jump' 'pass' 'per-directory-history' 'perl'
     'systemadmin' 'textmate' 'themes' 'torrent' 'urltools' 'wd' 'web-search'
     'zsh-navigation-tools' 'zsh_reload'
   )
@@ -70,7 +70,7 @@ function oh_my_zsh_conf ()
   existcmd 'svn' && plugins+=('svn' 'svn-fast-info')
   existcmd 'systemctl' && plugins+='systemd'
   existcmd 'tmux' && plugins+='tmux'
-  existcmd 'whois' && plugins+='iwhois'
+  #existcmd 'whois' && plugins+='iwhois'
   existcmd 'yum' && plugins+='yum'
   existcmd 'zypper' && plugins+='suse'
   # 第三方插件
@@ -176,7 +176,10 @@ zmodload 'zsh/mathfunc'
 # 环境变量
 # ==============================================================================
 # 额外的man 手册路径
-manpath+='/usr/local/man'
+if [[ ${#manpath[@]} -gt 0 ]]
+then
+  manpath+='/usr/local/man'
+fi
 # 对manpath 进行一次去重
 if existcmd 'awk'
 then
