@@ -9,12 +9,12 @@
 测试通过的系统：
 
 - [x] Arch Linux
-- [x] CentOS 7.3
-- [x] Debian 8.5.0
-- [x] Fedora 26
-- [x] openSUSE 42.2
-- [x] Slackware 14.2
-- [x] Ubuntu 16.04
+- [x] CentOS
+- [x] Debian
+- [x] Fedora
+- [x] openSUSE
+- [x] Slackware
+- [x] Ubuntu
 
 ## 安装
 
@@ -72,7 +72,7 @@ git pull -p
 
 ## 版权
 
-[MIT-LICENSE](MIT-LICENSE)
+[MIT-LICENSE](LICENSE)
 
 Copyright (c) 2015-2017 秦凡东(Qin Fandong)
 

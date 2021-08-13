@@ -135,7 +135,7 @@ function myPluginLoader ()
   myAliasLoader
 
   # From logintmux directory
-  existcmd 'loginTmux' && loginTmux
+  #existcmd 'loginTmux' && loginTmux
   # From iam directory
   existcmd 'iam' && iam
   # From custom directory, this SHOULD be last
