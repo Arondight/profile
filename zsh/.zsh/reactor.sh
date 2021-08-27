@@ -137,7 +137,7 @@ function myPluginLoader ()
   # From logintmux directory
   #existcmd 'loginTmux' && loginTmux
   # From iam directory
-  existcmd 'iam' && iam
+  #existcmd 'iam' && iam
   # From custom directory, this SHOULD be last
   existcmd 'customShellrc' && customShellrc
 
