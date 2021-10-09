@@ -196,6 +196,8 @@ export TERM="xterm-256color"
 # python-virtualenvwrapper
 export WORKON_HOME="$HOME/.virtualenvs"
 export VIRTUALENVWRAPPER_PYTHON="$(which python)"
+# For gpg2
+export GPG_TTY="$TTY"
 
 # ==============================================================================
 # 自动补全设置
@@ -225,7 +227,7 @@ fi
 # 和expr 类似的计算器
 # ==============================================================================
 zle -N exprline
-bindkey "^e" exprline
+bindkey "^[e" exprline
 function exprline ()
 {
   if [[ ! -z "$BUFFER" ]]
