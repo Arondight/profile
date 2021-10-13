@@ -1,9 +1,11 @@
 [user]
-	name = Arondight
+	name = Qin Fandong
 	email = shell_way@foxmail.com
 	signingkey = B66CC194
 [core]
 	editor = vim
+	askPass =
+	quotepath = off
 [color]
 	ui = true
 	pager = true
@@ -42,10 +44,14 @@
 	vc = verify-commit
 [push]
 	default = simple
+[pull]
+	rebase = false
 [merge]
 	tool = vimdiff
 #[commit]
 #	template = ~/.commit_template
 #[http]
-#	proxy = socks5://127.0.0.1:9999
+#	proxy = http://localhost:10809
+#[https]
+#	proxy = http://localhost:10809
 
