@@ -10,4 +10,3 @@
 | 音乐 | ~/Music |
 | 图片 | ~/Pictures |
 | 视频 | ~/Videos |
-

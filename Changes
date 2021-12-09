@@ -1,9 +1,37 @@
+v2021-12-09
+  * apache:
+      更新了配置
+  * git:
+      删除了安装脚本
+  * hosts:
+      移除
+  * mplayer:
+      移除
+  * nano:
+      移除
+  * nvim:
+      移除
+  * pacman:
+      移除
+  * redshift:
+      移除
+  * terminator:
+      更新了配置
+  * tmux:
+      更新了配置
+  * udev:
+      移除
+  * vim:
+      禁用了一些插件
+  * vsftpd:
+      更新了配置
+
 v2021-10-22
   * vim:
       增加了插件 wakatime/vim-wakatime
 
 v2021-10-13
-  * git
+  * git:
       更新了配置文件
 
 v2021-10-09

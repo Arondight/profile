@@ -83,5 +83,4 @@ $ vim =(ps -aux)          # 将ps -aux 的输出保存为临时文件并用vim �
 $ systemctl restart NetworkManager<ESC><ESC>  # -> sudo systemctl restart NetworkManager
 ```
 
-**使用原则**：遇到问题，无脑TAB。
-
+> 多用 TAB 。
