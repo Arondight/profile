@@ -54,7 +54,7 @@ Plugin 'Shougo/vimshell.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'tomasr/molokai'
-Plugin 'uguu-org/vim-matrix-screensaver'
+"Plugin 'uguu-org/vim-matrix-screensaver'
 Plugin 'Valloric/ListToggle'
 Plugin 'Valloric/MatchTagAlways'
 "Plugin 'Valloric/YouCompleteMe'
@@ -63,15 +63,15 @@ Plugin 'vim-scripts/Align'
 Plugin 'vim-scripts/a.vim'
 "Plugin 'vim-scripts/bad-apple'
 Plugin 'vim-scripts/c.vim'
-Plugin 'vim-scripts/DrawIt'
+"Plugin 'vim-scripts/DrawIt'
 Plugin 'vim-scripts/mru.vim'
 Plugin 'vim-scripts/spellcheck.vim'
 "Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/TaskList.vim'
 Plugin 'vim-scripts/TeTrIs.vim'
 Plugin 'wakatime/vim-wakatime'
-Plugin 'yonchu/accelerated-smooth-scroll'
-Plugin 'Yggdroot/indentLine'
+"Plugin 'yonchu/accelerated-smooth-scroll'
+"Plugin 'Yggdroot/indentLine'
 Plugin 'lzap/vim-selinux'
 " }
 call vundle#end()                     " 插件列表必须在此之前结束
@@ -95,8 +95,8 @@ set tabstop=2                         " tab 键占2 个空格
 set softtabstop=2                     " tab 键移2 个字符
 set backspace=2                       " 退格键移2 个字符
 set autoindent                        " 自动缩进
-set ignorecase                        " 搜索时忽略大小写
-set smartcase                         " 搜索内容中有大写字母才对大小写敏感
+"set ignorecase                        " 搜索时忽略大小写
+"set smartcase                         " 搜索内容中有大写字母才对大小写敏感
 set wrapscan                          " 循环搜索
 set hlsearch                          " 高亮搜索
 set incsearch                         " 即时搜索及反白显示第一个匹配
