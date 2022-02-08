@@ -1,25 +1,3 @@
-[user]
-	name = Qin Fandong
-	email = shell_way@foxmail.com
-	signingkey = B66CC194
-[core]
-	editor = vim
-	askPass =
-	quotepath = off
-[color]
-	ui = true
-	pager = true
-	branch = auto
-	diff = auto
-[color "status"]
-	added = green
-	changed = cyan
-	untracked = yellow
-[color "diff"]
-	frag = magenta bold
-	meta = green bold
-	new = cyan
-	old = yellow
 [alias]
 	bc = branch
 	cf = config
@@ -42,16 +20,43 @@
 	st = status
 	ts = tag -s
 	vc = verify-commit
-[push]
-	default = simple
-[pull]
-	rebase = false
-[merge]
-	tool = vimdiff
+[color]
+	branch = auto
+	diff = auto
+	pager = true
+	ui = true
+[color "diff"]
+	frag = magenta bold
+	meta = green bold
+	new = cyan
+	old = yellow
+[color "status"]
+	added = green
+	changed = cyan
+	untracked = yellow
 #[commit]
 #	template = ~/.commit_template
-#[http]
-#	proxy = http://localhost:10809
-#[https]
-#	proxy = http://localhost:10809
-
+[core]
+	askPass =
+	editor = vim
+	quotepath = false
+[gui]
+	encoding = utf-8
+[http]
+	proxy = http://localhost:8889
+[https]
+	proxy = http://localhost:8889
+[i18n]
+	logoutputencoding = utf-8
+[i18n "commit"]
+	encoding = utf-8
+[merge]
+	tool = vimdiff
+[pull]
+	rebase = false
+[push]
+	default = simple
+[user]
+	email = shell_way@foxmail.com
+	name = Qin Fandong
+	signingkey = B66CC194
