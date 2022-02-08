@@ -42,10 +42,10 @@
 	quotepath = false
 [gui]
 	encoding = utf-8
-[http]
-	proxy = http://localhost:8889
-[https]
-	proxy = http://localhost:8889
+#[http]
+#	proxy = http://localhost:8889
+#[https]
+#	proxy = http://localhost:8889
 [i18n]
 	logoutputencoding = utf-8
 [i18n "commit"]
