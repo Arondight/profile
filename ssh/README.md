@@ -1,6 +1,6 @@
 个人 SSH 密钥备份。
 
-```bash
+```sh
 gpg ssh-env.tar.gz.asc
 sshenv import ssh-env
 rm -f ssh-env.tar.gz

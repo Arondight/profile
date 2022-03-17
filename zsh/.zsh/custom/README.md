@@ -1,2 +1,1 @@
-读取`~/.custom_shellrc`
-
+读取 `~/.custom_shellrc`

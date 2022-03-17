@@ -1,8 +1,7 @@
-| 函数 | 作用 |
-| --- | --- |
-| synctmux | 同步操作的tmux |
-| nosynctmux | 独立操作的tmux |
-| loginTmux | 使用tmux 取代login shell |
+| 函数       | 作用                       |
+| ---------- | -------------------------- |
+| synctmux   | 同步操作的 tmux            |
+| nosynctmux | 独立操作的 tmux            |
+| loginTmux  | 使用 tmux 取代 login shell |
 
-> BUG：无法`scp` 到目标机器。
-
+> BUG：无法 `scp` 到目标机器。

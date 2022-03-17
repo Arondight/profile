@@ -1,6 +1,6 @@
-这是一份自用的sysctl 配置文件。
+这是一份自用的 sysctl 配置文件。
 
-```bash
+```sh
 sudo cp -r ./sysctl.d/ /etc
 sudo systemctl restart systemd-sysctl
 ```

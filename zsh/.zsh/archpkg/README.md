@@ -1,2 +1,1 @@
-这是一个封装了pacman 的脚本，允许以slackpkg 的使用方式管理Arch Linux 的软件包。
-
+这是一个封装了 pacman 的脚本，允许以 slackpkg 的使用方式管理 Arch Linux 的软件包。

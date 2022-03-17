@@ -1,6 +1,6 @@
-这是用于制作USB 多启动盘的一系列GRUB2 配置文件，用于制作一个可以选择从多个ISO 镜像启动的USB 设备。
+这是用于制作 USB 多启动盘的一系列 GRUB2 配置文件，用于制作一个可以选择从多个 ISO 镜像启动的 USB 设备。
 
-其中，`grub.cfg` 已将主题指定为[Dacha204/grub2-themes-Ettery](https://github.com/Dacha204/grub2-themes-Ettery)。
+其中， `grub.cfg` 已将主题指定为[Dacha204/grub2-themes-Ettery](https://github.com/Dacha204/grub2-themes-Ettery)。
 
 ---
 
@@ -59,4 +59,3 @@ image
 
 8 directories, 7 files
 ```
-

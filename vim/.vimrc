@@ -513,5 +513,5 @@ function! TabIndent ()
   setlocal noexpandtab smarttab
   setlocal tabstop=2 shiftwidth=2 softtabstop=2 backspace=2
 endfunction
-au FileType makefile,gitconfig call TabIndent ()
+au FileType makefile,gitconfig,go call TabIndent ()
 
