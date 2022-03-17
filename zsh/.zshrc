@@ -34,11 +34,11 @@ function oh_my_zsh_conf ()
   # ==============================================================================
   # 官方通用插件
   plugins=(
-    'battery' 'colorize' 'command-not-found' 'common-aliases' 'copydir' 'copyfile'
-    'dircycle' 'dirhistory' 'dirpersist' 'encode64' 'gnu-utils'
+    'battery' 'colorize' 'command-not-found' 'common-aliases' 'copypath'
+    'copyfile' 'dircycle' 'dirhistory' 'dirpersist' 'encode64' 'gnu-utils'
     'history-substring-search' 'jump' 'pass' 'per-directory-history' 'perl'
     'systemadmin' 'textmate' 'themes' 'torrent' 'urltools' 'wd' 'web-search'
-    'zsh-navigation-tools' 'zsh_reload'
+    'zsh-navigation-tools'
   )
   # 选择性加载
   existcmd 'adb' && plugins+=('adb' 'repo')
@@ -50,7 +50,7 @@ function oh_my_zsh_conf ()
   existcmd 'fbterm' && plugins+='fbterm'
   existcmd 'firewalld' && plugins+='firewalld'
   existcmd 'git' && plugins+=('git' 'github' 'git-prompt' 'git-extras')
-  existcmd 'go' && plugins+=('go' 'golang')
+  existcmd 'go' && plugins+=('golang')
   existcmd 'gvim' && plugins+='vim-interaction'
   existcmd 'nmap' && plugins+='nmap'
   existcmd 'node' && plugins+='node'

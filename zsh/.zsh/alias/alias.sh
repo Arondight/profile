@@ -7,9 +7,10 @@
 # SOURCE ME!!!
 # ==============================================================================
 
-# Girlfriend
-alias girlfriend='valgrind'
-alias girlfriend-say='girlfriend --leak-check=full --show-reachable=yes --trace-children=yes'
+# src
+alias src="source ${HOME}/.zshrc"
+# valgrind
+alias valgrind='girlfriend --leak-check=full --show-reachable=yes --trace-children=yes'
 # 文本处理 {
 alias a='env awk'
 alias c='env cat'

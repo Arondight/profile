@@ -1,3 +1,12 @@
+v2022-03-17.2
+  * vim:
+      增加了插件 fatih/vim-go
+  * zsh:
+      移除了插件 go 和 zsh_reload
+      别名改动
+      GOPATH 改动
+      PERL5LIB 改动
+
 v2022-03-17
   * all:
       格式化文档

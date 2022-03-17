@@ -63,6 +63,19 @@ function initClangComplete ()
   return 0
 }
 
+# vim-go
+function initVimGo ()
+{
+  local _vim_go_dir="${PLUGINDIR}/vim-go"
+
+  if [[ -d "$_clang_complete_dir" ]]
+  then
+    vim -c 'GoInstallBinaries' -c 'qa'
+  fi
+
+  return 0
+}
+
 # color_coded
 function initColorCoded ()
 {
@@ -199,6 +212,7 @@ function initYCM ()
   initPlugins || exit $?
   initVimproc
   initClangComplete
+  initVimGo
   #initColorCoded
   #initLibtinfo
   #initSyntastic

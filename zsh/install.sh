@@ -14,6 +14,7 @@ WORKDIR=$(dirname $(readlink -f $0))
   ZSHSRC="${WORKDIR}/.zsh"
   ZSHRCDEST="${HOME}/.zshrc"
   ZSHDEST="${HOME}/.zsh"
+  LIBDIR="${HOME}/.lib"
 
   if [[ -e $ZSHRCDEST ]]
   then
@@ -43,6 +44,11 @@ WORKDIR=$(dirname $(readlink -f $0))
   if [[ ! -e $ZSHDEST ]]
   then
     ln -sf $ZSHSRC $ZSHDEST
+  fi
+
+  if [[ ! -d $LIBDIR ]]
+  then
+    mkdir -pv $LIBDIR
   fi
 
   echo 'done'

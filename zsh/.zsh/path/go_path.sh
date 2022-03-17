@@ -5,6 +5,6 @@
 # SOURCE ME!!!
 # ==============================================================================
 
-export GOPATH="${HOME}/lib/go"
+export GOPATH="${HOME}/.lib/go"
 export PATH="${GOPATH}/bin:${PATH}"
 
