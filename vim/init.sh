@@ -68,7 +68,7 @@ function initVimGo ()
 {
   local _vim_go_dir="${PLUGINDIR}/vim-go"
 
-  if [[ -d "$_clang_complete_dir" ]]
+  if [[ -d "$_vim_go_dir" ]]
   then
     vim -c 'GoInstallBinaries' -c 'qa'
   fi
