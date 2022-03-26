@@ -332,8 +332,8 @@ let g:clang_auto_select = 1
 " 按键映射
 " ==============================================================================
 " 快速查找、替换
-nmap ,f :/<C-R><C-W><CR>
-nmap ,h :%s/<C-R><C-W>//g<HOME><RIGHT><RIGHT><RIGHT>
+nmap ,f :/\<<C-R><C-W><CR>\>
+nmap ,h :%s/\<<C-R><C-W>\>//g<HOME><RIGHT><RIGHT><RIGHT>
 nmap ,s :write !sudo tee %<CR>
 " ack.vim
 nmap ,a :Ack<Space>
