@@ -1,3 +1,7 @@
+v2022-06-16
+  * ssh:
+      更新 ssh 密钥
+
 v2022-03-26
   * vim:
       现在快捷查询替换开始精确匹配单词了
@@ -82,34 +86,34 @@ v2021-08-27
 
 v2021-08-13
   * ssh:
-      更新ssh 密钥
+      更新 ssh 密钥
   * bash & zsh:
-      禁用了loginTmux
+      禁用了 loginTmux
 
 v2019-12-02
   * bash & zsh:
-      增加了ssh-forget
+      增加了 ssh-forget
   * zsh:
-      修改了MANPATH 错误问题
+      修改了 MANPATH 错误问题
       修改了路径插件不加载的问题
   * vim:
-      不再启用插件vim-markdown
+      不再启用插件 vim-markdown
   * terminator:
       修改了配置
 
 v2018-07-15
   * ssh:
-      更新ssh 密钥
+      更新 ssh 密钥
 
 v2017-09-26
   * tmux:
       更新了按键设置
   * zsh:
-      修正了android_env 中错误的repo 脚本
+      修正了 android_env 中错误的 repo 脚本
 
 v2017-06-15
   * zsh:
-      启用插件zsh-syntax-highlighting
+      启用插件 zsh-syntax-highlighting
 
 v2017-05-08
   * tig:
@@ -117,55 +121,55 @@ v2017-05-08
 
 v2017-04-24
   * bash & zsh:
-      修正了ipmi-boot 和ipmi-deattach 无法工作的问题
-      修正了umount 目录失败的问题
+      修正了 ipmi-boot 和ipmi-deattach 无法工作的问题
+      修正了 umount 目录失败的问题
 
 v2017-04-14
   * bash & zsh:
-      添加了插件ipmi
+      添加了插件 ipmi
 
 v2017-03-21
   * ssh:
-      更新ssh 密钥
+      更新 ssh 密钥
 
 v2017-03-01.2
   * bash & zsh:
-      调整了custom 插件的加载顺序
+      调整了 custom 插件的加载顺序
 
 v2017-03-01.1
   * bash & zsh:
-      调整了custom 插件的加载顺序
+      调整了 custom 插件的加载顺序
 
 v2017-03-01
   * bash & zsh:
-      增加插件custom
-      删除了一条alias
+      增加插件 custom
+      删除了一条 alias
   * vim:
-      修改了README.md
+      修改了 README.md
 
 
 v2017-01-30
   * apache:
-      增加了一些autoindex
+      增加了一些 autoindex
   * sysctl:
-      增加了个人的sysctl 配置
+      增加了个人的 sysctl 配置
 
 v2017-01-11
   * bash & zsh:
       修改了一个出错信息未被忽略的错误
   * bash:
-      增加了~/.bash_profile
+      增加了 ~/.bash_profile
   * zsh:
-      暂时移除会导致终端退出的插件zsh-syntax-highlighting
-      修改了iam 插件加载错误的问题
+      暂时移除会导致终端退出的插件 zsh-syntax-highlighting
+      修改了 iam 插件加载错误的问题
   * apache:
-      增加了Arch Linux 下apache 配置文件
+      增加了 Arch Linux 下 apache 配置文件
   * vsftpd:
       去除了配置文件的独立化设置
 
 v2017-01-05.1
   * apache:
-      使用Arch Linux 的包名作为目录名
+      使用 Arch Linux 的包名作为目录名
       配置微调
 
 v2017-01-05
@@ -174,66 +178,66 @@ v2017-01-05
 
 v2017-01-03.1
   * httpd:
-      添加了缺失的.web 目录
+      添加了缺失的 .web 目录
 
 v2017-01-03
   * bash & zsh:
-      统一了bash 和zsh 的配置的风格
+      统一了 bash 和 zsh 的配置的风格
       修复了一些可能存在的问题
   * httpd:
-      新增了一份httpd 文件浏览样式
+      新增了一份 httpd 文件浏览样式
 
 v2016-12-01
   * grub2:
-      增加了一个用于修复UEFI 下GRUB2 引导的脚本
+      增加了一个用于修复 UEFI 下 GRUB2 引导的脚本
 
 v2016-11-22
   * hosts:
-      增加了几个hosts
+      增加了几个 hosts
 
 v2016-10-16
   * all:
-      使用pushd/popd 替换了可能引发问题的cd 指令
-      更好的.gitignore
+      使用 pushd/popd 替换了可能引发问题的 cd 指令
+      更好的 .gitignore
   * vim:
       为内核模块查错进行准备
 
 v2016-10-11.1
   * vim:
-      为YouCompleteMe 添加JavaScript 和Rust 支持
+      为 YouCompleteMe 添加 JavaScript 和 Rust 支持
 
 v2016-10-11
   * vim:
-      0x23..0x26, 0x40 不在作为单词的一部分
-      YouCompleteMe 使用color_coded/build 目录下的高版本clang 根目录
+      0x23..0x26, 0x40 不再作为单词的一部分
+      YouCompleteMe 使用 color_coded/build 目录下的高版本 clang 根目录
 
 v2016-10-08
   * bash & zsh:
-      为curl 和wget 添加alisa
+      为 curl 和 wget 添加 alisa
   * terminator:
       现在~ 也是单词的一部分了
 
 v2016-09-13
   * vim:
-      不再显式指定color_coded 调用clang 的-fcolor-diagnostics 参数
+      不再显式指定 color_coded 调用 clang 的 -fcolor-diagnostics 参数
 
 v2016-07-12.1
   * pacman:
-      增加了几个XferCommand
+      增加了几个 XferCommand
 
 v2016-07-12
   * bash & zsh:
-      修改了alias
+      修改了 alias
   * pacman:
       使用增量更新 \(^o^)/~
 
 v2016-06-28
   * bash & zsh:
-      rm/mv/ln/cp 增加-v 选择
+      rm/mv/ln/cp 增加 -v 选择
 
 v2016-06-28
   * bash & zsh:
-      根据GPG 密钥自动配置GIT 仓库环境变量
+      根据 GPG 密钥自动配置 GIT 仓库环境变量
 
 v2016-06-22
   * nano:
@@ -242,11 +246,11 @@ v2016-06-22
 v2016-06-09
   * tmux:
       不再支持鼠标滚屏
-      使用默认的Escape 键
+      使用默认的 Escape 键
 
 v2016-05-23
   * zsh:
-      更改了androidenv 的初始化脚本以适应更多系统
+      更改了 androidenv 的初始化脚本以适应更多系统
   * vim:
       更改了库搜索路径以适应更多系统
 
@@ -256,34 +260,34 @@ v2016-05-21
   * hosts:
       修改了错误的安装路径
   * vim:
-      现在检查系统对libtinfo 库的支持
+      现在检查系统对 libtinfo 库的支持
 
 v2016-05-08
   * bash & zsh:
-      现在loginTmux 不会attach 到错误的session 了
+      现在 loginTmux 不会 attach 到错误的 session 了
   * zsh:
       现在有选择的加载第三方插件
 
 v2016-05-06.2
   * bash & zsh:
-      修正了loginTmux 无法兼容bash 的问题
+      修正了 loginTmux 无法兼容 bash 的问题
   * tmux:
-      不再指定默认shell
+      不再指定默认 shell
 
 v2016-05-06
   * bash & zsh:
-      单独将tmux 相关的函数拉出一个插件
-      在使用SSH 登陆时交互式地试图使用tmux 取代login shell
-      简化了reactor.sh
+      单独将 tmux 相关的函数拉出一个插件
+      在使用 SSH 登陆时交互式地试图使用 tmux 取代 login shell
+      简化了 reactor.sh
 
 v2016-05-02
   * vim:
-      在~/.ycm_extra_conf.py 中添加了内核头文件目录
-      禁用syntastic 关闭检查以避免偶尔的退出时卡死
+      在 ~/.ycm_extra_conf.py 中添加了内核头文件目录
+      禁用 syntastic 关闭检查以避免偶尔的退出时卡死
 
 v2016-05-01.2
   * zsh:
-      增加插件zsh-autosuggestions
+      增加插件 zsh-autosuggestions
 
 v2016-05-01
   * all:
@@ -291,67 +295,67 @@ v2016-05-01
 
 v2016-04-30.1
   * all:
-      现在配置更新的时候不再使用写死的URL 了（只支持HTTP/HTTPS 方式）
+      现在配置更新的时候不再使用写死的 URL 了（只支持 HTTP/HTTPS 方式）
   * vim:
-      修正了init.sh 中错误的逻辑
+      修正了 init.sh 中错误的逻辑
 
 v2016-04-30
   * all:
-      精简README.md
+      精简 README.md
   * bash & zsh:
-      重写了archpkg 和ssh_env
+      重写了 archpkg 和ssh_env
       一些代码做了规范性调整
-      重命名ssh_env 为sshenv
-      重命名android_env 为androidenv
-      重命名profile_upgrade 为profileupdate
-      重命名profile_reconf 为profilereconf
+      重命名 ssh_env 为 sshenv
+      重命名 android_env 为 androidenv
+      重命名 profile_upgrade 为 profileupdate
+      重命名 profile_reconf 为 profilereconf
   * vim:
-      现在profilereconf 会更新并重配vim 插件了
+      现在 profilereconf 会更新并重配 vim 插件了
 
 v2016-04-29.6
   * all:
-      更新了README.md
+      更新了 README.md
 
 v2016-04-29.5
   * all:
-      更新了README.md
+      更新了 README.md
   * bash & zsh:
       重写了一部分脚本
 
 v2016-04-29.4
   * tmux:
-      连接虚拟化主机时，退出tmux 即断开连接
+      连接虚拟化主机时，退出 tmux 即断开连接
   * bash & zsh:
       重写了一部分脚本
 
 v2016-04-29.3
   * tmux:
-      修复了无法SSH 到虚拟化主机的BUG
+      修复了无法 SSH 到虚拟化主机的 BUG
 
 v2016-04-29.2
   * bash & zsh:
-      现在试图在虚拟化环境中自动登陆到tmux
-      增加了profile_reconf 函数
+      现在试图在虚拟化环境中自动登陆到 tmux
+      增加了 profile_reconf 函数
 
 v2016-04-29
   * all:
       重构了整套安装脚本
-      现在升级配置自动执行install.sh -a
+      现在升级配置自动执行 install.sh -a
 
 v2016-04-27.3
   * vim:
-      这下真的不会备份~/.vim 了……
+      这下真的不会备份 ~/.vim 了……
 
 v2016-04-27.2
   * nvim:
-      增加nvim 配置，与vim 共享配置
+      增加 nvim 配置，与 vim 共享配置
 
 v2016-04-27
   * vim:
-      现在启用插件color_coded
-      现在YCM 与color_coded 公用一套clang
-      解决了使用color_coded 时Vim 花屏的BUG
-      修改了Vim 配置插件的逻辑，不再备份原有的~/.vim 目录
+      现在启用插件 color_coded
+      现在 YCM 与 color_coded 公用一套 clang
+      解决了使用 color_coded 时 Vim 花屏的 BUG
+      修改了 Vim 配置插件的逻辑，不再备份原有的 ~/.vim 目录
   * host:
       改了个IP
 
@@ -363,122 +367,122 @@ v2016-04-25
 
 v2016-04-24
   * grub2:
-      增加了grub2 配置文件
+      增加了 grub2 配置文件
 
 v2016-04-22
   * bash & zsh:
-      修正了一处archpkg 的逻辑错误
+      修正了一处 archpkg 的逻辑错误
   * zsh:
-      修改了一些oh-my-zsh 插件
+      修改了一些 oh-my-zsh 插件
   * vim:
-      增加快捷键,s
+      增加快捷键 ,s
 
 v2016-04-19
   * bash & zsh:
-      修改了alias
-      修改了archpkg upgrade-all 时升级linux-header 的顺序（可能会引入问题）
+      修改了 alias
+      修改了 archpkg upgrade-all 时升级 linux-header 的顺序（可能会引入问题）
   * hosts
-      增加了个人vps
+      增加了个人 vps
 
 v2016-04-17
   * git:
-      增加了GPG 签名的commit 和tag 别名
+      增加了 GPG 签名的 commit 和 tag 别名
 
 v2016-04-16.3
   * zsh:
-      解决了fc 无法显示所有历史的问题
+      解决了 fc 无法显示所有历史的问题
   * nano:
       同步了新版的语法高亮文件
   * tmux:
-      修复了2.1 版本引入的的鼠标滚屏问题，默认配置不再兼容2.1 之前的版本
+      修复了 2.1 版本引入的的鼠标滚屏问题，默认配置不再兼容 2.1 之前的版本
   * pacman:
-      修改了archlinuxcn 源
+      修改了 archlinuxcn 源
   * tig:
       搜索时不再区分大小写
 
 v2016-04-16.2
   * vim:
-      重新试图与color_coded 共用一套clang
-      使用vim-cpp-enhanced-highlight 插件暂时替代color_coded
-      不再强制指定126 色以便在TTY 下使用
+      重新试图与 color_coded 共用一套 clang
+      使用 vim-cpp-enhanced-highlight 插件暂时替代 color_coded
+      不再强制指定 126 色以便在 TTY 下使用
 
 v2016-04-16
   * ssh:
-      添加SSH 密钥对以做备份
+      添加 SSH 密钥对以做备份
 
 v2016-04-15
   * all:
-      更新了README.md
+      更新了 README.md
   * git:
       默认复制配置文件，不再使用链接
   * hosts:
-      增加了hosts
+      增加了 hosts
   * iam:
-      增加了iam 函数
+      增加了 iam 函数
 
 v2016-04-12.2
   * all:
       更新了README.md
   * vim:
-      允许加载YCM
-      尝试自动解决YCM 对libtinfo 的依赖
+      允许加载 YCM
+      尝试自动解决 YCM 对 libtinfo 的依赖
 
 v2016-04-12
   * bash & zsh:
-      修改了alias
-      修改了apply
+      修改了 alias
+      修改了 apply
   * vim:
       增删了几个插件
-      不再与color_coded 共用一套clang
+      不再与 color_coded 共用一套 clang
   * tig:
-      所有模式下显示commit id
+      所有模式下显示 commit id
 
 v2016-04-08.3
   * bash & zsh:
-      将makepatch 函数修改为mkpatch
+      将 makepatch 函数修改为 mkpatch
       修正了一些错误的帮助信息
 
 v2016-04-08.2
   * all:
-      增加了MIT-LICENSE
-      修改了过时的README.md
+      增加了 MIT-LICENSE
+      修改了过时的 README.md
 
 v2016-04-08
   * bash & zsh:
-      删除了diff 的别名
+      删除了 diff 的别名
       增加了一套补丁工具
 
 v2016-04-05
   * bash & zsh:
-      修复了一处可能使所有终端都无法登陆的BUG
+      修复了一处可能使所有终端都无法登陆的 BUG
 
 v2016-03-18
   * bash & zsh:
-      archpkg 更新pkgfile 数据库时使用root 权限
+      archpkg 更新 pkgfile 数据库时使用 root 权限
 
 v2016-03-17
   * vim:
-      根据YCM 的改动修改了make 的参数
+      根据 YCM 的改动修改了 make 的参数
 
 v2016-03-08
   * tig:
-      增加tig 配置文件
+      增加 tig 配置文件
 
 v2016-02-24
   * bash & zsh:
-      现在archpkg clean-system 时使用-Rsn 参数了
+      现在 archpkg clean-system 时使用 -Rsn 参数了
 
 v2016-02-21
   * bash & zsh:
-      修复了vman 不带参数运行导致终端退出的错误
+      修复了 vman 不带参数运行导致终端退出的错误
 
 v2016-02-19
   * bash & zsh:
-      增加vman 函数
+      增加 vman 函数
 
 v2016-02-18
   * bash & zsh:
-      修正了git 目录下错误的init 脚本
+      修正了 git 目录下错误的 init 脚本
 
 v2016-02-16.2
   * zsh:
@@ -486,7 +490,7 @@ v2016-02-16.2
 
 v2016-02-16
   * bash & zsh:
-      为android_env 增加了初始化脚本
+      为 android_env 增加了初始化脚本
   * tmux:
       修改了一处新版本中变动的配置选项
   * nano:
@@ -494,7 +498,7 @@ v2016-02-16
 
 v2016-01-29
   * vim:
-      增加了插件vim-jst 和vim-javascript
+      增加了插件 vim-jst 和 vim-javascript
 
 v2016-01-26
   * all:
@@ -512,24 +516,24 @@ v2016-01-13
 
 v2015-12-30
   * zsh & bash:
-      增加了一些alias
+      增加了一些 alias
   * bash:
-      完善了bash 的基本配置和补全
+      完善了 bash 的基本配置和补全
   * vim:
-      修正了一处map 错误
+      修正了一处 map 错误
 
 v2015-12-03
   * vim:
-      完善了README.md
-      添加了依赖zlib
-      移除了插件python-syntax
+      完善了 README.md
+      添加了依赖 zlib
+      移除了插件 python-syntax
 
 v2015-11-18
   * zsh & bash:
-      添加了一些ls 和cd 指令的容错
+      添加了一些 ls 和 cd 指令的容错
   * vim
-      增加了perl 脚本的实时错误检查
-      增加了插件ultisnips
+      增加了 perl 脚本的实时错误检查
+      增加了插件 ultisnips
 
 v2015-11-13
   * zsh & bash:
@@ -537,30 +541,30 @@ v2015-11-13
   * nano:
       PKGBUILD 语法高亮使用单独的文件
   * terminator:
-      修改了键位以兼容nano
+      修改了键位以兼容 nano
       禁用了大多数快捷键
 
 v2015-11-05.2
   * zsh:
-      增加了ssh-env 和archpkg 的自动补全
-      增加了groot 指令
+      增加了 ssh-env 和 archpkg 的自动补全
+      增加了 groot 指令
 
 v2015-11-05
   * git:
-      现在git 配置不会被安装了
+      现在 git 配置不会被安装了
 
 v2015-11-01
   * fish:
-      移除了fish 配置
+      移除了 fish 配置
   * bash:
-      使用bash-git-prompt，避免了之前PS1 在android-env 中的一个错误
+      使用 bash-git-prompt ，避免了之前 PS1 在 android-env 中的一个错误
 
 v2015-10-26
   * zsh:
       调整了配置架构
-      现在android_env 函数会加载~/.bahsrc 了
+      现在 android_env 函数会加载 ~/.bahsrc 了
   * bash:
-      现在与zsh 共享自定义配置
+      现在与 zsh 共享自定义配置
 
 v2015-10-25.2
   * fish:
@@ -574,18 +578,18 @@ v2015-10-25
   * all:
       补充了一些基本的说明文件
   * fish:
-      手动设置oh-my-fish，不再使用官方脚本
+      手动设置 oh-my-fish，不再使用官方脚本
 
 v2015-10-24
   * all:
       增加了一些基本的说明文件
   * zsh:
-      修改了alias 设置，不再使用绝对路径
-      修改了ssh_env
+      修改了 alias 设置，不再使用绝对路径
+      修改了 ssh_env
 
 v2015-10-16
   * vim:
-      增加了插件accelerated-smooth-scroll
+      增加了插件 accelerated-smooth-scroll
   * zsh:
       规范了一些比较语句
       更改了挂载函数的逻辑
@@ -594,29 +598,29 @@ v2015-10-16
 
 v2015-10-14
   * udev:
-      增加了Spreadtrum 设备的udev rule
+      增加了 Spreadtrum 设备的 udev rule
 
 v2015-10-10
   * zsh:
       增加了挂载函数的安全性检查
-      修正了ssh_env 的一处错误
+      修正了 ssh_env 的一处错误
   * vim:
       插件的细微调整
 
 v2015-09-29.1
   * zsh:
-      修正了ssh_env 的一处错误
+      修正了 ssh_env 的一处错误
 
 v2015-09-29
   * zsh:
-      增加了ssh_env 函数
-      修改了mount 函数的参数
+      增加了 ssh_env 函数
+      修改了 mount 函数的参数
   * vim:
-      增加了ack.vim 的配置
+      增加了 ack.vim 的配置
 
 v2015-09-28
   * vim:
-      更改了YCM 配置方式，优先使用非系统位置libclang
+      更改了 YCM 配置方式，优先使用非系统位置 libclang
       增加了一些依赖检查
 
 v2015-09-25
@@ -626,7 +630,7 @@ v2015-09-25
 
 v2015-09-24
   * vim:
-      现在vim 是必须依赖了
+      现在 vim 是必须依赖了
   * zsh:
       增加了挂载函数的提示信息
 
@@ -634,8 +638,8 @@ v2015-09-19
   * vim:
       更改了一些插件的行为
   * zsh:
-      修正了一处android_env 无法编译出升级包的错误
-      修正了android_env 无法正确辨别是否存在vitualevnwrapper 的错误
+      修正了一处 android_env 无法编译出升级包的错误
+      修正了 android_env 无法正确辨别是否存在 vitualevnwrapper 的错误
 
 v2015-09-18.2
   * vim:
@@ -643,35 +647,35 @@ v2015-09-18.2
 
 v2015-09-18.1
   * zsh:
-      修正了android_env 的一处逻辑错误
+      修正了 android_env 的一处逻辑错误
   * vim:
-      默认使用基于clang 的代码高亮插件color_coded
-      修改了YCM 变更导致的安装失败的问题
+      默认使用基于clang 的代码高亮插件 color_coded
+      修改了 YCM 变更导致的安装失败的问题
 
 v2015-09-18
   * zsh:
-      修正了android_env 在Ubuntu 环境上失败的错误
-      现在~/.zsh/path 中显式使用PATH 变量了
-      增加了cpan 的用户路径
+      修正了 android_env 在 Ubuntu 环境上失败的错误
+      现在 ~/.zsh/path 中显式使用PATH 变量了
+      增加了 cpan 的用户路径
   * vim:
       增加了几个代码高亮类插件
-      修改了YCM 的配置方式
+      修改了 YCM 的配置方式
 
 v2015-09-07
   * zsh:
       修改了两个挂载函数
       oh-my-zsh 现在使用一个单独的函数升级
-      现在path 不会引发安全性问题了
+      现在 path 不会引发安全性问题了
   * vim:
-      增加了插件ack.vim
+      增加了插件 ack.vim
 
 v2015-08-29
   * all:
-      公开了指令profile_upgrade
+      公开了指令 profile_upgrade
   * zsh:
-      完善了函数android_env
-      现在可以为profile_upgrade 指令指定-f 开关以强制更新了
-      现在每次加载配置文件的时候都会对PATH 和MANPATH 进行去重了
+      完善了函数 android_env
+      现在可以为 profile_upgrade 指令指定 -f 开关以强制更新了
+      现在每次加载配置文件的时候都会对 PATH 和MANPATH 进行去重了
   * vim:
       更改了导致光标移动延迟的一处按键映射
   * bash:
@@ -679,77 +683,77 @@ v2015-08-29
 
 v2015-08-24
   * all:
-      增加了配置更新指令profile_upgrade
+      增加了配置更新指令 profile_upgrade
   * zsh:
-      删除了java 和android sdk 的path 文件
-      修改了一些alias
+      删除了 java 和 android sdk 的 path 文件
+      修改了一些 alias
       增加了几处环境变量
-      增加了函数android_env
-      增加了函数repo
+      增加了函数 android_env
+      增加了函数 repo
       改变了自定义函数的加载形式
   * vim:
-      将插件taglist 替换为tagbar
+      将插件 taglist 替换为 tagbar
       修改了一些按键映射
-      现在无关图形界面一律使用dark 背景
+      现在无关图形界面一律使用 dark 背景
   * zsh:
-      增加了函数android_env
+      增加了函数 android_env
   * terminator
       更改了配色方案
   * git
-      增加了一些alias
+      增加了一些 alias
   * redshift
-      新增了redshift 配置文件
+      新增了 redshift 配置文件
   * bash:
-      新增了bash 和其他shell 的交互接口目录
+      新增了 bash 和其他 shell 的交互接口目录
 
 v2015-08-09
   * zsh:
-      剔除了全部的非自建global alias
-      现在所有zsh 插件都通过oh-my-zsh plugins 加载
+      剔除了全部的非自建 global alias
+      现在所有 zsh 插件都通过 oh-my-zsh plugins 加载
       修正了一处安装脚本的错误
   * vim:
-      增加了可选插件Clang Complete
+      增加了可选插件 Clang Complete
 
 v2015-08-04
   * all:
       修改了几处重定向的逻辑错误
-      修改了git 指令的的判断语句错误
+      修改了 git 指令的的判断语句错误
   * vim:
-      增加了插件bufexplorer
+      增加了插件 bufexplorer
   * vsftpd:
       增加了说明文件
 
 v2015-07-31
   * zsh:
-      单独使用一个目录配置$path
+      单独使用一个目录配置 $path
       修正了一些因为绝对路径引发的问题
   * vsftpd:
-      增加了一个只允许匿名连接的vsftpd 配置文件
+      增加了一个只允许匿名连接的 vsftpd 配置文件
 
 v2015-07-14
   * vim:
-      单独添加了一个tab 缩进函数
+      单独添加了一个 tab 缩进函数
 
 v2015-05-05
   * all:
-      修改了各自的install.sh 使之更加清晰。
+      修改了各自的 install.sh 使之更加清晰
   * vim:
-      Makefile 中单独设置tab 缩进。
+      Makefile 中单独设置 tab 缩进
   * git:
-      增加了git 配置。
+      增加了 git 配置
   * zsh:
-      移除了gcc/g++/cc/cxx 的alias。
+      移除了 gcc/g++/cc/cxx 的 alias
 
 v2015-05-02
   * vim:
-      增加了插件vim-gitgutter。
-      修正了<C-V> 可能会转换到nopaste 模式的错误。
-      修正了<C-V> 在插入模式时粘贴后光标可能会移位的错误。
-      移除了插件AuthorInfo。
+      增加了插件 vim-gitgutter
+      修正了 <C-V> 可能会转换到nopaste 模式的错误
+      修正了 <C-V> 在插入模式时粘贴后光标可能会移位的错误
+      移除了插件 AuthorInfo
   * nano:
-      修改了按键映射。
-      更新了语法高亮配置文件。
-      更改了nanorc 中高亮配置，不再支持旧版。
+      修改了按键映射
+      更新了语法高亮配置文件
+      更改了nanorc 中高亮配置，不再支持旧版
   * zsh:
-      现在所有的发行版上都默认加载alias.zsh。
+      现在所有的发行版上都默认加载 alias.zsh
 
