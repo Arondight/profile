@@ -178,7 +178,7 @@ zmodload 'zsh/mathfunc'
 # 额外的man 手册路径
 if [[ ${#manpath[@]} -gt 0 ]]
 then
-  manpath+='/usr/local/man'
+  manpath+=('/usr/share/man' '/usr/local/share/man')
 fi
 # 对manpath 进行一次去重
 if existcmd 'awk'
