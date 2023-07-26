@@ -1,3 +1,9 @@
+v2023-07-27
+  * htop:
+      新增 htop 配置
+  * user-dirs:
+      更新了 XDG_DOWNLOAD_DIR
+
 v2022-07-23
   * vim:
       增加了插件 leafgarland/typescript-vim
