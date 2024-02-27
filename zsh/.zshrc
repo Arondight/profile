@@ -36,9 +36,8 @@ function oh_my_zsh_conf ()
   plugins=(
     'battery' 'colorize' 'command-not-found' 'common-aliases' 'copypath'
     'copyfile' 'dircycle' 'dirhistory' 'dirpersist' 'encode64' 'gnu-utils'
-    'history-substring-search' 'jump' 'pass' 'per-directory-history' 'perl'
-    'systemadmin' 'textmate' 'themes' 'torrent' 'urltools' 'wd' 'web-search'
-    'zsh-navigation-tools'
+    'history-substring-search' 'jump' 'pass' 'perl' 'systemadmin' 'textmate'
+    'themes' 'torrent' 'urltools' 'wd' 'web-search' 'zsh-navigation-tools'
   )
   # 选择性加载
   existcmd 'adb' && plugins+=('adb' 'repo')

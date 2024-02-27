@@ -1,3 +1,7 @@
+v2024-02-28
+  * zsh:
+      禁用了插件 per-directory-history
+
 v2023-07-27
   * htop:
       新增 htop 配置
