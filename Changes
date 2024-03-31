@@ -1,3 +1,7 @@
+v2024-03-31
+  * zsh:
+      不再将 rubygems 用户目录添加到 PATH
+
 v2024-02-28
   * zsh:
       禁用了插件 per-directory-history
