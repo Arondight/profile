@@ -143,7 +143,7 @@ function _sshenvNew ()
   fi
 
   mkdir -p "${SSHENV_WORK_DIR}/${_new}"
-  ssh-keygen -t 'rsa' -C "${_mail}" -f "${SSHENV_WORK_DIR}/${_new}/id_rsa"
+  ssh-keygen -t 'ed25519' -C "${_mail}" -f "${SSHENV_WORK_DIR}/${_new}/id_ed25519"
 
   # XXX: WHY? I forgot why try to remove ~/.ssh here...
   if [[ -d "$_sshenv_ssh_dir" ]]
