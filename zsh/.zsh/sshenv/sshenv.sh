@@ -294,6 +294,21 @@ function _sshenvImport ()
     return 1
   fi
 
+  for d in $(find "${HOME}/.ssh_env/"* -maxdepth 0 -type d)
+  do
+    command chmod 700 "$d"
+  done
+
+  for f in $(find "${HOME}/.ssh_env/" -type f -name 'id_*.pub')
+  do
+    command chmod 644 "$f"
+  done
+
+  for f in $(find "${HOME}/.ssh_env/" -type f -name 'id_*' -not -name '*.pub')
+  do
+    command chmod 400 "$f"
+  done
+
   return 0
 }
 

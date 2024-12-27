@@ -12,6 +12,9 @@ tags
 # dot files
 .*
 
+# zip files
+*.gz
+
 # git
 !.gitignore
 

@@ -40,12 +40,17 @@
 	askPass =
 	editor = vim
 	quotepath = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	process = git-lfs filter-process
+	required = true
+	smudge = git-lfs smudge -- %f
 [gui]
 	encoding = utf-8
 #[http]
-#	proxy = http://localhost:8889
+#	proxy = http://localhost:10809
 #[https]
-#	proxy = http://localhost:8889
+#	proxy = http://localhost:10809
 [i18n]
 	logoutputencoding = utf-8
 [i18n "commit"]
@@ -58,5 +63,5 @@
 	default = simple
 [user]
 	email = shell_way@foxmail.com
-	name = Qin Fandong
-	signingkey = B66CC194
+	name = 秦凡东
+	signingkey = 43E6919A7C6150C354A77DA9ECFF404B11F89583
