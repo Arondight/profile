@@ -62,6 +62,18 @@
 [push]
 	default = simple
 [user]
-	email = shell_way@foxmail.com
-	name = 秦凡东
-	signingkey = 43E6919A7C6150C354A77DA9ECFF404B11F89583
+	# {
+	#name = 秦凡东
+	#email = shell_way@foxmail.com
+	#signingkey = 43E6919A7C6150C354A77DA9ECFF404B11F89583
+	# }
+	# {
+	#name = Qin Fandong
+	#email = shell_way@foxmail.com
+	#signingkey = 4444949501B3CC2A76579C0825FFD92AB66CC194
+	# }
+	# {
+	#name = 秦凡东
+	#email = qinfandong@kylinos.cn
+	#signingkey = F6AE5ACD1E5DE960A99B1B91A3105F851889818B
+	# }

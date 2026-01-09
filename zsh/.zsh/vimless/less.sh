@@ -7,9 +7,7 @@
 # SOURCE ME!!!
 # ==============================================================================
 
-alias sysless='env less'
-
-function less ()
+function vimless ()
 {
   local _input=''
   local _pager=''
