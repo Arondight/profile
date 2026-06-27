@@ -1,4 +1,5 @@
 #!/usr/bin/env cat
+# shellcheck shell=bash
 # ==============================================================================
 # ipmitool
 # ==============================================================================
@@ -12,7 +13,7 @@ function _ipmi_action ()
   local _ip=$1 && shift
   local _user=$1 && shift
   local _passwd=$1 && shift
-  local _action=($@)
+  local _action=("$@")
 
   if [[ -z "$_ip" || -z "$_user" || -z "$_passwd" || 0 -eq "${#_action[@]}" ]]
   then
@@ -20,7 +21,7 @@ function _ipmi_action ()
     return 1
   fi
 
-  ipmitool -I lanplus -H "$_ip" -U "$_user" -P "$_passwd" -e! ${_action[@]}
+  ipmitool -I lanplus -H "$_ip" -U "$_user" -P "$_passwd" -e! "${_action[@]}"
 
   return $?
 }
@@ -31,7 +32,7 @@ function _ipmi_action ()
 alias ipmi-status='ipmi_status'
 function ipmi_status ()
 {
-  _ipmi_action $@ power status
+  _ipmi_action "$@" power status
   return $?
 }
 
@@ -41,7 +42,7 @@ function ipmi_status ()
 alias ipmi-boot='ipmi_boot'
 function ipmi_boot ()
 {
-  _ipmi_action $@ power on
+  _ipmi_action "$@" power on
   return $?
 }
 
@@ -51,7 +52,7 @@ function ipmi_boot ()
 alias ipmi-halt='ipmi_halt'
 function ipmi_halt ()
 {
-  _ipmi_action $@ power off
+  _ipmi_action "$@" power off
   return $?
 }
 
@@ -61,7 +62,7 @@ function ipmi_halt ()
 alias ipmi-attach='ipmi_attach'
 function ipmi_attach ()
 {
-  _ipmi_action $@ sol activate
+  _ipmi_action "$@" sol activate
   return $?
 }
 
@@ -71,7 +72,7 @@ function ipmi_attach ()
 alias ipmi-deattach='ipmi_deattach'
 function ipmi_deattach ()
 {
-  _ipmi_action $@ sol deactivate
+  _ipmi_action "$@" sol deactivate
   return $?
 }
 

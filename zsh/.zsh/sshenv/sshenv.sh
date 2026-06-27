@@ -1,4 +1,5 @@
 #!/usr/bin/env cat
+# shellcheck shell=bash
 # ==============================================================================
 # ssh key manager
 # ==============================================================================
@@ -7,7 +8,8 @@
 # SOURCE ME!!!
 # ==============================================================================
 # 由于历史原因，工作目录和指令名并不符合
-export SSHENV_WORK_DIR="$(readlink -f ${SSHENV_WORK_DIR:-"${HOME}/.ssh_env"})"
+SSHENV_WORK_DIR="$(readlink -f "${SSHENV_WORK_DIR:-"${HOME}/.ssh_env"}")"
+export SSHENV_WORK_DIR
 
 if [[ -n "$ZSH_NAME" ]]
 then
@@ -41,7 +43,8 @@ EOF
 
 function _sshenvProlog ()
 {
-  local _suffix="$(date +'%Y%m%d-%H%M%S')"
+  local _suffix
+  _suffix="$(date +'%Y%m%d-%H%M%S')"
   local _sshenv_ssh_dir="${HOME}/.ssh"
 
   mkdir -p "$SSHENV_WORK_DIR"
@@ -72,14 +75,15 @@ function _sshenvProlog ()
 function _sshenvList ()
 {
   # Here use origin path
-  local _sshenv_ssh_dir="$(readlink -f "${HOME}/.ssh")"
+  local _sshenv_ssh_dir
+  _sshenv_ssh_dir="$(readlink -f "${HOME}/.ssh")"
   local _env=''
 
   for _env in "$SSHENV_WORK_DIR"/*
   do
     if [[ -d "$_env" && -w "$_env" ]]
     then
-      echo -n "$(basename $_env)"
+      echo -n "$(basename "$_env")"
       if [[ "$_env" == "$_sshenv_ssh_dir" ]]
       then
         echo -e "\t*"
@@ -105,7 +109,7 @@ function _sshenvUse ()
 
   if [[ -d "$_env" && -r "$_env" ]]
   then
-    echo "Use environment \"$(basename $_env)\"."
+    echo "Use environment \"$(basename "$_env")\"."
     if [[ -e "${HOME}/.ssh" ]]
     then
       rm -rf "${HOME}/.ssh"
@@ -113,6 +117,7 @@ function _sshenvUse ()
     ln -sf "$_env" "${HOME}/.ssh"
     _ret="$?"
   else
+    # shellcheck disable=SC2154
     echo "Environment \"$env\" is bad." >&2
     _ret=1
   fi
@@ -178,7 +183,7 @@ function _sshenvDelete ()
   fi
 
   echo "Export current environment \"${1}\" to \"${1}.tar.gz\""
-  tar -zcf "${1}.tar.gz" -C "$SSHENV_WORK_DIR" "$(basename $_env)"
+  tar -zcf "${1}.tar.gz" -C "$SSHENV_WORK_DIR" "$(basename "$_env")"
   echo "Delete environment \"${1}\""
   rm -rf "$_env"
 
@@ -238,9 +243,8 @@ function _sshenvExport ()
   fi
 
   echo "Export all environments to \"${_tarball}.tar.gz\""
-  tar -zcf "${_tarball}.tar.gz" \
-      -C "$(dirname $SSHENV_WORK_DIR)" "$(basename $SSHENV_WORK_DIR)"
-  if [[ 0 -eq "$?" ]]
+  if tar -zcf "${_tarball}.tar.gz" \
+      -C "$(dirname "$SSHENV_WORK_DIR")" "$(basename "$SSHENV_WORK_DIR")"
   then
     echo 'done'
   else
@@ -285,8 +289,7 @@ function _sshenvImport ()
   fi
 
   echo "Import environments from \"${_tarball}\""
-  tar -zxf "$_tarball" -C "$(dirname $SSHENV_WORK_DIR)"
-  if [[ 0 -eq "$?" ]]
+  if tar -zxf "$_tarball" -C "$(dirname "$SSHENV_WORK_DIR")"
   then
     echo 'done'
   else
@@ -294,16 +297,19 @@ function _sshenvImport ()
     return 1
   fi
 
+  # shellcheck disable=SC2044
   for d in $(find "${HOME}/.ssh_env/"* -maxdepth 0 -type d)
   do
     command chmod 700 "$d"
   done
 
+  # shellcheck disable=SC2044
   for f in $(find "${HOME}/.ssh_env/" -type f -name 'id_*.pub')
   do
     command chmod 644 "$f"
   done
 
+  # shellcheck disable=SC2044
   for f in $(find "${HOME}/.ssh_env/" -type f -name 'id_*' -not -name '*.pub')
   do
     command chmod 400 "$f"
@@ -314,7 +320,7 @@ function _sshenvImport ()
 
 function sshenv ()
 {
-  if ! _sshenvProlog $@
+  if ! _sshenvProlog "$@"
   then
     return 1
   fi
@@ -326,27 +332,27 @@ function sshenv ()
       ;;
     use|workon)
       shift
-      _sshenvUse $@
+      _sshenvUse "$@"
       ;;
     new|create)
       shift
-      _sshenvNew $@
+      _sshenvNew "$@"
       ;;
     delete|remove|rm)
       shift
-      _sshenvDelete $@
+      _sshenvDelete "$@"
       ;;
     rename|move|mv)
       shift
-      _sshenvRename $@
+      _sshenvRename "$@"
       ;;
     export)
       shift
-      _sshenvExport $@
+      _sshenvExport "$@"
       ;;
     import)
       shift
-      _sshenvImport $@
+      _sshenvImport "$@"
       ;;
     h|help|-h|--help)
       shift

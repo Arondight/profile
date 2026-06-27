@@ -6,7 +6,7 @@
 # ==============================================================================
 
 SUFFIX=$(date +'%Y%m%d-%H%M%S')
-WORKDIR=$(dirname $(readlink -f $0))
+WORKDIR="$(dirname "$(readlink -f "$0")")"
 
 # MAIN:
 {
@@ -18,29 +18,29 @@ WORKDIR=$(dirname $(readlink -f $0))
   INTERFACESHSRC="${WORKDIR}/.bash/interface.sh"
   INTERFACESHDEST="${HOME}/.bash/interface.sh"
 
-  mkdir -p $BASHDIR
+  mkdir -p "$BASHDIR"
 
   if [[ -e $BASHRCDEST ]]
   then
-    if [[ -n $(md5sum $BASHRCSRC $BASHRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$BASHRCSRC" "$BASHRCDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $BASHRCDEST "${BASHRCDEST}.${SUFFIX}.bak"
+      mv -v "$BASHRCDEST" "${BASHRCDEST}.${SUFFIX}.bak"
     fi
   fi
 
   if [[ -e $BASHPROFILEDEST ]]
   then
-    if [[ -n $(md5sum $BASHPROFILESRC $BASHPROFILEDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$BASHPROFILESRC" "$BASHPROFILEDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $BASHPROFILEDEST "${BASHPROFILEDEST}.${SUFFIX}.bak"
+      mv -v "$BASHPROFILEDEST" "${BASHPROFILEDEST}.${SUFFIX}.bak"
     fi
   fi
 
   if [[ -e $INTERFACESHDEST ]]
   then
-    if [[ -n $(md5sum $INTERFACESHSRC $INTERFACESHDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$INTERFACESHSRC" "$INTERFACESHDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $INTERFACESHDEST "${INTERFACESHDEST}.${SUFFIX}.bak"
+      mv -v "$INTERFACESHDEST" "${INTERFACESHDEST}.${SUFFIX}.bak"
     fi
   fi
 
@@ -48,21 +48,22 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $BASHRCDEST ]]
   then
-    ln -sf $BASHRCSRC $BASHRCDEST
+    ln -sf "$BASHRCSRC" "$BASHRCDEST"
   fi
 
   if [[ ! -e $BASHPROFILEDEST ]]
   then
-    ln -sf $BASHPROFILESRC $BASHPROFILEDEST
+    ln -sf "$BASHPROFILESRC" "$BASHPROFILEDEST"
   fi
 
   if [[ ! -e $INTERFACESHDEST ]]
   then
-    ln -sf $INTERFACESHSRC $INTERFACESHDEST
+    ln -sf "$INTERFACESHSRC" "$INTERFACESHDEST"
   fi
 
+  ret=$?
   echo 'done'
 
-  exit $?
+  exit $ret
 }
 

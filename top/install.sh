@@ -6,7 +6,7 @@
 # ==============================================================================
 
 SUFFIX=$(date +'%Y%m%d-%H%M%S')
-WORKDIR=$(dirname $(readlink -f $0))
+WORKDIR="$(dirname "$(readlink -f "$0")")"
 
 # MAIN:
 {
@@ -15,9 +15,9 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ -e $TOPRCDEST ]]
   then
-    if [[ -n $(md5sum $TOPRCSRC $TOPRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$TOPRCSRC" "$TOPRCDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $TOPRCDEST "${TOPRCDEST}.${SUFFIX}.bak"
+      mv -v "$TOPRCDEST" "${TOPRCDEST}.${SUFFIX}.bak"
     fi
   fi
 
@@ -25,11 +25,12 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $TOPRCDEST ]]
   then
-    install -Dm0644 $TOPRCSRC $TOPRCDEST
+    install -Dm0644 "$TOPRCSRC" "$TOPRCDEST"
   fi
 
+  ret=$?
   echo 'done'
 
-  exit $?
+  exit $ret
 }
 

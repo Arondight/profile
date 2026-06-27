@@ -21,42 +21,57 @@
   echo 'Init profiles for zsh ...'
 
   # oh-my-zsh
-  if [[ ! -d $OHMYZSHDIR ]]
+  if [[ ! -d "$OHMYZSHDIR" ]]
   then
-    git clone $OHMYZSHURL $OHMYZSHDIR
+    git clone "$OHMYZSHURL" "$OHMYZSHDIR"
   else
-    pushd $OHMYZSHDIR && command $GITPULLCMD && popd
+    pushd "$OHMYZSHDIR" || exit
+    {
+      command "$GITPULLCMD"
+    }
+    popd || exit
   fi
 
   # zsh-syntax-highlighting
-  if [[ ! -d $ZSHSYNHLDIR ]]
+  if [[ ! -d "$ZSHSYNHLDIR" ]]
   then
-    git clone $ZSHSYNHLURL $ZSHSYNHLDIR
+    git clone "$ZSHSYNHLURL" "$ZSHSYNHLDIR"
   else
-    pushd $ZSHSYNHLDIR && command $GITPULLCMD && popd
+    pushd "$ZSHSYNHLDIR" || exit
+    {
+      command "$GITPULLCMD"
+    }
+    popd || exit
   fi
 
   # zsh-completions
-  if [[ ! -d $ZSHCOMLDIR ]]
+  if [[ ! -d "$ZSHCOMLDIR" ]]
   then
-    git clone $ZSHCOMLURL $ZSHCOMLDIR
+    git clone "$ZSHCOMLURL" "$ZSHCOMLDIR"
   else
-    pushd $ZSHCOMLDIR && command $GITPULLCMD && popd
+    pushd "$ZSHCOMLDIR" || exit
+    {
+      command "$GITPULLCMD"
+    }
+    popd || exit
   fi
 
   # zsh-autosuggestions
-  if [[ ! -d $ZSHSUGGESTDIR ]]
+  if [[ ! -d "$ZSHSUGGESTDIR" ]]
   then
-    git clone $ZSHSUGGESTURL $ZSHSUGGESTDIR
+    git clone "$ZSHSUGGESTURL" "$ZSHSUGGESTDIR"
   else
-    pushd $ZSHSUGGESTDIR && command $GITPULLCMD && popd
+    pushd "$ZSHSUGGESTDIR" || exit
+    {
+      command "$GITPULLCMD"
+    }
+    popd || exit
   fi
 
   # for possible insecure directories
-  chmod g-w -R $OHMYZSHDIR
-
+  chmod g-w -R "$OHMYZSHDIR"
+  ret=$?
   echo 'done'
-
-  exit $?
+  exit $ret
 }
 

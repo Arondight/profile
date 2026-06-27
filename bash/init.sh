@@ -15,13 +15,18 @@
 
   if [[ ! -d $BASHPROMPTDIR ]]
   then
-    git clone $BASHPROMPTURL $BASHPROMPTDIR
+    git clone "$BASHPROMPTURL" "$BASHPROMPTDIR"
   else
-    pushd $BASHPROMPTDIR && command $GITPULLCMD && popd
+    pushd "$BASHPROMPTDIR" || exit
+    {
+      command "$GITPULLCMD"
+    }
+    popd || exit
   fi
 
+  ret=$?
   echo 'done'
 
-  exit $?
+  exit $ret
 }
 

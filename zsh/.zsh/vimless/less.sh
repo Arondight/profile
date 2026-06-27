@@ -1,4 +1,5 @@
 #!/usr/bin/env cat
+# shellcheck shell=bash
 # ==============================================================================
 # 使用Vim 作为less 程序
 # ==============================================================================
@@ -21,7 +22,7 @@ function vimless ()
   then
     _pager='nano -v'
   else
-    less $@
+    less "$@"
     return "$?"
   fi
 
@@ -43,7 +44,7 @@ function vimless ()
     then
       cat
     else
-      cat $@
+      cat "$@"
     fi
     return "$?"
   fi

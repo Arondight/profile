@@ -6,7 +6,7 @@
 # ==============================================================================
 
 SUFFIX=$(date +'%Y%m%d-%H%M%S')
-WORKDIR=$(dirname $(readlink -f $0))
+WORKDIR=$(dirname "$(readlink -f "$0")")
 
 # MAIN:
 {
@@ -15,36 +15,36 @@ WORKDIR=$(dirname $(readlink -f $0))
   YCMRCSRC="${WORKDIR}/.ycm_extra_conf.py"
   YCMRCDEST="${HOME}/.ycm_extra_conf.py"
 
-  if [[ -e $VIMRCDEST ]]
+  if [[ -e "$VIMRCDEST" ]]
   then
-    if [[ -n $(md5sum $VIMRCSRC $VIMRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$VIMRCSRC" "$VIMRCDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $VIMRCDEST "${VIMRCDEST}.${SUFFIX}.bak"
+      mv -v "$VIMRCDEST" "${VIMRCDEST}.${SUFFIX}.bak"
     fi
   fi
 
   if [[ -e "$YCMRCDEST" ]]
   then
-    if [[ -n $(md5sum $YCMRCSRC $YCMRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$YCMRCSRC" "$YCMRCDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $YCMRCDEST "${YCMRCDEST}.${SUFFIX}.bak"
+      mv -v "$YCMRCDEST" "${YCMRCDEST}.${SUFFIX}.bak"
     fi
   fi
 
   echo -ne "Install profiles for vim ...\t"
 
-  if [[ ! -e $VIMRCDEST ]]
+  if [[ ! -e "$VIMRCDEST" ]]
   then
-    ln -sf $VIMRCSRC $VIMRCDEST
+    ln -sf "$VIMRCSRC" "$VIMRCDEST"
   fi
 
-  if [[ ! -e $YCMRCDEST ]]
+  if [[ ! -e "$YCMRCDEST" ]]
   then
-    ln -sf $YCMRCSRC $YCMRCDEST
+    ln -sf "$YCMRCSRC" "$YCMRCDEST"
   fi
 
   echo 'done'
 
-  exit $?
+  exit 0
 }
 

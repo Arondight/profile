@@ -1,3 +1,8 @@
+- v2026-06-27
+  - repo
+    - 所有脚本通过 shellcheck 检查
+  - `zsh`
+    - 重命名 `reactor.sh` 为 `loader.sh`
 - v2026-01-09
   - repo
     - 更新了 `README.md`

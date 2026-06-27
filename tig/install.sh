@@ -6,7 +6,7 @@
 # ==============================================================================
 
 SUFFIX=$(date +'%Y%m%d-%H%M%S')
-WORKDIR=$(dirname $(readlink -f $0))
+WORKDIR="$(dirname "$(readlink -f "$0")")"
 
 # MAIN:
 {
@@ -15,9 +15,9 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ -e $TIGRCDEST ]]
   then
-    if [[ -n $(md5sum $TIGRCSRC $TIGRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$TIGRCSRC" "$TIGRCDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $TIGRCDEST "${TIGRCDEST}.${SUFFIX}.bak"
+      mv -v "$TIGRCDEST" "${TIGRCDEST}.${SUFFIX}.bak"
     fi
   fi
 
@@ -25,11 +25,12 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $TIGRCDEST ]]
   then
-    install -Dm0644 $TIGRCSRC $TIGRCDEST
+    install -Dm0644 "$TIGRCSRC" "$TIGRCDEST"
   fi
 
+  ret=$?
   echo 'done'
 
-  exit $?
+  exit $ret
 }
 

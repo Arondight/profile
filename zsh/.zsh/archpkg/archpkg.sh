@@ -1,4 +1,5 @@
 #!/usr/bin/env cat
+# shellcheck shell=bash
 # ==============================================================================
 # A slackpkg-style package manager for Arch Linux
 # ==============================================================================
@@ -46,9 +47,10 @@ END_OF_HELP
   return "$?"
 }
 
+# shellcheck disable=SC2120
 function _archpkgCheckUpgrades ()
 {
-  sudo pacman -Qu $@
+  sudo pacman -Qu "$@"
 
   return "$?"
 }
@@ -82,11 +84,12 @@ function _archpkgUpgradeAll ()
 
 function _archpkgCleanSystem ()
 {
-  local _result=( $(pacman -Qqdt) )
+  local _result
+  read -ra _result <<< "$(pacman -Qqdt)"
 
   if [[ 0 -ne "${#_result[@]}" ]]
   then
-    sudo pacman --noconfirm --color auto -Rsn ${_result[@]}
+    sudo pacman --noconfirm --color auto -Rsn "${_result[@]}"
   fi
 
   sudo pacman --noconfirm --color auto -Sc
@@ -102,7 +105,7 @@ function _archpkgInstall ()
     return 1
   fi
 
-  sudo pacman --needed --color auto -S $@
+  sudo pacman --needed --color auto -S "$@"
 
   return "$?"
 }
@@ -115,13 +118,14 @@ function _archpkgReinstall ()
     return 1
   fi
 
-  sudo pacman --color auto -S $@
+  sudo pacman --color auto -S "$@"
 
   return "$?"
 }
 
 function _archpkgRemove ()
 {
+  # shellcheck disable=SC2178
   local _result=''
 
   if [[ 0 -eq "$#" ]]
@@ -130,11 +134,11 @@ function _archpkgRemove ()
     return 1
   fi
 
-  _result=( $(pacman -Qqs "$1") )
+  read -ra _result <<< "$(pacman -Qqs "$1")"
 
   if [[ 0 != "${#_result[@]}" ]]
   then
-    sudo pacman --color auto -Rsn ${_result[@]}
+    sudo pacman --color auto -Rsn "${_result[@]}"
   fi
 
   return $?
@@ -148,7 +152,7 @@ function _archpkgDownload ()
     return 1
   fi
 
-  sudo pacman --color auto -Sw $@
+  sudo pacman --color auto -Sw "$@"
 
   return "$?"
 }
@@ -161,7 +165,7 @@ function _archpkgInfo ()
     return 1
   fi
 
-  pacman --color auto -Si $@
+  pacman --color auto -Si "$@"
 
   return "$?"
 }
@@ -174,7 +178,7 @@ function _archpkgSearch ()
     return 1
   fi
 
-  pacman --color auto -Si $@
+  pacman --color auto -Si "$@"
 
   return "$?"
 }
@@ -193,7 +197,7 @@ function _archpkgFileSearch ()
     sudo pkgfile --update
   fi
 
-  pkgfile --search $@
+  pkgfile --search "$@"
 
   return "$?"
 }
@@ -240,8 +244,8 @@ function _archpkgInstallTemplate ()
     return 1
   fi
 
-  _packages=( $(cat "$_templatefile") )
-  sudo pacman --needed --color auto -S ${_packages[@]}
+  read -ra _packages <<< "$(cat "$_templatefile")"
+  sudo pacman --needed --color auto -S "${_packages[@]}"
 
   return "$?"
 }
@@ -249,6 +253,7 @@ function _archpkgInstallTemplate ()
 function _archpkgRemoveTemplate ()
 {
   local _templatefile=''
+  # shellcheck disable=SC2178
   local _packages=''
 
   if [[ 0 -eq $# ]]
@@ -264,8 +269,8 @@ function _archpkgRemoveTemplate ()
     return 1
   fi
 
-  _packages=( $(cat "$_templatefile") )
-  sudo pacman --color auto -Rsn ${_packages[@]}
+  read -ra _packages <<< "$(cat "$_templatefile")"
+  sudo pacman --color auto -Rsn "${_packages[@]}"
 
   return "$?"
 }
@@ -286,6 +291,7 @@ function archpkg ()
   case "$1" in
     check-updates)
       shift
+      # shellcheck disable=SC2119
       _archpkgCheckUpgrades
       ;;
     update)
@@ -302,43 +308,43 @@ function archpkg ()
       ;;
     install)
       shift
-      _archpkgInstall $@
+      _archpkgInstall "$@"
         ;;
     reinstall)
       shift
-      _archpkgReinstall $@
+      _archpkgReinstall "$@"
       ;;
     remove)
       shift
-      _archpkgRemove $@
+      _archpkgRemove "$@"
       ;;
     download)
       shift
-      _archpkgDownload $@
+      _archpkgDownload "$@"
       ;;
     info)
       shift
-      _archpkgInfo $@
+      _archpkgInfo "$@"
       ;;
     search)
       shift
-      _archpkgSearch $@
+      _archpkgSearch "$@"
       ;;
     file-search)
       shift
-      _archpkgFileSearch $@
+      _archpkgFileSearch "$@"
       ;;
     generate-template)
       shift
-      _archpkgGenerateTemplate $@
+      _archpkgGenerateTemplate "$@"
       ;;
     install-template)
       shift
-      _archpkgInstallTemplate $@
+      _archpkgInstallTemplate "$@"
       ;;
     remove-template)
       shift
-      _archpkgRemoveTemplate $@
+      _archpkgRemoveTemplate "$@"
       ;;
     h|help|-h|--help)
       shift

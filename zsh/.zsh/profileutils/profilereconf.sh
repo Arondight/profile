@@ -10,12 +10,14 @@ alias profile_reconf='profilereconf'
 
 function profilereconf ()
 {
-  local _profileroot="$(dirname $(dirname $(readlink -f $HOME/.zshrc)))"
+  local _profileroot
+  _profileroot="$(dirname "$(dirname "$(readlink -f "$HOME/.zshrc")")")"
   local _install_sh="${_profileroot}/install.sh"
   local _args='-a'
   local _ret=0
 
-  pushd "$_profileroot"
+  pushd "$_profileroot" || exit
+  {
 
   if [[ -x "$_install_sh" ]]
   then
@@ -26,7 +28,8 @@ function profilereconf ()
     _ret=1
   fi
 
-  popd
+  }
+  popd || exit
 
   return "$?"
 }

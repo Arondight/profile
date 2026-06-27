@@ -1,4 +1,5 @@
 #!/usr/bin/env cat
+# shellcheck shell=bash
 # ==============================================================================
 # login tmux，适用于无法分屏的ssh 的环境
 # ==============================================================================
@@ -72,7 +73,7 @@ function loginTmux ()
   fi
 
   echo -n 'It seems you login with a ssh client, work with tmux? (y/n) '
-  read 'choose'
+  read -r 'choose'
 
   if echo "$choose" | grep -P '[^yY]' >/dev/null 2>&1
   then
@@ -89,14 +90,14 @@ EOF
   while true
   do
     echo -n 'Choose one: '
-    read choose
+    read -r choose
 
     if echo "$choose" | grep -P '[^0-9]' >/dev/null 2>&1
     then
       continue
     fi
 
-    if [[ 'false' == "$(awk --assign=choose=$choose \
+    if [[ 'false' == "$(awk --assign=choose="$choose" \
                         'BEGIN { print ((choose >= 1) && (choose < 4)) \
                           ? "true" : "false" }')" ]]
     then

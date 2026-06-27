@@ -1,4 +1,5 @@
 #!/usr/bin/env cat
+# shellcheck shell=bash
 # ==============================================================================
 # 在Vim 中查看Manual
 # ==============================================================================
@@ -12,12 +13,12 @@ function vimman()
   local _section=''
   local _key=''
 
-  if [[ "$#" < 1 ]]
+  if [[ "$#" -lt 1 ]]
   then
     return 0
   fi
 
-  for _key in $@
+  for _key in "$@"
   do
     if echo "$_key" | grep -P '^[1-9]$' >/dev/null 2>&1
     then

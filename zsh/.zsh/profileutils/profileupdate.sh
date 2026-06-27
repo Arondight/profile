@@ -1,4 +1,4 @@
-
+#!/usr/bin/env bash
 # ==============================================================================
 # 更新配置文件
 # ==============================================================================
@@ -6,14 +6,16 @@ alias profile-update='profileupdate'
 alias profile_update='profileupdate'
 
 function profileupdate () {
-  local _profileroot=$(dirname $(dirname $(readlink -f "${HOME}/.zshrc")))
+  local _profileroot
+  _profileroot="$(dirname "$(dirname "$(readlink -f "${HOME}/.zshrc")")")"
   local _upstream='https://github.com/Arondight/profile.git'
   local _urlreg='https?://(([\w\d\.-]+\.\w{2,6})|(\d{1,3}(\.\d{1,3}){3}))(:\d{1,4})*(/[\w\d\&%\./-~-]*)?'
   local _branch='master'
   local _gitconf=''
   local _giturl=''
 
-  pushd "$_profileroot"
+  pushd "$_profileroot" || exit
+  {
 
   if existcmd 'groot'
   then
@@ -44,7 +46,8 @@ function profileupdate () {
     echo 'Use "-f" option to do a force update, but you will lose local changes.' >&2
   fi
 
-  popd
+  }
+  popd || exit
 
   return "$?"
 }

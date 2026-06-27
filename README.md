@@ -4,7 +4,7 @@
 
 My software config files, tested on Arch Linux, CentOS Stream 10, Debian 13.
 
-## Dependence
+## Dependencies
 
 - gawk
 - clang
@@ -12,13 +12,13 @@ My software config files, tested on Arch Linux, CentOS Stream 10, Debian 13.
 - git
 - grep
 - make
-- vim
+- vim (vim-nox on Debian)
 - xz
 
 ## Usage
 
 ```bash
-mkdir -p ~/.config/
+mkdir -pv ~/.config/
 git clone https://github.com/Arondight/profile.git ~/.config/.profile/
 cd ~/.config/.profile/
 ./install.sh -a
@@ -28,19 +28,25 @@ cd ~/.config/.profile/
 
 ## Plugins
 
-| Plugin                                | 作用                                                                            |
-| ------------------------------------- | ------------------------------------------------------------------------------- |
-| [archpkg](zsh/.zsh/archpkg)           | An Arch Linux package manager in the style of slackpkg                          |
-| [groot](zsh/.zsh/groot)               | Go to top level of a git repository                                             |
-| [ipmi](zsh/.zsh/ipmi)                 | Wrapper for `ipmitool`                                                          |
-| [mountcmds](zsh/.zsh/mountcmds)       | Mount/umount commands                                                           |
-| [profileutils](zsh/.zsh/profileutils) | Update and re-config all config files using `profileupdate` and `profilereconf` |
-| [sshenv](zsh/.zsh/sshenv)             | Manage ssh environments                                                         |
-| [vimless](zsh/.zsh/less)              | A `less` command using `vim`                                                    |
-| [vimman](zsh/.zsh/vman)               | A `man` command using `vim`                                                     |
-| oh-my-zsh-upgrade                     | Update oh-my-zsh (a zsh plugin)                                                 |
+| Plugin                                | Description                                                                        |
+| ------------------------------------- | ---------------------------------------------------------------------------------- |
+| [alias](zsh/.zsh/alias)               | Shell aliases                                                                      |
+| [archpkg](zsh/.zsh/archpkg)           | An Arch Linux package manager in the style of slackpkg                             |
+| [custom](zsh/.zsh/custom)             | Load custom user config from `~/.custom_shellrc`                                   |
+| [groot](zsh/.zsh/groot)               | Go to top level of a git repository                                                |
+| [ipmi](zsh/.zsh/ipmi)                 | Wrapper for `ipmitool`                                                             |
+| [logintmux](zsh/.zsh/logintmux)       | Auto-start tmux on login                                                           |
+| [mountcmds](zsh/.zsh/mountcmds)       | Mount/umount commands                                                              |
+| [path](zsh/.zsh/path)                 | PATH environment configuration                                                     |
+| [profileutils](zsh/.zsh/profileutils) | Update and re-configure all config files using `profileupdate` and `profilereconf` |
+| [ssh](zsh/.zsh/ssh)                   | SSH client configuration                                                           |
+| [sshenv](zsh/.zsh/sshenv)             | Manage ssh environments                                                            |
+| [vimless](zsh/.zsh/vimless)           | A `less` command using `vim`                                                       |
+| [vimman](zsh/.zsh/vimman)             | A `man` command using `vim`                                                        |
+| oh-my-zsh-upgrade                     | Update oh-my-zsh (a zsh plugin)                                                    |
 
-> Plugin [custom](zsh/.zsh/custom) will read `~/.custom_shellrc`.
+> Plugins are loaded via [loader.sh](zsh/.zsh/loader.sh) — source it in `~/.zshrc` or `~/.bashrc`.
+> All plugins use bash syntax and are compatible with both zsh and bash.
 
 ## LICENSE
 

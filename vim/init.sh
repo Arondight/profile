@@ -10,7 +10,7 @@ PLUGINDIR="${HOME}/.vim/bundle"
 # vim plugins
 function preinit ()
 {
-  mkdir -p $PLUGINDIR
+  mkdir -p "$PLUGINDIR"
 
   return 0
 }
@@ -23,7 +23,7 @@ function initPlugins ()
 
   if [[ ! -d ${VUNDLEDIR} ]]
   then
-    if ! git clone $VUNDLEURL $VUNDLEDIR
+    if ! git clone "$VUNDLEURL" "$VUNDLEDIR"
     then
       return 1
     fi
@@ -42,7 +42,11 @@ function initVimproc ()
 
   if [[ -d $VIMPROCDIR ]]
   then
-    pushd $VIMPROCDIR && make -j8 && popd
+    pushd "$VIMPROCDIR" || exit
+    {
+      make -j8
+    }
+    popd || exit
     return $?
   fi
 
@@ -56,7 +60,11 @@ function initClangComplete ()
 
   if [[ -d "$_clang_complete_dir" ]]
   then
-    pushd "$_clang_complete_dir" && make install -j8 && popd
+    pushd "$_clang_complete_dir" || exit
+    {
+      make install -j8
+    }
+    popd || exit
     return $?
   fi
 
@@ -77,17 +85,20 @@ function initVimGo ()
 }
 
 # color_coded
+# shellcheck disable=SC2317
 function initColorCoded ()
 {
   local COLORCODEDDIR="${PLUGINDIR}/color_coded"
 
-  if [[ -d $COLORCODEDDIR ]]
+  if [[ -d "$COLORCODEDDIR" ]]
   then
     mkdir -p "${COLORCODEDDIR}/build"
-    pushd "${COLORCODEDDIR}/build"
-    cmake ..
-    cmake --build . --target install --config Release -- -j8
-    popd
+    pushd "${COLORCODEDDIR}/build" || exit
+    {
+      cmake ..
+      cmake --build . --target install --config Release -- -j8
+    }
+    popd || exit
 
     return $?
   fi
@@ -97,13 +108,14 @@ function initColorCoded ()
 
 # libtinfo
 # XXX: This for a bug of YCM -- It use libtinfo.so but not provides by Arch Linux
+# shellcheck disable=SC2317
 function initLibtinfo ()
 {
   local ANDROIDENVINIT_SH="$HOME/.zsh/android_env/init.sh"
 
   # This is ok, because installtion is before init
-  if [[ -x $ANDROIDENVINIT_SH ]]; then
-    command $ANDROIDENVINIT_SH
+  if [[ -x "$ANDROIDENVINIT_SH" ]]; then
+    command "$ANDROIDENVINIT_SH"
 
     return $?
   fi
@@ -111,29 +123,35 @@ function initLibtinfo ()
   return 1
 }
 
+# shellcheck disable=SC2317
 function initSyntastic ()
 {
-  local KDIR="/usr/lib/modules/$(uname -r)/build"
-  local SYNTASTICDIR="$(dirname $(readlink -f $0))/syntastic"
+  local KDIR
+  KDIR="/usr/lib/modules/$(uname -r)/build"
+  local SYNTASTICDIR
+  SYNTASTICDIR="$(dirname "$(readlink -f "$0")")/syntastic"
   local SYNTASTIC_C_CONFIG="${HOME}/.syntastic_c_config"
 
-  if [[ ! -d $KDIR ]]
+  if [[ ! -d "$KDIR" ]]
   then
     return
   fi
 
-  echo $SYNTASTICDIR
-  pushd $SYNTASTICDIR
-  make clean
-  make all V=1 2>&1 | grep -oP -- '-nostdinc.+?(?=-DKBUILD_BASENAME)' | \
-    head -n 1 |  tee $SYNTASTIC_C_CONFIG
-  make clean
-  sed -i 's/[ \t]\+/\n/g' $SYNTASTIC_C_CONFIG
-  sed -i '/^\s*$/d' $SYNTASTIC_C_CONFIG
-  popd
+  echo "$SYNTASTICDIR"
+pushd "$SYNTASTICDIR" || exit
+    {
+      make clean
+      make all V=1 2>&1 | grep -oP -- '-nostdinc.+?(?=-DKBUILD_BASENAME)' | \
+        head -n 1 |  tee "$SYNTASTIC_C_CONFIG"
+      make clean
+      sed -i 's/[ \t]\+/\n/g' "$SYNTASTIC_C_CONFIG"
+      sed -i '/^\s*$/d' "$SYNTASTIC_C_CONFIG"
+    }
+    popd || exit
 }
 
 # YCM
+# shellcheck disable=SC2317
 function initYCM ()
 {
   local YCMDIR="${PLUGINDIR}/YouCompleteMe"
@@ -142,12 +160,12 @@ function initYCM ()
   local buildpara=''
   local clangroot=''
 
-  if [[ -d $YCMDIR ]]
+  if [[ -d "$YCMDIR" ]]
   then
     buildpara="--clang-completer"
-    clangroot=$(find $HOME/.vim/bundle/color_coded/build -maxdepth 1 -type d -name 'clang*' | sort -r | head -n 1)
+    clangroot=$(find "$HOME"/.vim/bundle/color_coded/build -maxdepth 1 -type d -name 'clang*' | sort -r | head -n 1)
 
-    if [[ -z $clangroot && -e $LIBCLANG_SO ]]
+    if [[ -z "$clangroot" && -e "$LIBCLANG_SO" ]]
     then
       sysclang=1
     fi
@@ -172,32 +190,34 @@ function initYCM ()
       buildpara="$buildpara --tern-completer"
     fi
 
-    pushd $YCMDIR
+    pushd "$YCMDIR" || exit
+    {
+      if ! git submodule update --init --recursive
+      then
+        return 1
+      fi
 
-    if ! git submodule update --init --recursive
-    then
-      return 1
-    fi
-
-    if [[ 1 -eq $sysclang ]]
-    then
-      buildpara="$buildpara --system-libclang"
-      python2 "${YCMDIR}/install.py" $buildpara
-      return $?
-    elif [[ -n $clangroot ]]
-    then
-      mkdir -p ${YCMDIR}/build && \
-        pushd ${YCMDIR}/build && \
-        cmake -DPATH_TO_LLVM_ROOT=$clangroot . ${YCMDIR}/third_party/ycmd/cpp && \
-        cmake --build . --target ycm_core --config Release && \
-        popd
-      return $?
-    else
-      python2 "${YCMDIR}/install.py" $buildpara
-      return $?
-    fi
-
-    popd
+      if [[ 1 -eq $sysclang ]]
+      then
+        buildpara="$buildpara --system-libclang"
+        python2 "${YCMDIR}/install.py" "$buildpara"
+        return $?
+      elif [[ -n "$clangroot" ]]
+      then
+        mkdir -p "${YCMDIR}/build" && \
+          pushd "${YCMDIR}/build" || exit
+          {
+            cmake -DPATH_TO_LLVM_ROOT="$clangroot" . "${YCMDIR}/third_party/ycmd/cpp" && \
+            cmake --build . --target ycm_core --config Release
+          }
+          popd || exit
+        return $?
+      else
+        python2 "${YCMDIR}/install.py" "$buildpara"
+        return $?
+      fi
+    }
+    popd || exit
   fi
 
   return 0

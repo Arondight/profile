@@ -1,4 +1,5 @@
 #!/usr/bin/env cat
+# shellcheck shell=bash
 # ==============================================================================
 # 跳到git 仓库顶层目录
 # ==============================================================================
@@ -11,7 +12,8 @@ function groot ()
 {
   local _gdirname='.git'
   local _rootdir='/'
-  local _topdir=$(readlink -f $(pwd))
+  local _topdir
+  _topdir="$(readlink -f "$(pwd)")"
 
   while [[ ! -d "${_topdir}/${_gdirname}" && "$_rootdir" != "$_topdir" ]]
   do
@@ -23,7 +25,7 @@ function groot ()
     echo "Not a git repository." >&2
     return 1
   else
-    cd "$_topdir"
+    cd "$_topdir" || exit
   fi
 
   return "$?"

@@ -8,21 +8,22 @@
 # MAIN:
 {
   DIRSFILE="${HOME}/.config/user-dirs.dirs"
-  DIRREGEX='(?<=\=\").+(?=\"$)'
+  DIRREGEX=('(?<=\=\").+(?=\"$)')
   userdirs=''
   dir=''
 
-  userdirs=( $(grep -oP $DIRREGEX $DIRSFILE) )
+  mapfile -t userdirs < <(grep -oP "${DIRREGEX[@]}" "$DIRSFILE")
 
   echo -ne "Init profiles for user-dirs ...\t"
 
-  for dir in ${userdirs[@]}
+  for dir in "${userdirs[@]}"
   do
-    eval mkdir -p $dir
+    eval "mkdir -p \"$dir\""
   done
 
+  ret=$?
   echo 'done'
 
-  exit $?
+  exit $ret
 }
 

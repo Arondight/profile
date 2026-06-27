@@ -1,4 +1,5 @@
 #!/usr/bin/env cat
+# shellcheck shell=bash
 # ==============================================================================
 # Create by Arondight <shell_way@foxmail.com>
 # ==============================================================================
@@ -43,7 +44,7 @@ function _mount_dir_check ()
 # ==============================================================================
 function mountfat ()
 {
-  if [[ "$#" < 2 ]]
+  if [[ "$#" -lt 2 ]]
   then
     return 1
   fi
@@ -71,7 +72,7 @@ function mountfat ()
 # ==============================================================================
 function mountntfs ()
 {
-  if [[ "$#" < 2 ]]
+  if [[ "$#" -lt 2 ]]
   then
     return 1
   fi
@@ -103,7 +104,7 @@ function mountntfs ()
 # iso 文件挂载
 # ==============================================================================
 function mountiso {
-  if [[ "$#" < 2 ]]
+  if [[ "$#" -lt 2 ]]
   then
     return 1
   fi
@@ -132,16 +133,15 @@ function mountiso {
 function mountdir {
   local _dir=''
 
-  if [[ "$#" < 2 ]]; then
+  if [[ "$#" -lt 2 ]]; then
     return 1
   fi
 
   for _dir in "$1" "$2"
   do
-    _mount_dir_check "$_dir"
-    if [[ 0 -eq $? ]]
+    if _mount_dir_check "$_dir"
     then
-      echo "\"${dir}\" is not a directory." >&2
+      echo "\"${_dir}\" is not a directory." >&2
       return 1
     fi
   done
@@ -159,7 +159,7 @@ function mountfs {
   local _isdev=0
   local _isdir=0
 
-  if [[ "$#" < 2 ]]
+  if [[ "$#" -lt 2 ]]
   then
     return 1
   fi
@@ -169,10 +169,10 @@ function mountfs {
   _mount_dev_check "$1"
   _isdev="$?"
 
+  # shellcheck disable=SC2055
   if [[ 0 -ne "$_isdir" || 0 -ne "$_isdev" ]]
   then
-    _mount_dir_check $2
-    if [[ 0 -ne $? ]]
+    if ! _mount_dir_check "$2"
     then
       echo "\"${2}\" is not a directory." >&2
       return 1
@@ -196,11 +196,11 @@ function umount {
   local _error=0
   local _file=''
 
-  if [[ "$#" < 1 ]]; then
+  if [[ "$#" -lt 1 ]]; then
     return 1
   fi
 
-  for _file in $@; do
+  for _file in "$@"; do
     _mount_dir_check "$_file"
     _isdir="$?"
     _mount_dev_check "$_file"
@@ -211,8 +211,8 @@ function umount {
       # Here MUST use "env" but "command"
       sudo env umount "$_file"
     else
-      echo "\"${file}\" is not a device or directory." >&2
-      _error+=1
+      echo "\"${_file}\" is not a device or directory." >&2
+      (( _error += 1 ))
       continue
     fi
   done

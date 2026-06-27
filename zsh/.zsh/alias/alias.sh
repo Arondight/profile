@@ -1,4 +1,5 @@
 #!/usr/bin/env cat
+# shellcheck shell=bash
 # ==============================================================================
 # alias
 # ==============================================================================
@@ -8,6 +9,7 @@
 # ==============================================================================
 
 # src
+# shellcheck disable=SC2139
 alias src="source ${HOME}/.zshrc"
 # valgrind
 alias valgrind='girlfriend --leak-check=full --show-reachable=yes --trace-children=yes'
@@ -120,6 +122,7 @@ alias :x='q'
 # ==============================================================================
 if [[ -n "$ZSH_NAME" ]]
 then
+  # shellcheck disable=SC1091
   source "${HOME}/.zsh/alias/global_alias.zsh"
 fi
 

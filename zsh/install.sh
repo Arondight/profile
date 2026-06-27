@@ -6,7 +6,7 @@
 # ==============================================================================
 
 SUFFIX=$(date +'%Y%m%d-%H%M%S')
-WORKDIR=$(dirname $(readlink -f $0))
+WORKDIR=$(dirname "$(readlink -f "$0")")
 
 # MAIN:
 {
@@ -16,39 +16,39 @@ WORKDIR=$(dirname $(readlink -f $0))
   ZSHDEST="${HOME}/.zsh"
   LIBDIR="${HOME}/.lib"
 
-  if [[ -e $ZSHRCDEST ]]
+  if [[ -e "$ZSHRCDEST" ]]
   then
-    if [[ -n $(md5sum $ZSHRCSRC $ZSHRCDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$ZSHRCSRC" "$ZSHRCDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $ZSHRCDEST "${ZSHRCDEST}.${SUFFIX}.bak"
+      mv -v "$ZSHRCDEST" "${ZSHRCDEST}.${SUFFIX}.bak"
     fi
   fi
 
-  if [[ -e $ZSHDEST ]]
+  if [[ -e "$ZSHDEST" ]]
   then
-    if [[ -L $ZSHDEST ]]
+    if [[ -L "$ZSHDEST" ]]
     then
-      rm -vf $ZSHDEST
+      rm -vf "$ZSHDEST"
     else
-      mv -v $ZSHRCDEST "${ZSHRCDEST}.${SUFFIX}.bak"
+      mv -v "$ZSHRCDEST" "${ZSHRCDEST}.${SUFFIX}.bak"
     fi
   fi
 
   echo -ne "Install profiles for zsh...\t"
 
-  if [[ ! -e $ZSHRCDEST ]]
+  if [[ ! -e "$ZSHRCDEST" ]]
   then
-    ln -sf $ZSHRCSRC $ZSHRCDEST
+    ln -sf "$ZSHRCSRC" "$ZSHRCDEST"
   fi
 
-  if [[ ! -e $ZSHDEST ]]
+  if [[ ! -e "$ZSHDEST" ]]
   then
-    ln -sf $ZSHSRC $ZSHDEST
+    ln -sf "$ZSHSRC" "$ZSHDEST"
   fi
 
-  if [[ ! -d $LIBDIR ]]
+  if [[ ! -d "$LIBDIR" ]]
   then
-    mkdir -pv $LIBDIR
+    mkdir -pv "$LIBDIR"
   fi
 
   echo 'done'

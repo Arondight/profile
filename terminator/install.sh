@@ -6,7 +6,7 @@
 # ==============================================================================
 
 SUFFIX=$(date +'%Y%m%d-%H%M%S')
-WORKDIR=$(dirname $(readlink -f $0))
+WORKDIR="$(dirname "$(readlink -f "$0")")"
 
 # MAIN:
 {
@@ -14,13 +14,13 @@ WORKDIR=$(dirname $(readlink -f $0))
   TMNTCONFSRC="${WORKDIR}/config"
   TMNTCONFDEST="${TMNTDIR}/config"
 
-  mkdir -p $TMNTDIR
+  mkdir -p "$TMNTDIR"
 
   if [[ -e $TMNTCONFDEST ]]
   then
-    if [[ -n $(md5sum $TMNTCONFSRC $TMNTCONFDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$TMNTCONFSRC" "$TMNTCONFDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $TMNTCONFDEST "${TMNTCONFDEST}.${SUFFIX}.bak"
+      mv -v "$TMNTCONFDEST" "${TMNTCONFDEST}.${SUFFIX}.bak"
     fi
   fi
 
@@ -28,11 +28,12 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $TMNTCONFDEST ]]
   then
-    ln -sf $TMNTCONFSRC $TMNTCONFDEST
+    ln -sf "$TMNTCONFSRC" "$TMNTCONFDEST"
   fi
 
+  ret=$?
   echo 'done'
 
-  exit $?
+  exit $ret
 }
 

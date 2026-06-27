@@ -5,7 +5,7 @@
 # Created by Arondight <shell_way@foxmail.com>
 # ==============================================================================
 # 在shell 配置文件中加入下列一行:
-#   source $HOME/.zsh/reactor.sh
+#   source $HOME/.zsh/loader.sh
 # ==============================================================================
 
 if ! (type existcmd) >/dev/null 2>&1
@@ -29,9 +29,11 @@ function _uniqPath ()
   fi
 
   # XXX: 这里的去重考虑使用sed/awk 重写
-  export PATH="$(
+  local _new_path
+  _new_path="$(
     perl -E 'print join ":", grep { ++$_{$_} < 2 } split ":", $ENV{PATH}'
   )"
+  export PATH="$_new_path"
 
   return "$?"
 }
@@ -47,9 +49,11 @@ function _uniqFpath ()
   fi
 
   # XXX: 这里的去重考虑使用sed/awk 重写
-  export FPATH="$(
-    echo -n $FPATH | perl -anF/:/ -E 'print join ":", grep { ++$_{$_} < 2 } @F'
+  local _new_fpath
+  _new_fpath="$(
+    echo -n "$FPATH" | perl -anF/:/ -E 'print join ":", grep { ++$_{$_} < 2 } @F'
   )"
+  export FPATH="$_new_fpath"
 
   return "$?"
 }
@@ -67,6 +71,7 @@ function myPathLoader ()
     do
       if [[ -r "$script" ]]
       then
+        # shellcheck disable=SC1090
         source "$script"
       fi
     done
@@ -88,6 +93,7 @@ function myAliasLoader ()
 
   if [[ -r "$MYALIAS_SH" ]]
   then
+    # shellcheck disable=SC1090
     source "$MYALIAS_SH"
   fi
 
@@ -110,16 +116,17 @@ function myPluginLoader ()
     'profileutils' 'sshenv' 'vimman'
   )
 
-  for subdir in ${SCRIPTDIR[@]}
+  for subdir in "${SCRIPTDIR[@]}"
   do
     script="${ZSHDIR}/${subdir}"
     if [[ -d "$script" ]]
     then
       for script in "${script}"/*.sh
       do
-        if [[ -r "$script" && ! -x "$script" ]]
+if [[ -r "$script" && ! -x "$script" ]]
         then
-          source "$script"
+          # shellcheck disable=SC1090
+        source "$script"
         fi
       done
       unset 'script'

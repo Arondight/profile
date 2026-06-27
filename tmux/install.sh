@@ -6,7 +6,7 @@
 # ==============================================================================
 
 SUFFIX=$(date +'%Y%m%d-%H%M%S')
-WORKDIR=$(dirname $(readlink -f $0))
+WORKDIR="$(dirname "$(readlink -f "$0")")"
 
 # MAIN:
 {
@@ -15,9 +15,9 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ -e $TMUXCONFDEST ]]
   then
-    if [[ -n $(md5sum $TMUXCONFSRC $TMUXCONFDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$TMUXCONFSRC" "$TMUXCONFDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $TMUXCONFDEST "${TMUXCONFDEST}.${SUFFIX}.bak"
+      mv -v "$TMUXCONFDEST" "${TMUXCONFDEST}.${SUFFIX}.bak"
     fi
   fi
 
@@ -25,11 +25,12 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $TMUXCONFDEST ]]
   then
-    install -Dm0644 $TMUXCONFSRC $TMUXCONFDEST
+    install -Dm0644 "$TMUXCONFSRC" "$TMUXCONFDEST"
   fi
 
+  ret=$?
   echo 'done'
 
-  exit $?
+  exit $ret
 }
 

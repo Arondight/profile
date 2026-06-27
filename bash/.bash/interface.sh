@@ -10,13 +10,14 @@
 interface_dir="$HOME/.bash/interface"
 
 if [[ ! -d $interface_dir ]]; then
-  mkdir -p $interface_dir
+  mkdir -p "$interface_dir"
 fi
 
 if [[ -d $interface_dir ]]; then
-  for script in $HOME/.bash/interface/*.sh; do
+  for script in "$HOME"/.bash/interface/*.sh; do
     if [[ -r $script ]]; then
-      source $script
+      # shellcheck disable=SC1090
+      source "$script"
     fi
   done
   unset script

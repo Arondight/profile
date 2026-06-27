@@ -5,7 +5,7 @@
 # Create by Arondight (shell_way@foxmail.com)
 # ==============================================================================
 
-WORKDIR=$(dirname $(readlink -f $0))
+WORKDIR="$(dirname "$(readlink -f "$0")")"
 
 function showHelp ()
 {
@@ -32,10 +32,10 @@ function doCheck ()
 
   echo 'Checking your system first ...'
 
-  for util in ${UTILS[@]}
+  for util in "${UTILS[@]}"
   do
     echo -ne "Checking ${util} ...\t"
-    if ! type $util >/dev/null 2>&1
+    if ! type "$util" >/dev/null 2>&1
     then
       echo 'failed'
       return 1
@@ -44,11 +44,11 @@ function doCheck ()
     fi
   done
 
-  for path in ${WORKDIR}/*
+  for path in "${WORKDIR}"/*
   do
     if [[ -d $path ]]
     then
-      path=$(readlink -f $path)
+      path="$(readlink -f "$path")"
       if [[ -x "${path}/check.sh" ]]
       then
         if ! command "${path}/check.sh"
@@ -71,11 +71,11 @@ function doInstall ()
 
   echo 'Install profiles begin...'
 
-  for path in ${WORKDIR}/*
+  for path in "${WORKDIR}"/*
   do
     if [[ -d $path ]]
     then
-      path=$(readlink -f $path)
+      path="$(readlink -f "$path")"
       if [[ -x "$path/install.sh" ]]
       then
         if ! command "${path}/install.sh"
@@ -98,11 +98,11 @@ function doInit ()
 
   echo 'Init profiles begin...'
 
-  for path in ${WORKDIR}/*
+  for path in "${WORKDIR}"/*
   do
     if [[ -d $path ]]
     then
-      path=$(readlink -f $path)
+      path="$(readlink -f "$path")"
       if [[ -x "$path/init.sh" ]]
       then
         if ! command "${path}/init.sh"
@@ -141,13 +141,13 @@ function doInit ()
       -i|--install)
         shift
         optInstall=1
-        set -- '--check' $@
+        set -- '--check' "$@"
         continue
         ;;
       -a|--init)
         shift
         optInit=1
-        set -- '--install' $@
+        set -- '--install' "$@"
         continue
         ;;
       -h|--help)

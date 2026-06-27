@@ -6,7 +6,7 @@
 # ==============================================================================
 
 SUFFIX=$(date +'%Y%m%d-%H%M%S')
-WORKDIR=$(dirname $(readlink -f $0))
+WORKDIR="$(dirname "$(readlink -f "$0")")"
 
 # MAIN:
 {
@@ -16,21 +16,21 @@ WORKDIR=$(dirname $(readlink -f $0))
   LOCALESRC="${WORKDIR}/user-dirs.locale"
   LOCALEDEST="${CONFDIR}/user-dirs.locale"
 
-  mkdir -p $CONFDIR
+  mkdir -p "$CONFDIR"
 
   if [[ -e $DIRSDEST ]]
   then
-    if [[ -n $(md5sum $DIRSSRC $DIRSDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$DIRSSRC" "$DIRSDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $DIRSDEST "${DIRSDEST}.${SUFFIX}.bak"
+      mv -v "$DIRSDEST" "${DIRSDEST}.${SUFFIX}.bak"
     fi
   fi
 
   if [[ -e $LOCALEDEST ]]
   then
-    if [[ -n $(md5sum $LOCALESRC $LOCALEDEST | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if [[ -n $(md5sum "$LOCALESRC" "$LOCALEDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
     then
-      mv -v $LOCALEDEST "${LOCALEDEST}.${SUFFIX}.bak"
+      mv -v "$LOCALEDEST" "${LOCALEDEST}.${SUFFIX}.bak"
     fi
   fi
 
@@ -38,16 +38,17 @@ WORKDIR=$(dirname $(readlink -f $0))
 
   if [[ ! -e $DIRSDEST ]]
   then
-    ln -sf $DIRSSRC $DIRSDEST
+    ln -sf "$DIRSSRC" "$DIRSDEST"
   fi
 
   if [[ ! -e $LOCALEDEST ]]
   then
-    ln -sf $LOCALESRC $LOCALEDEST
+    ln -sf "$LOCALESRC" "$LOCALEDEST"
   fi
 
+  ret=$?
   echo 'done'
 
-  exit $?
+  exit $ret
 }
 

@@ -7,8 +7,11 @@
 
 # MAIN:
 {
+  # shellcheck disable=SC2034,SC2207
   HEADERS=( $(find /usr/include -type f) )
+  # shellcheck disable=SC2034
   LIBDIRS=( /lib{,64} /usr/lib{,64} )
+  # shellcheck disable=SC2034
   LIBS=()
   ret=0
 
