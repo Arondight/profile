@@ -8,7 +8,7 @@
 #   source $HOME/.zsh/loader.sh
 # ==============================================================================
 
-if ! (type existcmd) >/dev/null 2>&1
+if ! type existcmd >/dev/null 2>&1
 then
   function existcmd ()
   {
@@ -30,12 +30,17 @@ function _uniqPath ()
 
   # XXX: 这里的去重考虑使用sed/awk 重写
   local _new_path
+  local _ret=1
   _new_path="$(
     perl -E 'print join ":", grep { ++$_{$_} < 2 } split ":", $ENV{PATH}'
   )"
-  export PATH="$_new_path"
+  _ret="$?"
+  if [[ 0 -eq "$_ret" && -n "$_new_path" ]]
+  then
+    export PATH="$_new_path"
+  fi
 
-  return "$?"
+  return "$_ret"
 }
 
 # ==============================================================================
@@ -50,12 +55,17 @@ function _uniqFpath ()
 
   # XXX: 这里的去重考虑使用sed/awk 重写
   local _new_fpath
+  local _ret=1
   _new_fpath="$(
     echo -n "$FPATH" | perl -anF/:/ -E 'print join ":", grep { ++$_{$_} < 2 } @F'
   )"
-  export FPATH="$_new_fpath"
+  _ret="$?"
+  if [[ 0 -eq "$_ret" && -n "$_new_fpath" ]]
+  then
+    export FPATH="$_new_fpath"
+  fi
 
-  return "$?"
+  return "$_ret"
 }
 
 # ==============================================================================
@@ -90,14 +100,16 @@ function myPathLoader ()
 function myAliasLoader ()
 {
   local MYALIAS_SH="${HOME}/.zsh/alias/alias.sh"
+  local _ret=0
 
   if [[ -r "$MYALIAS_SH" ]]
   then
     # shellcheck disable=SC1090
     source "$MYALIAS_SH"
+    _ret="$?"
   fi
 
-  return 0
+  return "$_ret"
 }
 
 # ==============================================================================
@@ -124,7 +136,7 @@ function myPluginLoader ()
       for script in "${script}"/*.sh
       do
 if [[ -r "$script" && ! -x "$script" ]]
-        then
+          then
           # shellcheck disable=SC1090
         source "$script"
         fi

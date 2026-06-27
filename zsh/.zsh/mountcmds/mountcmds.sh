@@ -15,15 +15,15 @@ function _mount_dev_check ()
 
   if [[ ! -b "$_point" ]]
   then
-    return 0
+    return 1
   fi
 
   if ! echo "$_point" | grep -P '/dev/.+\d+' >/dev/null 2>&1
   then
-    return 0
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 # ==============================================================================
@@ -33,10 +33,10 @@ function _mount_dir_check ()
 {
   if [[ ! -d "$1" ]]
   then
-    return 0
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
 # ==============================================================================
@@ -97,21 +97,22 @@ function mountntfs ()
     mountfs "$1" "$2"
   fi
 
-  return $?
+  return "$?"
 }
 
 # ==============================================================================
 # iso 文件挂载
 # ==============================================================================
-function mountiso {
+function mountiso ()
+{
   if [[ "$#" -lt 2 ]]
   then
     return 1
   fi
 
-  if ! _mount_dev_check "$1"
+  if [[ ! -f "$1" && ! -b "$1" ]]
   then
-    echo "\"${1}\" is not a device." >&2
+    echo "\"${1}\" is not a valid file or device." >&2
     return 1
   fi
 
@@ -130,7 +131,8 @@ function mountiso {
 # ==============================================================================
 # 目录挂载
 # ==============================================================================
-function mountdir {
+function mountdir ()
+{
   local _dir=''
 
   if [[ "$#" -lt 2 ]]; then
@@ -139,7 +141,7 @@ function mountdir {
 
   for _dir in "$1" "$2"
   do
-    if _mount_dir_check "$_dir"
+    if ! _mount_dir_check "$_dir"
     then
       echo "\"${_dir}\" is not a directory." >&2
       return 1
@@ -155,7 +157,8 @@ function mountdir {
 # ==============================================================================
 # 其他分区挂载
 # ==============================================================================
-function mountfs {
+function mountfs ()
+{
   local _isdev=0
   local _isdir=0
 
@@ -169,8 +172,7 @@ function mountfs {
   _mount_dev_check "$1"
   _isdev="$?"
 
-  # shellcheck disable=SC2055
-  if [[ 0 -ne "$_isdir" || 0 -ne "$_isdev" ]]
+  if [[ 0 -eq "$_isdir" || 0 -eq "$_isdev" ]]
   then
     if ! _mount_dir_check "$2"
     then
@@ -190,7 +192,8 @@ function mountfs {
 # ==============================================================================
 # 卸载设备
 # ==============================================================================
-function umount {
+function umount ()
+{
   local _isdev=0
   local _isdir=0
   local _error=0
@@ -206,7 +209,7 @@ function umount {
     _mount_dev_check "$_file"
     _isdev="$?"
 
-    if [[ 1 -eq "$_isdir" || 1 -eq "$_isdev" ]]; then
+    if [[ 0 -eq "$_isdir" || 0 -eq "$_isdev" ]]; then
       echo "Umount ${_file}"
       # Here MUST use "env" but "command"
       sudo env umount "$_file"

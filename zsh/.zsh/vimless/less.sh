@@ -10,17 +10,14 @@
 
 function vimless ()
 {
-  local _input=''
-  local _pager=''
+  local _pager=()
 
   if type vim >/dev/null 2>&1
   then
-    _pager="vim -c 'set nofoldenable' \
-               -c 'let no_plugin_maps = 1' \
-               -c 'runtime! macros/less.vim'"
+    _pager=(vim -c 'set nofoldenable' -c 'let no_plugin_maps = 1' -c 'runtime! macros/less.vim')
   elif type nano >/dev/null 2>&1
   then
-    _pager='nano -v'
+    _pager=(nano -v)
   else
     less "$@"
     return "$?"
@@ -28,29 +25,26 @@ function vimless ()
 
   if [[ 0 -eq "$#" ]]
   then
-    _input='-'
     if [[ -t 0 ]]
     then
       echo "Missing filename" >&2
       return 1
     fi
-  else
-    _input='$@'
+    if [[ ! -t 1 ]]
+    then
+      cat
+      return "$?"
+    fi
+    "${_pager[@]}" -
+    return "$?"
   fi
 
   if [[ ! -t 1 ]]
   then
-    if [[ 0 -eq "$#" ]]
-    then
-      cat
-    else
-      cat "$@"
-    fi
+    cat "$@"
     return "$?"
   fi
 
-  eval "$_pager" "$_input"
-
+  "${_pager[@]}" -- "$@"
   return "$?"
 }
-

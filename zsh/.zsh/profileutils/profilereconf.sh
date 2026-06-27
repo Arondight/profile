@@ -16,7 +16,7 @@ function profilereconf ()
   local _args='-a'
   local _ret=0
 
-  pushd "$_profileroot" || exit
+  pushd "$_profileroot" || return 1
   {
 
   if [[ -x "$_install_sh" ]]
@@ -29,8 +29,8 @@ function profilereconf ()
   fi
 
   }
-  popd || exit
+  popd || return 1
 
-  return "$?"
+  return "$_ret"
 }
 

@@ -13,7 +13,7 @@ function groot ()
   local _gdirname='.git'
   local _rootdir='/'
   local _topdir
-  _topdir="$(readlink -f "$(pwd)")"
+  _topdir="$(readlink -f "$PWD")"
 
   while [[ ! -d "${_topdir}/${_gdirname}" && "$_rootdir" != "$_topdir" ]]
   do
@@ -25,7 +25,7 @@ function groot ()
     echo "Not a git repository." >&2
     return 1
   else
-    cd "$_topdir" || exit
+    cd "$_topdir" || return 1
   fi
 
   return "$?"

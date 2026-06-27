@@ -66,10 +66,12 @@ function _sshenvProlog ()
     if mv -f "$_sshenv_ssh_dir" "${SSHENV_WORK_DIR}/env.${_suffix}"
     then
       echo "Transfer current ssh keys to environment \"env.${_suffix}\"."
+    else
+      echo "Warning: failed to migrate existing ~/.ssh, continuing anyway." >&2
     fi
   fi
 
-  return "$?"
+  return 0
 }
 
 function _sshenvList ()
@@ -86,7 +88,7 @@ function _sshenvList ()
       echo -n "$(basename "$_env")"
       if [[ "$_env" == "$_sshenv_ssh_dir" ]]
       then
-        echo -e "\t*"
+        printf '\t*\n'
       else
         echo
       fi
@@ -117,8 +119,7 @@ function _sshenvUse ()
     ln -sf "$_env" "${HOME}/.ssh"
     _ret="$?"
   else
-    # shellcheck disable=SC2154
-    echo "Environment \"$env\" is bad." >&2
+    echo "Environment \"${1}\" is bad." >&2
     _ret=1
   fi
 
@@ -150,12 +151,6 @@ function _sshenvNew ()
   mkdir -p "${SSHENV_WORK_DIR}/${_new}"
   ssh-keygen -t 'ed25519' -C "${_mail}" -f "${SSHENV_WORK_DIR}/${_new}/id_ed25519"
 
-  # XXX: WHY? I forgot why try to remove ~/.ssh here...
-  if [[ -d "$_sshenv_ssh_dir" ]]
-  then
-    rm -rf "$_sshenv_ssh_dir"
-  fi
-
   return "$?"
 }
 
@@ -163,6 +158,7 @@ function _sshenvDelete ()
 {
   local _sshenv_ssh_dir="${HOME}/.ssh"
   local _env="${SSHENV_WORK_DIR}/${1}"
+  local _ret=0
 
   if [[ ! -d "$_env" ]]
   then
@@ -183,25 +179,31 @@ function _sshenvDelete ()
   fi
 
   echo "Export current environment \"${1}\" to \"${1}.tar.gz\""
-  tar -zcf "${1}.tar.gz" -C "$SSHENV_WORK_DIR" "$(basename "$_env")"
-  echo "Delete environment \"${1}\""
-  rm -rf "$_env"
+  if tar -zcf "${1}.tar.gz" -C "$SSHENV_WORK_DIR" "$(basename "$_env")"
+  then
+    echo "Delete environment \"${1}\""
+    rm -rf "$_env"
+    _ret="$?"
+  else
+    echo "Failed to export environment \"${1}\"." >&2
+    return 1
+  fi
 
-  # XXX: WHY? I forgot why try to remove ~/.ssh here...
-  if [[ -d "$_sshenv_ssh_dir" ]]
+  if [[ -L "$_sshenv_ssh_dir" && "$(readlink "$_sshenv_ssh_dir")" == "$_env" ]]
   then
     rm -rf "$_sshenv_ssh_dir"
   fi
 
-  return "$?"
+  return "$_ret"
 }
 
 function _sshenvRename ()
 {
   local _old="${SSHENV_WORK_DIR}/${1}"
   local _new="${SSHENV_WORK_DIR}/${2}"
+  local _ret=0
 
-  if [[ -z "$_old" || -z "$_new" ]]
+  if [[ -z "$1" || -z "$2" ]]
   then
     echo 'Run "sshenv -h" for help.' >&2
     return 1
@@ -213,11 +215,22 @@ function _sshenvRename ()
     return 1
   fi
 
+  if [[ -d "$_new" ]]
+  then
+    echo "Environment \"${2}\" already exists." >&2
+    return 1
+  fi
+
   echo "Rename \"$1\" to \"$2\"."
   mv "$_old" "$_new"
-  _sshenvUse "$2"
+  _ret="$?"
 
-  return "$?"
+  if [[ 0 -eq "$_ret" ]]
+  then
+    _sshenvUse "$2"
+  fi
+
+  return "$_ret"
 }
 
 function _sshenvExport ()
@@ -298,19 +311,19 @@ function _sshenvImport ()
   fi
 
   # shellcheck disable=SC2044
-  for d in $(find "${HOME}/.ssh_env/"* -maxdepth 0 -type d)
+  for d in $(find "${SSHENV_WORK_DIR}/"* -maxdepth 0 -type d)
   do
     command chmod 700 "$d"
   done
 
   # shellcheck disable=SC2044
-  for f in $(find "${HOME}/.ssh_env/" -type f -name 'id_*.pub')
+  for f in $(find "${SSHENV_WORK_DIR}/" -type f -name 'id_*.pub')
   do
     command chmod 644 "$f"
   done
 
   # shellcheck disable=SC2044
-  for f in $(find "${HOME}/.ssh_env/" -type f -name 'id_*' -not -name '*.pub')
+  for f in $(find "${SSHENV_WORK_DIR}/" -type f -name 'id_*' -not -name '*.pub')
   do
     command chmod 400 "$f"
   done

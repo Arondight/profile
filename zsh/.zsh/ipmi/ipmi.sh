@@ -23,7 +23,7 @@ function _ipmi_action ()
 
   ipmitool -I lanplus -H "$_ip" -U "$_user" -P "$_passwd" -e! "${_action[@]}"
 
-  return $?
+  return "$?"
 }
 
 # ==============================================================================
@@ -33,7 +33,7 @@ alias ipmi-status='ipmi_status'
 function ipmi_status ()
 {
   _ipmi_action "$@" power status
-  return $?
+  return "$?"
 }
 
 # ==============================================================================
@@ -43,7 +43,7 @@ alias ipmi-boot='ipmi_boot'
 function ipmi_boot ()
 {
   _ipmi_action "$@" power on
-  return $?
+  return "$?"
 }
 
 # ==============================================================================
@@ -53,7 +53,7 @@ alias ipmi-halt='ipmi_halt'
 function ipmi_halt ()
 {
   _ipmi_action "$@" power off
-  return $?
+  return "$?"
 }
 
 # ==============================================================================
@@ -63,7 +63,7 @@ alias ipmi-attach='ipmi_attach'
 function ipmi_attach ()
 {
   _ipmi_action "$@" sol activate
-  return $?
+  return "$?"
 }
 
 # ==============================================================================
@@ -73,6 +73,6 @@ alias ipmi-deattach='ipmi_deattach'
 function ipmi_deattach ()
 {
   _ipmi_action "$@" sol deactivate
-  return $?
+  return "$?"
 }
 

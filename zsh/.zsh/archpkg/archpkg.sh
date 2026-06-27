@@ -8,7 +8,7 @@
 # SOURCE ME!!!
 # ==============================================================================
 
-if [[ -n $ZSH_NAME ]]
+if [[ -n "$ZSH_NAME" ]]
 then
   fpath+="${HOME}/.zsh/archpkg"
 fi
@@ -57,44 +57,49 @@ function _archpkgCheckUpgrades ()
 
 function _archpkgUpdate ()
 {
-  sudo pacman -Sy
+  local _ret=0
+
+  sudo pacman -Sy || _ret=1
 
   if existcmd 'pkgfile'
   then
-    sudo pkgfile --update
+    sudo pkgfile --update || _ret=1
   fi
 
-  return "$?"
+  return "$_ret"
 }
 
 function _archpkgUpgradeAll ()
 {
-  sudo pacman -Sy
-  sudo pacman --needed --noconfirm --color auto -S xdelta3
-  sudo pacman --noconfirm --color auto -Su
-  sudo pacman --needed --noconfirm --color auto -S linux-headers
+  local _ret=0
+
+  sudo pacman -Sy || _ret=1
+  sudo pacman --needed --noconfirm --color auto -S xdelta3 || _ret=1
+  sudo pacman --noconfirm --color auto -Su || _ret=1
+  sudo pacman --needed --noconfirm --color auto -S linux-headers || _ret=1
 
   if existcmd 'pkgfile'
   then
-    sudo pkgfile --update
+    sudo pkgfile --update || _ret=1
   fi
 
-  return "$?"
+  return "$_ret"
 }
 
 function _archpkgCleanSystem ()
 {
   local _result
+  local _ret=0
   read -ra _result <<< "$(pacman -Qqdt)"
 
   if [[ 0 -ne "${#_result[@]}" ]]
   then
-    sudo pacman --noconfirm --color auto -Rsn "${_result[@]}"
+    sudo pacman --noconfirm --color auto -Rsn "${_result[@]}" || _ret=1
   fi
 
-  sudo pacman --noconfirm --color auto -Sc
+  sudo pacman --noconfirm --color auto -Sc || _ret=1
 
-  return "$?"
+  return "$_ret"
 }
 
 function _archpkgInstall ()
@@ -136,12 +141,12 @@ function _archpkgRemove ()
 
   read -ra _result <<< "$(pacman -Qqs "$1")"
 
-  if [[ 0 != "${#_result[@]}" ]]
+  if [[ 0 -ne "${#_result[@]}" ]]
   then
     sudo pacman --color auto -Rsn "${_result[@]}"
   fi
 
-  return $?
+  return "$?"
 }
 
 function _archpkgDownload ()
@@ -178,7 +183,7 @@ function _archpkgSearch ()
     return 1
   fi
 
-  pacman --color auto -Si "$@"
+  pacman --color auto -Ss "$@"
 
   return "$?"
 }

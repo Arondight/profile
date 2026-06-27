@@ -8,7 +8,7 @@
 # SOURCE ME!!!
 # ==============================================================================
 
-function vimman()
+function vimman ()
 {
   local _section=''
   local _key=''

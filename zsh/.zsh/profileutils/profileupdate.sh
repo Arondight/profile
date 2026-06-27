@@ -13,8 +13,9 @@ function profileupdate () {
   local _branch='master'
   local _gitconf=''
   local _giturl=''
+  local _ret=0
 
-  pushd "$_profileroot" || exit
+  pushd "$_profileroot" || return 1
   {
 
   if existcmd 'groot'
@@ -41,14 +42,16 @@ function profileupdate () {
   if git pull --rebase --stat "$_giturl" "$_branch"
   then
     echo 'Everything is up to date. Run "profilereconf" to reconfig.'
+    _ret=0
   else
     echo 'Failed to update, maybe your git repo is dirty.' >&2
     echo 'Use "-f" option to do a force update, but you will lose local changes.' >&2
+    _ret=1
   fi
 
   }
-  popd || exit
+  popd || return 1
 
-  return "$?"
+  return "$_ret"
 }
 
