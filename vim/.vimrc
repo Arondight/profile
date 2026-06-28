@@ -235,7 +235,7 @@ let g:gruvbox_improved_warnings = 1
 " Molokai
 "let g:molokai_original = 1
 "let g:rehash256 = 1
-" Rainbow (luochen1990/rainbow)
+" rainbow
 let g:rainbow_active = 1
 " ==============================================================================
 " 按键映射
@@ -256,8 +256,8 @@ nmap zk \\b
 " MatchTagAlways
 nmap <leader>% :MtaJumpToOtherTag<cr>
 " vim-gitgutter
-nmap gn <Plug>GitGutterNextHunk
-nmap gp <Plug>GitGutterPrevHunk
+nmap gn <Plug>(GitGutterNextHunk)
+nmap gp <Plug>(GitGutterPrevHunk)
 " tagbar 开关
 nmap tl :TagbarToggle<CR>
 " nerdtree 开关
@@ -291,7 +291,7 @@ imap <C-T> <ESC><C-T>
 nmap <F5> :w<CR>
 imap <F5> <ESC><F5>a
 vmap <F5> v<F5>
-" <F9> 一键编译(需要makefile)
+" <F9> 一键 make
 nmap <F9> <F5>:make %<CR>lop
 vmap <F9> v<F9>
 imap <F9> <Esc><F9>a
