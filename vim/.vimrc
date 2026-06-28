@@ -21,60 +21,44 @@ set rtp+=~/.vim/bundle/Vundle.vim     " Vundle 路径
 call vundle#begin()                   " call vundle#begin('~/some/path/here')
 " 插件列表 {
 Plugin 'Matt-Deacalion/vim-systemd-syntax'
-Plugin 'Rip-Rip/clang_complete'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/vimshell.vim'
 Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/ListToggle'
 Plugin 'Valloric/MatchTagAlways'
-"Plugin 'Valloric/YouCompleteMe'
-"Plugin 'Yggdroot/indentLine'
+"Plugin 'ycm-core/YouCompleteMe'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'prabirshrestha/asyncomplete.vim'
+Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+Plugin 'mattn/vim-lsp-settings'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
-Plugin 'briancollins/vim-jst'
+Plugin 'sheerun/vim-polyglot'
 Plugin 'chrisbra/vim-diff-enhanced'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'fatih/vim-go'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'godlygeek/tabular'
-Plugin 'hdima/python-syntax'
 Plugin 'honza/vim-snippets'
 Plugin 'itchyny/calendar.vim'
-"Plugin 'jeaye/color_coded'
 Plugin 'jlanzarotta/bufexplorer'
-Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'leafgarland/typescript-vim'
+Plugin 'luochen1990/rainbow'
 Plugin 'lilydjwg/colorizer'
 Plugin 'lzap/vim-selinux'
 Plugin 'majutsushi/tagbar'
-Plugin 'mbbill/fencview'
 Plugin 'mileszs/ack.vim'
 Plugin 'morhetz/gruvbox'
-"Plugin 'nathanaelkane/vim-indent-guides'
+"Plugin 'preservim/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'pangloss/vim-javascript'
-"Plugin 'plasticboy/vim-markdown'             " godlygeek/tabular
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-"Plugin 'scrooloose/syntastic'
-Plugin 'terryma/vim-multiple-cursors'
+Plugin 'preservim/vim-markdown'             " godlygeek/tabular
+Plugin 'preservim/nerdcommenter'
+Plugin 'preservim/nerdtree'
+Plugin 'mg979/vim-visual-multi'
 "Plugin 'tomasr/molokai'
-"Plugin 'uguu-org/vim-matrix-screensaver'
 Plugin 'vim-perl/vim-perl'
-Plugin 'vim-scripts/Align'
-"Plugin 'vim-scripts/DrawIt'
-Plugin 'vim-scripts/TaskList.vim'
-Plugin 'vim-scripts/TeTrIs.vim'
+Plugin 'aserebryakov/vim-todo-lists'
 Plugin 'vim-scripts/a.vim'
-"Plugin 'vim-scripts/bad-apple'
-Plugin 'vim-scripts/c.vim'
-Plugin 'vim-scripts/mru.vim'
-Plugin 'vim-scripts/spellcheck.vim'
-"Plugin 'vim-scripts/taglist.vim'
+Plugin 'yegappan/mru'
 Plugin 'wakatime/vim-wakatime'
-"Plugin 'yonchu/accelerated-smooth-scroll'
 " }
 call vundle#end()                     " 插件列表必须在此之前结束
 filetype plugin indent on
@@ -158,32 +142,15 @@ let g:ack_qhandler = "botright copen 20"
 let g:ack_lhandler = "botright lopen 20"
 let g:ack_default_options =
   \ " -s -H --nocolor --nogroup --column --smart-case --follow"
-" Taglist
-"let Tlist_Auto_Open=0
-"let Tlist_Auto_Update=1
-"let Tlist_WinWidth=35
-"let Tlist_Show_One_File=1
-"let Tlist_Use_Right_Window=1
-"let Tlist_Use_SingleClick=1
-"let Tlist_Compact_Format=1
-"let Tlist_Exit_OnlyWindow=1
-"let Tlist_File_Fold_Auto_Close=1
-"let Tlist_GainFocus_On_ToggleOpen=1
 " tagbar
 let g:tagbar_width = 35
 let g:tagbar_indent = 2
 let g:tagbar_show_linenumbers = 2
 let g:tagbar_autoshowtag = 1
 "let g:tagbar_autopreview = 1
-" python-syntax
-let python_highlight_all = 1
-" accelerated-smooth-scroll
-let g:ac_smooth_scroll_no_default_key_mappings = 1
 " vim-cpp-enhanced-highlight
 let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
-" Fenview
-let g:fencview_autodetect = 1
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 " vim-operator-highlight
@@ -219,27 +186,6 @@ let g:vim_markdown_new_list_item_indent = 2
 let g:UltiSnipsExpandTrigger="<TAB>"
 let g:UltiSnipsJumpForwardTrigger="<C-P>"
 let g:UltiSnipsJumpBackwardTrigger="<C-N>"
-" Syntastic
-" 需要flake8
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_enable_perl_checker = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_c_checkers = ["gcc", "clang"]
-let g:syntastic_c_compiler_options = '-std=gnu99 -Wall'
-let g:syntastic_c_config_file = ''
-"let g:syntastic_c_no_default_include_dirs = 0
-let g:syntastic_cpp_checkers = ["g++", "clang++"]
-let g:syntastic_cpp_include_dirs = ['/usr/include/qt']
-let g:syntastic_cpp_compiler_options = '-std=gnu++11 -Wall'
-let g:syntastic_perl_checkers = ["perl"]
-let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_quiet_messages = {"type": "style"}
-let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
 " YouCompleteMe
 " 需要clang cmake llvm python2
 let g:ycm_show_diagnostics_ui = 0   " Use GCC as checker (by syntastic)
@@ -266,6 +212,11 @@ let g:ycm_semantic_triggers =  {
   \   'lua' : ['.', ':'],
   \   'erlang' : [':'],
   \ }
+" vim-lsp
+let g:lsp_diagnostics_enabled = 0
+let g:lsp_document_highlight_enabled = 0
+" asyncomplete
+let g:asyncomplete_auto_popup = 1
 " MatchTagAlways
 let g:mta_use_matchparen_group = 1
 let g:mta_set_default_matchtag_color = 1
@@ -275,10 +226,6 @@ let g:mta_filetypes = {
   \ 'xml' : 1,
   \ 'jinja' : 1,
   \ }
-" Indentline
-let g:indentLine_color_term = 239
-let g:indentLine_color_gui = '#A4E57E'
-let g:indentLine_color_light = 7
 " gruvbox
 let g:gruvbox_termcolors = 256
 let g:gruvbox_hls_cursor = 'orange'
@@ -288,47 +235,8 @@ let g:gruvbox_improved_warnings = 1
 " Molokai
 "let g:molokai_original = 1
 "let g:rehash256 = 1
-" Rainbow-Parentheses
-let g:rbpt_colorpairs = [
-  \   ['brown',       'RoyalBlue3'],
-  \   ['Darkblue',    'SeaGreen3'],
-  \   ['darkgray',    'DarkOrchid3'],
-  \   ['darkgreen',   'firebrick3'],
-  \   ['darkcyan',    'RoyalBlue3'],
-  \   ['darkred',     'SeaGreen3'],
-  \   ['darkmagenta', 'DarkOrchid3'],
-  \   ['brown',       'firebrick3'],
-  \   ['gray',        'RoyalBlue3'],
-  \   ['black',       'SeaGreen3'],
-  \   ['darkmagenta', 'DarkOrchid3'],
-  \   ['Darkblue',    'firebrick3'],
-  \   ['darkgreen',   'RoyalBlue3'],
-  \   ['darkcyan',    'SeaGreen3'],
-  \   ['darkred',     'DarkOrchid3'],
-  \   ['red',         'firebrick3'],
-  \ ]
-let g:rbpt_max = 16
-let g:rbpt_loadcmd_toggle = 0
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-" vimshell.vim
-let g:vimshell_prompt_expr =
-  \ 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
-let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
-" Clang Complete
-"let g:clang_library_path='/usr/lib/libclang.so'
-"let g:clang_use_library = 1
-"let g:clang_user_options = '-std=c++11'
-let g:clang_complete_auto = 1
-let g:clang_complete_copen = 1
-let g:clang_hl_errors = 1
-let g:clang_complete_optional_args_in_snippets = 1
-let g:clang_snippets = 1
-let g:clang_snippets_engine = 'clang_complete'
-let g:clang_auto_select = 1
-
+" Rainbow (luochen1990/rainbow)
+let g:rainbow_active = 1
 " ==============================================================================
 " 按键映射
 " ==============================================================================
@@ -350,27 +258,17 @@ nmap <leader>% :MtaJumpToOtherTag<cr>
 " vim-gitgutter
 nmap gn <Plug>GitGutterNextHunk
 nmap gp <Plug>GitGutterPrevHunk
-" accelerated-smooth-scroll
-nmap <silent> <S-J> <Plug>(ac-smooth-scroll-c-d)
-nmap <silent> <S-K> <Plug>(ac-smooth-scroll-c-u)
-" DrawIt
-nmap ,di :DrawIt<CR>tw
-nmap ,ds \ds
-" taglist 开关
-"nmap tl :TlistToggle<CR>
 " tagbar 开关
 nmap tl :TagbarToggle<CR>
 " nerdtree 开关
 nmap fl :NERDTreeToggle<CR>
-" fencview 开关
-nmap fe :FencView<CR>
 " Calendar 开关
 nmap ca :Calendar<CR>
 " MRU
 nmap rf :MRU<CR>
-" YouCompleteMe
-nmap go :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nmap <F8> :YcmForceCompileAndDiagnostics<CR>
+" vim-lsp
+nmap go :LspDefinition<CR>
+nmap <F8> :LspDocumentDiagnostics<CR>
 " Toggle whitespace highlighting on/off
 nmap tw :ToggleWhitespace <CR>
 " Clean extra whitespace
@@ -385,16 +283,10 @@ nmap ,b :buffer<Space>
 " 错误列表窗口
 nmap ,op :lopen<CR>
 nmap ,cl :lclose<CR>
-" vimshell.vim
-nmap ,sh :VimShellCreate
 " Ctrl+T 新建标签
 nmap <C-T> <C-W>n
 vmap <C-T> v<C-T>
 imap <C-T> <ESC><C-T>
-" Ctrl+L 黑客帝国式锁屏
-nmap <C-L> :Matrix<CR>
-vmap <C-L> v<C-L>
-imap <C-L> <ESC><C-L>
 " <F5> 一键保存
 nmap <F5> :w<CR>
 imap <F5> <ESC><F5>a

@@ -36,6 +36,7 @@ function initPlugins ()
 
 
 # vimproc.vim
+# shellcheck disable=SC2317
 function initVimproc ()
 {
   local VIMPROCDIR="${PLUGINDIR}/vimproc.vim"
@@ -54,6 +55,7 @@ function initVimproc ()
 }
 
 # clang_complete
+# shellcheck disable=SC2317
 function initClangComplete ()
 {
   local _clang_complete_dir="${PLUGINDIR}/clang_complete"
@@ -230,8 +232,8 @@ function initYCM ()
   echo -ne "Init profiles for vim ...\t"
 
   initPlugins || exit $?
-  initVimproc
-  initClangComplete
+  #initVimproc
+  #initClangComplete
   initVimGo
   #initColorCoded
   #initLibtinfo

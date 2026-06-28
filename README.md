@@ -2,7 +2,7 @@
 
 ## About
 
-My software config files, tested on Arch Linux, CentOS Stream 10, Debian 13.
+My linux config files, tested on Arch Linux, CentOS Stream 10, and Debian 13.
 
 ## Dependencies
 
@@ -11,7 +11,7 @@ My software config files, tested on Arch Linux, CentOS Stream 10, Debian 13.
 - git
 - grep
 - make
-- clang
+- clang (also requires clangd on Debian)
 - sudo
 - tar
 - gzip
@@ -36,7 +36,7 @@ cd ~/.config/.profile/
 | [alias](zsh/.zsh/alias)               | Shell aliases                                                                      |
 | [archpkg](zsh/.zsh/archpkg)           | An Arch Linux package manager in the style of slackpkg                             |
 | [custom](zsh/.zsh/custom)             | Load custom user config from `~/.custom_shellrc`                                   |
-| [groot](zsh/.zsh/groot)               | Go to top level of a git repository                                                |
+| [groot](zsh/.zsh/groot)               | Go to the top level of a git repository                                            |
 | [ipmi](zsh/.zsh/ipmi)                 | Wrapper for `ipmitool`                                                             |
 | [logintmux](zsh/.zsh/logintmux)       | Auto-start tmux on login                                                           |
 | [mountcmds](zsh/.zsh/mountcmds)       | Mount/umount commands                                                              |
