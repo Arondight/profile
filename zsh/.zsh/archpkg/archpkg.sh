@@ -314,7 +314,7 @@ function archpkg ()
     install)
       shift
       _archpkgInstall "$@"
-        ;;
+      ;;
     reinstall)
       shift
       _archpkgReinstall "$@"

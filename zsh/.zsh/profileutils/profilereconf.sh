@@ -19,14 +19,14 @@ function profilereconf ()
   pushd "$_profileroot" || return 1
   {
 
-  if [[ -x "$_install_sh" ]]
-  then
-    command "$_install_sh" "$_args"
-    _ret="$?"
-  else
-    echo "\"${_install_sh}\" not found." >&2
-    _ret=1
-  fi
+    if [[ -x "$_install_sh" ]]
+    then
+      command "$_install_sh" "$_args"
+      _ret="$?"
+    else
+      echo "\"${_install_sh}\" not found." >&2
+      _ret=1
+    fi
 
   }
   popd || return 1

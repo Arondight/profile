@@ -6,12 +6,15 @@ My software config files, tested on Arch Linux, CentOS Stream 10, Debian 13.
 
 ## Dependencies
 
-- gawk
-- clang
 - coreutils
+- gawk
 - git
 - grep
 - make
+- clang
+- sudo
+- tar
+- gzip
 - vim (vim-nox on Debian)
 - xz
 

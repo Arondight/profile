@@ -138,16 +138,16 @@ function initSyntastic ()
   fi
 
   echo "$SYNTASTICDIR"
-pushd "$SYNTASTICDIR" || exit
-    {
-      make clean
-      make all V=1 2>&1 | grep -oP -- '-nostdinc.+?(?=-DKBUILD_BASENAME)' | \
-        head -n 1 |  tee "$SYNTASTIC_C_CONFIG"
-      make clean
-      sed -i 's/[ \t]\+/\n/g' "$SYNTASTIC_C_CONFIG"
-      sed -i '/^\s*$/d' "$SYNTASTIC_C_CONFIG"
-    }
-    popd || exit
+  pushd "$SYNTASTICDIR" || exit
+  {
+    make clean
+    make all V=1 2>&1 | grep -oP -- '-nostdinc.+?(?=-DKBUILD_BASENAME)' | \
+      head -n 1 |  tee "$SYNTASTIC_C_CONFIG"
+    make clean
+    sed -i 's/[ \t]\+/\n/g' "$SYNTASTIC_C_CONFIG"
+    sed -i '/^\s*$/d' "$SYNTASTIC_C_CONFIG"
+  }
+  popd || exit
 }
 
 # YCM
@@ -205,12 +205,12 @@ function initYCM ()
       elif [[ -n "$clangroot" ]]
       then
         mkdir -p "${YCMDIR}/build" && \
-          pushd "${YCMDIR}/build" || exit
-          {
-            cmake -DPATH_TO_LLVM_ROOT="$clangroot" . "${YCMDIR}/third_party/ycmd/cpp" && \
-            cmake --build . --target ycm_core --config Release
-          }
-          popd || exit
+        pushd "${YCMDIR}/build" || exit
+        {
+          cmake -DPATH_TO_LLVM_ROOT="$clangroot" . "${YCMDIR}/third_party/ycmd/cpp" && \
+          cmake --build . --target ycm_core --config Release
+        }
+        popd || exit
         return $?
       else
         python2 "${YCMDIR}/install.py" "$buildpara"

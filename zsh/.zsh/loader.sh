@@ -23,24 +23,19 @@ fi
 # ==============================================================================
 function _uniqPath ()
 {
-  if ! existcmd 'perl'
-  then
-    return 1
-  fi
-
-  # XXX: 这里的去重考虑使用sed/awk 重写
   local _new_path
-  local _ret=1
-  _new_path="$(
-    perl -E 'print join ":", grep { ++$_{$_} < 2 } split ":", $ENV{PATH}'
-  )"
-  _ret="$?"
-  if [[ 0 -eq "$_ret" && -n "$_new_path" ]]
+  _new_path="$(echo "$PATH" | awk -F: '{
+    for (i = 1; i <= NF; i++)
+      if (!seen[$i]++)
+        printf "%s%s", (i > 1 ? ":" : ""), $i
+    print ""
+  }')"
+  if [[ -n "$_new_path" ]]
   then
     export PATH="$_new_path"
   fi
 
-  return "$_ret"
+  return 0
 }
 
 # ==============================================================================
@@ -48,24 +43,19 @@ function _uniqPath ()
 # ==============================================================================
 function _uniqFpath ()
 {
-  if ! existcmd 'perl'
-  then
-    return 1
-  fi
-
-  # XXX: 这里的去重考虑使用sed/awk 重写
   local _new_fpath
-  local _ret=1
-  _new_fpath="$(
-    echo -n "$FPATH" | perl -anF/:/ -E 'print join ":", grep { ++$_{$_} < 2 } @F'
-  )"
-  _ret="$?"
-  if [[ 0 -eq "$_ret" && -n "$_new_fpath" ]]
+  _new_fpath="$(echo "$FPATH" | awk -F: '{
+    for (i = 1; i <= NF; i++)
+      if (!seen[$i]++)
+        printf "%s%s", (i > 1 ? ":" : ""), $i
+    print ""
+  }')"
+  if [[ -n "$_new_fpath" ]]
   then
     export FPATH="$_new_fpath"
   fi
 
-  return "$_ret"
+  return 0
 }
 
 # ==============================================================================
@@ -135,10 +125,10 @@ function myPluginLoader ()
     then
       for script in "${script}"/*.sh
       do
-if [[ -r "$script" && ! -x "$script" ]]
-          then
+        if [[ -r "$script" && ! -x "$script" ]]
+        then
           # shellcheck disable=SC1090
-        source "$script"
+          source "$script"
         fi
       done
       unset 'script'

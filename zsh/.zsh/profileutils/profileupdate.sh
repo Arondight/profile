@@ -18,36 +18,36 @@ function profileupdate () {
   pushd "$_profileroot" || return 1
   {
 
-  if existcmd 'groot'
-  then
-    groot
-  fi
+    if existcmd 'groot'
+    then
+      groot
+    fi
 
-  _profileroot="$(pwd)"
-  _gitconf="${_profileroot}/.git/config"
+    _profileroot="$(pwd)"
+    _gitconf="${_profileroot}/.git/config"
 
-  if [[ -r "$_gitconf" ]]
-  then
-    _giturl=$(grep -oP "$_urlreg" "$_gitconf" | head -n 1)
-  fi
+    if [[ -r "$_gitconf" ]]
+    then
+      _giturl=$(grep -oP "$_urlreg" "$_gitconf" | head -n 1)
+    fi
 
-  if [[ '-f' == "$1" ]]
-  then
-    git reset HEAD .
-    git checkout -- .
-  fi
+    if [[ '-f' == "$1" ]]
+    then
+      git reset HEAD .
+      git checkout -- .
+    fi
 
-  _giturl="${_giturl:-$_upstream}"
+    _giturl="${_giturl:-$_upstream}"
 
-  if git pull --rebase --stat "$_giturl" "$_branch"
-  then
-    echo 'Everything is up to date. Run "profilereconf" to reconfig.'
-    _ret=0
-  else
-    echo 'Failed to update, maybe your git repo is dirty.' >&2
-    echo 'Use "-f" option to do a force update, but you will lose local changes.' >&2
-    _ret=1
-  fi
+    if git pull --rebase --stat "$_giturl" "$_branch"
+    then
+      echo 'Everything is up to date. Run "profilereconf" to reconfig.'
+      _ret=0
+    else
+      echo 'Failed to update, maybe your git repo is dirty.' >&2
+      echo 'Use "-f" option to do a force update, but you will lose local changes.' >&2
+      _ret=1
+    fi
 
   }
   popd || return 1
