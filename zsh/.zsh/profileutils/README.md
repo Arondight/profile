@@ -1,6 +1,10 @@
-配置文件的控制工具。
+## profileutils
 
-| 函数                              | 作用                     |
-| --------------------------------- | ------------------------ |
-| [profileupdate](profileupdate.sh) | 更新配置文件             |
-| [profilereconf](profilereconf.sh) | 重新初始化需要的运行环境 |
+Configuration management tools for updating and re-initializing the profile environment.
+
+| Function | Description |
+| -------- | ----------- |
+| `profileupdate` | Pull the latest config from the upstream git repository. Use `profileupdate -f` to force overwrite local changes |
+| `profilereconf` | Re-run the full install + init pipeline (`install.sh -a`), updating third-party repos and re-applying all configurations |
+
+Aliases: `profile-update`, `profile_update`, `profile-reconf`, `profile_reconf`.

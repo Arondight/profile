@@ -1,1 +1,3 @@
-这是一个用于替代 less 的脚本，分别会优先使用 vim 和 nano 模仿 less 的行为，如果这两个程序没有被找到，则使用 less 指令。
+## vimless
+
+A `less` replacement that tries `vim` (with less.vim macros), then `nano`, then falls back to `less`. Supports both file and pipe input.

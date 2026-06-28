@@ -1,1 +1,3 @@
-一个灵活但输出效率较低的 TTY 分屏方案，使用了 Vim 键位。
+## tmux
+
+A flexible terminal multiplexer with Vim-style keybindings. Prefix is `Ctrl+A`, navigation uses `h`/`j`/`k`/`l`. Supports 256 colors, mouse, clipboard integration, and session persistence via tmux-resurrect.

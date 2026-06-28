@@ -1,1 +1,3 @@
-一些 alias，并且去除了几乎所有的 global alias —— 因为它们时常会引发问题。
+## alias
+
+Shell aliases with safety defaults (e.g. `cp`/`mv`/`rm` prompt before overwrite, `ls` colorized, `grep` colorized with PCRE). Global aliases are intentionally removed as they often cause unexpected issues.

@@ -1,12 +1,12 @@
 ## sysctl
 
-### 配置文件
+### Configuration files
 
-- `10-network-security.conf`：网络与安全相关内核参数：禁用 ICMP 广播/重定向/源路由、开启 SYN-flood 保护、反向路径过滤等。
-- `60-ipv4_bbr.conf`：启用 BBR 拥塞控制算法和 fq 排队规则，提升 TCP 吞吐量。
+- `10-network-security.conf` — Network security hardening: disables ICMP broadcast/redirects/source routing, enables SYN-flood protection, reverse path filtering, and more.
+- `60-ipv4_bbr.conf` — Enables BBR congestion control and fq qdisc for improved TCP throughput.
 
-> `60-ipv4_bbr.conf` 需要内核支持 BBR。使用 `sysctl net.ipv4.tcp_available_congestion_control` 查看可用算法，输出包含 `bbr` 方可使用。
+> `60-ipv4_bbr.conf` requires kernel BBR support (Linux >= 4.9). Run `sysctl net.ipv4.tcp_available_congestion_control` to check available algorithms; only use this file if the output contains `bbr`.
 
-### 使用
+### Usage
 
-将需要的配置文件复制到 `/etc/sysctl.d/`，然后执行 `sudo systemctl restart systemd-sysctl` 使其生效。
+Copy the desired configuration files to `/etc/sysctl.d/`, then run `sudo systemctl restart systemd-sysctl` to apply.

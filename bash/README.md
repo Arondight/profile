@@ -1,1 +1,3 @@
-Bash 配置文件，提供了补全和 git prompt 支持，加载了 `~/.zsh` 下的插件。
+## bash
+
+Bash configuration with completions, git-aware prompt (via [bash-git-prompt](https://github.com/magicmonty/bash-git-prompt)), and the shared `~/.zsh` plugin loader.

@@ -1,3 +1,9 @@
-![Vim](screenshots/vim.png?raw=true)
+## vim
 
-> 从 2016-01-05 开始，vim 配置致力于回归编辑器本职，不再提供重量级插件，也不再提供一些本应该由 IDE 提供的功能。参见[#21](https://github.com/Arondight/profile/issues/21)。
+Vim configuration focused on being a lightweight editor, not an IDE. Heavy plugins and IDE-like features are intentionally excluded.
+
+> See [#21](https://github.com/Arondight/profile/issues/21) for the design philosophy.
+
+Uses Vundle for plugin management, vim-lsp + clangd for C/C++ completion, vim-polyglot for multi-language syntax, and gruvbox + vim-airline for appearance.
+
+![Vim](screenshots/vim.png?raw=true)

@@ -1,1 +1,12 @@
-这个目录是一些自定义 PATH 的设置，任何存在于此目录的可读且不可执行的 `.sh` 文件均会被加载。
+## path
+
+Custom PATH configuration. Any readable, non-executable `.sh` file in this directory is sourced automatically.
+
+### Included paths
+
+| File | Adds to PATH |
+|------|-------------|
+| `bin_path.sh` | `~/.local/bin`, `~/.bin` |
+| `local_bin_path.sh` | `/usr/local/bin`, `/usr/local/sbin` |
+| `cpan_path.sh` | Perl CPAN module paths |
+| `go_path.sh` | `$GOPATH/bin`, `$GOROOT/bin` |

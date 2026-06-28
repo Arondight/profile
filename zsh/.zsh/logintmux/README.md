@@ -1,7 +1,11 @@
-| 函数       | 作用                       |
-| ---------- | -------------------------- |
-| synctmux   | 同步操作的 tmux            |
-| nosynctmux | 独立操作的 tmux            |
-| loginTmux  | 使用 tmux 取代 login shell |
+## logintmux
 
-> BUG：无法 `scp` 到目标机器。
+Auto-start tmux on login, useful for SSH environments that don't support window splitting.
+
+| Function | Description |
+| -------- | ----------- |
+| `synctmux` | Start tmux in synchronized mode — all terminals share the same tmux session |
+| `nosynctmux` | Start tmux in independent mode — each terminal gets its own session |
+| `loginTmux` | Use tmux as the login shell |
+
+> BUG: `scp` to the target machine may not work when tmux is used as the login shell.

@@ -1,12 +1,16 @@
-个人 SSH 密钥备份。因为 RSA 密钥已经不被支持，可能需要在 `sshd` 配置文件中配置 `PubkeyAcceptedKeyTypes +ssh-rsa` 。
+## ssh
 
-导入。
+Personal SSH key backup, encrypted with GPG and stored as base64. Import and export use the [sshenv](../zsh/.zsh/sshenv) plugin.
+
+> RSA keys are no longer supported by default on modern systems. If you use RSA keys, add `PubkeyAcceptedKeyTypes +ssh-rsa` to `sshd_config`.
+
+### Import
 
 ```bash
 sshenv import <(gpg --default-key $(cat ./fingerprint) -o- -d <(base64 -d ./ssh-env.tar.gz.asc.base64))
 ```
 
-导出。
+### Export
 
 ```bash
 sshenv export ssh-env

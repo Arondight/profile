@@ -2,7 +2,7 @@
 
 ## About
 
-My linux config files, tested on Arch Linux, CentOS Stream 10, and Debian 13.
+My Linux config files, tested on Arch Linux, CentOS Stream 10, and Debian 13.
 
 ## Dependencies
 
@@ -18,6 +18,8 @@ My linux config files, tested on Arch Linux, CentOS Stream 10, and Debian 13.
 - vim (vim-nox on Debian)
 - xz
 
+> For vim C/C++ completion, the `clangd` LSP server is required. On Arch Linux and CentOS, it is included in the `clang` package. On Debian, install it separately (e.g. `clangd-19`).
+
 ## Usage
 
 ```bash
@@ -27,7 +29,15 @@ cd ~/.config/.profile/
 ./install.sh -a
 ```
 
-> Do not remove `~/.config/.profile/` after install.
+> Do not remove `~/.config/.profile/` after install — symlinks point into it.
+
+### Commands
+
+| Command            | Description                            |
+| ------------------ | -------------------------------------- |
+| `profileupdate`    | Pull latest config from upstream       |
+| `profileupdate -f` | Force update, discarding local changes |
+| `profilereconf`    | Re-run full install + init pipeline    |
 
 ## Plugins
 

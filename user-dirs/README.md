@@ -1,12 +1,14 @@
-设置默认用户目录：
+## user-dirs
 
-| 名称 | 位置          |
-| ---- | ------------- |
-| 桌面 | ~/Desktop     |
-| 下载 | ~Download     |
-| 模板 | ~/Templates   |
-| 共享 | ~/Publicshare |
-| 文档 | ~/Documents   |
-| 音乐 | ~/Music       |
-| 图片 | ~/Pictures    |
-| 视频 | ~/Videos      |
+Default XDG user directories, configured via `user-dirs.dirs` and applied by `xdg-user-dirs-update`.
+
+| Name      | Path            |
+| --------- | --------------- |
+| Desktop   | `~/Desktop`     |
+| Download  | `~/Download`    |
+| Templates | `~/Templates`   |
+| Share     | `~/Publicshare` |
+| Documents | `~/Documents`   |
+| Music     | `~/Music`       |
+| Pictures  | `~/Pictures`    |
+| Videos    | `~/Videos`      |
