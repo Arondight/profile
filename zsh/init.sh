@@ -16,7 +16,6 @@
   ZSHCOMLURL="https://github.com/zsh-users/zsh-completions.git"
   ZSHSUGGESTDIR="${PLUGINDIR}/zsh-autosuggestions"
   ZSHSUGGESTURL='https://github.com/zsh-users/zsh-autosuggestions.git'
-  GITPULLCMD='git pull --rebase --stat'
 
   echo 'Init profiles for zsh ...'
 
@@ -27,7 +26,7 @@
   else
     pushd "$OHMYZSHDIR" || exit
     {
-      command "$GITPULLCMD"
+      git pull --rebase --stat
     }
     popd || exit
   fi
@@ -39,7 +38,7 @@
   else
     pushd "$ZSHSYNHLDIR" || exit
     {
-      command "$GITPULLCMD"
+      git pull --rebase --stat
     }
     popd || exit
   fi
@@ -51,7 +50,7 @@
   else
     pushd "$ZSHCOMLDIR" || exit
     {
-      command "$GITPULLCMD"
+      git pull --rebase --stat
     }
     popd || exit
   fi
@@ -63,7 +62,7 @@
   else
     pushd "$ZSHSUGGESTDIR" || exit
     {
-      command "$GITPULLCMD"
+      git pull --rebase --stat
     }
     popd || exit
   fi

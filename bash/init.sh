@@ -9,7 +9,6 @@
 {
   BASHPROMPTDIR="${HOME}/.bash/bash-git-prompt"
   BASHPROMPTURL='https://github.com/magicmonty/bash-git-prompt'
-  GITPULLCMD='git pull --rebase --stat'
 
   echo 'Init profiles for bash ...'
 
@@ -19,7 +18,7 @@
   else
     pushd "$BASHPROMPTDIR" || exit
     {
-      command "$GITPULLCMD"
+      git pull --rebase --stat
     }
     popd || exit
   fi
