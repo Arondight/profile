@@ -30,6 +30,7 @@ function initPlugins ()
   fi
 
   vim -c 'PluginUpdate' -c 'qa'
+  vim -c 'PluginClean!' -c 'qa'
 
   return $?
 }
@@ -234,7 +235,7 @@ function initYCM ()
   initPlugins || exit $?
   #initVimproc
   #initClangComplete
-  initVimGo
+  #initVimGo
   #initColorCoded
   #initLibtinfo
   #initSyntastic

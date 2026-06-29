@@ -33,8 +33,9 @@ function profileupdate () {
 
     if [[ '-f' == "$1" ]]
     then
-      git reset HEAD .
+      git clean -xdf .
       git checkout -- .
+      git reset --hard HEAD
     fi
 
     _giturl="${_giturl:-$_upstream}"
