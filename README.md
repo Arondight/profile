@@ -2,23 +2,29 @@
 
 ## About
 
-My Linux config files, tested on Arch Linux, CentOS Stream 10, and Debian 13.
+My Linux config files, tested on Arch Linux, CentOS Stream 10, Debian 13, and Kylin V11.
 
 ## Dependencies
 
-- coreutils
-- gawk
-- git
-- grep
-- make
-- clang (also requires clangd on Debian)
-- sudo
-- tar
-- gzip
-- vim (vim-nox on Debian)
-- xz
+### Arch Linux
 
-> For vim C/C++ completion, the `clangd` LSP server is required. On Arch Linux and CentOS, it is included in the `clang` package. On Debian, install it separately (e.g. `clangd-19`).
+```shell
+sudo pacman -S c{oreutils,lang} g{awk,it,rep,zip} make sudo tar vim xz
+```
+
+### CentOS Stream 10
+
+```shell
+sudo dnf install c{oreutils,lang{,-tools-extra}} g{awk,it,rep,zip} make sudo tar vim xz
+```
+
+### Debian 13 and Kylin V11
+
+```shell
+sudo apt install c{oreutils,lang{,d}} g{awk,it,rep,zip} make sudo tar vim-nox xz-utils
+```
+
+> The `clangd` LSP server is required for vim C/C++ completion.
 
 ## Usage
 
@@ -58,7 +64,6 @@ cd ~/.config/.profile/
 | [vimman](zsh/.zsh/vimman)             | A `man` command using `vim`                                                        |
 | oh-my-zsh-upgrade                     | Update oh-my-zsh (a zsh plugin)                                                    |
 
-> Plugins are loaded via [loader.sh](zsh/.zsh/loader.sh) — source it in `~/.zshrc` or `~/.bashrc`.
 > All plugins use bash syntax and are compatible with both zsh and bash.
 
 ## LICENSE
