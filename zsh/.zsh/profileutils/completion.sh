@@ -18,14 +18,14 @@
 function _profile_profileupdate ()
 {
   _arguments \
-    '(-f --force)'{-f,--force}'[Force update, discarding local changes]'
+    '-f[Force update, discarding local changes]'
 }
 
 # bash 端
 function _profile_profileupdate_bash ()
 {
   local cur="${COMP_WORDS[COMP_CWORD]}"
-  COMPREPLY=($(compgen -W '-f --force' -- "$cur"))
+  COMPREPLY=($(compgen -W '-f' -- "$cur"))
   return 0
 }
 

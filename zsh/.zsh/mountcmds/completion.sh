@@ -15,12 +15,26 @@
 # 补全函数定义
 # ==============================================================================
 # zsh 端
-function _profile_mountfs ()
+# mountfat / mountntfs：第一个参数必须是块设备（/dev/*）
+function _profile_mountblk ()
 {
-  curcontext="${curcontext:-}:mountfs"
+  curcontext="${curcontext:-}:mountblk"
   if [[ $CURRENT -eq 2 ]]
   then
     _files -g '/dev/*'
+  elif [[ $CURRENT -eq 3 ]]
+  then
+    _files -/
+  fi
+}
+
+# mountiso / mountfs：第一个参数可以是任意文件（ISO 镜像）或目录（mountfs）
+function _profile_mountany ()
+{
+  curcontext="${curcontext:-}:mountany"
+  if [[ $CURRENT -eq 2 ]]
+  then
+    _files
   elif [[ $CURRENT -eq 3 ]]
   then
     _files -/
@@ -90,7 +104,8 @@ function _profile_umount_bash ()
 # ==============================================================================
 if [[ -n "$ZSH_NAME" ]]
 then
-  compdef _profile_mountfs mountfat mountntfs mountiso mountfs
+  compdef _profile_mountblk mountfat mountntfs
+  compdef _profile_mountany mountiso mountfs
   compdef _profile_mountdir mountdir
   compdef _profile_umount umount
 else

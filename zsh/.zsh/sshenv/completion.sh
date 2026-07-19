@@ -42,7 +42,7 @@ function _profile_sshenv ()
 
   _arguments -C \
     '1: :->subcmd' \
-    '*::arg: :->args'
+    '*:: :->args'
 
   case "$state" in
     subcmd)
@@ -60,12 +60,24 @@ function _profile_sshenv ()
       ;;
     args)
       case "$line[1]" in
-        use|delete|rename)
+        use|delete)
           envs=(${(f)"$(_sshenv_environments)"})
           _wanted envs expl 'environment' compadd -a envs
           ;;
-        export|import)
+        rename)
+          # rename <old> <new>：仅补全第一个参数（旧环境名），新名不应已有
+          if [[ $CURRENT -eq 3 ]]
+          then
+            envs=(${(f)"$(_sshenv_environments)"})
+            _wanted envs expl 'environment' compadd -a envs
+          fi
+          ;;
+        import)
           _files -g '*.tar.gz'
+          ;;
+        export)
+          # export 代码会在用户输入后追加 .tar.gz，所以补全普通文件而非 *.tar.gz
+          _files
           ;;
       esac
       ;;
@@ -92,10 +104,21 @@ function _profile_sshenv_bash ()
 
   case "$cmd" in
     use|delete|rename)
+      # rename: 仅在补全第一个参数时列出已有环境（COMP_CWORD==2）
+      if [[ "$cmd" == "rename" && $COMP_CWORD -gt 2 ]]
+      then
+        # 第二个参数是新名字，不补全已有环境
+        COMPREPLY=()
+        return 0
+      fi
       COMPREPLY=($(compgen -W "$(_sshenv_environments)" -- "$cur"))
       ;;
-    export|import)
+    import)
       COMPREPLY=($(compgen -f -X '!*.tar.gz' -- "$cur"))
+      ;;
+    export)
+      # export 代码会在用户输入后追加 .tar.gz，补全普通文件而非 *.tar.gz
+      COMPREPLY=($(compgen -f -- "$cur"))
       ;;
   esac
 

@@ -1,3 +1,6 @@
+- v2026-07-19.1
+  - `zsh` & `bash`
+    - 修复补全问题
 - v2026-07-19
   - `zsh` & `bash`
     - 为各插件新增 `completion.sh`，提供 zsh/bash 通用的 tab 补全

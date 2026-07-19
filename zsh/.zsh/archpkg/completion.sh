@@ -43,7 +43,7 @@ function _profile_archpkg ()
 
   _arguments -C \
     '1: :->subcmd' \
-    '*::arg: :->args'
+    '*:: :->args'
 
   case "$state" in
     subcmd)
