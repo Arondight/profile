@@ -11,11 +11,11 @@
 " ==============================================================================
 " :PluginList           - 列出配置的插件
 " :PluginInstall(!)     - 安装/更新插件
-" :PluginSearch(!) foo  - 查找插件foo(首先更新缓存)
+" :PluginSearch(!) foo  - 查找插件 foo(首先更新缓存)
 " :PluginClean(!)       - 清理被注释掉的插件
 " :h vundle             - 帮助手册
 " ==============================================================================
-set nocompatible                      " 不兼容Vi
+set nocompatible                      " 不兼容 Vi
 filetype off                          " required
 set rtp+=~/.vim/bundle/Vundle.vim     " Vundle 路径
 call vundle#begin()                   " call vundle#begin('~/some/path/here')
@@ -74,12 +74,12 @@ set ruler                             " 总是显示当前光标位置
 set smartindent                       " 智能对齐方式
 set matchpairs=(:),[:],{:},<:>,       " % 跳转匹配
 set whichwrap=b,s,<,>,[,]             " 光标行首行尾时自动移动
-set expandtab                         " 空格替代tab
-set smarttab                          " 智能tab
-set shiftwidth=2                      " 自动缩进2 个字符
-set tabstop=2                         " tab 键占2 个空格
-set softtabstop=2                     " tab 键移2 个字符
-set backspace=2                       " 退格键移2 个字符
+set expandtab                         " 空格替代 tab
+set smarttab                          " 智能 tab
+set shiftwidth=2                      " 自动缩进 2 个字符
+set tabstop=2                         " tab 键占 2 个空格
+set softtabstop=2                     " tab 键移 2 个字符
+set backspace=2                       " 退格键移 2 个字符
 set autoindent                        " 自动缩进
 "set ignorecase                        " 搜索时忽略大小写
 "set smartcase                         " 搜索内容中有大写字母才对大小写敏感
@@ -90,7 +90,7 @@ set showmatch                         " 显示括号匹配
 set foldenable                        " 允许折叠
 set foldmethod=indent                 " 折叠方式
 set foldlevel=0                       " 引发折叠的层次
-set foldcolumn=1                      " 折叠为1 行
+set foldcolumn=1                      " 折叠为 1 行
 set pastetoggle=<F10>                 " 粘贴模式切换
 " 进入插入模式光标颜色
 au InsertLeave * hi Cursor guibg=cyan
@@ -114,9 +114,9 @@ set history=4096                      " 历史记录长度
 set showcmd                           " 回显输入的命令
 set showmode                          " 显示当前的模式
 set mouse=a                           " 所有模式启用鼠标
-set backspace=start,indent,eol        " 解除Backspace的限制
+set backspace=start,indent,eol        " 解除 Backspace 的限制
 set clipboard+=unnamed                " 关联系统的剪贴板
-set encoding=utf-8                    " vim内部使用的编码方式
+set encoding=utf-8                    " vim 内部使用的编码方式
 set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set fileformat=unix                   " 换行符风格
 "set iskeyword+=35-38,64               " 以下字符被看作单词的一部分
@@ -187,7 +187,7 @@ let g:UltiSnipsExpandTrigger="<TAB>"
 let g:UltiSnipsJumpForwardTrigger="<C-P>"
 let g:UltiSnipsJumpBackwardTrigger="<C-N>"
 " YouCompleteMe
-" 需要clang cmake llvm python2
+" 需要 clang cmake llvm python2
 let g:ycm_show_diagnostics_ui = 0   " Use GCC as checker (by syntastic)
 "let g:ycm_show_diagnostics_ui = 1   " Use Clang as checker (by YCM, better)
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
@@ -381,7 +381,7 @@ if has("autocmd")
 endif
 
 " ==============================================================================
-" asm 文件使用nasm 语法
+" asm 文件使用 nasm 语法
 " ==============================================================================
 "au FileType asm set filetype=nasm
 

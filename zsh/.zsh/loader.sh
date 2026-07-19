@@ -4,7 +4,7 @@
 # ==============================================================================
 # Created by Arondight <shell_way@foxmail.com>
 # ==============================================================================
-# 在shell 配置文件中加入下列一行:
+# 在 shell 配置文件中加入下列一行:
 #   source $HOME/.zsh/loader.sh
 # ==============================================================================
 
@@ -19,7 +19,7 @@ then
 fi
 
 # ==============================================================================
-# 对path 进行去重
+# 对 path 进行去重
 # ==============================================================================
 function _uniqPath ()
 {
@@ -39,7 +39,7 @@ function _uniqPath ()
 }
 
 # ==============================================================================
-# 对fpath 进行去重
+# 对 fpath 进行去重
 # ==============================================================================
 function _uniqFpath ()
 {
@@ -113,9 +113,11 @@ function myPluginLoader ()
   local subdir=''
   local script=''
   # "alias" 和"path" 永远不应该被包含到这个数组
+  # 每个插件目录下若存在 completion.sh，会与本目录其他 *.sh 一起被 source，
+  # 从而为该插件注册 zsh（compdef）与 bash（complete -F）补全。
   local SCRIPTDIR=(
-    'archpkg' 'custom' 'ipmi' 'groot' 'vimless' 'logintmux' 'mountcmds'
-    'profileutils' 'sshenv' 'vimman'
+    'archpkg' 'custom' 'groot' 'ipmi' 'logintmux' 'mountcmds'
+    'profileutils' 'ssh' 'sshenv' 'vimless' 'vimman'
   )
 
   for subdir in "${SCRIPTDIR[@]}"

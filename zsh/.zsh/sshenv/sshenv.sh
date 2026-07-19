@@ -11,10 +11,7 @@
 SSHENV_WORK_DIR="$(readlink -f "${SSHENV_WORK_DIR:-"${HOME}/.ssh_env"}")"
 export SSHENV_WORK_DIR
 
-if [[ -n "$ZSH_NAME" ]]
-then
-  fpath+="${HOME}/.zsh/sshenv"
-fi
+# 补全由 completion/completion.sh 统一提供，无需在此手动加入 fpath。
 
 alias ssh-env='sshenv'
 alias ssh_env='sshenv'

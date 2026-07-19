@@ -16,22 +16,22 @@ alias valgrind='valgrind --leak-check=full --show-reachable=yes --trace-children
 # 文本处理 {
 alias a='env awk'
 alias c='env cat'
-# less, more, diff, view, vi 全部使用vim
+# less, more, diff, view, vi 全部使用 vim
 alias more='less'
 alias m='more'
 alias view='env vim -R'
 alias vi='env vim'
 alias vm='env vim'
-# grep 自动高亮，默认使用pcre 正则
+# grep 自动高亮，默认使用 pcre 正则
 alias grep='env grep --color=auto -P'
 alias egrep='env grep --color=auto -E'
-# 防止别处nano 的alisa 影响了nano 配置文件
+# 防止别处 nano 的 alisa 影响了 nano 配置文件
 alias nano='env nano'
-# leafpad 默认使用utf8 编码
+# leafpad 默认使用 utf8 编码
 alias leafpad='env leafpad --codeset=utf8'
 # }
 # cc {
-# 提供cc99, cxx11 等编译小程序的指令
+# 提供 cc99, cxx11 等编译小程序的指令
 alias gcc='env gcc -Wall -fdiagnostics-color=auto'
 alias g++='env g++ -Wall -fdiagnostics-color=auto'
 alias c99='gcc -std=gnu99'
@@ -85,7 +85,7 @@ alias x='env startx'
 if [[ -s /usr/bin/pacman-key ]]; then
   alias pacman='env pacman --color auto'
 fi
-# startx 使用中文locale
+# startx 使用中文 locale
 alias startx='export LANG=zh_CN.UTF-8 && env startx'
 # 指令人性化输出
 alias mkdir='env mkdir -p -v'

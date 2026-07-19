@@ -1,15 +1,15 @@
 ## ipmi
 
-Wrapper for `ipmitool` to manage remote servers via IPMI.
+Wrapper for `ipmitool` to manage remote servers via IPMI over LAN (`-I lanplus`).
 
 ### Commands
 
 | Command | Action |
 | ------- | ------ |
-| `ipmi-status` | Show power status |
-| `ipmi-boot` | Power on |
-| `ipmi-halt` | Power off |
-| `ipmi-attach` | Attach virtual media |
-| `ipmi-deattach` | Detach virtual media |
+| `ipmi-status` | Query power status (`power status`) |
+| `ipmi-boot` | Power on (`power on`) |
+| `ipmi-halt` | Power off (`power off`) |
+| `ipmi-attach` | Activate Serial-over-LAN console (`sol activate`) |
+| `ipmi-deattach` | Deactivate Serial-over-LAN console (`sol deactivate`) |
 
-All commands require the environment variables `IPMI_IP`, `IPMI_USER`, and `IPMI_PASSWD` to be set.
+Each command takes three positional arguments — `<ip> <user> <password>` — and forwards them to `_ipmi_action`, which calls `ipmitool -I lanplus -H <ip> -U <user> -P <passwd> -e!` with the corresponding action. Each command also has a hyphen-separated alias (e.g. `ipmi-status` for `ipmi_status`).

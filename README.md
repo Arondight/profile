@@ -58,13 +58,14 @@ cd ~/.config/.profile/
 | [mountcmds](zsh/.zsh/mountcmds)       | Mount/umount commands                                                              |
 | [path](zsh/.zsh/path)                 | PATH environment configuration                                                     |
 | [profileutils](zsh/.zsh/profileutils) | Update and re-configure all config files using `profileupdate` and `profilereconf` |
-| [ssh](zsh/.zsh/ssh)                   | SSH client configuration                                                           |
+| [ssh](zsh/.zsh/ssh)                   | `ssh_forget` helper to prune `~/.ssh/known_hosts`                                  |
 | [sshenv](zsh/.zsh/sshenv)             | Manage ssh environments                                                            |
 | [vimless](zsh/.zsh/vimless)           | A `less` command using `vim`                                                       |
 | [vimman](zsh/.zsh/vimman)             | A `man` command using `vim`                                                        |
 | oh-my-zsh-upgrade                     | Update oh-my-zsh (a zsh plugin)                                                    |
 
 > All plugins use bash syntax and are compatible with both zsh and bash.
+> Each plugin may ship a `completion.sh` next to its main script to provide zsh/bash tab completion.
 
 ## LICENSE
 

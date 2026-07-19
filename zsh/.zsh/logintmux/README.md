@@ -5,7 +5,7 @@ Auto-start tmux on login, useful for SSH environments that don't support window 
 | Function | Description |
 | -------- | ----------- |
 | `synctmux` | Start tmux in synchronized mode — all terminals share the same tmux session |
-| `nosynctmux` | Start tmux in independent mode — each terminal gets its own session |
-| `loginTmux` | Use tmux as the login shell |
+| `unsynctmux` | Start tmux in independent mode — each terminal gets its own session |
+| `loginTmux` | Prompt to use tmux as the login shell on SSH login |
 
 > BUG: `scp` to the target machine may not work when tmux is used as the login shell.

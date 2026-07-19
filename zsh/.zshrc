@@ -17,7 +17,7 @@ function existcmd ()
 }
 
 # ==============================================================================
-# 配置oh-my-zsh
+# 配置 oh-my-zsh
 # ==============================================================================
 function oh_my_zsh_conf ()
 {
@@ -89,7 +89,7 @@ function oh_my_zsh_conf ()
   # ==============================================================================
   # oh-my-zsh 自动更新
   # ==============================================================================
-  # 关闭oh-my-zsh 自带的定期更新，当$ZSH 目录有写权限时提供更新指令
+  # 关闭 oh-my-zsh 自带的定期更新，当 $ZSH 目录有写权限时提供更新指令
   DISABLE_AUTO_UPDATE="true"
   alias oh-my-zsh-upgrade='oh_my_zsh_upgrade'
   function oh_my_zsh_upgrade
@@ -174,12 +174,12 @@ zmodload 'zsh/mathfunc'
 # ==============================================================================
 # 环境变量
 # ==============================================================================
-# 额外的man 手册路径
+# 额外的 man 手册路径
 if [[ ${#manpath[@]} -gt 0 ]]
 then
   manpath+=('/usr/share/man' '/usr/local/share/man')
 fi
-# 对manpath 进行一次去重
+# 对 manpath 进行一次去重
 if existcmd 'awk'
 then
   manpath=( $(awk -vRS=' ' '!a[$1]++' <<< ${manpath[@]}) )
@@ -190,7 +190,7 @@ export ARCHFLAGS='-arch x86_64'
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 # 默认编辑器
 export EDITOR="env vim"
-# 终端256 色
+# 终端 256 色
 export TERM="xterm-256color"
 # python-virtualenvwrapper
 export WORKON_HOME="$HOME/.virtualenvs"
@@ -215,6 +215,13 @@ then
 fi
 
 # ==============================================================================
+# autoload（需在 loader.sh 之前完成，以便 completion 插件调用 compdef）
+# ==============================================================================
+autoload -U colors && colors
+autoload -U compinit && compinit
+autoload -U promptinit promptinit
+
+# ==============================================================================
 # 自定义配置
 # ==============================================================================
 if [[ -r "${HOME}/.zsh/loader.sh" ]]
@@ -223,7 +230,7 @@ then
 fi
 
 # ==============================================================================
-# 和expr 类似的计算器
+# 和 expr 类似的计算器
 # ==============================================================================
 zle -N exprline
 bindkey "^[e" exprline
@@ -243,11 +250,4 @@ function exprline ()
 function timeconv {
   date -d "@${1}" +"%Y-%m-%d %T"
 }
-
-# ==============================================================================
-# autoload
-# ==============================================================================
-autoload -U colors && colors
-autoload -U compinit && compinit
-autoload -U promptinit promptinit
 

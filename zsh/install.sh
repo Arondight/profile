@@ -30,7 +30,7 @@ WORKDIR=$(dirname "$(readlink -f "$0")")
     then
       rm -vf "$ZSHDEST"
     else
-      mv -v "$ZSHRCDEST" "${ZSHRCDEST}.${SUFFIX}.bak"
+      mv -v "$ZSHDEST" "${ZSHDEST}.${SUFFIX}.bak"
     fi
   fi
 
