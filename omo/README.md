@@ -4,18 +4,29 @@
 | ---- | ---------- | ------------------------------------- |
 | v1.1 | 2026-08-02 | OpenCode · Alibaba Token Plan (China) |
 
-> ⚠️ **时效声明**：本文所述的 agent 清单、模型清单、能力评级均会随 [Oh My OpenAgent](https://github.com/code-yeongyu/oh-my-openagent) 及各提供商（provider）的更新而过时。使用前请以本地 `~/.cache/opencode/models.json` 与最新 [JSON Schema](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json) 为准。文中凡引用具体模型清单之处，均标注核查日期，以便判断时效。
+> ⚠️ **时效声明**：本文所述的 agent 清单、模型清单、能力评级均会随 [Oh My OpenAgent](https://github.com/code-yeongyu/oh-my-openagent) 及各提供商（provider）的更新而过时。使用前请以本地 `~/.cache/opencode/models.json` 与最新 [JSON Schema](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/omo.schema.json) 为准。文中凡引用具体模型清单之处，均标注核查日期，以便判断时效。
 
-**配置文件路径**（两处均可，优先级从高到低）：
+**配置文件位置**：Oh My OpenAgent 已引入**统一配置**（`~/.omo/omo.jsonc`，harness-neutral，推荐）；旧版 OpenCode 专用配置仍由兼容层识别。各路径优先级从高到低：
 
-| 层级   | 路径                                       | 优先级 |
-| ------ | ------------------------------------------ | ------ |
-| 项目级 | `.opencode/oh-my-openagent.jsonc`          | 高     |
-| 用户级 | `~/.config/opencode/oh-my-openagent.jsonc` | 低     |
+| 类型           | 路径                                         | Schema                       | 优先级 / 状态  |
+| -------------- | -------------------------------------------- | ---------------------------- | -------------- |
+| 项目级         | `.opencode/oh-my-openagent.json[c]`          | `oh-my-opencode.schema.json` | 高             |
+| 用户级（统一） | `~/.omo/omo.jsonc`                           | `omo.schema.json`            | **推荐（新）** |
+| 用户级（旧）   | `~/.config/opencode/oh-my-openagent.json[c]` | `oh-my-opencode.schema.json` | 兼容，建议迁移 |
 
-兼容层同时识别 `oh-my-openagent.json[c]` 与旧名 `oh-my-opencode.json[c]`。JSONC 格式（支持注释与尾逗号）。
+兼容层同时识别 `oh-my-openagent.json[c]` 与旧名 `oh-my-opencode.json[c]`。JSONC 格式（支持注释与尾逗号）。两个 schema 的完整 URL 见下方链接。
 
-- **JSON Schema**：[oh-my-opencode.schema.json](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json)
+> 💡 **从旧配置迁移到统一配置**
+>
+> 若 `~/.config/opencode/oh-my-openagent.json` 仍存在，运行 `bunx oh-my-openagent doctor` 会提示 "Legacy OMO configuration remains"。执行以下命令将其并入统一配置：
+>
+> ```bash
+> bunx oh-my-openagent config migrate
+> ```
+>
+> 迁移会：将旧文件备份至 `~/.omo/migration-backup-<时间戳>-opencode-config/`；在 `~/.omo/omo.jsonc` 中把原 `agents` / `categories` 包裹进 `[opencode]` 命名空间；写入 `_migrations` 记录（如 `2026-07-opencode-config-unification`）。统一配置为 harness-neutral 设计，`[opencode]` 即 OpenCode profile，便于后续扩展其他 harness。
+
+- **JSON Schema**：统一配置 [omo.schema.json](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/omo.schema.json)（推荐）；旧版扁平配置 [oh-my-opencode.schema.json](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/oh-my-opencode.schema.json)
 - **适用对象**：已安装 `oh-my-openagent` 插件的 [OpenCode](https://opencode.ai/docs/zh-cn/config/) 用户
 - **官方文档**：[OpenCode.asia 生态文档](https://www.opencode.asia/ecosystem/oh-my-openagent/) · [配置参考](https://www.opencode.asia/ecosystem/oh-my-openagent/configuration/)
 
@@ -31,7 +42,7 @@
 | GLM             | 模型家族，含 5 / 5.1 / 5.2 等型号                   | Zhipu AI（智谱 AI，国际品牌 Z.ai） |
 | DeepSeek        | 模型家族，含 V4-Pro / V4-Flash 等型号               | DeepSeek                           |
 | Qwen            | 模型家族，又称通义千问；Qwen-VL 为视觉语言子系列    | Alibaba Cloud                      |
-| Kimi            | 模型家族，含 K3 / K2.7 / K2.6 等型号                | Moonshot AI                        |
+| Kimi            | 模型家族，含 K2.7 / K2.6 / K2.5 等型号              | Moonshot AI                        |
 | MiniMax         | 模型家族，含 M2.5 / M2.7 等型号                     | MiniMax                            |
 | MiMo            | 模型家族，含 V2.5 / V2.5-Pro 等型号                 | Xiaomi（小米）                     |
 
@@ -57,18 +68,24 @@ Oh My OpenAgent 是一个多 agent 编排系统，包含 **11 个内置 agent** 
 
 ## 1. 配置文件顶层结构
 
+统一配置（`~/.omo/omo.jsonc`）为 harness-neutral，OpenCode 相关设置包裹在 `[opencode]` 命名空间下：
+
 ```jsonc
-// ~/.config/opencode/oh-my-openagent.jsonc
+// ~/.omo/omo.jsonc
 {
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
-  "agents": {
-    "<agent-id>": { "model": "<provider>/<model-id>" },
-  },
-  "categories": {
-    "<category-id>": { "model": "<provider>/<model-id>" },
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/omo.schema.json",
+  "[opencode]": {
+    "agents": {
+      "<agent-id>": { "model": "<provider>/<model-id>" },
+    },
+    "categories": {
+      "<category-id>": { "model": "<provider>/<model-id>" },
+    },
   },
 }
 ```
+
+> ℹ️ **旧版扁平结构仍可用**：兼容层仍识别 `~/.config/opencode/oh-my-openagent.json[c]` 与项目级 `.opencode/oh-my-openagent.json[c]`，其顶层直接为 `agents` / `categories`（不包裹 `[opencode]`），schema 指向 `oh-my-opencode.schema.json`。新装建议直接使用统一配置；已有旧配置执行 `bunx oh-my-openagent config migrate` 迁移即可（迁移说明见上文）。
 
 模型 ID 格式恒为 `<provider>/<model-id>`，例如 `alibaba-token-plan-cn/glm-5.2`。其中 `<provider>` 必须为 OpenCode 已注册的提供商（由用户自定义或经插件 / auth 注册）。可运行 `opencode models` 查看当前可用的全部 provider/model 组合，运行 `opencode auth list` 查看已登录的提供商。
 
@@ -80,12 +97,12 @@ Oh My OpenAgent 是一个多 agent 编排系统，包含 **11 个内置 agent** 
 
 ### 2.1 能力档位定义
 
-| 档位                | 能力要求                                                        | 跨提供商参考型号                                                | 本文示例（截至 2026-08-02）                           |
-| ------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | ----------------------------------------------------- |
-| **S** 旗舰推理      | 最强推理 / 架构 / 长链逻辑；规划、审查、架构顾问、最难算法      | Claude Opus 4.8 / Fable 5、GPT-5.6 Sol、Kimi K3、Gemini 3.1 Pro | `glm-5.2`                                             |
-| **A** 强推理 / 中强 | 可靠执行 + 中等推理；编排指挥、写代码（harness 严格时中强即可） | Claude Sonnet 4.6、GPT-5.6 Sol (medium)                         | `glm-5.2`（该提供商无独立中强档，由 S 档兼任）        |
-| **B** 快 / 低成本   | grep、查文档、琐碎改动、散文；不依赖深推理，侧重速度与成本      | Claude Haiku 4.5、GPT-5.6 Luna Fast、MiniMax M2.7 highspeed     | `deepseek-v4-flash`                                   |
-| **V** 视觉          | 必须支持图片 / 视频输入并具备理解能力；图像、PDF、截图、图表    | Qwen-VL Max、Gemini、GPT-4o 级多模态                            | `qwen3.8-max-preview`（最强）/ `qwen3.7-plus`（稳定） |
+| 档位                | 能力要求                                                        | 跨提供商参考型号                                                  | 本文示例（截至 2026-08-02）                           |
+| ------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------- |
+| **S** 旗舰推理      | 最强推理 / 架构 / 长链逻辑；规划、审查、架构顾问、最难算法      | Claude Opus 4.8 / Fable 5、GPT-5.6 Sol、Kimi K2.7、Gemini 3.1 Pro | `glm-5.2`                                             |
+| **A** 强推理 / 中强 | 可靠执行 + 中等推理；编排指挥、写代码（harness 严格时中强即可） | Claude Sonnet 4.6、GPT-5.6 Sol (medium)                           | `glm-5.2`（该提供商无独立中强档，由 S 档兼任）        |
+| **B** 快 / 低成本   | grep、查文档、琐碎改动、散文；不依赖深推理，侧重速度与成本      | Claude Haiku 4.5、GPT-5.6 Luna Fast、MiniMax M2.7 highspeed       | `deepseek-v4-flash`                                   |
+| **V** 视觉          | 必须支持图片 / 视频输入并具备理解能力；图像、PDF、截图、图表    | Qwen-VL Max、Gemini、GPT-4o 级多模态                              | `qwen3.8-max-preview`（最强）/ `qwen3.7-plus`（稳定） |
 
 > ⚠️ **纯文本模型不支持图像输入**：多数旗舰文本模型（含本文 S 档 `glm-5.2`、B 档 `deepseek-v4-flash`）的输入仅接受 text。视觉任务必须使用 V 档，否则无法完成图像理解。为 `multimodal-looker` 配置模型前，请在本地 `~/.cache/opencode/models.json` 中核对该模型的 `modalities.input` 是否包含 `image`。
 
@@ -124,9 +141,9 @@ Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵�
 | 模型家族 | 厂商        | 认证型号                                | 备注                                 |
 | -------- | ----------- | --------------------------------------- | ------------------------------------ |
 | Claude   | Anthropic   | Fable 5、Opus 4.8、Opus 4.7、Sonnet 4.6 | 首选                                 |
-| Kimi     | Moonshot AI | K3、K2.7                                | 首选                                 |
+| Kimi     | Moonshot AI | K2.7、K2.6、K2.5                        | 首选                                 |
 | GLM      | Zhipu AI    | 5、5.1                                  | 可接受（长嵌套工作流略松）           |
-| GPT      | OpenAI      | 5.4、5.5、5.6 Sol                       | 有 GPT-native 提示路径，但非推荐默认 |
+| GPT      | OpenAI      | 5.4、5.5                                | 有 GPT-native 提示路径，但非推荐默认 |
 
 > 🚨 **以下模型明确不支持 Sisyphus**
 >
@@ -138,7 +155,7 @@ Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵�
 >
 > GLM 5.2 **不属于认证集**，当前标记为 **experimental（实验性）**。维护者为其提供了校准提示，Sisyphus 回退链中的 `glm-5` 字面量经模糊匹配可能解析为 GLM 5.1 或 GLM 5.2，但仅有社区报告、尚无维护者端到端验证。任何 GLM 5.2 的使用均为实验性配置，不保证后续版本兼容。
 >
-> 在 `alibaba-token-plan-cn` 提供商下，因该提供商不提供 Claude / Kimi 认证型号，S 档只能落于 `glm-5.2`（可用的最低门槛选项）。更换提供商时，若可获取 Claude（Fable 5 / Opus 4.8）或 Kimi（K3）认证型号，应优先于 GLM 5.2。
+> 在 `alibaba-token-plan-cn` 提供商下，因该提供商不提供 Claude / Kimi 认证型号，S 档只能落于 `glm-5.2`（可用的最低门槛选项）。更换提供商时，若可获取 Claude（Fable 5 / Opus 4.8）或 Kimi（K2.7）认证型号，应优先于 GLM 5.2。
 
 > ℹ️ **DeepSeek 的可用位置**
 >
@@ -152,7 +169,7 @@ Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵�
 
 ### 2.4 本文示例的总规
 
-综上，[附录 A](#附录-a完整示例配置) 的示例配置以 `glm-5.2` 兼任 S 档与 A 档（该提供商无独立中强档）、以 `deepseek-v4-flash` 任 B 档、以 `qwen3.8-max-preview` 任 V 档（模型清单截至 2026-08-02）。若读者选用其他强推理模型（如 Claude Opus 4.8、Kimi K3），将 S 档的 `glm-5.2` 整体替换为所选型号即可；A / B / V 档同理，替换为所用提供商下对应档位的型号。
+综上，[附录 A](#附录-a完整示例配置) 的示例配置以 `glm-5.2` 兼任 S 档与 A 档（该提供商无独立中强档）、以 `deepseek-v4-flash` 任 B 档、以 `qwen3.8-max-preview` 任 V 档（模型清单截至 2026-08-02）。若读者选用其他强推理模型（如 Claude Opus 4.8、Kimi K2.7），将 S 档的 `glm-5.2` 整体替换为所选型号即可；A / B / V 档同理，替换为所用提供商下对应档位的型号。
 
 ---
 
@@ -222,7 +239,7 @@ Sisyphus → Hephaestus → Prometheus → Atlas
 
 ## 5. 字段说明
 
-每个 agent / category 块支持以下字段（仅列常用项，完整定义见 [JSON Schema](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json)）：
+每个 agent / category 块支持以下字段（仅列常用项，完整定义见 [JSON Schema](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/omo.schema.json)）：
 
 | 字段                       | 类型            | 说明                                                                                                                                                         |
 | -------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -247,7 +264,7 @@ Sisyphus → Hephaestus → Prometheus → Atlas
 
 ## 附录 A：完整示例配置
 
-以下为 `~/.config/opencode/oh-my-openagent.jsonc` 的当前内容，可作为起步模板。分档逻辑（模型清单截至 2026-08-02）：
+以下为 `~/.omo/omo.jsonc`（统一配置，OpenCode profile）的当前内容，可作为起步模板。分档逻辑（模型清单截至 2026-08-02）：
 
 | 模型                  | 档位                      | 用量 | 覆盖角色                                                                                                                                                                                  |
 | --------------------- | ------------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -256,71 +273,76 @@ Sisyphus → Hephaestus → Prometheus → Atlas
 | `qwen3.8-max-preview` | **V** 视觉最强            | ×1   | `multimodal-looker`                                                                                                                                                                       |
 
 ```jsonc
+// OMO configuration: ~/.omo/omo.jsonc
 {
-  "$schema": "https:/busercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
-  "agents": {
-    "sisyphus": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/omo.schema.json",
+  "[opencode]": {
+    "agents": {
+      "sisyphus": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "hephaestus": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "oracle": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "librarian": {
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+      },
+      "explore": {
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+      },
+      "multimodal-looker": {
+        "model": "alibaba-token-plan-cn/qwen3.8-max-preview",
+      },
+      "prometheus": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "metis": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "momus": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "atlas": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "sisyphus-junior": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
     },
-    "hephaestus": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "oracle": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "librarian": {
-      "model": "alibaba-token-plan-cn/deepseek-v4-flash",
-    },
-    "explore": {
-      "model": "alibaba-token-plan-cn/deepseek-v4-flash",
-    },
-    "multimodal-looker": {
-      "model": "alibaba-token-plan-cn/qwen3.8-max-preview",
-    },
-    "prometheus": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "metis": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "momus": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "atlas": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "sisyphus-junior": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-  },
-  "categories": {
-    "visual-engineering": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "ultrabrain": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "deep": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "artistry": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "quick": {
-      "model": "alibaba-token-plan-cn/deepseek-v4-flash",
-    },
-    "unspecified-low": {
-      "model": "alibaba-token-plan-cn/deepseek-v4-flash",
-    },
-    "unspecified-high": {
-      "model": "alibaba-token-plan-cn/glm-5.2",
-    },
-    "writing": {
-      "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+    "categories": {
+      "visual-engineering": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "ultrabrain": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "deep": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "artistry": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "quick": {
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+      },
+      "unspecified-low": {
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+      },
+      "unspecified-high": {
+        "model": "alibaba-token-plan-cn/glm-5.2",
+      },
+      "writing": {
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+      },
     },
   },
 }
 ```
+
+> ℹ️ **未迁移的旧配置**：若仍使用 `~/.config/opencode/oh-my-openagent.json[c]`（扁平结构），去掉 `[opencode]` 包裹、将 `agents` / `categories` 提至顶层、并把 `$schema` 改为 `oh-my-opencode.schema.json` 即可。
 
 ---
 
@@ -351,4 +373,4 @@ Sisyphus → Hephaestus → Prometheus → Atlas
 
 ---
 
-_本文档基于 Oh My OpenAgent [GitHub 仓库](https://github.com/code-yeongyu/oh-my-openagent) 的公开文档编写。如需安装指引，请参阅 [Installation](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/guide/installation.md)。_
+_本文档基于 Oh My OpenAgent [GitHub 仓库](https://github.com/code-yeongyu/oh-my-openagent) 的公开文档编写。如需安装指引，请参阅 [Installation](https://github.com/code-yeongyu/oh-my-openagent/blob/master/docs/guide/installation.md)。_

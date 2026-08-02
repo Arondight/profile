@@ -1,0 +1,70 @@
+// OMO configuration
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/omo.schema.json",
+  "[opencode]": {
+    "agents": {
+      "sisyphus": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "hephaestus": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "oracle": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "librarian": {
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash"
+      },
+      "explore": {
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash"
+      },
+      "multimodal-looker": {
+        "model": "alibaba-token-plan-cn/qwen3.8-max-preview"
+      },
+      "prometheus": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "metis": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "momus": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "atlas": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "sisyphus-junior": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      }
+    },
+    "categories": {
+      "visual-engineering": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "ultrabrain": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "deep": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "artistry": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "quick": {
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash"
+      },
+      "unspecified-low": {
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash"
+      },
+      "unspecified-high": {
+        "model": "alibaba-token-plan-cn/glm-5.2"
+      },
+      "writing": {
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash"
+      }
+    }
+  },
+  "_migrations": [
+    "2026-08-reasoning-unification"
+  ]
+}
