@@ -8,11 +8,11 @@
 
 **配置文件位置**：Oh My OpenAgent 已引入**统一配置**（`~/.omo/omo.jsonc`，harness-neutral，推荐）；旧版 OpenCode 专用配置仍由兼容层识别。各路径优先级从高到低：
 
-| 类型           | 路径                                 | Schema                       | 优先级                       | 状态           |
-| -------------- | ------------------------------------ | ---------------------------- | ---------------------------- | -------------- |
-| 项目级         | `.opencode/oh-my-openagent.json[c]`  | `oh-my-opencode.schema.json` | 高                           |
-| 用户级（统一） | `~/.omo/omo.jsonc`                   | `omo.schema.json`            | **推荐（新）**               |
-| 用户级（旧）   | `~/.config/opencode/oh-my-open[agent | code].json[c]`               | `oh-my-opencode.schema.json` | 兼容，建议迁移 |
+| 类型           | 路径                                                 | Schema                       | 优先级 | 状态               |
+| -------------- | ---------------------------------------------------- | ---------------------------- | ------ | ------------------ |
+| 项目级         | `.opencode/oh-my-openagent.json[c]`                  | `oh-my-opencode.schema.json` | 高     |
+| 用户级（统一） | `~/.omo/omo.jsonc`                                   | `omo.schema.json`            | 中     | **推荐（新）**     |
+| 用户级（兼容） | `~/.config/opencode/oh-my-open[agent\|code].json[c]` | `oh-my-opencode.schema.json` | 低     | 兼容配置，建议迁移 |
 
 兼容层同时识别 `oh-my-openagent.json[c]` 与旧名 `oh-my-opencode.json[c]`。JSONC 格式（支持注释与尾逗号）。两个 schema 的完整 URL 见下方链接。
 
