@@ -4,7 +4,7 @@
 | ---- | ---------- | ------------------------------------- |
 | v1.1 | 2026-08-02 | OpenCode · Alibaba Token Plan (China) |
 
-> ⚠️ **时效声明**：本文所述的 agent 清单、模型清单、能力评级均会随 [Oh My OpenAgent](https://github.com/code-yeongyu/oh-my-openagent) 及各 provider 的更新而过时。使用前请以本地 `~/.cache/opencode/models.json` 与最新 [JSON Schema](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json) 为准。文中凡引用具体模型清单之处，均标注核查日期，以便判断时效。
+> ⚠️ **时效声明**：本文所述的 agent 清单、模型清单、能力评级均会随 [Oh My OpenAgent](https://github.com/code-yeongyu/oh-my-openagent) 及各提供商（provider）的更新而过时。使用前请以本地 `~/.cache/opencode/models.json` 与最新 [JSON Schema](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json) 为准。文中凡引用具体模型清单之处，均标注核查日期，以便判断时效。
 
 **配置文件路径**（两处均可，优先级从高到低）：
 
@@ -35,7 +35,7 @@
 | MiniMax         | 模型家族，含 M2.5 / M2.7 等型号                     | MiniMax                            |
 | MiMo            | 模型家族，含 V2.5 / V2.5-Pro 等型号                 | Xiaomi（小米）                     |
 
-**文档定位**：本文以阐述配置方法与选型思想为主，以 OpenCode 的 **Alibaba Token Plan (China)** provider（`alibaba-token-plan-cn`，baseURL `https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1`）作为示例进行演示。该 provider 同时托管 GLM、DeepSeek、Qwen-VL、Kimi 等多家模型，便于一篇文档覆盖多档位选型。若使用其他 provider，将示例中的模型 ID 替换为所用 provider 下同等能力的型号即可，配置方法与字段完全一致。
+**文档定位**：本文以阐述配置方法与选型思想为主，以 OpenCode 的 **Alibaba Token Plan (China)** 提供商（`alibaba-token-plan-cn`，baseURL `https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1`）作为示例进行演示。该提供商同时托管 GLM、DeepSeek、Qwen-VL、Kimi 等多家模型，便于一篇文档覆盖多档位选型。若使用其他提供商，将示例中的模型 ID 替换为所用提供商下同等能力的型号即可，配置方法与字段完全一致。
 
 Oh My OpenAgent 是一个多 agent 编排系统，包含 **11 个内置 agent** 与 **8 个语义 category**，不同角色对模型能力的要求差异极大。本配置文件用于为每个 agent / category 指定所用模型。**将全部角色配置为同一模型属于反模式**——以旗舰模型承担简单搜索会浪费配额，以快档模型承担复杂推理会降低质量。
 
@@ -70,20 +70,20 @@ Oh My OpenAgent 是一个多 agent 编排系统，包含 **11 个内置 agent** 
 }
 ```
 
-模型 ID 格式恒为 `<provider>/<model-id>`，例如 `alibaba-token-plan-cn/glm-5.2`。其中 `<provider>` 必须为 OpenCode 已注册的 provider（由用户自定义或经插件 / auth 注册）。可运行 `opencode models` 查看当前可用的全部 provider/model 组合，运行 `opencode auth list` 查看已登录的 provider。
+模型 ID 格式恒为 `<provider>/<model-id>`，例如 `alibaba-token-plan-cn/glm-5.2`。其中 `<provider>` 必须为 OpenCode 已注册的提供商（由用户自定义或经插件 / auth 注册）。可运行 `opencode models` 查看当前可用的全部 provider/model 组合，运行 `opencode auth list` 查看已登录的提供商。
 
 ---
 
 ## 2. 模型选型规划：先定能力档，再选具体模型
 
-选型的关键并非"某个 agent 使用某个具体模型"，而是"某个 agent **需要多强能力的模型**"。本文将模型能力划分为四档，任意 provider 下只要找到对应档位的型号即可替换——下文以 Alibaba Token Plan (China) 为示例给出具体映射，读者无需照搬示例中的模型设置。
+选型的关键并非"某个 agent 使用某个具体模型"，而是"某个 agent **需要多强能力的模型**"。本文将模型能力划分为四档，任意提供商下只要找到对应档位的型号即可替换——下文以 Alibaba Token Plan (China) 为示例给出具体映射，读者无需照搬示例中的模型设置。
 
 ### 2.1 能力档位定义
 
-| 档位                | 能力要求                                                        | 跨 provider 参考型号                                            | 本文示例（截至 2026-08-02）                           |
+| 档位                | 能力要求                                                        | 跨提供商参考型号                                                | 本文示例（截至 2026-08-02）                           |
 | ------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | ----------------------------------------------------- |
 | **S** 旗舰推理      | 最强推理 / 架构 / 长链逻辑；规划、审查、架构顾问、最难算法      | Claude Opus 4.8 / Fable 5、GPT-5.6 Sol、Kimi K3、Gemini 3.1 Pro | `glm-5.2`                                             |
-| **A** 强推理 / 中强 | 可靠执行 + 中等推理；编排指挥、写代码（harness 严格时中强即可） | Claude Sonnet 4.6、GPT-5.6 Sol (medium)                         | `glm-5.2`（该 provider 无独立中强档，由 S 档兼任）    |
+| **A** 强推理 / 中强 | 可靠执行 + 中等推理；编排指挥、写代码（harness 严格时中强即可） | Claude Sonnet 4.6、GPT-5.6 Sol (medium)                         | `glm-5.2`（该提供商无独立中强档，由 S 档兼任）        |
 | **B** 快 / 低成本   | grep、查文档、琐碎改动、散文；不依赖深推理，侧重速度与成本      | Claude Haiku 4.5、GPT-5.6 Luna Fast、MiniMax M2.7 highspeed     | `deepseek-v4-flash`                                   |
 | **V** 视觉          | 必须支持图片 / 视频输入并具备理解能力；图像、PDF、截图、图表    | Qwen-VL Max、Gemini、GPT-4o 级多模态                            | `qwen3.8-max-preview`（最强）/ `qwen3.7-plus`（稳定） |
 
@@ -91,7 +91,7 @@ Oh My OpenAgent 是一个多 agent 编排系统，包含 **11 个内置 agent** 
 
 ### 2.2 能力 → 角色映射
 
-下表给出各角色所需的能力档位。读者取得所用 provider 的模型清单后，按下表对应档位填入型号即可，无需拘泥于具体型号。
+下表给出各角色所需的能力档位。读者取得所用提供商的模型清单后，按下表对应档位填入型号即可，无需拘泥于具体型号。
 
 | 角色                 | 档位  | 选用理由                                                                     |
 | -------------------- | ----- | ---------------------------------------------------------------------------- |
@@ -119,7 +119,7 @@ Oh My OpenAgent 是一个多 agent 编排系统，包含 **11 个内置 agent** 
 
 Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵循、对话维持、委派编排能力有极高要求。**并非所有强推理模型都能胜任 Sisyphus**。
 
-当前（截至 2026-08-02），Sisyphus **仅在以下模型上经过维护者验证**（完整清单以 [Agent-Model Matching Guide](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/guide/agent-model-matching.md) 为准）：
+当前（截至 2026-08-02），Sisyphus **仅在以下模型上经过维护者验证**（完整清单以 [Agent-Model Matching Guide](https://github.com/code-yeongyu/oh-my-openagent/blob/master/docs/guide/agent-model-matching.md) 为准）：
 
 | 模型家族 | 厂商        | 认证型号                                | 备注                                 |
 | -------- | ----------- | --------------------------------------- | ------------------------------------ |
@@ -138,7 +138,7 @@ Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵�
 >
 > GLM 5.2 **不属于认证集**，当前标记为 **experimental（实验性）**。维护者为其提供了校准提示，Sisyphus 回退链中的 `glm-5` 字面量经模糊匹配可能解析为 GLM 5.1 或 GLM 5.2，但仅有社区报告、尚无维护者端到端验证。任何 GLM 5.2 的使用均为实验性配置，不保证后续版本兼容。
 >
-> 在 `alibaba-token-plan-cn` provider 下，因该 provider 不提供 Claude / Kimi 认证型号，S 档只能落于 `glm-5.2`（可用的最低门槛选项）。更换 provider 时，若可获取 Claude（Fable 5 / Opus 4.8）或 Kimi（K3）认证型号，应优先于 GLM 5.2。
+> 在 `alibaba-token-plan-cn` 提供商下，因该提供商不提供 Claude / Kimi 认证型号，S 档只能落于 `glm-5.2`（可用的最低门槛选项）。更换提供商时，若可获取 Claude（Fable 5 / Opus 4.8）或 Kimi（K3）认证型号，应优先于 GLM 5.2。
 
 > ℹ️ **DeepSeek 的可用位置**
 >
@@ -146,13 +146,13 @@ Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵�
 
 > 📋 **认证清单与回退链核查地址**（权威，随版本更新）
 >
-> - [Agent-Model Matching Guide](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/guide/agent-model-matching.md) — 各 agent 推荐模型与认证状态
-> - [model-requirements.ts](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/packages/omo-opencode/src/shared/model-requirements.ts) — 回退链源码（agent / category 各自硬编码链）
+> - [Agent-Model Matching Guide](https://github.com/code-yeongyu/oh-my-openagent/blob/master/docs/guide/agent-model-matching.md) — 各 agent 推荐模型与认证状态
+> - [model-requirements.ts](https://github.com/code-yeongyu/oh-my-openagent/blob/master/packages/omo-opencode/src/shared/model-requirements.ts) — 回退链源码（agent / category 各自硬编码链）
 > - 运行 `bunx oh-my-openagent doctor` — 检查当前配置的有效模型解析
 
 ### 2.4 本文示例的总规
 
-综上，[附录 A](#附录-a完整示例配置) 的示例配置以 `glm-5.2` 兼任 S 档与 A 档（该 provider 无独立中强档）、以 `deepseek-v4-flash` 任 B 档、以 `qwen3.8-max-preview` 任 V 档（模型清单截至 2026-08-02）。若读者选用其他强推理模型（如 Claude Opus 4.8、Kimi K3），将 S 档的 `glm-5.2` 整体替换为所选型号即可；A / B / V 档同理，替换为所用 provider 下对应档位的型号。
+综上，[附录 A](#附录-a完整示例配置) 的示例配置以 `glm-5.2` 兼任 S 档与 A 档（该提供商无独立中强档）、以 `deepseek-v4-flash` 任 B 档、以 `qwen3.8-max-preview` 任 V 档（模型清单截至 2026-08-02）。若读者选用其他强推理模型（如 Claude Opus 4.8、Kimi K3），将 S 档的 `glm-5.2` 整体替换为所选型号即可；A / B / V 档同理，替换为所用提供商下对应档位的型号。
 
 ---
 
@@ -328,9 +328,9 @@ Sisyphus → Hephaestus → Prometheus → Atlas
 
 > ⚠️ **本节模型清单具有强时效性**
 >
-> 会随 provider 更新而变动。使用前请以本地 `~/.cache/opencode/models.json` 中该 provider 的实际清单为准，或查阅 [阿里云百炼 Token Plan 概述](https://help.aliyun.com/zh/model-studio/token-plan-overview)。以下信息核查日期为 2026-08-02。
+> 会随提供商更新而变动。使用前请以本地 `~/.cache/opencode/models.json` 中该提供商的实际清单为准，或查阅阿里云百炼 [Token Plan 概述](https://help.aliyun.com/zh/model-studio/token-plan-overview)。以下信息核查日期为 2026-08-02。
 
-该 provider 共 22 个模型，其中 **9 个支持图片输入**。下表为文本输出型视觉模型（适合 `multimodal-looker` 分析图像 / PDF；视频与图片生成类已排除）：
+该提供商共 22 个模型，其中 **9 个支持图片输入**。下表为文本输出型视觉模型（适合 `multimodal-looker` 分析图像 / PDF；视频与图片生成类已排除）：
 
 | 模型 ID               | 名称                | 上下文 | 输出   | 思考模式 | 备注                          |
 | --------------------- | ------------------- | ------ | ------ | -------- | ----------------------------- |
@@ -351,4 +351,4 @@ Sisyphus → Hephaestus → Prometheus → Atlas
 
 ---
 
-_本文档基于 Oh My OpenAgent [GitHub 仓库](https://github.com/code-yeongyu/oh-my-openagent) 的公开文档编写。如需安装指引，请参阅 [Installation Guide](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/refs/heads/master/docs/guide/installation.md)。_
+_本文档基于 Oh My OpenAgent [GitHub 仓库](https://github.com/code-yeongyu/oh-my-openagent) 的公开文档编写。如需安装指引，请参阅 [Installation](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/guide/installation.md)。_
