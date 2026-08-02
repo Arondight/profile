@@ -8,11 +8,11 @@
 
 **配置文件位置**：Oh My OpenAgent 已引入**统一配置**（`~/.omo/omo.jsonc`，harness-neutral，推荐）；旧版 OpenCode 专用配置仍由兼容层识别。各路径优先级从高到低：
 
-| 类型           | 路径                                         | Schema                       | 优先级 / 状态  |
-| -------------- | -------------------------------------------- | ---------------------------- | -------------- |
-| 项目级         | `.opencode/oh-my-openagent.json[c]`          | `oh-my-opencode.schema.json` | 高             |
-| 用户级（统一） | `~/.omo/omo.jsonc`                           | `omo.schema.json`            | **推荐（新）** |
-| 用户级（旧）   | `~/.config/opencode/oh-my-openagent.json[c]` | `oh-my-opencode.schema.json` | 兼容，建议迁移 |
+| 类型           | 路径                                 | Schema                       | 优先级                       | 状态           |
+| -------------- | ------------------------------------ | ---------------------------- | ---------------------------- | -------------- |
+| 项目级         | `.opencode/oh-my-openagent.json[c]`  | `oh-my-opencode.schema.json` | 高                           |
+| 用户级（统一） | `~/.omo/omo.jsonc`                   | `omo.schema.json`            | **推荐（新）**               |
+| 用户级（旧）   | `~/.config/opencode/oh-my-open[agent | code].json[c]`               | `oh-my-opencode.schema.json` | 兼容，建议迁移 |
 
 兼容层同时识别 `oh-my-openagent.json[c]` 与旧名 `oh-my-opencode.json[c]`。JSONC 格式（支持注释与尾逗号）。两个 schema 的完整 URL 见下方链接。
 
@@ -35,7 +35,7 @@
 | 术语            | 全称 / 说明                                         | 厂商                               |
 | --------------- | --------------------------------------------------- | ---------------------------------- |
 | OpenCode        | 开源 AI 编程 Agent（CLI 命令为 `opencode`）         | OpenCode 项目                      |
-| Oh My OpenAgent | OpenCode 的多 Agent 编排插件（旧名 oh-my-opencode） | code-yeongyu                       |
+| Oh My OpenAgent | OpenCode 的多 Agent 编排插件（旧名 Oh My OpenCode） | code-yeongyu                       |
 | Claude          | 模型家族，含 Opus / Sonnet / Haiku / Fable 系列     | Anthropic                          |
 | GPT             | 模型家族，含 5.4 / 5.5 / 5.6 Sol / Luna 等型号      | OpenAI                             |
 | Gemini          | 模型家族，含 Pro / Flash 等型号                     | Google                             |
