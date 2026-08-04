@@ -15,7 +15,7 @@ WORKDIR="$(dirname "$(readlink -f "$0")")"
 
   if [[ -e $TMUXCONFDEST ]]
   then
-    if [[ -n $(md5sum "$TMUXCONFSRC" "$TMUXCONFDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if ! cmp -s "$TMUXCONFSRC" "$TMUXCONFDEST"
     then
       mv -v "$TMUXCONFDEST" "${TMUXCONFDEST}.${SUFFIX}.bak"
     fi

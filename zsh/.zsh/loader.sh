@@ -78,9 +78,6 @@ function myPathLoader ()
     unset 'script'
   fi
 
-  # 当前目录必须*最后*添加
-  export PATH="${PATH}:."
-
   return "$?"
 }
 

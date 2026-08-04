@@ -19,7 +19,7 @@ function preinit ()
 function initPlugins ()
 {
   local VUNDLEDIR="${PLUGINDIR}/Vundle.vim"
-  local VUNDLEURL='https://github.com/gmarik/Vundle.vim.git'
+  local VUNDLEURL='https://github.com/VundleVim/Vundle.vim.git'
 
   if [[ ! -d ${VUNDLEDIR} ]]
   then
@@ -155,75 +155,65 @@ function initSyntastic ()
 
 # YCM
 # shellcheck disable=SC2317
+# Updated per https://ycm-core.github.io/YouCompleteMe/
+# clangd-based (replaces old libclang/color_coded path), requires Python 3.12+
 function initYCM ()
 {
   local YCMDIR="${PLUGINDIR}/YouCompleteMe"
-  local LIBCLANG_SO='/usr/lib/libclang.so'
-  local sysclang=0
-  local buildpara=''
-  local clangroot=''
+  local _ret=0
+  local -a buildpara=()
 
-  if [[ -d "$YCMDIR" ]]
+  if [[ ! -d "$YCMDIR" ]]
   then
-    buildpara="--clang-completer"
-    clangroot=$(find "$HOME"/.vim/bundle/color_coded/build -maxdepth 1 -type d -name 'clang*' | sort -r | head -n 1)
-
-    if [[ -z "$clangroot" && -e "$LIBCLANG_SO" ]]
-    then
-      sysclang=1
-    fi
-
-    if type go >/dev/null 2>&1
-    then
-      buildpara="$buildpara --gocode-completer"
-    fi
-
-    if type xbuild >/dev/null 2>&1
-    then
-      buildpara="$buildpara --omnisharp-completer"
-    fi
-
-    if type rustc >/dev/null 2>&1
-    then
-      buildpara="$buildpara --racer-completer"
-    fi
-
-    if type npm >/dev/null 2>&1 && type node >/dev/null 2>&1
-    then
-      buildpara="$buildpara --tern-completer"
-    fi
-
-    pushd "$YCMDIR" || exit
-    {
-      if ! git submodule update --init --recursive
-      then
-        return 1
-      fi
-
-      if [[ 1 -eq $sysclang ]]
-      then
-        buildpara="$buildpara --system-libclang"
-        python2 "${YCMDIR}/install.py" "$buildpara"
-        return $?
-      elif [[ -n "$clangroot" ]]
-      then
-        mkdir -p "${YCMDIR}/build" && \
-        pushd "${YCMDIR}/build" || exit
-        {
-          cmake -DPATH_TO_LLVM_ROOT="$clangroot" . "${YCMDIR}/third_party/ycmd/cpp" && \
-          cmake --build . --target ycm_core --config Release
-        }
-        popd || exit
-        return $?
-      else
-        python2 "${YCMDIR}/install.py" "$buildpara"
-        return $?
-      fi
-    }
-    popd || exit
+    return 0
   fi
 
-  return 0
+  # C-family: clangd is the modern completer; install.py downloads a pre-built binary
+  buildpara+=('--clangd-completer')
+
+  # Go (gopls)
+  if type go >/dev/null 2>&1
+  then
+    buildpara+=('--go-completer')
+  fi
+
+  # C# (OmniSharp-Roslyn, requires Mono)
+  if type mono >/dev/null 2>&1
+  then
+    buildpara+=('--cs-completer')
+  fi
+
+  # JavaScript/TypeScript (TSServer, requires Node.js 18+ and npm)
+  if type npm >/dev/null 2>&1 && type node >/dev/null 2>&1
+  then
+    buildpara+=('--ts-completer')
+  fi
+
+  # Rust (rust-analyzer)
+  if type rustc >/dev/null 2>&1
+  then
+    buildpara+=('--rust-completer')
+  fi
+
+  # Java (jdt.ls, requires JDK 17+)
+  if type java >/dev/null 2>&1
+  then
+    buildpara+=('--java-completer')
+  fi
+
+  pushd "$YCMDIR" || exit
+  {
+    if ! git submodule update --init --recursive
+    then
+      _ret=1
+    else
+      python3 "${YCMDIR}/install.py" "${buildpara[@]}"
+      _ret=$?
+    fi
+  }
+  popd || exit
+
+  return "$_ret"
 }
 
 function initVimLsp ()

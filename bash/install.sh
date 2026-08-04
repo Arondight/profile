@@ -22,7 +22,7 @@ WORKDIR="$(dirname "$(readlink -f "$0")")"
 
   if [[ -e $BASHRCDEST ]]
   then
-    if [[ -n $(md5sum "$BASHRCSRC" "$BASHRCDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if ! cmp -s "$BASHRCSRC" "$BASHRCDEST"
     then
       mv -v "$BASHRCDEST" "${BASHRCDEST}.${SUFFIX}.bak"
     fi
@@ -30,7 +30,7 @@ WORKDIR="$(dirname "$(readlink -f "$0")")"
 
   if [[ -e $BASHPROFILEDEST ]]
   then
-    if [[ -n $(md5sum "$BASHPROFILESRC" "$BASHPROFILEDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if ! cmp -s "$BASHPROFILESRC" "$BASHPROFILEDEST"
     then
       mv -v "$BASHPROFILEDEST" "${BASHPROFILEDEST}.${SUFFIX}.bak"
     fi
@@ -38,7 +38,7 @@ WORKDIR="$(dirname "$(readlink -f "$0")")"
 
   if [[ -e $INTERFACESHDEST ]]
   then
-    if [[ -n $(md5sum "$INTERFACESHSRC" "$INTERFACESHDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if ! cmp -s "$INTERFACESHSRC" "$INTERFACESHDEST"
     then
       mv -v "$INTERFACESHDEST" "${INTERFACESHDEST}.${SUFFIX}.bak"
     fi

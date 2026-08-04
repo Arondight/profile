@@ -2,7 +2,7 @@
 
 A shell plugin directory using bash syntax, compatible with any shell that supports bash syntax. Source it in your shell configuration:
 
-```sh
+```bash
 source $HOME/.zsh/loader.sh
 ```
 

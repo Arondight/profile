@@ -4,7 +4,7 @@ View man pages in Vim with syntax highlighting and navigation.
 
 ### Usage
 
-```sh
+```bash
 vman man
 vman 2 socket
 vman 2 printf 1 read write 5 passwd

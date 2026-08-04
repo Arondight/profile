@@ -5,7 +5,7 @@ An SSH key manager for managing multiple sets of keys. Existing keys are preserv
 ### Commands
 
 | Command | Description |
-|---------|-------------|
+| --------- | ------------- |
 | `sshenv list` | List all available environments |
 | `sshenv use [environment]` | Switch to an environment as the default SSH key |
 | `sshenv new [environment] <email>` | Create a new environment with the given email |

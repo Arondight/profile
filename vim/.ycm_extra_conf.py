@@ -226,8 +226,11 @@ def FlagsForQt ():
   from subprocess import PIPE
 
   for module in qmodules:
-    qtflags += Popen ([ 'pkg-config', '--cflags' ]
-                        + qmodules, stdout=PIPE).communicate ()[0].split ()
+    try:
+      qtflags += Popen (['pkg-config', '--cflags', module],
+                        stdout=PIPE, stderr=PIPE).communicate ()[0].split ()
+    except FileNotFoundError:
+      break
 
   flags += qtflags
 

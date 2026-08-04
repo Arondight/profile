@@ -15,7 +15,7 @@ WORKDIR="$(dirname "$(readlink -f "$0")")"
 
   if [[ -e $TIGRCDEST ]]
   then
-    if [[ -n $(md5sum "$TIGRCSRC" "$TIGRCDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if ! cmp -s "$TIGRCSRC" "$TIGRCDEST"
     then
       mv -v "$TIGRCDEST" "${TIGRCDEST}.${SUFFIX}.bak"
     fi

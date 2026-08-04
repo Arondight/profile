@@ -2,36 +2,34 @@
 
 Zsh configuration with oh-my-zsh, syntax highlighting, autosuggestions, and completions.
 
-### Features
-
 ### Command completion
 
-```sh
+```bash
 $ sys-an<TAB>             # -> systemd-analyze
 ```
 
 ### Command correction
 
-```sh
+```bash
 $ gerp<TAB>               # -> gerp
 ```
 
 ### Error highlighting
 
-```sh
+```bash
 $ nuame                   # red
 $ uname                   # green
 ```
 
 ### File existence hint
 
-```sh
+```bash
 $ echo >file.txt          # file.txt is underlined if it exists
 ```
 
 ### Argument completion
 
-```sh
+```bash
 $ unzip example.zip<TAB>  # all zip archives except example.zip
 $ git checkout <TAB>      # all check-outable branches and commits
 $ systemctl status <TAB>  # all system services
@@ -43,46 +41,46 @@ $ echo $t                 # all environment variables starting with t/T
 
 ### Argument correction
 
-```sh
+```bash
 $ gcc -unuse-f<TAB>       # -> gcc -Wunused-function
 $ git sibmode<TAB>        # -> git submodule
 ```
 
 ### Advanced redirection
 
-```sh
+```bash
 $ git pull |& >>log       # append stdout/stderr to log
 $ date >log{1,2} >file    # redirect stdout to log1, log2, and file
 ```
 
 ### Path completion
 
-```sh
+```bash
 $ less /u/i/am/errno<TAB> # -> less /usr/include/asm/errno.h
 ```
 
 ### Directory history
 
-```sh
+```bash
 $ cd -<TAB>               # recently visited directories
 ```
 
 ### Calculator
 
-```sh
+```bash
 $ 4*atan(1.0)<Alt+Shift+E><Enter>   # -> 3.1415926535897931
 ```
 
 ### Temporary files
 
-```sh
+```bash
 $ diff =(ls A) =(ls B)    # compare output of ls A and ls B
 $ vim =(ps -aux)          # edit ps output in vim
 ```
 
 ### sudo
 
-```sh
+```bash
 $ systemctl restart NetworkManager<ESC><ESC>  # -> sudo systemctl restart NetworkManager
 ```
 

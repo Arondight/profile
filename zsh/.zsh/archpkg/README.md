@@ -5,7 +5,7 @@ A `slackpkg`-style wrapper around `pacman` for Arch Linux.
 ### Commands
 
 | Command | Description |
-|---------|-------------|
+| --------- | ------------- |
 | `archpkg update` | Update package database |
 | `archpkg check-updates [package]` | Check for available updates |
 | `archpkg upgrade-all` | Upgrade all packages |

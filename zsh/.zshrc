@@ -194,7 +194,7 @@ export EDITOR="env vim"
 export TERM="xterm-256color"
 # python-virtualenvwrapper
 export WORKON_HOME="$HOME/.virtualenvs"
-export VIRTUALENVWRAPPER_PYTHON="$(which python)"
+export VIRTUALENVWRAPPER_PYTHON="$(command -v python)"
 # For gpg2
 export GPG_TTY="$TTY"
 
@@ -236,7 +236,7 @@ zle -N exprline
 bindkey "^[e" exprline
 function exprline ()
 {
-  if [[ ! -z "$BUFFER" ]]
+  if [[ -n "$BUFFER" ]]
   then
     BUFFER="echo \$(($BUFFER))"
   fi

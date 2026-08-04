@@ -211,8 +211,7 @@ function umount ()
 
     if [[ 0 -eq "$_isdir" || 0 -eq "$_isdev" ]]; then
       echo "Umount ${_file}"
-      # Here MUST use "env" but "command"
-      sudo env umount "$_file"
+      sudo umount "$_file"
     else
       echo "\"${_file}\" is not a device or directory." >&2
       (( _error += 1 ))

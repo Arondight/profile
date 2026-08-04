@@ -35,7 +35,7 @@ Plugin 'chrisbra/vim-diff-enhanced'
 Plugin 'easymotion/vim-easymotion'
 "Plugin 'fatih/vim-go'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'honza/vim-snippets'
 Plugin 'itchyny/calendar.vim'
@@ -241,7 +241,7 @@ let g:rainbow_active = 1
 " 按键映射
 " ==============================================================================
 " 快速查找、替换
-nmap ,f :/\<<C-R><C-W><CR>\>
+nmap ,f :/\<<C-R><C-W>\><CR>
 nmap ,h :%s/\<<C-R><C-W>\>//g<HOME><RIGHT><RIGHT><RIGHT>
 nmap ,s :write !sudo tee %<CR>
 " ack.vim

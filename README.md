@@ -62,11 +62,11 @@ cd ~/.config/.profile/
 | [sshenv](zsh/.zsh/sshenv)             | Manage ssh environments                                                            |
 | [vimless](zsh/.zsh/vimless)           | A `less` command using `vim`                                                       |
 | [vimman](zsh/.zsh/vimman)             | A `man` command using `vim`                                                        |
-| oh-my-zsh-upgrade                     | Update oh-my-zsh (a zsh plugin)                                                    |
+| oh-my-zsh-upgrade                     | Update oh-my-zsh (alias in `.zshrc`)                                               |
 
 > All plugins use bash syntax and are compatible with both zsh and bash.
 > Each plugin may ship a `completion.sh` next to its main script to provide zsh/bash tab completion.
 
 ## LICENSE
 
-[MIT-LICENSE](MIT-LICENSE)
+[MIT-LICENSE](LICENSE)

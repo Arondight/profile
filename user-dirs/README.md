@@ -5,7 +5,7 @@ Default XDG user directories, configured via `user-dirs.dirs` and applied by `xd
 | Name      | Path            |
 | --------- | --------------- |
 | Desktop   | `~/Desktop`     |
-| Download  | `~/Download`    |
+| Download  | `~/Downloads`   |
 | Templates | `~/Templates`   |
 | Share     | `~/Publicshare` |
 | Documents | `~/Documents`   |

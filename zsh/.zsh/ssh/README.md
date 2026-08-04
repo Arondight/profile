@@ -10,7 +10,7 @@ Small SSH-related helpers sourced by `loader.sh`.
 
 ### Usage
 
-```sh
+```bash
 ssh_forget 3      # remove the 3rd entry from ~/.ssh/known_hosts
 ssh-forget 3      # alias
 ```

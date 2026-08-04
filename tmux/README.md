@@ -1,3 +1,3 @@
 ## tmux
 
-A flexible terminal multiplexer with Vim-style keybindings. Prefix is `Ctrl+A`, navigation uses `h`/`j`/`k`/`l`. Supports 256 colors, mouse, clipboard integration, and session persistence via tmux-resurrect.
+A flexible terminal multiplexer with Vim-style keybindings. Default prefix is `Ctrl+B`; pane navigation uses `h`/`j`/`k`/`l` and resizing uses `H`/`J`/`K`/`L`. Copy mode is vi-style (`v` begins selection, `y` copies). Supports 256 colors.

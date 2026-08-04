@@ -8,9 +8,9 @@
 # SOURCE ME!!!
 # ==============================================================================
 
-for alias in $(alias -g | grep -oP '^.+?(?==)')
+for _alias_name in $(alias -g | grep -oP '^.+?(?==)')
 do
-  unalias "$alias"
+  unalias "$_alias_name"
 done
 
 alias -g ..='..'

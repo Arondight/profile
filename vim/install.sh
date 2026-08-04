@@ -17,7 +17,7 @@ WORKDIR=$(dirname "$(readlink -f "$0")")
 
   if [[ -e "$VIMRCDEST" ]]
   then
-    if [[ -n $(md5sum "$VIMRCSRC" "$VIMRCDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if ! cmp -s "$VIMRCSRC" "$VIMRCDEST"
     then
       mv -v "$VIMRCDEST" "${VIMRCDEST}.${SUFFIX}.bak"
     fi
@@ -25,7 +25,7 @@ WORKDIR=$(dirname "$(readlink -f "$0")")
 
   if [[ -e "$YCMRCDEST" ]]
   then
-    if [[ -n $(md5sum "$YCMRCSRC" "$YCMRCDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if ! cmp -s "$YCMRCSRC" "$YCMRCDEST"
     then
       mv -v "$YCMRCDEST" "${YCMRCDEST}.${SUFFIX}.bak"
     fi

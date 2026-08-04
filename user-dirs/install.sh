@@ -20,7 +20,7 @@ WORKDIR="$(dirname "$(readlink -f "$0")")"
 
   if [[ -e $DIRSDEST ]]
   then
-    if [[ -n $(md5sum "$DIRSSRC" "$DIRSDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if ! cmp -s "$DIRSSRC" "$DIRSDEST"
     then
       mv -v "$DIRSDEST" "${DIRSDEST}.${SUFFIX}.bak"
     fi
@@ -28,7 +28,7 @@ WORKDIR="$(dirname "$(readlink -f "$0")")"
 
   if [[ -e $LOCALEDEST ]]
   then
-    if [[ -n $(md5sum "$LOCALESRC" "$LOCALEDEST" | awk '{print $1}' | uniq -u | tail -n 1) ]]
+    if ! cmp -s "$LOCALESRC" "$LOCALEDEST"
     then
       mv -v "$LOCALEDEST" "${LOCALEDEST}.${SUFFIX}.bak"
     fi
