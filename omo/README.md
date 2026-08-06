@@ -97,14 +97,14 @@ Oh My OpenAgent 是一个多 agent 编排系统，包含 **11 个内置 agent** 
 
 ### 2.1 能力档位定义
 
-| 档位                | 能力要求                                                        | 跨提供商参考型号                                                  | 本文示例（截至 2026-08-02）                           |
-| ------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------- |
-| **S** 旗舰推理      | 最强推理 / 架构 / 长链逻辑；规划、审查、架构顾问、最难算法      | Claude Opus 4.8 / Fable 5、GPT-5.6 Sol、Kimi K2.7、Gemini 3.1 Pro | `glm-5.2`                                             |
-| **A** 强推理 / 中强 | 可靠执行 + 中等推理；编排指挥、写代码（harness 严格时中强即可） | Claude Sonnet 4.6、GPT-5.6 Sol (medium)                           | `glm-5.2`（该提供商无独立中强档，由 S 档兼任）        |
-| **B** 快 / 低成本   | grep、查文档、琐碎改动、散文；不依赖深推理，侧重速度与成本      | Claude Haiku 4.5、GPT-5.6 Luna Fast、MiniMax M2.7 highspeed       | `deepseek-v4-flash`                                   |
-| **V** 视觉          | 必须支持图片 / 视频输入并具备理解能力；图像、PDF、截图、图表    | Qwen-VL Max、Gemini、GPT-4o 级多模态                              | `qwen3.8-max-preview`（最强）/ `qwen3.7-plus`（稳定） |
+| 档位                | 能力要求                                                        | 跨提供商参考型号                                                  | 本文示例（截至 2026-08-02）                    |
+| ------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------- |
+| **S** 旗舰推理      | 最强推理 / 架构 / 长链逻辑；规划、审查、架构顾问、最难算法      | Claude Opus 4.8 / Fable 5、GPT-5.6 Sol、Kimi K2.7、Gemini 3.1 Pro | `glm-5.2`                                      |
+| **A** 强推理 / 中强 | 可靠执行 + 中等推理；编排指挥、写代码（harness 严格时中强即可） | Claude Sonnet 4.6、GPT-5.6 Sol (medium)                           | `glm-5.2`（该提供商无独立中强档，由 S 档兼任） |
+| **B** 快 / 低成本   | grep、查文档、琐碎改动、散文；不依赖深推理，侧重速度与成本      | Claude Haiku 4.5、GPT-5.6 Luna Fast、MiniMax M2.7 highspeed       | `deepseek-v4-flash-0731`                       |
+| **V** 视觉          | 必须支持图片 / 视频输入并具备理解能力；图像、PDF、截图、图表    | Qwen-VL Max、Gemini、GPT-4o 级多模态                              | `qwen3.8-max`                                  |
 
-> ⚠️ **纯文本模型不支持图像输入**：多数旗舰文本模型（含本文 S 档 `glm-5.2`、B 档 `deepseek-v4-flash`）的输入仅接受 text。视觉任务必须使用 V 档，否则无法完成图像理解。为 `multimodal-looker` 配置模型前，请在本地 `~/.cache/opencode/models.json` 中核对该模型的 `modalities.input` 是否包含 `image`。
+> ⚠️ **纯文本模型不支持图像输入**：多数旗舰文本模型（含本文 S 档 `glm-5.2`、B 档 `deepseek-v4-flash-0731`）的输入仅接受 text。视觉任务必须使用 V 档，否则无法完成图像理解。为 `multimodal-looker` 配置模型前，请在本地 `~/.cache/opencode/models.json` 中核对该模型的 `modalities.input` 是否包含 `image`。
 
 ### 2.2 能力 → 角色映射
 
@@ -147,7 +147,7 @@ Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵�
 
 > 🚨 **以下模型明确不支持 Sisyphus**
 >
-> **MiniMax**（MiniMax）、**Qwen**（Alibaba Cloud）、**MiMo**（Xiaomi）、**DeepSeek**（DeepSeek，含 `deepseek-v4-pro`、`deepseek-v4-flash` 等全部变体）。官方原文："We have NOT found any way to make MiniMax, Qwen, MiMo, or DeepSeek work acceptably as Sisyphus."
+> **MiniMax**（MiniMax）、**Qwen**（Alibaba Cloud）、**MiMo**（Xiaomi）、**DeepSeek**（DeepSeek，含 `deepseek-v4-pro`、`deepseek-v4-flash-0731` 等全部变体）。官方原文："We have NOT found any way to make MiniMax, Qwen, MiMo, or DeepSeek work acceptably as Sisyphus."
 >
 > 这些模型无法支撑 Sisyphus 的 nested todo + delegation + orchestration 提示，属模型固有特性，非"调优即可"的问题。
 
@@ -159,7 +159,7 @@ Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵�
 
 > ℹ️ **DeepSeek 的可用位置**
 >
-> DeepSeek 整体不在任何 agent 的回退链中，仅作为 `unspecified-low` category 的回退项被批准（官方标注 "Limited Alternative"），且不可替代仅限 Sol 的 `deep` category。故在本文示例中，`deepseek-v4-pro` **不用作 Sisyphus 的强推理替代**。而 `deepseek-v4-flash` 因能力限制，仅用于 B 档（`explore` / `librarian` / `quick` 等），不用于任何 S / A 档 agent。
+> DeepSeek 整体不在任何 agent 的回退链中，仅作为 `unspecified-low` category 的回退项被批准（官方标注 "Limited Alternative"），且不可替代仅限 Sol 的 `deep` category。故在本文示例中，`deepseek-v4-pro` **不用作 Sisyphus 的强推理替代**。而 `deepseek-v4-flash-0731` 因能力限制，仅用于 B 档（`explore` / `librarian` / `quick` 等），不用于任何 S / A 档 agent。
 
 > 📋 **认证清单与回退链核查地址**（权威，随版本更新）
 >
@@ -169,7 +169,7 @@ Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵�
 
 ### 2.4 本文示例的总规
 
-综上，[附录 A](#附录-a完整示例配置) 的示例配置以 `glm-5.2` 兼任 S 档与 A 档（该提供商无独立中强档）、以 `deepseek-v4-flash` 任 B 档、以 `qwen3.8-max-preview` 任 V 档（模型清单截至 2026-08-02）。若读者选用其他强推理模型（如 Claude Opus 4.8、Kimi K2.7），将 S 档的 `glm-5.2` 整体替换为所选型号即可；A / B / V 档同理，替换为所用提供商下对应档位的型号。
+综上，[附录 A](#附录-a完整示例配置) 的示例配置以 `glm-5.2` 兼任 S 档与 A 档（该提供商无独立中强档）、以 `deepseek-v4-flash-0731` 任 B 档、以 `qwen3.8-max` 任 V 档（模型清单截至 2026-08-02）。若读者选用其他强推理模型（如 Claude Opus 4.8、Kimi K2.7），将 S 档的 `glm-5.2` 整体替换为所选型号即可；A / B / V 档同理，替换为所用提供商下对应档位的型号。
 
 ---
 
@@ -266,11 +266,11 @@ Sisyphus → Hephaestus → Prometheus → Atlas
 
 以下为 `~/.omo/omo.jsonc`（统一配置，OpenCode profile）的当前内容，可作为起步模板。分档逻辑（模型清单截至 2026-08-02）：
 
-| 模型                  | 档位                      | 用量 | 覆盖角色                                                                                                                                                                                  |
-| --------------------- | ------------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `deepseek-v4-flash`   | **B** 快                  | ×5   | `explore`、`librarian`、categories `quick` / `unspecified-low` / `writing`                                                                                                                |
-| `glm-5.2`             | **S** 强推理（兼任 A 档） | ×13  | `sisyphus`、`hephaestus`、`oracle`、`prometheus`、`metis`、`momus`、`atlas`、`sisyphus-junior`、categories `visual-engineering` / `ultrabrain` / `deep` / `artistry` / `unspecified-high` |
-| `qwen3.8-max-preview` | **V** 视觉最强            | ×1   | `multimodal-looker`                                                                                                                                                                       |
+| 模型                     | 档位                      | 用量 | 覆盖角色                                                                                                                                                                                  |
+| ------------------------ | ------------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `deepseek-v4-flash-0731` | **B** 快                  | ×5   | `explore`、`librarian`、categories `quick` / `unspecified-low` / `writing`                                                                                                                |
+| `glm-5.2`                | **S** 强推理（兼任 A 档） | ×13  | `sisyphus`、`hephaestus`、`oracle`、`prometheus`、`metis`、`momus`、`atlas`、`sisyphus-junior`、categories `visual-engineering` / `ultrabrain` / `deep` / `artistry` / `unspecified-high` |
+| `qwen3.8-max`            | **V** 视觉                | ×1   | `multimodal-looker`                                                                                                                                                                       |
 
 ```jsonc
 // OMO configuration: ~/.omo/omo.jsonc
@@ -288,13 +288,13 @@ Sisyphus → Hephaestus → Prometheus → Atlas
         "model": "alibaba-token-plan-cn/glm-5.2",
       },
       "librarian": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
       },
       "explore": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
       },
       "multimodal-looker": {
-        "model": "alibaba-token-plan-cn/qwen3.8-max-preview",
+        "model": "alibaba-token-plan-cn/qwen3.8-max",
       },
       "prometheus": {
         "model": "alibaba-token-plan-cn/glm-5.2",
@@ -326,16 +326,16 @@ Sisyphus → Hephaestus → Prometheus → Atlas
         "model": "alibaba-token-plan-cn/glm-5.2",
       },
       "quick": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
       },
       "unspecified-low": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
       },
       "unspecified-high": {
         "model": "alibaba-token-plan-cn/glm-5.2",
       },
       "writing": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
       },
     },
   },
@@ -354,22 +354,22 @@ Sisyphus → Hephaestus → Prometheus → Atlas
 
 该提供商共 22 个模型，其中 **9 个支持图片输入**。下表为文本输出型视觉模型（适合 `multimodal-looker` 分析图像 / PDF；视频与图片生成类已排除）：
 
-| 模型 ID               | 名称                | 上下文 | 输出   | 思考模式 | 备注                          |
-| --------------------- | ------------------- | ------ | ------ | -------- | ----------------------------- |
-| `qwen3.8-max-preview` | Qwen3.8 Max Preview | 1M     | 131072 | ✓        | **最强**，flagship 多模态推理 |
-| `qwen3.7-plus`        | Qwen3.7 Plus        | 1M     | 65536  | ✓        | 多模态主力，稳定              |
-| `qwen3.6-plus`        | Qwen3.6 Plus        | 1M     | 65536  | ✓        | 早期多模态主力                |
-| `qwen3.6-flash`       | Qwen3.6 Flash       | 1M     | 65536  | ✓        | 视觉快档，低成本备选          |
-| `kimi-k2.7-code`      | Kimi K2.7 Code      | 262144 | 262144 | ✓        | 偏代码，带视觉                |
-| `kimi-k2.6`           | Kimi K2.6           | 262144 | 262144 | ✓        | Kimi 多模态主力               |
-| `kimi-k2.5`           | Kimi K2.5           | 262144 | 98304  | ✓        | 早期 Kimi 前沿                |
+| 模型 ID          | 名称           | 上下文 | 输出   | 思考模式 | 备注                          |
+| ---------------- | -------------- | ------ | ------ | -------- | ----------------------------- |
+| `qwen3.8-max`    | Qwen3.8 Max    | 1M     | 131072 | ✓        | **最强**，flagship 多模态推理 |
+| `qwen3.7-plus`   | Qwen3.7 Plus   | 1M     | 65536  | ✓        | 多模态主力，稳定              |
+| `qwen3.6-plus`   | Qwen3.6 Plus   | 1M     | 65536  | ✓        | 早期多模态主力                |
+| `qwen3.6-flash`  | Qwen3.6 Flash  | 1M     | 65536  | ✓        | 视觉快档，低成本备选          |
+| `kimi-k2.7-code` | Kimi K2.7 Code | 262144 | 262144 | ✓        | 偏代码，带视觉                |
+| `kimi-k2.6`      | Kimi K2.6      | 262144 | 262144 | ✓        | Kimi 多模态主力               |
+| `kimi-k2.5`      | Kimi K2.5      | 262144 | 98304  | ✓        | 早期 Kimi 前沿                |
 
 > ⚠️ **不适用于图像分析的模型**
 >
 > - `happyhorse-1.1-*`（i2v / r2v / t2v）为**视频生成**模型，输出为 video，配置给 `multimodal-looker` 无意义
 > - `qwen-image-2.0` / `qwen-image-2.0-pro` / `wan2.7-image*` 为**图片生成**模型（文生图），同样不适用于图像理解
 
-**选型建议**：需最强视觉理解能力 → `qwen3.8-max-preview`；需稳定 → `qwen3.7-plus`；需控制成本 → `qwen3.6-flash`。
+**选型建议**：需最强视觉理解能力 → `qwen3.8-max`；需稳定 → `qwen3.7-plus`；需控制成本 → `qwen3.6-flash`。
 
 ---
 

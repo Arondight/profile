@@ -1,4 +1,4 @@
-// OMO configuration
+// OMO configuration: ~/.omo/omo.jsonc
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/omo.schema.json",
   "[opencode]": {
@@ -13,13 +13,13 @@
         "model": "alibaba-token-plan-cn/glm-5.2",
       },
       "librarian": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
       },
       "explore": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
       },
       "multimodal-looker": {
-        "model": "alibaba-token-plan-cn/qwen3.8-max-preview",
+        "model": "alibaba-token-plan-cn/qwen3.8-max",
       },
       "prometheus": {
         "model": "alibaba-token-plan-cn/glm-5.2",
@@ -51,16 +51,16 @@
         "model": "alibaba-token-plan-cn/glm-5.2",
       },
       "quick": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
       },
       "unspecified-low": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
       },
       "unspecified-high": {
         "model": "alibaba-token-plan-cn/glm-5.2",
       },
       "writing": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
       },
     },
   },
