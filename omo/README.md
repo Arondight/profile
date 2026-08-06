@@ -2,7 +2,7 @@
 
 | 版本 | 日期       | 示例 Provider                         |
 | ---- | ---------- | ------------------------------------- |
-| v1.1 | 2026-08-02 | OpenCode · Alibaba Token Plan (China) |
+| v1.2 | 2026-08-06 | OpenCode · Alibaba Token Plan (China) |
 
 > ⚠️ **时效声明**：本文所述的 agent 清单、模型清单、能力评级均会随 [Oh My OpenAgent](https://github.com/code-yeongyu/oh-my-openagent) 及各提供商（provider）的更新而过时。使用前请以本地 `~/.cache/opencode/models.json` 与最新 [JSON Schema](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/omo.schema.json) 为准。文中凡引用具体模型清单之处，均标注核查日期，以便判断时效。
 
@@ -97,7 +97,7 @@ Oh My OpenAgent 是一个多 agent 编排系统，包含 **11 个内置 agent** 
 
 ### 2.1 能力档位定义
 
-| 档位                | 能力要求                                                        | 跨提供商参考型号                                                  | 本文示例（截至 2026-08-02）                    |
+| 档位                | 能力要求                                                        | 跨提供商参考型号                                                  | 本文示例（截至 2026-08-06）                    |
 | ------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------- |
 | **S** 旗舰推理      | 最强推理 / 架构 / 长链逻辑；规划、审查、架构顾问、最难算法      | Claude Opus 4.8 / Fable 5、GPT-5.6 Sol、Kimi K2.7、Gemini 3.1 Pro | `glm-5.2`                                      |
 | **A** 强推理 / 中强 | 可靠执行 + 中等推理；编排指挥、写代码（harness 严格时中强即可） | Claude Sonnet 4.6、GPT-5.6 Sol (medium)                           | `glm-5.2`（该提供商无独立中强档，由 S 档兼任） |
@@ -136,7 +136,7 @@ Oh My OpenAgent 是一个多 agent 编排系统，包含 **11 个内置 agent** 
 
 Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵循、对话维持、委派编排能力有极高要求。**并非所有强推理模型都能胜任 Sisyphus**。
 
-当前（截至 2026-08-02），Sisyphus **仅在以下模型上经过维护者验证**（完整清单以 [Agent-Model Matching Guide](https://github.com/code-yeongyu/oh-my-openagent/blob/master/docs/guide/agent-model-matching.md) 为准）：
+当前（截至 2026-08-06），Sisyphus **仅在以下模型上经过维护者验证**（完整清单以 [Agent-Model Matching Guide](https://github.com/code-yeongyu/oh-my-openagent/blob/master/docs/guide/agent-model-matching.md) 为准）：
 
 | 模型家族 | 厂商        | 认证型号                                | 备注                                 |
 | -------- | ----------- | --------------------------------------- | ------------------------------------ |
@@ -169,7 +169,7 @@ Sisyphus 是主编排 agent，其提示词约 1,100 行，对模型的指令遵�
 
 ### 2.4 本文示例的总规
 
-综上，[附录 A](#附录-a完整示例配置) 的示例配置以 `glm-5.2` 兼任 S 档与 A 档（该提供商无独立中强档）、以 `deepseek-v4-flash-0731` 任 B 档、以 `qwen3.8-max` 任 V 档（模型清单截至 2026-08-02）。若读者选用其他强推理模型（如 Claude Opus 4.8、Kimi K2.7），将 S 档的 `glm-5.2` 整体替换为所选型号即可；A / B / V 档同理，替换为所用提供商下对应档位的型号。
+综上，[附录 A](#附录-a完整示例配置) 的示例配置以 `glm-5.2` 兼任 S 档与 A 档（该提供商无独立中强档）、以 `deepseek-v4-flash-0731` 任 B 档、以 `qwen3.8-max` 任 V 档（模型清单截至 2026-08-06）。若读者选用其他强推理模型（如 Claude Opus 4.8、Kimi K2.7），将 S 档的 `glm-5.2` 整体替换为所选型号即可；A / B / V 档同理，替换为所用提供商下对应档位的型号。
 
 ---
 
@@ -264,7 +264,7 @@ Sisyphus → Hephaestus → Prometheus → Atlas
 
 ## 附录 A：完整示例配置
 
-以下为 `~/.omo/omo.jsonc`（统一配置，OpenCode profile）的当前内容，可作为起步模板。分档逻辑（模型清单截至 2026-08-02）：
+以下为 `~/.omo/omo.jsonc`（统一配置，OpenCode profile）的当前内容，可作为起步模板。分档逻辑（模型清单截至 2026-08-06）：
 
 | 模型                     | 档位                      | 用量 | 覆盖角色                                                                                                                                                                                  |
 | ------------------------ | ------------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -350,7 +350,7 @@ Sisyphus → Hephaestus → Prometheus → Atlas
 
 > ⚠️ **本节模型清单具有强时效性**
 >
-> 会随提供商更新而变动。使用前请以本地 `~/.cache/opencode/models.json` 中该提供商的实际清单为准，或查阅阿里云百炼 [Token Plan 概述](https://help.aliyun.com/zh/model-studio/token-plan-overview)。以下信息核查日期为 2026-08-02。
+> 会随提供商更新而变动。使用前请以本地 `~/.cache/opencode/models.json` 中该提供商的实际清单为准，或查阅阿里云百炼 [Token Plan 概述](https://help.aliyun.com/zh/model-studio/token-plan-overview)。以下信息核查日期为 2026-08-06。
 
 该提供商共 22 个模型，其中 **9 个支持图片输入**。下表为文本输出型视觉模型（适合 `multimodal-looker` 分析图像 / PDF；视频与图片生成类已排除）：
 
