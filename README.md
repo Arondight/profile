@@ -1,3 +1,5 @@
+
+
 # profile
 
 ## About
@@ -9,19 +11,19 @@ My Linux config files, tested on Arch Linux, CentOS Stream 10, Debian 13, and Ky
 ### Arch Linux
 
 ```shell
-sudo pacman -S c{oreutils,lang} g{awk,it,rep,zip} make sudo tar vim xz
+sudo pacman -S c{oreutils,lang} g{awk,it,rep,zip} make sudo tar vim xz zsh
 ```
 
 ### CentOS Stream 10
 
 ```shell
-sudo dnf install c{oreutils,lang{,-tools-extra}} g{awk,it,rep,zip} make sudo tar vim xz
+sudo dnf install c{oreutils,lang{,-tools-extra}} g{awk,it,rep,zip} make sudo tar vim xz zsh
 ```
 
 ### Debian 13 and Kylin V11
 
 ```shell
-sudo apt install c{oreutils,lang{,d}} g{awk,it,rep,zip} make sudo tar vim-nox xz-utils
+sudo apt install c{oreutils,lang{,d}} g{awk,it,rep,zip} make sudo tar vim-nox xz-utils zsh
 ```
 
 > The `clangd` LSP server is required for vim C/C++ completion.
