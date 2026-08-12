@@ -1,6 +1,6 @@
 // OMO configuration: ~/.omo/omo.jsonc
 {
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/master/assets/omo.schema.json",
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json",
   "[opencode]": {
     "agents": {
       "sisyphus": {

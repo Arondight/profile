@@ -216,19 +216,6 @@ function initYCM ()
   return "$_ret"
 }
 
-function initVimLsp ()
-{
-  local VIMLSP="${PLUGINDIR}/vim-lsp"
-
-  if [[ -d $VIMLSP ]]
-  then
-    vim -c 'LspInstallServer' -c 'qa'
-    return $?
-  fi
-
-  return 0
-}
-
 # MAIN:
 {
   preinit || exit $?
@@ -243,7 +230,6 @@ function initVimLsp ()
   #initLibtinfo
   #initSyntastic
   #initYCM
-  initVimLsp
 
   echo 'done'
 
