@@ -4,63 +4,82 @@
   "[opencode]": {
     "agents": {
       "sisyphus": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "hephaestus": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "oracle": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "librarian": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
       },
       "explore": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
       },
       "multimodal-looker": {
         "model": "alibaba-token-plan-cn/qwen3.8-max",
+        "reasoning": "xhigh",
       },
       "prometheus": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "metis": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "momus": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "atlas": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "high",
       },
       "sisyphus-junior": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "high",
       },
     },
     "categories": {
       "visual-engineering": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "ultrabrain": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "deep": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "artistry": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "quick": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
       },
       "unspecified-low": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
       },
       "unspecified-high": {
-        "model": "alibaba-token-plan-cn/glm-5.2",
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
       },
       "writing": {
-        "model": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
       },
     },
   },
