@@ -1,7 +1,87 @@
-// OMO configuration: ~/.omo/omo.jsonc
+// OmO configuration: ~/.omo/omo.jsonc
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json",
+  // [native]    OmO Native 读取
+  "[native]": {
+    // 主 agent（会话模型），provider 中只有 glm-5.3 在推荐阶梯内
+    "model_profiles": {
+      "token-plan-cn": {
+        "display_name": "Alibaba Token Plan (China)",
+        "models": [
+          {
+            "model": "qwen-token-plan-cn/glm-5.3",
+            "reasoning": "max",
+          },
+        ],
+      },
+    },
+    "model_profile": "token-plan-cn",
+    // 只读研究与计划评审 agent
+    "agents": {
+      "plan-consultant": {
+        "model": "qwen-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "plan-reviewer": {
+        "model": "qwen-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "explore": {
+        "model": "qwen-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
+      },
+      "librarian": {
+        "model": "qwen-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
+      },
+    },
+    // 委派 category：S 档统一 glm-5.3，deep-low 走视觉旗舰，B 档走快模型
+    "categories": {
+      "architect": {
+        "model": "qwen-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "visual-engineering": {
+        "model": "qwen-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "ultrabrain": {
+        "model": "qwen-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "deep-low": {
+        "model": "qwen-token-plan-cn/qwen3.8-max",
+        "reasoning": "xhigh",
+      },
+      "deep-high": {
+        "model": "qwen-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "artistry": {
+        "model": "qwen-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "unspecified-high": {
+        "model": "qwen-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "writing": {
+        "model": "qwen-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "quick": {
+        "model": "qwen-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
+      },
+      "unspecified-low": {
+        "model": "qwen-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
+      },
+    },
+  },
+  // [opencode]  OpenCode 插件读取
   "[opencode]": {
+    // 主编排、规划、评审、检索等 agent
     "agents": {
       "sisyphus": {
         "model": "alibaba-token-plan-cn/glm-5.3",
@@ -14,18 +94,6 @@
       "oracle": {
         "model": "alibaba-token-plan-cn/glm-5.3",
         "reasoning": "max",
-      },
-      "librarian": {
-        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
-        "reasoning": "max",
-      },
-      "explore": {
-        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
-        "reasoning": "max",
-      },
-      "multimodal-looker": {
-        "model": "alibaba-token-plan-cn/qwen3.8-max",
-        "reasoning": "xhigh",
       },
       "prometheus": {
         "model": "alibaba-token-plan-cn/glm-5.3",
@@ -47,7 +115,20 @@
         "model": "alibaba-token-plan-cn/glm-5.3",
         "reasoning": "high",
       },
+      "explore": {
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
+      },
+      "librarian": {
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "reasoning": "max",
+      },
+      "multimodal-looker": {
+        "model": "alibaba-token-plan-cn/qwen3.8-max",
+        "reasoning": "xhigh",
+      },
     },
+    // 委派 category：S 档统一 glm-5.3，B 档走快模型
     "categories": {
       "visual-engineering": {
         "model": "alibaba-token-plan-cn/glm-5.3",
@@ -57,11 +138,19 @@
         "model": "alibaba-token-plan-cn/glm-5.3",
         "reasoning": "max",
       },
-      "deep": {
+      "deep-low": {
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "deep-high": {
         "model": "alibaba-token-plan-cn/glm-5.3",
         "reasoning": "max",
       },
       "artistry": {
+        "model": "alibaba-token-plan-cn/glm-5.3",
+        "reasoning": "max",
+      },
+      "unspecified-high": {
         "model": "alibaba-token-plan-cn/glm-5.3",
         "reasoning": "max",
       },
@@ -71,10 +160,6 @@
       },
       "unspecified-low": {
         "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
-        "reasoning": "max",
-      },
-      "unspecified-high": {
-        "model": "alibaba-token-plan-cn/glm-5.3",
         "reasoning": "max",
       },
       "writing": {
