@@ -1,3 +1,8 @@
+- v2026-10-13
+  - user-dirs
+    - 新增 XDG_PROJECTS_DIR
+  - zsh
+    - 修复 HISTFILE 损坏问题
 - v2026-09-28.2
   - tmux
     - 更新配置

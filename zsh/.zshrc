@@ -48,7 +48,7 @@ function oh_my_zsh_conf ()
   existcmd 'emacs' && plugins+='emacs'
   existcmd 'fbterm' && plugins+='fbterm'
   existcmd 'firewalld' && plugins+='firewalld'
-  existcmd 'git' && plugins+=('git' 'github' 'git-prompt' 'git-extras')
+  existcmd 'git' && plugins+=('git' 'git-prompt' 'git-extras')
   existcmd 'go' && plugins+=('golang')
   existcmd 'gvim' && plugins+='vim-interaction'
   existcmd 'nmap' && plugins+='nmap'
@@ -209,9 +209,20 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 # ==============================================================================
 # 历史记录
 # ==============================================================================
-if [[ -r "${HOME}/.zsh_history" ]]
+# 处理可能的 HISTFILE 损坏
+if [[ -r "$HISTFILE" ]]
 then
-  fc -R "${HOME}/.zsh_history"
+  hist_tmp="${HISTFILE}.repair.$$"
+
+  if (umask 077; command tr -d '\000' < "$HISTFILE" > "$hist_tmp" 2>/dev/null) &&
+     ! command cmp -s "$HISTFILE" "$hist_tmp"
+  then
+    command mv -f "$hist_tmp" "$HISTFILE"
+  else
+    command rm -f "$hist_tmp"
+  fi
+
+  unset hist_tmp
 fi
 
 # ==============================================================================
