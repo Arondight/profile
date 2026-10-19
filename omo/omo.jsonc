@@ -3,7 +3,7 @@
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json",
   // [native]    OmO Native 读取
   "[native]": {
-    // 主 agent（会话模型），provider 中只有 glm-5.3 在推荐阶梯内
+    // 主 agent（会话模型），provider 中只有 glm-5.3 在推荐模型集合内
     "model_profiles": {
       "token-plan-cn": {
         "display_name": "Alibaba Token Plan (China)",
@@ -27,11 +27,11 @@
         "reasoning": "max",
       },
       "explore": {
-        "model": "qwen-token-plan-cn/deepseek-v4.1-flash",
+        "model": "qwen-token-plan-cn/deepseek-v4.1-flash-1017",
         "reasoning": "max",
       },
       "librarian": {
-        "model": "qwen-token-plan-cn/deepseek-v4.1-flash",
+        "model": "qwen-token-plan-cn/deepseek-v4.1-flash-1017",
         "reasoning": "max",
       },
     },
@@ -70,11 +70,11 @@
         "reasoning": "max",
       },
       "quick": {
-        "model": "qwen-token-plan-cn/deepseek-v4.1-flash",
+        "model": "qwen-token-plan-cn/deepseek-v4.1-flash-1017",
         "reasoning": "max",
       },
       "unspecified-low": {
-        "model": "qwen-token-plan-cn/deepseek-v4.1-flash",
+        "model": "qwen-token-plan-cn/deepseek-v4.1-flash-1017",
         "reasoning": "max",
       },
     },
@@ -116,11 +116,11 @@
         "reasoning": "high",
       },
       "explore": {
-        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash-1017",
         "reasoning": "max",
       },
       "librarian": {
-        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash-1017",
         "reasoning": "max",
       },
       "multimodal-looker": {
@@ -155,15 +155,15 @@
         "reasoning": "max",
       },
       "quick": {
-        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash-1017",
         "reasoning": "max",
       },
       "unspecified-low": {
-        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash-1017",
         "reasoning": "max",
       },
       "writing": {
-        "model": "alibaba-token-plan-cn/deepseek-v4.1-flash",
+        "model": "alibaba-token-plan-cn/glm-5.3",
         "reasoning": "max",
       },
     },

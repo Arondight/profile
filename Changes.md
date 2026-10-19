@@ -1,3 +1,6 @@
+- v2026-10-20
+  - omo
+    - 更新说明和配置
 - v2026-10-13
   - user-dirs
     - 新增 XDG_PROJECTS_DIR

@@ -1,21 +1,21 @@
 # Oh My OpenAgent（OmO）配置指引
 
-| 版本 | 日期       | 示例环境                                                       |
-| ---- | ---------- | -------------------------------------------------------------- |
-| v2.0 | 2026-09-28 | OmO Native 5.0.1 · OpenCode 插件 5.0.1 · 阿里云百炼 Token Plan |
+| 版本 | 日期       | 示例环境                                                                                              |
+| ---- | ---------- | ----------------------------------------------------------------------------------------------------- |
+| v2.1 | 2026-10-20 | OmO Native 5.1.38（senpi 2026.10.19）· OpenCode 插件 5.1.38 · OpenCode 1.19.3 · 阿里云百炼 Token Plan |
 
 > **时效性**：本文的 agent / category / 模型清单与能力评级会随 [Oh My OpenAgent](https://github.com/code-yeongyu/oh-my-openagent) 及各提供商更新而变化。使用前请以本机 `omo doctor`、`omo --list-models`、`opencode models` 与最新 [JSON Schema](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json) 为准。
 
 Oh My OpenAgent（OmO）是面向 AI 编码会话的多 agent 编排配置，按宿主提供多种形态。本文涉及以下两种：
 
 - **OmO Native**：独立的 `omo` 命令，senpi 引擎内置 OMO 扩展，不依赖任何宿主；本文以它为主体。
-- **OpenCode 插件**（Ultimate）：`oh-my-openagent` 插件，加载进 OpenCode v1；5.x 起官方将其列为降级支持（degraded support）形态，新功能优先进入 OmO Native。
+- **OpenCode 插件**（Ultimate）：`oh-my-openagent` 插件，加载进 OpenCode。官方要求 OpenCode 1.4.0 或更高；5.1.38 起也可加载到 OpenCode 2（启动时会提示迁移到 Native，并给出安装命令与指南）。插件仍在维护；官方文档现在以 OmO Native 为主体，插件专属配置在官方文档中归入 legacy 页面。
 
-OmO Native 运行在 senpi 引擎上，senpi 是 [pi](https://github.com/badlogic/pi-mono) 的 fork，因此其 CLI、会话与扩展机制与 pi 同源。
+官方另有 **Codex 插件（Light）** 形态，本文不展开。OmO Native 运行在 senpi 引擎上，senpi 是 [pi](https://github.com/badlogic/pi-mono) 的 fork，因此其 CLI、会话与扩展机制与 pi 同源。
 
 本文以 **阿里云百炼 Token Plan** 为示例；两个形态各用自己的 provider：Native 侧为 `qwen-token-plan-cn`，OpenCode 插件侧为 `alibaba-token-plan-cn`。替换为其他提供商时，需同步替换 provider 前缀与模型 ID，并核对思考强度、上下文 / 输出限制与认证方式；以 `omo --list-models` / `opencode models` 为准。
 
-- **适用对象**：OmO Native 5.x 用户与 OpenCode 插件（OpenCode v1）用户
+- **适用对象**：OmO Native 5.1.x 用户与 OpenCode 插件（OpenCode 1.4+ / 2）用户
 - **官方文档**：[GitHub 仓库](https://github.com/code-yeongyu/oh-my-openagent) · [omo.dev/docs](https://omo.dev/docs)
 - **JSON Schema**：[omo.schema.json](https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json)
 - **权威依据**：[Agent-Model Matching Guide](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/guide/agent-model-matching.md) · `omo doctor` · `opencode models`
@@ -56,30 +56,30 @@ OmO Native 运行在 senpi 引擎上，senpi 是 [pi](https://github.com/badlogi
 
 ## 术语表
 
-| 术语                         | 含义                                                                                                                                                       |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Recommended（推荐阶梯）      | 未设置 `model_profile` 时使用的默认主模型链（仅 Desktop / headless 新建会话）                                                                              |
-| TUI / Desktop / headless     | 终端交互界面 / OmO Desktop 客户端 / 非交互运行（如 `omo -p`）                                                                                              |
-| agent / subagent_type        | 由模型、系统提示与工具策略组成的具名角色（如 `explore`）；用 `task(subagent_type: ...)` 调用                                                               |
-| category                     | 任务意图标签，如 `deep-low`；用 `task(category: ...)` 调用                                                                                                 |
-| lane                         | 官方内置的四组主模型链：Daily / Geeky × Normal / Heavy；以其 ID（如 `daily-normal`）作为 `model_profile` 的取值                                            |
-| pin（固定）                  | 将 `model_profile` 直接写成 `provider/model`，只使用该模型，不走命名链                                                                                     |
-| plan-gated                   | 需先进入 `/ulw-plan` 计划流（产出 `.omo/plans/*.md` 的计划命令）才能使用                                                                                   |
-| provider（提供商）           | `provider/model` 中的前缀，代表模型的提供方，如 `qwen-token-plan-cn`；用 `omo --list-models`（Native）或 `opencode models`（OpenCode）查看                 |
-| reasoning（思考强度）        | 模型思考强度的高低，取值见 [3.3](#33-覆盖规则与模型引用)                                                                                                   |
-| scoped model / resume / fork | 会话内指定的模型 / 恢复既有会话 / 从既有会话分叉                                                                                                           |
-| ulw-loop                     | 多目标循环工作流；其内部评审 agent 见 [3.2](#32-委派角色)                                                                                                  |
-| 主 agent                     | 会话中的编排 agent；OmO Native 只有一个，OpenCode 插件有 4 个 primary agent                                                                                |
-| 委派                         | 主 agent 通过 `task` 工具把工作交给新的子会话执行                                                                                                          |
-| 档位（rung）                 | 模型链中的一项                                                                                                                                             |
-| 模型 profile                 | `model_profiles.<name>` 定义的命名链；`model_profile` 指定当前使用哪一条                                                                                   |
-| 模型引用                     | `provider/model` 形式的完整模型 ID，如 `qwen-token-plan-cn/glm-5.3`；可附加 `:level` 后缀指定思考强度                                                      |
-| 模型目录                     | 顶层或 `[native]` 中的 `models`，将短名映射到模型引用                                                                                                      |
-| 模型链                       | 有序的“模型 + 思考强度”列表，用于新建 Desktop / headless 会话与委派时的模型选择，取第一个可服务的条目；会话中途的故障走引擎自身的重试链，不按模型链回退    |
-| 聚合器                       | OpenRouter、OpenGateway 等转售多家模型的网关；Recommended 不使用它们                                                                                       |
-| 能力档 S / B / V             | 本文对角色所需模型能力的归纳，见 [3. OmO Native：角色与模型选型](#3-omo-native角色与模型选型)                                                              |
-| 配置 profile                 | `profiles.<name>` 定义的配置覆盖层，由 `OMO_PROFILE` 等环境变量激活；与“模型 profile”无关                                                                  |
-| 门控（gate）                 | 部分 category 需指定模型存在才可用；显式配置其 `model` / `models` 可解除。`plan-consultant` / `plan-reviewer` 另有 plan-gated 条件；见 [3.2](#32-委派角色) |
+| 术语                         | 含义                                                                                                                                                                  |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 推荐模型集合                 | 官方调优过编排提示的七个模型（Opus 5.5、Fable 5.1、Kimi K3、GPT-6 Astra、GPT-6.1 Sol、GPT-6 Sol、GLM 5.3）；不作为单独的 runtime profile，默认 lane 为 Daily · Normal |
+| TUI / Desktop / headless     | 终端交互界面 / OmO Desktop 客户端 / 非交互运行（如 `omo -p`）                                                                                                         |
+| agent / subagent_type        | 由模型、系统提示与工具策略组成的具名角色（如 `explore`）；用 `task(subagent_type: ...)` 调用                                                                          |
+| category                     | 任务意图标签，如 `deep-low`；用 `task(category: ...)` 调用                                                                                                            |
+| lane                         | 官方内置的四组主模型链：Daily / Geeky × Normal / Heavy；以其 ID（如 `daily-normal`）作为 `model_profile` 的取值                                                       |
+| pin（固定）                  | 将 `model_profile` 直接写成 `provider/model`，只使用该模型，不走命名链                                                                                                |
+| plan-gated                   | 需先进入 `/ulw-plan` 计划流，且已触碰 `.omo/plans/*.md`、尚未调用 `ulw-execute` 才能使用                                                                              |
+| provider（提供商）           | `provider/model` 中的前缀，代表模型的提供方，如 `qwen-token-plan-cn`；用 `omo --list-models`（Native）或 `opencode models`（OpenCode）查看                            |
+| reasoning（思考强度）        | 模型思考强度的高低，取值见 [3.3](#33-覆盖规则与模型引用)                                                                                                              |
+| scoped model / resume / fork | 会话内指定的模型 / 恢复既有会话 / 从既有会话分叉                                                                                                                      |
+| ulw-loop                     | 多目标循环工作流；其内部评审 agent 见 [3.2](#32-委派角色)                                                                                                             |
+| 主 agent                     | 会话中的编排 agent；OmO Native 只有一个，OpenCode 插件有 4 个 primary agent                                                                                           |
+| 委派                         | 主 agent 通过 `task` 工具把工作交给新的子会话执行                                                                                                                     |
+| 档位（rung）                 | 模型链中的一项                                                                                                                                                        |
+| 模型 profile                 | `model_profiles.<name>` 定义的命名链；`model_profile` 指定当前使用哪一条                                                                                              |
+| 模型引用                     | `provider/model` 形式的完整模型 ID，如 `qwen-token-plan-cn/glm-5.3`；可附加 `:level` 后缀指定思考强度                                                                 |
+| 模型目录                     | 顶层或 `[native]` 中的 `models`，将短名映射到模型引用                                                                                                                 |
+| 模型链                       | 有序的“模型 + 思考强度”列表，用于新建 Desktop / headless 会话与委派时的模型选择，取第一个可服务的条目；会话中途的故障走引擎自身的重试链，不按模型链回退               |
+| 聚合器                       | OpenRouter、OpenGateway 等转售多家模型的网关；推荐模型集合不使用它们                                                                                                  |
+| 能力档 S / B / V             | 本文对角色所需模型能力的归纳，见 [3. OmO Native：角色与模型选型](#3-omo-native角色与模型选型)                                                                         |
+| 配置 profile                 | `profiles.<name>` 定义的配置覆盖层，由 `OMO_PROFILE` 等环境变量激活；与“模型 profile”无关                                                                             |
+| 门控（gate）                 | 部分 category 需指定模型存在才可用；显式配置其 `model` / `models` 可解除。`plan-consultant` / `plan-reviewer` 另有 plan-gated 条件；见 [3.2](#32-委派角色)            |
 
 ---
 
@@ -87,29 +87,31 @@ OmO Native 运行在 senpi 引擎上，senpi 是 [pi](https://github.com/badlogi
 
 ### 1.1 前置依赖
 
-| 依赖     | 要求               | 说明                                                                                                   |
-| -------- | ------------------ | ------------------------------------------------------------------------------------------------------ |
-| Node.js  | 24 或更高版本      | `omo-ai` 的安装与运行要求；OpenCode 插件由 OpenCode 宿主提供运行时                                     |
-| Bun      | 1.4 或更高（推荐） | 已安装时引擎以 Bun 运行；可用 `npm install -g bun` 或 `curl -fsSL https://bun.sh/install \| bash` 安装 |
-| OpenCode | v1                 | 仅 OpenCode 插件需要；OpenCode v2 的适配仍在进行中                                                     |
-
-未安装 Bun 时 OmO Native 仍可在 Node.js 上运行；可用 `OMO_RUNTIME=node` 强制使用 Node.js。
+| 依赖                 | 要求          | 说明                                                                                           |
+| -------------------- | ------------- | ---------------------------------------------------------------------------------------------- |
+| OmO Native（二进制） | —             | 官方安装脚本提供自包含二进制，运行时不需要 Node.js、npm 或 Bun                                 |
+| Node.js              | 24 或更高版本 | 仅在用 npm / bun 安装 `omo-ai` 时需要；引擎版本由包锁定                                        |
+| Bun                  | 1.4 或更高    | OmO Native 可选（可用 `bun add -g omo-ai`）；OpenCode 插件安装器需要 Bun（通过 `bunx` 调用）   |
+| OpenCode             | 1.4.0 或更高  | 仅 OpenCode 插件需要；安装器需要 Bun；5.1.38 起 OpenCode 2 也可加载，启动时会提示迁移到 Native |
+| 网络                 | —             | 安装脚本与 `omo update` 需要访问 `get.omo.dev` / npm；脚本遵循 `https_proxy` / `HTTPS_PROXY`   |
 
 ### 1.2 OmO Native
 
 ```bash
 npm install -g omo-ai   # 或 bun add -g omo-ai
+
 omo                     # 启动
 omo setup               # 可选：从 OpenCode 等导入 provider、MCP、skills、模型选择
-omo doctor              # 检查已连接 provider 与各 category 的可用性
-omo update              # 原地升级
-omo --list-models       # 查看当前可用的 provider/model 组合
+omo doctor              # 检查已连接 provider、config、各 category 与运行环境
+omo update              # 包管理器安装：原地升级；二进制安装请重新运行安装脚本
+omo --list-models qwen-token-plan-cn  # 查看 provider/model、上下文、输出与图片能力
 ```
 
 - npm 包名为 `omo-ai`，命令名为 `omo`；npm 上的 `omo` 包与本项目无关。
-- 引擎状态位于 `~/.omo/agent/`（`settings.jsonc`、`auth.json`、`models.json` 等）。
+- 二进制默认安装到 `~/.local/bin/omo`；引擎状态（两种安装方式相同）位于 `~/.omo/agent/`：`auth.json`、`models.json`、`models-store.json` 等使用固定 `.json` 文件名，设置文件优先读取 `settings.jsonc`（没有时读 `settings.json`）。
+- 若 `omo --version` 不是刚安装的版本，用 `command -v omo` / `Get-Command omo` 检查 PATH 上是否有旧的 `omo`；`omo doctor` 会提示冲突及修复命令。
 - 订阅登录在会话内完成：`/login <provider>`。
-- 卸载：`npm uninstall -g omo-ai`，或 `bun remove -g omo-ai`（Bun 安装可能残留 `~/.bun/bin/omo` shim，可手动删除）。
+- 卸载：二进制安装删除 `~/.local/bin/omo`、`~/.omo/binary-runtime` 与 `~/.omo/install.json`；npm / bun 安装用 `npm uninstall -g omo-ai` 或 `bun remove -g omo-ai`（Bun 安装可能残留 `~/.bun/bin/omo` shim，可手动删除）。
 
 ### 1.3 OpenCode 插件
 
@@ -125,7 +127,7 @@ bunx oh-my-openagent install
 
 **方式二：写入 OpenCode 的 `plugin` 数组**
 
-OpenCode 会自行安装并缓存数组中的插件，需在 `plugin` 数组中登记；文件可能还包含其他配置：
+OpenCode 会自行安装并缓存数组中的插件，需在 `plugin` 数组中登记；文件可能还包含其他配置。官方安装器写入不带 tag 的 `"oh-my-openagent"`，本仓库示例使用 `@latest`：
 
 ```jsonc
 {
@@ -133,14 +135,14 @@ OpenCode 会自行安装并缓存数组中的插件，需在 `plugin` 数组中�
 }
 ```
 
-对应 `~/.config/opencode/opencode.jsonc` 与（使用 TUI 时的）`~/.config/opencode/tui.jsonc`，后者只需这一项。该方式仅完成插件加载，provider 认证与模型配置需另行完成（见 [4. OpenCode 插件：角色与模型选型](#4-opencode-插件角色与模型选型)）。
+对应 `~/.config/opencode/opencode.jsonc` 与（使用 TUI 时的）`~/.config/opencode/tui.json`，后者只需这一项。该方式仅完成插件加载，provider 认证与模型配置需另行完成（见 [4. OpenCode 插件：角色与模型选型](#4-opencode-插件角色与模型选型)）。OpenCode 会把 `@latest` 插件缓存到 `~/.cache/opencode/packages/`；5.1.x 起插件会在缓存的版本落后于 tag 时清理沙箱，重启 OpenCode 即可加载新版本。
 
 > **官方明确不支持全局安装插件**（`npm install -g oh-my-openagent`、`bun add -g oh-my-openagent` 均不可用）：插件必须从 OpenCode 加载插件的位置解析。若要安装 Bun，可用 `npm install -g bun`，随后以 `bunx oh-my-openagent install` 安装插件。
 
 ### 1.4 两种形态共存
 
 - 两种形态互不依赖，可同时安装。
-- 二者共享 `~/.omo/omo.jsonc`：多数顶层键对两者均生效，少数（如 `model_profile` / `model_profiles` / `memory` / `telemetry`）仅 OmO Native 读取（见 [2.2](#22-解析顺序与配置块)）；`[native]` 与 `[opencode]` 各归其形态。
+- 二者共享 `~/.omo/omo.jsonc`：多数顶层键对两者均生效；`model_profile` / `model_profiles` / `memory` / `git_master` 等只由 OmO Native 读取（见 [2.2](#22-解析顺序与配置块)），顶层 `telemetry` 块也只控制 Native，OpenCode 插件用自己的 `[opencode].telemetry`；`[native]` 与 `[opencode]` 各归其形态，另有 `[codex]` 块。
 - 两个形态的 provider ID 可能不同，示例对照如下：
 
   | 类别                  | OmO Native provider    | OpenCode provider       |
@@ -150,7 +152,7 @@ OpenCode 会自行安装并缓存数组中的插件，需在 `plugin` 数组中�
   | Kimi                  | `kimi-coding`          | `kimi-for-coding`       |
   | OpenAI                | `chatgpt-subscription` | `openai`                |
 
-- `omo setup` 可将 OpenCode 的 API key、自定义 provider、MCP 服务器与全局 skills 导入引擎状态目录 `~/.omo/agent/`，并将默认模型与 categories / agents 写入 `[native]` 块。OAuth 登录无法复制，需在 omo 内执行 `/login <provider>`。
+- `omo setup` 可将 OpenCode 的 API key、自定义 provider、MCP 服务器与全局 skills 导入引擎状态目录 `~/.omo/agent/`，并将默认模型与 categories / agents 写入 `[native]` 块；已存在的 Native 配置不会被覆盖。OAuth 登录无法复制，需在 omo 内执行 `/login <provider>`。
 
 ---
 
@@ -158,10 +160,12 @@ OpenCode 会自行安装并缓存数组中的插件，需在 `plugin` 数组中�
 
 ### 2.1 文件位置与优先级
 
-| 层级   | 路径                    | 优先级 | 说明                                                                                         |
-| ------ | ----------------------- | ------ | -------------------------------------------------------------------------------------------- |
-| 用户级 | `~/.omo/omo.jsonc`      | 低     | 全局配置                                                                                     |
-| 项目级 | `<项目>/.omo/omo.jsonc` | 高     | 从工作目录向上到 `$HOME` 逐层合并（工作目录在 `$HOME` 之外时继续到根），越近的层级优先级越高 |
+| 层级   | 路径                                     | 优先级 | 说明                                                                                                                 |
+| ------ | ---------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------- |
+| 用户级 | `~/.omo/omo.jsonc`                       | 低     | 全局配置；也接受 `omo.json`                                                                                          |
+| 项目级 | `<项目>/.omo/omo.jsonc`（或 `omo.json`） | 高     | 从工作目录向上逐层合并到 `$HOME`（`$HOME` 本身跳过），越近的层级优先级越高；符号链接的项目 `.omo` / 配置文件会被跳过 |
+
+加载器会把无法解析的文件、未知键和错误值分别记为 diagnostic 后跳过，不会因为一个坏值丢掉整份配置；`omo doctor` 会逐条列出。
 
 ```jsonc
 {
@@ -171,36 +175,37 @@ OpenCode 会自行安装并缓存数组中的插件，需在 `plugin` 数组中�
 
 文档涉及的文件与格式：
 
-| 文件                                        | 说明                                 |
-| ------------------------------------------- | ------------------------------------ |
-| `~/.omo/omo.jsonc`；`<项目>/.omo/omo.jsonc` | OmO 配置                             |
-| `~/.omo/agent/settings.jsonc`               | 引擎设置；TUI 的 `Ctrl+S` 写入该文件 |
-| `~/.config/opencode/opencode.jsonc`         | OpenCode 主配置                      |
-| `~/.config/opencode/tui.jsonc`              | OpenCode TUI 配置                    |
+| 文件                                                | 说明                                     |
+| --------------------------------------------------- | ---------------------------------------- |
+| `~/.omo/omo.jsonc`；`<项目>/.omo/omo.jsonc`         | OmO 配置                                 |
+| `~/.omo/agent/settings.jsonc`（或 `settings.json`） | 引擎设置；TUI 的 `Ctrl+S` 写入当前设置源 |
+| `~/.config/opencode/opencode.jsonc`                 | OpenCode 主配置                          |
+| `~/.config/opencode/tui.json`                       | OpenCode TUI 配置                        |
 
-引擎状态目录中的 `auth.json`、`models.json` 等为固定 `.json` 文件名，没有 `.jsonc` 变体。
+`auth.json`、`models.json`、`models-store.json` 等使用固定 `.json` 文件名；引擎设置优先读取 `settings.jsonc`，没有时读 `settings.json`。OpenCode / 插件当前使用 `tui.json`；若本机仍有 `tui.jsonc`，以 OpenCode 实际读取的文件为准。
 
 ### 2.2 解析顺序与配置块
 
 合并完成后，每个 harness 按以下顺序解析自己的视图，后者覆盖前者，默认值最后补齐：
 
-1. 顶层键
-2. 当前 harness 的配置块：`[native]` 或 `[opencode]`
+1. 顶层键（除 `profiles` 与 harness 块外的共享键）
+2. 当前 harness 的配置块：`[native]`、`[opencode]` 或 `[codex]`
 3. `profiles.<name>`
-4. `profiles.<name>` 内的 harness 块（`[native]` / `[opencode]`）
+4. `profiles.<name>` 内的 harness 块（`[native]` / `[opencode]` / `[codex]`）
 
-> 层级合并（项目级覆盖用户级）先完成，再应用上述解析顺序；因此激活的 profile 会覆盖合并后的基础值，与文件层级无关。`OMO_PROFILE` 一次只激活一个 profile。
+> 层级合并（项目级覆盖用户级）先完成，再应用上述解析顺序；因此激活的 profile 会覆盖合并后的基础值，与文件层级无关。激活来源按优先级为 `OMO_PROFILE`、`OCX_PROFILE`、尾部为 `profiles/<name>` 的 `OPENCODE_CONFIG_DIR`，一次只激活一个 profile。
 
 各配置块的职责：
 
-| 键                | 作用域           | 说明                                                                                                  |
-| ----------------- | ---------------- | ----------------------------------------------------------------------------------------------------- |
-| 顶层键            | 多数形态         | `agents`、`categories`、`models`、`task`、`teams`、`disabled_skills` 等；少数键仅 Native 读取（见下） |
-| `[native]`        | OmO Native       | Native 的专属视图；接受与顶层相同的键集，用于只对 Native 生效的覆盖                                   |
-| `[opencode]`      | OpenCode 插件    | OpenCode 插件专属配置，含其 agents / categories / hooks 等                                            |
-| `profiles.<name>` | 按激活的 profile | 配置层覆盖，由 `OMO_PROFILE` 等环境变量激活                                                           |
+| 键                | 作用域           | 说明                                                                                                        |
+| ----------------- | ---------------- | ----------------------------------------------------------------------------------------------------------- |
+| 顶层键            | 多数形态         | `agents`、`categories`、`models`、`task`、`teams`、`disabled_skills` 等共享键；少数键仅 Native 读取（见下） |
+| `[native]`        | OmO Native       | Native 的专属视图；类型化块，接受与顶层相同的共享键，用于只对 Native 生效的覆盖；旧拼写 `[senpi]` 仍兼容    |
+| `[opencode]`      | OpenCode 插件    | OpenCode 插件专属配置，含其 agents / categories / hooks 等；freeform 块，由插件按自己的 schema 校验         |
+| `[codex]`         | Codex 插件       | Codex 专属覆盖；本文不展开                                                                                  |
+| `profiles.<name>` | 按激活的 profile | 配置层覆盖，由 `OMO_PROFILE` 等环境变量激活                                                                 |
 
-> `model_profile` / `model_profiles` / `memory` / `telemetry` 等键写在顶层同样有效，但只有 OmO Native 读取；也可以放进 `[native]` 以明确作用域。
+> `model_profile` / `model_profiles` / `memory` / `telemetry` / `git_master` / `side_panel` 等键写在顶层同样有效，但只有 OmO Native 读取；也可以放进 `[native]` 以明确作用域。OpenCode 插件的遥测开关放在 `[opencode].telemetry`。`disabled_skills` 在各层之间取并集，项目层不能重新启用用户层禁用的技能；Native 的 `telemetry.enabled` 默认为 `true`。
 
 ### 2.3 最小结构
 
@@ -253,28 +258,30 @@ OmO Native 的模型选择分为两层：**主 agent** 决定会话模型，**�
 
 ### 3.1 主 agent 的模型
 
-主 agent 使用会话模型。Desktop / headless 会话由 `model_profile` 选择模型；未设置时应用 **Recommended** 阶梯，按顺序取第一个由已连接 provider 提供服务的档位：
+主 agent 使用会话模型。Desktop / headless 新建会话由 `model_profile` 选择模型；未设置时应用 **Daily · Normal**，若它没有可服务的档位，则依次尝试 Daily · Heavy、Geeky · Normal、Geeky · Heavy。官方不再提供名为 `recommended` 的 profile：旧配置写 `"recommended"` 会得到同样的默认行为并记录一行日志，除非自己在 `model_profiles` 中定义了同名链。
 
-`claude-opus-5-5 (medium)` → `claude-fable-5-1 (xhigh)` → `kimi-k3 (max)` → `gpt-6-astra (xhigh)` → `gpt-6-sol (medium)` → `glm-5.3 (max)`
+官方文档按偏好列出以下经过编排提示调优的模型（这是一个模型集合，不是单独的运行时 profile；未设置 `model_profile` 时默认运行 Daily · Normal）：
 
-Recommended 的每一档只在官方排名的 provider 上解析（见 [Agent-Model Matching Guide](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/guide/agent-model-matching.md)）——每档预置一组按优先级排列的 provider（订阅在前、API 在后），OpenGateway、OpenRouter 等网关聚合器不参与；四个内置 lane 的候选同样优先使用各自列出的 provider，但 lane 不限制在这些 provider：列出的 provider 均不可用时，同一模型仍可由其他已连接 provider 提供。
+`claude-opus-5-5 (medium)` → `claude-fable-5-1 (xhigh)` → `kimi-k3 (max)` → `gpt-6-astra (high)` → `gpt-6.1-sol (medium)` → `gpt-6-sol (medium)` → `glm-5.3 (max)`
 
-四个内置 lane 中，Daily 两条与 Geeky · Heavy 是 Recommended 阶梯的精选子序列（跳过的档位不参与），Geeky · Normal 使用 GPT-5.6 Sol：
+每一档只在官方列出的 provider 上解析（见 [Agent-Model Matching Guide](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/guide/agent-model-matching.md)）——每档预置一组按优先级排列的 provider（订阅在前、API 在后），OpenGateway、OpenRouter 等网关聚合器不参与。与旧版不同，档位列出的 provider 都不可用时，不会换用其他 provider 的同名模型。
 
-| Lane           | ID             | 适用场景           | 模型链                                                         |
-| -------------- | -------------- | ------------------ | -------------------------------------------------------------- |
-| Daily · Normal | `daily-normal` | 日常任务的稳妥选择 | `claude-opus-5-5` (medium) → `kimi-k3` (max) → `glm-5.3` (max) |
-| Daily · Heavy  | `daily-heavy`  | 多角度权衡后执行   | `claude-fable-5-1` (xhigh)                                     |
-| Geeky · Normal | `geeky-normal` | 单任务深入思考     | `gpt-5.6-sol` (medium)                                         |
-| Geeky · Heavy  | `geeky-heavy`  | 单任务全面推演     | `gpt-6-astra` (xhigh)                                          |
+四个内置 lane 中，Daily 两条与 Geeky · Heavy 是推荐模型集合的精选子序列（跳过的档位不参与），Geeky · Normal 使用 GPT-6.1 Sol 系列：
 
-表中括号内为思考强度（`reasoning`），取值含义见 [3.3](#33-覆盖规则与模型引用)。`gpt-6-*` 与 `gpt-5.6-*` 是两代模型：`geeky-normal` 特意使用 GPT-5 旗舰。
+| Lane           | ID             | 适用场景           | 模型链                                                                        |
+| -------------- | -------------- | ------------------ | ----------------------------------------------------------------------------- |
+| Daily · Normal | `daily-normal` | 日常任务的稳妥选择 | `claude-opus-5-5` (medium) → `kimi-k3` (max) → `glm-5.3` (max)                |
+| Daily · Heavy  | `daily-heavy`  | 多角度权衡后执行   | `claude-fable-5-1` (xhigh)                                                    |
+| Geeky · Normal | `geeky-normal` | 单任务深入思考     | `gpt-6.1-sol-fast` (medium) → `gpt-6.1-sol` (medium) → `gpt-5.6-sol` (medium) |
+| Geeky · Heavy  | `geeky-heavy`  | 单任务全面推演     | `gpt-6-astra` (high)                                                          |
+
+表中括号内为思考强度（`reasoning`），取值含义见 [3.3](#33-覆盖规则与模型引用)。`gpt-6-*` 与 `gpt-5.6-*` 是两代模型：`geeky-normal` 先试 GPT-6.1 Sol Fast，再回退到 GPT-6.1 Sol 与 GPT-5.6 Sol。
 
 `model_profile` 的取值有三类：
 
 - **内置 lane ID**：如 `"model_profile": "daily-normal"`（见上表）。
 - **自定义链**：在 `model_profiles.<name>` 定义有序链，再让 `model_profile` 指向该名称。
-- **pin**：直接写 `provider/model`，如 `"model_profile": "qwen-token-plan-cn/glm-5.3"`。
+- **pin**：直接写 `provider/model`，如 `"model_profile": "qwen-token-plan-cn/glm-5.3"`；任何包含 `/` 的值都按 pin 处理。
 
 ```jsonc
 {
@@ -287,7 +294,6 @@ Recommended 的每一档只在官方排名的 provider 上解析（见 [Agent-Mo
             "model": "qwen-token-plan-cn/glm-5.3",
             "reasoning": "max",
           },
-          "chatgpt-subscription/gpt-6-sol:medium",
         ],
       },
     },
@@ -299,11 +305,14 @@ Recommended 的每一档只在官方排名的 provider 上解析（见 [Agent-Mo
 使用规则：
 
 - `model_profile` 只作用于**新建的 Desktop / headless 会话**；`--model` 参数、scoped model、resume、fork 均保留各自的模型，profile 不会覆盖。
-- 应用结果不会写回配置文件，仅在当前会话生效；会话中途的模型故障按引擎自身的重试链处理，不按 profile 回退。
+- 应用结果不会写回配置文件，仅在当前会话生效；会话中途的模型故障按引擎自身的重试链（`retry.fallbackChains`）处理，不按 profile 回退。
 - **交互式 TUI 不应用 `model_profile`**。TUI 的启动模型来自 `~/.omo/agent/settings.jsonc` 的 `defaultProvider` / `defaultModel`；在 TUI 内用 `/model` 选择模型后按 `Ctrl+S` 可存为默认（写入同一文件的 `defaultProvider` / `defaultModel`）。
-- 若 TUI 默认模型不在 Recommended 阶梯，启动时会显示 **Risky model warning**。该告警按 `${provider}/${model} ${name}` 是否包含 `qwen` 或 `minimax` 判定，因此在 provider ID 含 `qwen` 的提供方（如 `qwen-token-plan-cn`）上，即使换成 `glm-5.3` 也会出现；要消除需改用不含这两个词的 provider（如 `alibaba-token-plan`，需对应端点的凭据）。
-- 官方只对 Recommended 阶梯上的模型验证过编排提示；阶梯外的模型（如 Qwen、DeepSeek）可作为委派模型，但官方不支持其作为主 agent。
-- 自定义链中，带 provider 前缀的条目只在该 provider 上解析；裸模型 ID 可匹配任意 provider（provider 由引擎按可用顺序选择）。
+  若 TUI 会话启动在隐式默认模型上，Senpi 的 recommended-model 切换会按六模型顺序选择第一个可用项：`claude-opus-5-5` (medium) → `claude-fable-5-1` (xhigh) → `kimi-k3` (max) → `gpt-6-astra` (xhigh) → `gpt-6.1-sol` (medium) → `glm-5.3` (max)；该列表不含 GPT-6 Sol。
+- **Risky model warning** 只在 `${provider}/${model} ${name}` 含 `qwen` 或 `minimax` 时出现，与模型是否在推荐集合中无关。
+  因此在 provider ID 含 `qwen` 的提供方（如 `qwen-token-plan-cn`）上，即使跑 `glm-5.3` 也会触发；要消除需改用不含这两个词的 provider（如 `alibaba-token-plan` / `alibaba-token-plan-cn`，需对应端点的凭据）。若 Senpi 找不到任何推荐模型，另有 non-recommended 警告。
+- 官方只对推荐模型集合中的模型验证过编排提示；集合外的模型（如 Qwen、DeepSeek）可作为委派模型，但官方不支持其作为主 agent。
+- 自定义链中，带 provider 前缀的条目只在该 provider 上解析；裸模型 ID 可匹配任意 provider（provider 由引擎按可用顺序选择）。`model_profiles.<name>` 与内置 lane 同名时**整体替换**该 lane，不做逐字段合并。
+- `model_profiles.<name>.models` 的条目可以引用 `models` 目录中的短名；也可以使用 `provider/model:level` 字符串或 `{ model, reasoning, ... }` 对象。
 
 ### 3.2 委派角色
 
@@ -314,41 +323,44 @@ Recommended 的每一档只在官方排名的 provider 上解析（见 [Agent-Mo
 
 category worker 是全新会话，不能再委派，以避免递归委派。
 
-agent / category 的内置链是跨 provider 的：链中的模型不带 provider 前缀，引擎按已连接 provider 解析；[附录 A](#附录-a示例提供商模型速查) 只列示例 provider 的模型，其他链上模型需登录对应 provider 后才可用；同名模型在不同 provider 上可能不是同一引用（如内置链的 `deepseek-flash` 与附录 A 的 `deepseek-v4-flash`）。
+agent / category 的内置链由官方按 provider 优先级列出：每个档位只在指定 provider 上解析，引擎取第一个可服务的档位；[附录 A](#附录-a示例提供商模型速查) 只列示例 provider 的模型，其他链上模型需登录对应 provider 后才可用；同名模型在不同 provider 上可能不是同一引用（如内置链的 `deepseek-flash` 与附录 A 的 `deepseek-v4-flash`）。
 
 #### Agents（4 个精选 + 3 个内部评审）
 
-| Agent             | 调用方式                                      | 职责                                                                            |
-| ----------------- | --------------------------------------------- | ------------------------------------------------------------------------------- |
-| `explore`         | `task(subagent_type: "explore", ...)`         | 代码库检索：定位符号、文件与实现                                                |
-| `librarian`       | `task(subagent_type: "librarian", ...)`       | 外部文档与开源代码检索                                                          |
-| `plan-consultant` | `task(subagent_type: "plan-consultant", ...)` | 计划前置审查：识别隐藏意图、歧义与缺失的验收标准（需先进入 `/ulw-plan` 计划流） |
-| `plan-reviewer`   | `task(subagent_type: "plan-reviewer", ...)`   | 计划评审：清晰度、可验证性与完整性；一次性调用（需先进入 `/ulw-plan` 计划流）   |
+| Agent             | 调用方式                                      | 职责                                                                                    |
+| ----------------- | --------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `explore`         | `task(subagent_type: "explore", ...)`         | 代码库检索：定位符号、文件与实现                                                        |
+| `librarian`       | `task(subagent_type: "librarian", ...)`       | 外部文档与开源代码检索                                                                  |
+| `plan-consultant` | `task(subagent_type: "plan-consultant", ...)` | 计划前置审查：识别隐藏意图、歧义与缺失的验收标准（需先进入 `/ulw-plan` 计划流）         |
+| `plan-reviewer`   | `task(subagent_type: "plan-reviewer", ...)`   | 计划评审：清晰度、可验证性与完整性；每次调用执行一轮评审（需先进入 `/ulw-plan` 计划流） |
 
-- 四者均为只读工具策略，并各自带有内置模型链：`explore` / `librarian` 首选 `kimi-for-coding-highspeed` (off)，`plan-consultant` 首选 `claude-fable-5-1` (max)，`plan-reviewer` 首选 `gpt-6-astra` (xhigh)。
-- `plan-consultant` 与 `plan-reviewer` 同样经 `task(subagent_type: ...)` 调起，但仅在请求过 `/ulw-plan` 计划流后可用（plan-gated）；在 `agents` 中为其配置模型只改变模型，不解除该限制。
+- 四者均为只读工具策略，并各自带有内置模型链：`explore` / `librarian` 首选 `kimi-for-coding-highspeed` (off)，随后是 `gpt-6-luna-fast` (low)、`claude-haiku-5-5` (medium)、`deepseek-flash` (max)、`qwen3.7-plus`、`minimax-m2.7`；`plan-consultant` 首选 `claude-fable-5-1` (max)，再回退到 `claude-opus-5-5` (max) 与 `kimi-k3` (max)；`plan-reviewer` 首选 `gpt-6-astra` (xhigh)，再依次回退到 `gpt-6-astra` (high，Copilot / ChatGPT / OpenAI / OpenCode)、`claude-opus-5-5` (max)、`gemini-4-argon` (high)、`gemini-3.1-pro` (high) 与 `glm-5.2`。
+- `plan-consultant` 与 `plan-reviewer` 同样经 `task(subagent_type: ...)` 调起，但仅在请求过 `/ulw-plan` 计划流、已触碰 `.omo/plans/*.md` 且尚未调用 `ulw-execute` 时可用（plan-gated）；在 `agents` 中为其配置模型只改变模型，不解除该限制。
 - 在 `agents` 中写内置名称时，仅覆盖显式给出的字段，其余保留内置值；写入其他名称将追加为自定义 agent。
+- `metis` / `momus` 作为 `plan-consultant` / `plan-reviewer` 别名的窗口已在 5.0.0-beta.51 后关闭：现在写 `agents.metis` 会定义一个普通自定义 agent，`subagent_type: "metis"` 也不再解析到内置角色。
 - 此外，ulw-loop 流程内部使用三个评审 agent：`omo-native-code-reviewer`（按 `unspecified-high` 运行）、`omo-native-gate-reviewer`（按 `deep-high`，回退 `unspecified-high`）、`omo-native-qa-executor`（按 `deep-low`，回退 `unspecified-low`）。它们没有独立模型链，随对应 category 的配置变化；category 不可用时对应评审也不可用。
 
 #### Categories（10 个）
 
-| Category             | 用途                                                                          | 内置链（节选）                                                               | 可用条件                            |
-| -------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------- |
-| `architect`          | 系统设计咨询：只提议、不实现                                                  | `claude-fable-5-1` (max)                                                     | `claude-fable-5-1`                  |
-| `visual-engineering` | 前端、UI/UX、样式、动画、设计系统                                             | `claude-fable-5-1` (max) → `claude-opus-5-5` (max) → `kimi-k3` (max)         | 链上至少一档                        |
-| `ultrabrain`         | 最难的逻辑与架构推理；只给目标，不给步骤                                      | `gpt-6-astra` (max) → `gpt-5.6-sol` (max)                                    | `gpt-6-astra` 或 `gpt-5.6-sol`      |
-| `deep-low`           | 默认深度通道：3D 图形、computer use（桌面自动化）、浏览器、后端、算法、多模态 | `gpt-5.6-sol-fast` (medium) → `gpt-5.6-sol` (medium)                         | `gpt-5.6-sol-fast` 或 `gpt-5.6-sol` |
-| `deep-high`          | 升级深度通道：核心决策无法由证据解决时                                        | `gpt-6-astra` (xhigh)                                                        | `gpt-6-astra`                       |
-| `artistry`           | 非常规、创意型问题求解                                                        | `claude-fable-5-1` (max) → `claude-opus-5-5` (max) → `kimi-k3` (max)         | 链上至少一档                        |
-| `quick`              | 琐碎任务：单文件改动、typo                                                    | `gpt-6-luna-fast` (low) → `deepseek-flash` (off) → `qwen3.6-flash` (low) → … | 链上至少一档                        |
-| `unspecified-low`    | 不属于其他 category 的低强度任务                                              | `mimo-v2.6-pro` (max) → `grok-4.7` (xhigh) → `gpt-5.6-terra` (high) → …      | 链上至少一档                        |
-| `unspecified-high`   | 不属于其他 category 的高强度任务                                              | `claude-opus-5-5` (medium) → `glm-5.3` (max) → `kimi-k3` (max)               | 链上至少一档                        |
-| `writing`            | 文档、散文、commit message、PR 描述                                           | `claude-opus-5-5` (low) → `claude-opus-4-6` (max)                            | 链上至少一档（仅 Claude）           |
+| Category             | 用途                                                                          | 内置链（节选）                                                                                              | 可用条件                                                               |
+| -------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `architect`          | 系统设计咨询：只提议、不实现                                                  | `claude-fable-5-1` (max)                                                                                    | `claude-fable-5-1`                                                     |
+| `visual-engineering` | 前端、UI/UX、样式、动画、设计系统                                             | `gemini-4-argon` (low) → `claude-fable-5-1` (max) → `claude-opus-5-5` (max) → `kimi-k3` (max)               | 链上至少一档                                                           |
+| `ultrabrain`         | 最难的逻辑与架构推理；只给目标，不给步骤                                      | `gpt-6-astra` (max) → `gpt-5.6-sol` (max)                                                                   | `gpt-6-astra` 或 `gpt-5.6-sol`                                         |
+| `deep-low`           | 默认深度通道：3D 图形、computer use（桌面自动化）、浏览器、后端、算法、多模态 | `gpt-6.1-sol` (medium) → `gpt-6.1-sol-fast` (medium) → `gpt-5.6-sol` (medium) → `gpt-5.6-sol-fast` (medium) | `gpt-6.1-sol`、`gpt-6.1-sol-fast`、`gpt-5.6-sol` 或 `gpt-5.6-sol-fast` |
+| `deep-high`          | 升级深度通道：核心决策无法由证据解决时                                        | `gpt-6-astra` (high)                                                                                        | `gpt-6-astra`                                                          |
+| `artistry`           | 非常规、创意型问题求解                                                        | `claude-fable-5-1` (max) → `claude-opus-5-5` (max) → `kimi-k3` (max)                                        | 链上至少一档                                                           |
+| `quick`              | 琐碎任务：单文件改动、typo                                                    | `gpt-6-luna-fast` (low) → `claude-haiku-5-5` (medium) → `deepseek-flash` (off) → `qwen3.6-flash` (low) → …  | 链上至少一档                                                           |
+| `unspecified-low`    | 不属于其他 category 的低强度任务                                              | `claude-sonnet-5-5` (medium) → `mimo-v2.6-pro` (high) → `grok-4.7` (xhigh) → `glm-5.3` (high) → …           | 链上至少一档                                                           |
+| `unspecified-high`   | 不属于其他 category 的高强度任务                                              | `claude-opus-5-5` (medium) → `glm-5.3` (max) → `kimi-k3` (max)                                              | 链上至少一档                                                           |
+| `writing`            | 文档、散文、commit message、PR 描述                                           | `gemini-4-argon` (low) → `claude-opus-5-5` (low) → `claude-opus-4-6` (max)                                  | 链上至少一档                                                           |
 
-- `deep-low` 与 `deep-high` 每次调用只接受一个目标与一个交付物；多个目标应并行发起多个 `deep-low`，仅当核心决策无法由证据解决时才升级至 `deep-high`。
-- 未配置的 category 只有满足其可用条件才会出现在委派列表中：`ultrabrain`、`deep-low`、`deep-high`、`architect` 需要对应的门控模型，其余 category 需要链上至少一档可服务（`writing` 的链仅含 Claude，未连接 Claude 时不可用）；否则该 category 不可用。`omo doctor` 会逐条列出不可用的 category 及其修复方式。
-- 示例 provider `qwen-token-plan-cn` 不含 Claude / GPT / Kimi K3，因此 `architect`、`visual-engineering`、`ultrabrain`、`deep-low`、`deep-high`、`artistry`、`writing` 默认不可用；示例配置通过显式覆盖解除（见 [6.1](#61-能力档映射)）。
-- 显式配置 `categories.<name>.model` 或 `models` 即解除门控：该 category 始终可选，并按所配置的模型运行。
+- `deep-low` 与 `deep-high` 每次调用只接受一个目标与一个交付物；多个目标应并行发起多个 `deep-low`，仅当核心决策无法由证据解决时才升级至 `deep-high`。`deep` 是 `deep-low` 的兼容别名。
+- 未配置的 category 只有满足其可用条件才会出现在委派列表中：`architect` 需要 `claude-fable-5-1`；`ultrabrain` 需要 `gpt-6-astra` 或 `gpt-5.6-sol`；`deep-low` 需要 `gpt-6.1-sol`、`gpt-6.1-sol-fast`、`gpt-5.6-sol` 或 `gpt-5.6-sol-fast`；`deep-high` 需要 `gpt-6-astra`；其余 category 需要链上至少一档可服务。`writing` 不再仅限 Claude：它先试 Google Argon，再回退到 Claude Opus 5.5 / 4.6；三者都没有时才不可用。`omo doctor` 会逐条列出不可用的 category 及其修复方式。
+- `architect` 的内置链只有 `claude-fable-5-1` 一档，没有回退；未连接 Fable 时该 category 默认不可用。
+- `visual-engineering` 与 `writing` 的 Argon 档只在引擎/提供商实际提供 `gemini-4-argon` 时解析，否则直接落到下一档 Claude。
+- 示例 provider `qwen-token-plan-cn` 不在上述内置链的 provider 白名单中，也不含 Claude / GPT / Gemini / Kimi K3，因此 10 个 category 的内置默认全部不可用；示例配置逐一显式覆盖以解除限制（见 [6.1](#61-能力档映射)）。
+- 显式配置 `categories.<name>.model` 或 `models` 即解除门控：该 category 始终可选，并按所配置的模型运行；配置模型不可用时不会回退到内置链。
 - 内置链中的思考强度是引擎的请求值；模型仅支持开关时会被归一化（见 [3.3](#33-覆盖规则与模型引用)）。
 - 表中“内置链（节选）”只表示优先级顺序，不能据此判断可用性；可用性以 `omo doctor` 输出为准。
 
@@ -367,7 +379,7 @@ agent / category 的内置链是跨 provider 的：链中的模型不带 provide
       "quick": {
         "models": [
           {
-            "model": "qwen-token-plan-cn/deepseek-v4.1-flash",
+            "model": "qwen-token-plan-cn/deepseek-v4.1-flash-1017",
             "reasoning": "max",
           },
           "qwen-token-plan-cn/qwen3.8-flash:low",
@@ -383,7 +395,9 @@ agent / category 的内置链是跨 provider 的：链中的模型不带 provide
 - `provider/model`：完整引用，如 `zai/glm-5.3`。
 - 短名：引用 `models` 目录中的条目（见 [5.4](#54-模型目录与模型-profile)）。
 
-同一模型条目同时有 `:level` 后缀与 `reasoning` 字段时，以 `reasoning` 字段为准。
+同一模型条目同时有 `:level` 后缀与 `reasoning` 字段时，以 `reasoning` 字段为准。`:level` 是规范写法；旧的 `model(level)` 与 `model level` 仍被接受，并会在迁移时改写。
+
+`fallback_models`、`variant`、`reasoningEffort`、`maxTokens`、`thinking`、`textVerbosity` 是兼容旧配置的写法：`fallback_models` 映射到 `models`，`variant` / `reasoningEffort` / `thinking` 归一化为 `reasoning`（`thinking` 还可能带 `provider_options`），`maxTokens` / `textVerbosity` 分别映射到 `max_tokens` / `provider_options.textVerbosity`。新配置建议只使用规范字段。
 
 `reasoning` 控制模型的思考强度，规范取值如下：
 
@@ -397,14 +411,14 @@ agent / category 的内置链是跨 provider 的：链中的模型不带 provide
 
 写入模型不支持的档位时，引擎会归一化到该模型支持的档位；仅支持开关的模型，`off` 关闭思考，其余取值按开启处理。
 
-解析方式为：若用户为角色配置了 `model` / `models`，则直接按其运行（同时解除门控），配置模型不可用时不会回退到内置链，而是报告该角色不可用；否则先检查门控，再沿内置链取第一个由已连接 provider 提供服务的档位。
+解析方式为：若用户为角色配置了 `model` / `models`，则直接按其运行（同时解除门控）；`models` 会按配置顺序逐档尝试，但不会回退到内置链，链上所有档都不可用时报告该角色不可用。未配置时先检查门控，再沿内置链取第一个由指定 provider 提供服务的档位。
 
 ### 3.4 图像输入
 
 OmO Native 没有独立的 multimodal agent，图片输入直接交给当前会话模型处理。因此：
 
-- 示例主模型 `glm-5.3` 不支持图片输入；需要分析图片时，用 `/model` 将会话切换到支持图像输入的模型（如选择 `qwen-token-plan-cn/qwen3.8-max`；示例提供商另有 `qwen3.8-flash`、`deepseek-v4.1-flash` 等，见 [附录 A](#附录-a示例提供商模型速查)）。
-- 若希望委派的多模态工作由视觉模型执行，可将 `deep-low` 等 category 固定到视觉模型。本文示例即把 `deep-low` 配置为 `qwen3.8-max`。
+- 示例主模型 `glm-5.3` 不支持图片输入；需要分析图片时，用 `/model` 将会话切换到支持图像输入的模型（如选择 `qwen-token-plan-cn/qwen3.8-max`，它支持文本、图片、视频与 PDF 输入；示例提供商另有 `qwen3.8-flash`、`deepseek-v4.1-flash` 等，见 [附录 A](#附录-a示例提供商模型速查)）。
+- 若希望委派的多模态工作由视觉模型执行，可将 `deep-low` 等 category 固定到视觉模型。本文示例即把 `deep-low` 配置为 `qwen3.8-max`。`deepseek-v4.1-flash-1017` 同样支持图片输入，可作为 B 档的视觉快模型（Native 与 OpenCode 两侧都可用）。
 
 ---
 
@@ -412,25 +426,25 @@ OmO Native 没有独立的 multimodal agent，图片输入直接交给当前会�
 
 ### 4.1 配置方式
 
-OpenCode 插件的配置写入 `~/.omo/omo.jsonc` 的 `[opencode]` 块（也可写入项目级 `.omo/omo.jsonc`）。模型引用使用与 OmO Native 相同的 `provider/model` 语法，但 provider ID 使用 OpenCode 侧的命名；可用 `opencode models` 查询可用组合、`opencode auth list` 查询已登录的 provider。
+OpenCode 插件的配置写入 `~/.omo/omo.jsonc` 的 `[opencode]` 块（也可写入项目级 `.omo/omo.jsonc`）。该块是 freeform 记录，由插件按自己的 schema 校验；共享 `agents` / `categories` 等顶层键对插件也生效，`[opencode]` 中的同名键覆盖共享值。模型引用使用与 OmO Native 相同的 `provider/model` 语法，但 provider ID 使用 OpenCode 侧的命名；可用 `opencode models` 查询可用组合、`opencode auth list` 查询已登录的 provider。
 
-与 OmO Native 不同，OpenCode 插件通过 `agents` / `categories` 逐角色指定模型，没有 `model_profile`。
+与 OmO Native 不同，OpenCode 插件通过 `agents` / `categories` 逐角色指定模型，没有 `model_profile`。插件还提供 `disabled_agents`、`agent_order`、`permission`、`prompt_append`、`category` 继承等 OpenCode 专属字段；`fallback_models` 为兼容旧配置的写法，新配置应使用 `models`。
 
 ### 4.2 Agents（11 个）
 
-| Agent               | 模式     | 职责                                                                                          |
-| ------------------- | -------- | --------------------------------------------------------------------------------------------- |
-| `sisyphus`          | primary  | 主编排与默认入口：理解目标、选择路由、派发任务、验证结果                                      |
-| `hephaestus`        | primary  | 自主深度执行：只给目标，自主探索并完成                                                        |
-| `prometheus`        | primary  | 规划者：访谈需求并产出计划；只读，仅可写 `.omo/` 下的 md（由内置 hook 实施，非 `tools` 字段） |
-| `atlas`             | primary  | 计划执行指挥：读取计划、派发任务、汇总并验证                                                  |
-| `oracle`            | subagent | 只读顾问：架构决策、疑难调试、多系统权衡                                                      |
-| `metis`             | subagent | 计划前置审查：识别隐藏意图、歧义与缺失的验收标准                                              |
-| `momus`             | subagent | 计划评审：清晰度、可验证性与完整性                                                            |
-| `sisyphus-junior`   | subagent | 代码执行者：不参与编排，`task()` 仅可用于研究型子 agent（`explore`、`librarian`、`oracle`）   |
-| `explore`           | subagent | 代码库检索                                                                                    |
-| `librarian`         | subagent | 外部文档与开源代码检索                                                                        |
-| `multimodal-looker` | subagent | 图片、PDF、图表与截图分析                                                                     |
+| Agent               | 模式     | 职责                                                                                                                  |
+| ------------------- | -------- | --------------------------------------------------------------------------------------------------------------------- |
+| `sisyphus`          | primary  | 主编排与默认入口：理解目标、选择路由、派发任务、验证结果                                                              |
+| `hephaestus`        | primary  | 自主深度执行：只给目标，自主探索并完成                                                                                |
+| `prometheus`        | primary  | 规划者：访谈需求并产出计划；只读，仅可写 `.omo/` 下的 md（由内置 hook 实施，非 `tools` 字段）                         |
+| `atlas`             | primary  | 计划执行指挥：读取计划、派发任务、汇总并验证                                                                          |
+| `oracle`            | subagent | 只读顾问：架构决策、疑难调试、多系统权衡                                                                              |
+| `metis`             | subagent | 计划前置审查：识别隐藏意图、歧义与缺失的验收标准                                                                      |
+| `momus`             | subagent | 计划评审：清晰度、可验证性与完整性                                                                                    |
+| `sisyphus-junior`   | subagent | 代码执行者：不参与编排；`task` 工具被禁用，研究型子 agent 只能通过 `call_omo_agent` 调用（如 `explore`、`librarian`） |
+| `explore`           | subagent | 代码库检索                                                                                                            |
+| `librarian`         | subagent | 外部文档与开源代码检索                                                                                                |
+| `multimodal-looker` | subagent | 图片、PDF、图表与截图分析                                                                                             |
 
 四个 primary agent 的默认排列顺序为 `sisyphus` → `hephaestus` → `prometheus` → `atlas`：前两者是会话入口（编排式 / 自主式），后两者构成先规划后执行的计划流。
 
@@ -448,17 +462,19 @@ OpenCode 插件的配置写入 `~/.omo/omo.jsonc` 的 `[opencode]` 块（也可�
 | `unspecified-high`   | 不属于其他 category 的高强度任务    |
 | `writing`            | 文档、散文、commit message、PR 描述 |
 
-OpenCode 插件的 category 与 Native 使用同一套内置选型与门控逻辑（其中不含 `architect`）；在 `[opencode].categories.<name>` 中配置 `model` / `models` 即可覆盖并解除门控，示例见 [6.1](#61-能力档映射)。
+OpenCode 插件同样支持 category（不含 `architect`，`deep` 是 `deep-low` 的别名）。与 Native 不同，插件不会因内置链不可用而隐藏 category：所有合并后的 category 都会出现在 `availableCategories` 中；因此建议在 `[opencode].categories.<name>` 中显式配置 `model` / `models`，把选型固定到当前 provider 可服务的模型，示例见 [6.1](#61-能力档映射)。
 
 ### 4.4 与 OmO Native 的主要差异
 
-| 维度          | OmO Native                                                                                                                                    | OpenCode 插件                                                                                           |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| 形态          | 独立 `omo` 命令                                                                                                                               | OpenCode 插件                                                                                           |
-| 主 agent 模型 | `model_profile`（Recommended 阶梯 / lane）                                                                                                    | 由 OpenCode 会话模型决定；primary agent 可用 `agents.<name>.model` 单独覆盖，插件不读取 `model_profile` |
-| Agent 名单    | `explore`、`librarian`、`plan-consultant`、`plan-reviewer` + `omo-native-code-reviewer`、`omo-native-gate-reviewer`、`omo-native-qa-executor` | 上表 11 个 agent                                                                                        |
-| 图像分析      | 由会话模型处理                                                                                                                                | 由 `multimodal-looker` agent 处理                                                                       |
-| 新增能力      | 优先获得                                                                                                                                      | 部分能力不进入插件                                                                                      |
+| 维度            | OmO Native                                                                                                                                    | OpenCode 插件                                                                                           |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| 形态            | 独立 `omo` 命令，senpi 引擎内置 OMO                                                                                                           | OpenCode 1.4+ / 2 的插件                                                                                |
+| 主 agent 模型   | `model_profile`（内置 lane / 自定义链 / pin）；TUI 不使用                                                                                     | 由 OpenCode 会话模型决定；primary agent 可用 `agents.<name>.model` 单独覆盖，插件不读取 `model_profile` |
+| Agent 名单      | `explore`、`librarian`、`plan-consultant`、`plan-reviewer` + `omo-native-code-reviewer`、`omo-native-gate-reviewer`、`omo-native-qa-executor` | 上表 11 个 agent                                                                                        |
+| Category 可用性 | 未配置时按门控与内置链过滤，死链不会出现在委派列表中                                                                                          | 所有合并后的 category 都列出，不做死链过滤                                                              |
+| 图像分析        | 由会话模型处理                                                                                                                                | 由 `multimodal-looker` agent 处理                                                                       |
+| 配置块          | `[native]` 为类型化块，受 schema 校验                                                                                                         | `[opencode]` 为 freeform 块，由插件 schema 校验                                                         |
+| 扩展机制        | senpi 扩展与内置 skills                                                                                                                       | OpenCode 插件 hooks / skills / commands                                                                 |
 
 ---
 
@@ -471,11 +487,13 @@ OpenCode 插件的 category 与 Native 使用同一套内置选型与门控逻�
 | 字段               | 类型   | 说明                                                                                                          |
 | ------------------ | ------ | ------------------------------------------------------------------------------------------------------------- |
 | `model`            | string | 模型引用；支持 `provider/model`、目录短名与 `:level` 后缀；同时有后缀与 `reasoning` 字段时以 `reasoning` 为准 |
-| `reasoning`        | string | 思考强度，取值见 [3.3](#33-覆盖规则与模型引用)                                                                |
+| `reasoning`        | string | 思考强度，取值见 [3.3](#33-覆盖规则与模型引用)；也接受提供商自定义档位                                        |
 | `temperature`      | number | 采样温度，0–2；越高输出越随机                                                                                 |
 | `top_p`            | number | 核采样概率，0–1；越小候选范围越窄                                                                             |
 | `max_tokens`       | number | 输出 token 上限                                                                                               |
 | `provider_options` | object | 透传给提供商的请求选项                                                                                        |
+
+`variant`、`reasoningEffort` 是 `reasoning` 的兼容旧写法；`maxTokens` 映射到 `max_tokens`。模型条目可以是字符串（`provider/model:level`）或包含上述字段的对象。
 
 ### 5.2 Agent 字段
 
@@ -483,10 +501,16 @@ OpenCode 插件的 category 与 Native 使用同一套内置选型与门控逻�
 | ------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `model`             | string                    | 单模型，等价于仅含一项的 `models`                                                                                                                                                                          |
 | `models`            | array                     | 有序模型链，条目为字符串或模型条目对象                                                                                                                                                                     |
+| `reasoning`         | string                    | 思考强度；取值见 [3.3](#33-覆盖规则与模型引用)                                                                                                                                                             |
 | `temperature`       | number                    | 采样温度，0–2                                                                                                                                                                                              |
+| `top_p`             | number                    | 核采样概率，0–1                                                                                                                                                                                            |
+| `max_tokens`        | number                    | 输出 token 上限                                                                                                                                                                                            |
+| `provider_options`  | object                    | 透传给提供商的请求选项                                                                                                                                                                                     |
 | `description`       | string                    | 角色描述                                                                                                                                                                                                   |
 | `prompt`            | string                    | 覆盖系统提示                                                                                                                                                                                               |
+| `prompt_append`     | string                    | 追加到系统提示                                                                                                                                                                                             |
 | `tools`             | `record<string, boolean>` | 工具开关映射：`true` 启用、`false` 禁用（如 `{ "read": true, "write": false }`）；未列出的工具保持该角色的内置工具策略；`disallowed_tools` 是 agent 上的另一种禁用方式（字符串列表），两种写法不要同时使用 |
+| `permission`        | object                    | 工具权限映射；主要在 OpenCode 侧使用                                                                                                                                                                       |
 | `execution_mode`    | `in-process` / `process`  | 执行方式；`in-process` 与父会话同进程，`process` 为独立进程；精选内置 agent（`explore`、`librarian`、`plan-consultant`、`plan-reviewer`）固定为 in-process                                                 |
 | `background`        | boolean                   | 默认后台运行                                                                                                                                                                                               |
 | `max_depth`         | number                    | 允许的最大委派深度（仅 agent；category worker 不能再委派）                                                                                                                                                 |
@@ -495,7 +519,7 @@ OpenCode 插件的 category 与 Native 使用同一套内置选型与门控逻�
 | `max_turns`         | number                    | 最大回合数                                                                                                                                                                                                 |
 | `disable`           | boolean                   | 禁用该 agent                                                                                                                                                                                               |
 
-精选内置 agent（`explore`、`librarian`、`plan-consultant`、`plan-reviewer`）默认使用内置只读工具策略；如需调整，可用 `tools` 覆盖。
+精选内置 agent（`explore`、`librarian`、`plan-consultant`、`plan-reviewer`）默认使用内置只读工具策略；如需调整，可用 `tools` 覆盖。`variant` / `reasoningEffort` 为兼容旧写法；`fallback_models` 不是共享 agent 的规范字段，请改用 `models`。
 
 ### 5.3 Category 字段
 
@@ -503,6 +527,7 @@ OpenCode 插件的 category 与 Native 使用同一套内置选型与门控逻�
 | ------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `model`             | string                    | 单模型                                                                                                                     |
 | `models`            | array                     | 有序模型链                                                                                                                 |
+| `reasoning`         | string                    | 思考强度；取值见 [3.3](#33-覆盖规则与模型引用)                                                                             |
 | `description`       | string                    | 用途描述，展示于 task 提示中                                                                                               |
 | `prompt_append`     | string                    | 追加到系统提示                                                                                                             |
 | `temperature`       | number                    | 采样温度，0–2                                                                                                              |
@@ -511,13 +536,15 @@ OpenCode 插件的 category 与 Native 使用同一套内置选型与门控逻�
 | `provider_options`  | object                    | 透传给提供商的请求选项                                                                                                     |
 | `tools`             | `record<string, boolean>` | 工具开关映射：`true` 启用、`false` 禁用；未列出的工具保持该 category 的内置工具策略（category 无 `disallowed_tools` 字段） |
 | `max_prompt_tokens` | number                    | 委派任务的提示 token 上限                                                                                                  |
-| `is_unstable_agent` | boolean                   | 标记不稳定，强制后台监控                                                                                                   |
-| `warn_unavailable`  | boolean                   | 是否输出“链不可用”提示                                                                                                     |
+| `is_unstable_agent` | boolean                   | 标记不稳定，强制后台监控；模型 ID 含 `gemini` / `minimax` 时自动启用                                                       |
+| `warn_unavailable`  | boolean                   | 是否输出“链不可用”提示；该字段存在于 OpenCode schema，死链提示的抑制属于 Senpi/core `task` 行为，Native 由引擎过滤         |
 | `disable`           | boolean                   | 禁用该 category                                                                                                            |
+
+`fallback_models`、`variant`、`reasoningEffort`、`maxTokens`、`thinking`、`textVerbosity` 是兼容旧配置的写法，新配置应使用 `models`、`reasoning`、`max_tokens` 与 `provider_options`。
 
 ### 5.4 模型目录与模型 profile
 
-顶层 `models` 是共享目录，两个形态均可引用；`[native]` 内的 `models` 只对 Native 生效。目录将短名映射到 `{ model, reasoning? }`，供 `model` / `models` 引用；使用处仍可覆盖目录中的思考强度。目录条目以 `provider/model` 固定；两个形态 provider ID 不同时，需分别配置或在各自 harness 块内覆盖。
+顶层 `models` 是共享目录，两个形态均可引用；`[native]` 内的 `models` 只对 Native 生效。目录将短名映射到 `{ model, reasoning? }`，供 `model` / `models` 引用；使用处仍可覆盖目录中的思考强度。目录条目以 `provider/model` 固定；两个形态 provider ID 不同时，需分别配置或在各自 harness 块内覆盖。目录循环会被检测并报告为 `model_catalog_cycle`，不会无限展开。
 
 ```jsonc
 {
@@ -528,7 +555,7 @@ OpenCode 插件的 category 与 Native 使用同一套内置选型与门控逻�
         "reasoning": "max",
       },
       "fast": {
-        "model": "qwen-token-plan-cn/deepseek-v4.1-flash",
+        "model": "qwen-token-plan-cn/deepseek-v4.1-flash-1017",
         "reasoning": "max",
       },
     },
@@ -547,41 +574,43 @@ OpenCode 插件的 category 与 Native 使用同一套内置选型与门控逻�
 
 模型 profile 的两个键（仅 OmO Native 读取）：
 
-| 键               | 类型   | 说明                                                                 |
-| ---------------- | ------ | -------------------------------------------------------------------- |
-| `model_profiles` | object | 命名模型链。名称与内置 lane 同名时整体替换该内置链；其他名称新增一条 |
-| `model_profile`  | string | 当前使用的 profile ID，或 `provider/model` 形式的 pin                |
+| 键               | 类型   | 说明                                                                                      |
+| ---------------- | ------ | ----------------------------------------------------------------------------------------- |
+| `model_profiles` | object | 命名模型链。名称与内置 lane 同名时整体替换该内置链；其他名称新增一条                      |
+| `model_profile`  | string | 当前使用的 profile ID，或包含 `/` 的 `provider/model` pin；`recommended` 已退役但仍被容忍 |
 
-`model_profiles.<name>` 条目支持 `display_name`（string，可选展示名，缺省用 ID）、`family` / `tier`（可选元数据）与 `models`（有序链，条目与 category 的 `models` 相同）四个字段。
+`model_profiles.<name>` 条目支持 `display_name`（string，可选展示名，缺省用 ID）、`family`（`daily` / `geeky`）与 `tier`（`normal` / `heavy`）元数据，以及 `models`（有序链，条目与 category 的 `models` 相同）。同名覆盖是整体替换：只写 `display_name` 会得到一条没有模型的 profile。
 
 ---
 
 ## 6. 完整示例配置
 
-示例配置与 `~/.omo/omo.jsonc` 保持一致：`[native]` 块为主，`[opencode]` 块为 OpenCode 插件提供同能力档映射。以下模型与 provider 为示例环境快照，实际以 `omo --list-models` / `opencode models` 为准；表中“思考强度”的取值含义见 [3.3](#33-覆盖规则与模型引用)。
+示例配置可作为 `~/.omo/omo.jsonc` 使用：`[native]` 块为主，`[opencode]` 块为 OpenCode 插件提供同能力档映射。以下模型与 provider 为示例环境快照，实际以 `omo --list-models` / `opencode models` 为准；表中“思考强度”的取值含义见 [3.3](#33-覆盖规则与模型引用)。
 
 ### 6.1 能力档映射
 
 `[native]` 块（provider `qwen-token-plan-cn`）：
 
-| 模型                  | 能力档           | 思考强度 | 覆盖角色                                                                                                                                                                                                                                                     |
-| --------------------- | ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `glm-5.3`             | 主 agent / **S** | `max`    | Desktop / headless 新建会话的 profile 首选（TUI 不适用，见 [3.1](#31-主-agent-的模型)）、`plan-consultant`、`plan-reviewer` 及 7 个 S 档 category（`architect`、`visual-engineering`、`ultrabrain`、`deep-high`、`artistry`、`unspecified-high`、`writing`） |
-| `qwen3.8-max`         | **V** 视觉       | `xhigh`  | `deep-low`（兼多模态）                                                                                                                                                                                                                                       |
-| `deepseek-v4.1-flash` | **B** 快         | `max`    | `explore`、`librarian`、`quick`、`unspecified-low`                                                                                                                                                                                                           |
+| 模型                       | 能力档           | 思考强度 | 覆盖角色                                                                                                                                                                                                                                                     |
+| -------------------------- | ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `glm-5.3`                  | 主 agent / **S** | `max`    | Desktop / headless 新建会话的 profile 首选（TUI 不适用，见 [3.1](#31-主-agent-的模型)）、`plan-consultant`、`plan-reviewer` 及 7 个 S 档 category（`architect`、`visual-engineering`、`ultrabrain`、`deep-high`、`artistry`、`unspecified-high`、`writing`） |
+| `qwen3.8-max`              | **V** 视觉       | `xhigh`  | `deep-low`（兼多模态）                                                                                                                                                                                                                                       |
+| `deepseek-v4.1-flash-1017` | **B** 快         | `max`    | `explore`、`librarian`、`quick`、`unspecified-low`                                                                                                                                                                                                           |
 
 `[opencode]` 块（provider `alibaba-token-plan-cn`）：
 
-| 模型                  | 思考强度 | 覆盖角色                                                                                                                                                                                |
-| --------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `glm-5.3`             | `max`    | `sisyphus`、`hephaestus`、`oracle`、`prometheus`、`metis`、`momus` 及 6 个 S 档 category（`visual-engineering`、`ultrabrain`、`deep-low`、`deep-high`、`artistry`、`unspecified-high`） |
-| `glm-5.3`             | `high`   | `atlas`、`sisyphus-junior`                                                                                                                                                              |
-| `deepseek-v4.1-flash` | `max`    | `explore`、`librarian`、`quick`、`unspecified-low`、`writing`                                                                                                                           |
-| `qwen3.8-max`         | `xhigh`  | `multimodal-looker`                                                                                                                                                                     |
+| 模型                       | 思考强度 | 覆盖角色                                                                                                                                                                                           |
+| -------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `glm-5.3`                  | `max`    | `sisyphus`、`hephaestus`、`oracle`、`prometheus`、`metis`、`momus` 及 7 个 S 档 category（`visual-engineering`、`ultrabrain`、`deep-low`、`deep-high`、`artistry`、`unspecified-high`、`writing`） |
+| `glm-5.3`                  | `high`   | `atlas`、`sisyphus-junior`                                                                                                                                                                         |
+| `deepseek-v4.1-flash-1017` | `max`    | `explore`、`librarian`、`quick`、`unspecified-low`                                                                                                                                                 |
+| `qwen3.8-max`              | `xhigh`  | `multimodal-looker`                                                                                                                                                                                |
 
-两边的 `writing` 与 `deep-low` 选择不同：OpenCode 侧 `writing` 用 `deepseek-v4.1-flash`、`deep-low` 用 `glm-5.3`（它另有 `multimodal-looker` 处理图像）；Native 侧 `writing` 用 `glm-5.3`、`deep-low` 用视觉模型 `qwen3.8-max`。
+`deepseek-v4.1-flash-1017` 是 2026-10-17 的新快照，官方描述为改进了推理、编码、agent 任务与视觉理解；它支持 `low` / `high` / `max` 与图片输入。Native 的 `qwen-token-plan-cn` 模型清单现在也包含该快照，`[native]` 与 `[opencode]` 的 B 档都使用它。
 
-B 档模型统一使用 `reasoning: max`，属于质量优先的取舍（内置链对 `explore` / `librarian` 用 `off`、`quick` 用 `low`）；若更看重延迟与成本，可下调为 `low`（该模型不支持 `off`）。
+两边的 `writing` 都用 `glm-5.3` (max)。`deep-low` 的选择不同：OpenCode 侧用 `glm-5.3`（它另有 `multimodal-looker` 处理图像）；Native 侧用视觉模型 `qwen3.8-max`，以便委派的多模态工作直接由视觉模型执行。
+
+B 档模型统一使用 `reasoning: max`，属于质量优先的取舍（内置链对 `explore` / `librarian` 用 `off`、`quick` 用 `low`）；若更看重延迟与成本，可下调为 `low`。两个 DeepSeek 快照的强度元数据都包含 `low` / `high` / `max`；`off` 会由引擎按模型实际能力归一化。
 
 ### 6.2 示例配置
 
@@ -591,37 +620,38 @@ B 档模型统一使用 `reasoning: max`，属于质量优先的取舍（内置�
 
 ## 附录 A：示例提供商模型速查
 
-> 以下清单来自本机 `omo --list-models qwen-token-plan-cn`，思考强度来自 models.dev 元数据；两者都会随提供商更新，请以命令输出为准。`qwen-token-plan-cn` 是阿里云百炼的聚合 provider，除 Qwen 系列外还托管 GLM、DeepSeek、Kimi、MiniMax 等模型。
+> 以下清单来自本机 `omo --list-models qwen-token-plan-cn`，思考强度来自本机 Native 模型元数据（`~/.omo/agent/models-store.json`）；两者都会随提供商更新，请以命令输出为准。`qwen-token-plan-cn` 是阿里云百炼的聚合 provider，除 Qwen 系列外还托管 GLM、DeepSeek、Kimi、MiniMax 等模型。
 >
 > 表中 `K` / `M` 为 token 单位（K = 千，M = 百万）；“上下文”是单次请求可接受的总 token 上限，“输出”是单次回复的 token 上限，“思考模式”表示模型是否支持 `reasoning`，“图片输入”为 `—` 表示不支持。“思考强度”列出该模型支持的 `reasoning` 取值；“开关”表示仅有开/关、无强度分档；`—` 表示元数据未标注。
 
-`qwen-token-plan-cn` 共 20 个模型，其中 9 个支持图片输入：
+`qwen-token-plan-cn` 共 21 个模型，其中 10 个支持图片输入：
 
-| 模型 ID                  | 上下文 | 输出 | 思考模式 | 图片输入 | 思考强度             |
-| ------------------------ | ------ | ---- | -------- | -------- | -------------------- |
-| `glm-5.3`                | 1M     | 131K | ✓        | —        | `low, high, max`     |
-| `glm-5.2`                | 1M     | 131K | ✓        | —        | `high, max`          |
-| `glm-5.1`                | 203K   | 128K | ✓        | —        | 开关                 |
-| `glm-5`                  | 203K   | 16K  | ✓        | —        | 开关                 |
-| `qwen3.8-max`            | 1M     | 131K | ✓        | ✓        | `low, medium, xhigh` |
-| `qwen3.8-flash`          | 1M     | 131K | ✓        | ✓        | `low, medium, xhigh` |
-| `qwen3.7-max`            | 1M     | 131K | ✓        | —        | 开关                 |
-| `qwen3.7-plus`           | 1M     | 66K  | ✓        | ✓        | 开关                 |
-| `qwen3.6-plus`           | 1M     | 66K  | ✓        | ✓        | 开关                 |
-| `qwen3.6-flash`          | 1M     | 66K  | ✓        | ✓        | 开关                 |
-| `deepseek-v4.1-flash`    | 1M     | 384K | ✓        | ✓        | `low, high, max`     |
-| `deepseek-v4-pro`        | 1M     | 384K | ✓        | —        | `high, max`          |
-| `deepseek-v4-pro-0813`   | 1M     | 384K | ✓        | —        | `high, max`          |
-| `deepseek-v4-flash`      | 1M     | 384K | ✓        | —        | `high, max`          |
-| `deepseek-v4-flash-0731` | 1M     | 384K | ✓        | —        | `high, max`          |
-| `deepseek-v3.2`          | 131K   | 66K  | ✓        | —        | 开关                 |
-| `kimi-k2.7-code`         | 262K   | 262K | ✓        | ✓        | 开关                 |
-| `kimi-k2.6`              | 262K   | 262K | ✓        | ✓        | 开关                 |
-| `kimi-k2.5`              | 262K   | 98K  | ✓        | ✓        | 开关                 |
-| `MiniMax-M2.5`           | 197K   | 33K  | ✓        | —        | —                    |
+| 模型 ID                    | 上下文 | 输出 | 思考模式 | 图片输入 | 思考强度             |
+| -------------------------- | ------ | ---- | -------- | -------- | -------------------- |
+| `glm-5.3`                  | 1M     | 131K | ✓        | —        | `low, high, max`     |
+| `glm-5.2`                  | 1M     | 131K | ✓        | —        | `high, max`          |
+| `glm-5.1`                  | 203K   | 128K | ✓        | —        | `high, max`          |
+| `glm-5`                    | 203K   | 16K  | ✓        | —        | `high, max`          |
+| `qwen3.8-max`              | 1M     | 131K | ✓        | ✓        | `low, medium, xhigh` |
+| `qwen3.8-flash`            | 1M     | 131K | ✓        | ✓        | `low, medium, xhigh` |
+| `qwen3.7-max`              | 1M     | 131K | ✓        | —        | 开关                 |
+| `qwen3.7-plus`             | 1M     | 66K  | ✓        | ✓        | 开关                 |
+| `qwen3.6-plus`             | 1M     | 66K  | ✓        | ✓        | 开关                 |
+| `qwen3.6-flash`            | 1M     | 66K  | ✓        | ✓        | 开关                 |
+| `deepseek-v4.1-flash`      | 1M     | 384K | ✓        | ✓        | `low, high, max`     |
+| `deepseek-v4.1-flash-1017` | 1M     | 384K | ✓        | ✓        | `low, high, max`     |
+| `deepseek-v4-pro`          | 1M     | 384K | ✓        | —        | `high, max`          |
+| `deepseek-v4-pro-0813`     | 1M     | 384K | ✓        | —        | `high, max`          |
+| `deepseek-v4-flash`        | 1M     | 384K | ✓        | —        | `high, max`          |
+| `deepseek-v4-flash-0731`   | 1M     | 384K | ✓        | —        | `high, max`          |
+| `deepseek-v3.2`            | 131K   | 66K  | ✓        | —        | 开关                 |
+| `kimi-k2.7-code`           | 262K   | 262K | ✓        | ✓        | 开关                 |
+| `kimi-k2.6`                | 262K   | 262K | ✓        | ✓        | 开关                 |
+| `kimi-k2.5`                | 262K   | 98K  | ✓        | ✓        | 开关                 |
+| `MiniMax-M2.5`             | 197K   | 33K  | ✓        | —        | —                    |
 
-OpenCode 插件侧以 `alibaba-token-plan-cn` 为 provider（与 Native 的 `qwen-token-plan-cn` 相互独立），模型清单以 `opencode models` 为准；`glm-5.3`、`deepseek-v4.1-flash`、`qwen3.8-max` 在其清单中可用，另含图片与视频生成类模型（`qwen-image-2.0`、`wan2.7-image`、`happyhorse-1.1-*` 等）。
+OpenCode 插件侧以 `alibaba-token-plan-cn` 为 provider（与 Native 的 `qwen-token-plan-cn` 相互独立），模型清单以 `opencode models` 为准。当前清单共 28 条：与本机 Native 的 21 个模型相同，另加 7 个图片/视频生成模型（`happyhorse-1.1-*` ×3、`qwen-image-2.0`、`qwen-image-2.0-pro`、`wan2.7-image`、`wan2.7-image-pro`）。`qwen3.8-max-preview` 在 models.dev 元数据中标记 deprecated，`opencode models` 不列出；`opencode` provider 还提供一批 `*-free` 模型。
 
 ---
 
-_本文档基于 Oh My OpenAgent [GitHub 仓库](https://github.com/code-yeongyu/oh-my-openagent) 公开文档与本机 OmO Native 5.0.1 实机信息编写。安装见 [Installation](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/guide/installation.md)，配置全量参考见 [omo.jsonc 参考](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/reference/omo-json.md)。_
+_本文档基于 Oh My OpenAgent [GitHub 仓库](https://github.com/code-yeongyu/oh-my-openagent) 公开文档与本机 OmO Native 5.1.38（senpi 2026.10.19）实机信息编写。安装见 [Installation](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/guide/installation.md)，配置全量参考见 [omo.jsonc 参考](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/reference/omo-json.md)。_
