@@ -152,7 +152,10 @@ OpenCode 会自行安装并缓存数组中的插件，需在 `plugin` 数组中�
   | Kimi                  | `kimi-coding`          | `kimi-for-coding`       |
   | OpenAI                | `chatgpt-subscription` | `openai`                |
 
+- 示例中两个 Token Plan provider ID 指向同一个端点，只是两个 harness 的命名不同；两套 category 集合除 Native 多一个 `architect` 外一致。
 - `omo setup` 可将 OpenCode 的 API key、自定义 provider、MCP 服务器与全局 skills 导入引擎状态目录 `~/.omo/agent/`，并将默认模型与 categories / agents 写入 `[native]` 块；已存在的 Native 配置不会被覆盖。OAuth 登录无法复制，需在 omo 内执行 `/login <provider>`。
+
+> **共存提示**：同时安装两种形态时，OmO Native 首次启动可能显示 `OpenCode edition model settings Native does not use`，并列出 `sisyphus`、`hephaestus`、`oracle`、`prometheus`、`atlas`、`sisyphus-junior`、`multimodal-looker` 等 OpenCode 专属 agent。这是预期的迁移提示：Native 没有这些 agent（只有 `explore`、`librarian`、`plan-consultant`、`plan-reviewer` 和三个 `omo-native-*` 评审 agent），`[opencode]` 块本来就只给插件使用。提示写入 `_migrations` 的 `2026-09-opencode-routing-notice` 后通常只出现一次；`omo doctor` 会在差距存在时继续列出。若只用 Native，可移除 `[opencode]` 块与 OpenCode 插件入口；若两者都用，忽略即可。复制本文示例配置会暂时丢掉 `_migrations` 标记，因此下一次启动可能再提示一次。
 
 ---
 
@@ -311,6 +314,7 @@ OmO Native 的模型选择分为两层：**主 agent** 决定会话模型，**�
 - **Risky model warning** 只在 `${provider}/${model} ${name}` 含 `qwen` 或 `minimax` 时出现，与模型是否在推荐集合中无关。
   因此在 provider ID 含 `qwen` 的提供方（如 `qwen-token-plan-cn`）上，即使跑 `glm-5.3` 也会触发；要消除需改用不含这两个词的 provider（如 `alibaba-token-plan` / `alibaba-token-plan-cn`，需对应端点的凭据）。若 Senpi 找不到任何推荐模型，另有 non-recommended 警告。
 - 官方只对推荐模型集合中的模型验证过编排提示；集合外的模型（如 Qwen、DeepSeek）可作为委派模型，但官方不支持其作为主 agent。
+- GLM 5.3 属于推荐模型集合，且有 GLM 家族的 prompt preset（Native 的 `glm-5.3` 复用 GLM 5 家族提示；OpenCode 的 Sisyphus 会把 GLM 模型路由到 `glm-5-2` 提示）。不过官方对嵌套 todo、委派和长上下文路径的端到端验证少于 Claude/Kimi；在没有 Claude/Kimi 的 provider 上它仍是集合内最合适的主模型，首轮部署建议重点观察这几类行为。
 - 自定义链中，带 provider 前缀的条目只在该 provider 上解析；裸模型 ID 可匹配任意 provider（provider 由引擎按可用顺序选择）。`model_profiles.<name>` 与内置 lane 同名时**整体替换**该 lane，不做逐字段合并。
 - `model_profiles.<name>.models` 的条目可以引用 `models` 目录中的短名；也可以使用 `provider/model:level` 字符串或 `{ model, reasoning, ... }` 对象。
 
@@ -608,7 +612,7 @@ OpenCode 插件同样支持 category（不含 `architect`，`deep` 是 `deep-low
 
 `deepseek-v4.1-flash-1017` 是 2026-10-17 的新快照，官方描述为改进了推理、编码、agent 任务与视觉理解；它支持 `low` / `high` / `max` 与图片输入。Native 的 `qwen-token-plan-cn` 模型清单现在也包含该快照，`[native]` 与 `[opencode]` 的 B 档都使用它。
 
-两边的 `writing` 都用 `glm-5.3` (max)。`deep-low` 的选择不同：OpenCode 侧用 `glm-5.3`（它另有 `multimodal-looker` 处理图像）；Native 侧用视觉模型 `qwen3.8-max`，以便委派的多模态工作直接由视觉模型执行。
+两边的 `writing` 都用 `glm-5.3` (max)。`deep-low` 的 `low` 是相对 `deep-high` 的深度档，不是低成本档；两边选择不同是为了匹配各自的多模态路径：OpenCode 侧用 `glm-5.3`（图像交给 `multimodal-looker`），Native 侧用视觉模型 `qwen3.8-max`，让委派的多模态工作直接由视觉模型执行。OpenCode 的 `deep-low` 与 `deep-high` 目前都用 `glm-5.3` max，差别在 category prompt、工具策略与升级路径；若想保留模型强度分档，可把 `deep-low` 下调为 `high`。
 
 B 档模型统一使用 `reasoning: max`，属于质量优先的取舍（内置链对 `explore` / `librarian` 用 `off`、`quick` 用 `low`）；若更看重延迟与成本，可下调为 `low`。两个 DeepSeek 快照的强度元数据都包含 `low` / `high` / `max`；`off` 会由引擎按模型实际能力归一化。
 
